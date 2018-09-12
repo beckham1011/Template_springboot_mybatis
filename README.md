@@ -1,3 +1,5 @@
+声明： 这个版本是从下面博客的地址发展而来，添加我自己总结的。 bms 作者您好， 如有版权，请联系我
+
 # bms 后台管理系统
 后台管理系统权限控制，对user、role、menu（通常菜单和按钮）进行增删改查。
 springboot+shiro+freemarker+ace admin+mybatis+mysql+java1.8
