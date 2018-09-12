@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjjoy.bms.setting.dao.CamacAnswerDao">
+	
+	<parameterMap id="pm_camacAnswer" type="cn.bjjoy.bms.setting.entity.CamacAnswer">
+		<parameter property="answerId" javaType="Long" jdbcType="BIGINT" />
+		<parameter property="questionId" javaType="int" jdbcType="INTEGER" />
+		<parameter property="userId" javaType="int" jdbcType="INTEGER" />
+		<parameter property="answerTitle" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="answerContent" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="createTime" javaType="Date" jdbcType="TIMESTAMP" />
+	</parameterMap>
+	
+	<resultMap id="rm_camacAnswer" type="cn.bjjoy.bms.setting.entity.CamacAnswer">
+		<result property="answerId" column="answer_id" javaType="Long" jdbcType="BIGINT" />
+		<result property="questionId" column="question_id" javaType="int" jdbcType="INTEGER" />
+		<result property="userId" column="user_id" javaType="int" jdbcType="INTEGER" />
+		<result property="answerTitle" column="answer_title" javaType="String" jdbcType="VARCHAR" />
+		<result property="answerContent" column="answer_content" javaType="String" jdbcType="VARCHAR" />
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<insert id="save" parameterMap="pm_camacAnswer" useGeneratedKeys="true" keyProperty="answerId" >
+		insert into camac_answer
+		<trim prefix="(" suffix=")" suffixOverrides="," >	
+			<if test="answerId != null">answer_id,</if>
+			<if test="questionId != null">question_id,</if>
+			<if test="userId != null">user_id,</if>
+			<if test="answerTitle != null">answer_title,</if>
+			<if test="answerContent != null">answer_content,</if>
+			<if test="createTime != null">create_time</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="answerId != null">#{answerId},</if>
+			<if test="questionId != null">#{questionId},</if>
+			<if test="userId != null">#{userId},</if>
+			<if test="answerTitle != null">#{answerTitle},</if>
+			<if test="answerContent != null">#{answerContent},</if>
+			<if test="createTime != null">#{createTime}</if>
+		</trim>
+	</insert>
+		
+	<delete id="deleteOne" parameterType="java.lang.String">
+		DELETE FROM camac_answer WHERE camac_answer.answer_id = #{answerId}
+	</delete>
+	
+	<delete id="delete" parameterType="map">
+		DELETE FROM camac_answer
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</delete>
+
+	<select id="queryOne" parameterType="java.lang.String" resultMap="rm_camacAnswer">
+		<include refid="sql_select"/>
+		WHERE camac_answer.answer_id = #{answerId}
+	</select>
+	
+	<select id="queryList" parameterType="map" resultMap="rm_camacAnswer">
+		<include refid="sql_select" />
+		<where>
+			<include refid="sql_where" />
+		</where>
+		<include refid="sql_order" />
+		<include refid="sql_page" />
+	</select>
+	
+	<select id="queryListCount" parameterType="map" resultType="long">
+		SELECT COUNT(0) FROM camac_answer
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</select>
+	
+	<update id="updateOne" parameterType="map">
+		UPDATE camac_answer
+		<set>
+		<if test="_parameter.containsKey('questionId')">
+		<choose>
+            <when test="questionId == null">
+			question_id = NULL,
+            </when>
+            <otherwise>
+			question_id = #{questionId},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('userId')">
+		<choose>
+            <when test="userId == null">
+			user_id = NULL,
+            </when>
+            <otherwise>
+			user_id = #{userId},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('answerTitle')">
+		<choose>
+            <when test="answerTitle == null or answerTitle == ''">
+			answer_title = NULL,
+            </when>
+            <otherwise>
+			answer_title = #{answerTitle},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('answerContent')">
+		<choose>
+            <when test="answerContent == null or answerContent == ''">
+			answer_content = NULL,
+            </when>
+            <otherwise>
+			answer_content = #{answerContent},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('createTime')">
+		<choose>
+            <when test="createTime == null or createTime == ''">
+			create_time = NULL
+            </when>
+            <otherwise>
+			create_time = #{createTime}
+            </otherwise>  
+        </choose>
+		</if>
+		</set>
+		<where>
+		answer_id = #{answerId}
+		</where>
+	</update>
+
+	<update id="update" parameterType="map">
+		UPDATE camac_answer
+		<set>
+		<if test="_parameter.containsKey('questionIdAnw')">
+		<choose>
+            <when test="questionIdAnw == null">
+			question_id = NULL,
+            </when>
+            <otherwise>
+			question_id = #{questionIdAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('userIdAnw')">
+		<choose>
+            <when test="userIdAnw == null">
+			user_id = NULL,
+            </when>
+            <otherwise>
+			user_id = #{userIdAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('answerTitleAnw')">
+		<choose>
+            <when test="answerTitleAnw == null or answerTitleAnw == ''">
+			answer_title = NULL,
+            </when>
+            <otherwise>
+			answer_title = #{answerTitleAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('answerContentAnw')">
+		<choose>
+            <when test="answerContentAnw == null or answerContentAnw == ''">
+			answer_content = NULL,
+            </when>
+            <otherwise>
+			answer_content = #{answerContentAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('createTimeAnw')">
+		<choose>
+            <when test="createTimeAnw == null or createTimeAnw == ''">
+			create_time = NULL
+            </when>
+            <otherwise>
+			create_time = #{createTimeAnw}
+            </otherwise>  
+        </choose>
+		</if>
+		</set>
+		<where>
+			<include refid="sql_where"/>
+		</where>
+	</update>
+	
+	<sql id="sql_select">
+		<![CDATA[
+		SELECT 
+			camac_answer.answer_id,
+			camac_answer.question_id,
+			camac_answer.user_id,
+			camac_answer.answer_title,
+			camac_answer.answer_content,
+			camac_answer.create_time
+		FROM camac_answer
+		]]>
+	</sql>
+
+	<sql id="sql_where">
+		<if test="answerId != null and answerId != ''">
+			<![CDATA[AND camac_answer.answer_id = #{answerId}]]>
+		</if>
+		<if test="answerId == null or answerId == ''">
+			<if test="answerIdAst != null and answerIdAst != ''">
+				<![CDATA[AND camac_answer.answer_id >= #{answerIdAst}]]>
+			</if>
+			<if test="answerIdAed != null and answerIdAed != ''">
+				<![CDATA[AND camac_answer.answer_id <= #{answerIdAed}]]>
+			</if>
+			<if test="answerIds != null">
+				AND camac_answer.answer_id IN 
+				<foreach collection="answerIds" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+			<if test="answerIdAlk != null and answerIdAlk != ''">
+				<![CDATA[AND CAST(camac_answer.answer_id AS CHAR) LIKE CONCAT('%',#{answerIdAlk},'%')]]>
+			</if>
+		</if>
+		<if test="questionId != null and questionId != ''">
+		<![CDATA[AND camac_answer.question_id = #{questionId}]]>
+		</if>
+		<if test="questionId == null or questionId == ''">
+		<if test="questionIdAst != null and questionIdAst != ''">
+			<![CDATA[AND camac_answer.question_id >= #{questionIdAst}]]>
+		</if>
+		<if test="questionIdAed != null and questionIdAed != ''">
+			<![CDATA[AND camac_answer.question_id <= #{questionIdAed}]]>
+		</if>
+		<if test="questionIds != null">
+			AND camac_answer.question_id IN
+			<foreach collection="questionIds" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="questionIdAlk != null and questionIdAlk != ''">
+			<![CDATA[AND CAST(camac_answer.question_id AS CHAR) LIKE CONCAT('%',#{questionIdAlk},'%')]]>
+		</if>
+		</if>
+		<if test="userId != null and userId != ''">
+		<![CDATA[AND camac_answer.user_id = #{userId}]]>
+		</if>
+		<if test="userId == null or userId == ''">
+		<if test="userIdAst != null and userIdAst != ''">
+			<![CDATA[AND camac_answer.user_id >= #{userIdAst}]]>
+		</if>
+		<if test="userIdAed != null and userIdAed != ''">
+			<![CDATA[AND camac_answer.user_id <= #{userIdAed}]]>
+		</if>
+		<if test="userIds != null">
+			AND camac_answer.user_id IN
+			<foreach collection="userIds" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="userIdAlk != null and userIdAlk != ''">
+			<![CDATA[AND CAST(camac_answer.user_id AS CHAR) LIKE CONCAT('%',#{userIdAlk},'%')]]>
+		</if>
+		</if>
+		<if test="answerTitle != null and answerTitle != ''">
+			<![CDATA[AND camac_answer.answer_title = #{answerTitle}]]>
+		</if>
+		<if test="answerTitle == null or answerTitle == ''">
+			<if test="answerTitleAlk != null and answerTitleAlk != ''">
+				<![CDATA[AND camac_answer.answer_title LIKE CONCAT('%',#{answerTitleAlk},'%')]]>
+			</if>
+			<if test="answerTitles != null">
+				AND camac_answer.answer_title IN 
+				<foreach collection="answerTitles" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="answerContent != null and answerContent != ''">
+			<![CDATA[AND camac_answer.answer_content = #{answerContent}]]>
+		</if>
+		<if test="answerContent == null or answerContent == ''">
+			<if test="answerContentAlk != null and answerContentAlk != ''">
+				<![CDATA[AND camac_answer.answer_content LIKE CONCAT('%',#{answerContentAlk},'%')]]>
+			</if>
+			<if test="answerContents != null">
+				AND camac_answer.answer_content IN 
+				<foreach collection="answerContents" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="createTime != null and createTime != ''">
+			<![CDATA[AND date_format(camac_answer.create_time,'%Y-%m-%d') = #{createTime}]]>
+		</if>
+		<if test="createTime == null or createTime == ''">
+			<if test="createTimeAst != null and createTimeAst != ''">
+				<![CDATA[AND date_format(camac_answer.create_time,'%Y-%m-%d') >= #{createTimeAst}]]>
+			</if>
+			<if test="createTimeAed != null and createTimeAed != ''">
+				<![CDATA[AND date_format(camac_answer.create_time,'%Y-%m-%d') <= #{createTimeAed}]]>
+			</if>
+			<if test="createTimes != null">
+				AND date_format(camac_answer.create_time,'%Y-%m-%d') IN 
+				<foreach collection="createTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+			<if test="createTimeAlk != null and createTimeAlk != ''">
+				<![CDATA[AND date_format(camac_answer.create_time,'%Y-%m-%d') LIKE CONCAT('%',#{createTimeAlk},'%')]]>
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="sql_order">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+		<if test="sort == 'answerId' and (order == 'asc' or order == 'desc')">
+			camac_answer.answer_id ${order},
+		</if>
+		<if test="sort == 'questionId' and (order == 'asc' or order == 'desc')">
+			camac_answer.question_id ${order},
+		</if>
+		<if test="sort == 'userId' and (order == 'asc' or order == 'desc')">
+			camac_answer.user_id ${order},
+		</if>
+		<if test="sort == 'answerTitle' and (order == 'asc' or order == 'desc')">
+			camac_answer.answer_title ${order},
+		</if>
+		<if test="sort == 'answerContent' and (order == 'asc' or order == 'desc')">
+			camac_answer.answer_content ${order},
+		</if>
+		<if test="sort == 'createTime' and (order == 'asc' or order == 'desc')">
+			camac_answer.create_time ${order}
+		</if>
+		</trim>
+	</sql>
+	
+	<sql id="sql_page">
+		<if test="page != null and rows != null" >
+		limit #{rows} offset #{page}
+		</if>
+	</sql>
+</mapper>

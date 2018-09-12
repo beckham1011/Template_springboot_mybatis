@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjjoy.bms.setting.dao.CamacBusiChannelKeymsgDao">
+	
+	<parameterMap id="pm_camacBusiChannelKeymsg" type="cn.bjjoy.bms.setting.entity.CamacBusiChannelKeymsg">
+		<parameter property="keymsgId" javaType="Long" jdbcType="BIGINT" />
+		<parameter property="catalogId" javaType="int" jdbcType="INTEGER" />
+		<parameter property="productId" javaType="int" jdbcType="INTEGER" />
+		<parameter property="keyMsgContent" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="keyMsgEvidence" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="userId" javaType="int" jdbcType="INTEGER" />
+		<parameter property="createTime" javaType="Date" jdbcType="TIMESTAMP" />
+	</parameterMap>
+	
+	<resultMap id="rm_camacBusiChannelKeymsg" type="cn.bjjoy.bms.setting.entity.CamacBusiChannelKeymsg">
+		<result property="keymsgId" column="keymsg_id" javaType="Long" jdbcType="BIGINT" />
+		<result property="catalogId" column="catalog_id" javaType="int" jdbcType="INTEGER" />
+		<result property="productId" column="product_id" javaType="int" jdbcType="INTEGER" />
+		<result property="keyMsgContent" column="key_msg_content" javaType="String" jdbcType="VARCHAR" />
+		<result property="keyMsgEvidence" column="key_msg_evidence" javaType="String" jdbcType="VARCHAR" />
+		<result property="userId" column="user_id" javaType="int" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<insert id="save" parameterMap="pm_camacBusiChannelKeymsg" useGeneratedKeys="true" keyProperty="keymsgId" >
+		insert into camac_busi_channel_keymsg
+		<trim prefix="(" suffix=")" suffixOverrides="," >	
+			<if test="keymsgId != null">keymsg_id,</if>
+			<if test="catalogId != null">catalog_id,</if>
+			<if test="productId != null">product_id,</if>
+			<if test="keyMsgContent != null">key_msg_content,</if>
+			<if test="keyMsgEvidence != null">key_msg_evidence,</if>
+			<if test="userId != null">user_id,</if>
+			<if test="createTime != null">create_time</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="keymsgId != null">#{keymsgId},</if>
+			<if test="catalogId != null">#{catalogId},</if>
+			<if test="productId != null">#{productId},</if>
+			<if test="keyMsgContent != null">#{keyMsgContent},</if>
+			<if test="keyMsgEvidence != null">#{keyMsgEvidence},</if>
+			<if test="userId != null">#{userId},</if>
+			<if test="createTime != null">#{createTime}</if>
+		</trim>
+	</insert>
+		
+	<delete id="deleteOne" parameterType="java.lang.String">
+		DELETE FROM camac_busi_channel_keymsg WHERE camac_busi_channel_keymsg.keymsg_id = #{keymsgId}
+	</delete>
+	
+	<delete id="delete" parameterType="map">
+		DELETE FROM camac_busi_channel_keymsg
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</delete>
+
+	<select id="queryOne" parameterType="java.lang.String" resultMap="rm_camacBusiChannelKeymsg">
+		<include refid="sql_select"/>
+		WHERE camac_busi_channel_keymsg.keymsg_id = #{keymsgId}
+	</select>
+	
+	<select id="queryList" parameterType="map" resultMap="rm_camacBusiChannelKeymsg">
+		<include refid="sql_select" />
+		<where>
+			<include refid="sql_where" />
+		</where>
+		<include refid="sql_order" />
+		<include refid="sql_page" />
+	</select>
+	
+	<select id="queryListCount" parameterType="map" resultType="long">
+		SELECT COUNT(0) FROM camac_busi_channel_keymsg
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</select>
+	
+	<update id="updateOne" parameterType="map">
+		UPDATE camac_busi_channel_keymsg
+		<set>
+		<if test="_parameter.containsKey('catalogId')">
+		<choose>
+            <when test="catalogId == null">
+			catalog_id = NULL,
+            </when>
+            <otherwise>
+			catalog_id = #{catalogId},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('productId')">
+		<choose>
+            <when test="productId == null">
+			product_id = NULL,
+            </when>
+            <otherwise>
+			product_id = #{productId},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('keyMsgContent')">
+		<choose>
+            <when test="keyMsgContent == null or keyMsgContent == ''">
+			key_msg_content = NULL,
+            </when>
+            <otherwise>
+			key_msg_content = #{keyMsgContent},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('keyMsgEvidence')">
+		<choose>
+            <when test="keyMsgEvidence == null or keyMsgEvidence == ''">
+			key_msg_evidence = NULL,
+            </when>
+            <otherwise>
+			key_msg_evidence = #{keyMsgEvidence},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('userId')">
+		<choose>
+            <when test="userId == null">
+			user_id = NULL,
+            </when>
+            <otherwise>
+			user_id = #{userId},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('createTime')">
+		<choose>
+            <when test="createTime == null or createTime == ''">
+			create_time = NULL
+            </when>
+            <otherwise>
+			create_time = #{createTime}
+            </otherwise>  
+        </choose>
+		</if>
+		</set>
+		<where>
+		keymsg_id = #{keymsgId}
+		</where>
+	</update>
+
+	<update id="update" parameterType="map">
+		UPDATE camac_busi_channel_keymsg
+		<set>
+		<if test="_parameter.containsKey('catalogIdAnw')">
+		<choose>
+            <when test="catalogIdAnw == null">
+			catalog_id = NULL,
+            </when>
+            <otherwise>
+			catalog_id = #{catalogIdAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('productIdAnw')">
+		<choose>
+            <when test="productIdAnw == null">
+			product_id = NULL,
+            </when>
+            <otherwise>
+			product_id = #{productIdAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('keyMsgContentAnw')">
+		<choose>
+            <when test="keyMsgContentAnw == null or keyMsgContentAnw == ''">
+			key_msg_content = NULL,
+            </when>
+            <otherwise>
+			key_msg_content = #{keyMsgContentAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('keyMsgEvidenceAnw')">
+		<choose>
+            <when test="keyMsgEvidenceAnw == null or keyMsgEvidenceAnw == ''">
+			key_msg_evidence = NULL,
+            </when>
+            <otherwise>
+			key_msg_evidence = #{keyMsgEvidenceAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('userIdAnw')">
+		<choose>
+            <when test="userIdAnw == null">
+			user_id = NULL,
+            </when>
+            <otherwise>
+			user_id = #{userIdAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('createTimeAnw')">
+		<choose>
+            <when test="createTimeAnw == null or createTimeAnw == ''">
+			create_time = NULL
+            </when>
+            <otherwise>
+			create_time = #{createTimeAnw}
+            </otherwise>  
+        </choose>
+		</if>
+		</set>
+		<where>
+			<include refid="sql_where"/>
+		</where>
+	</update>
+	
+	<sql id="sql_select">
+		<![CDATA[
+		SELECT 
+			camac_busi_channel_keymsg.keymsg_id,
+			camac_busi_channel_keymsg.catalog_id,
+			camac_busi_channel_keymsg.product_id,
+			camac_busi_channel_keymsg.key_msg_content,
+			camac_busi_channel_keymsg.key_msg_evidence,
+			camac_busi_channel_keymsg.user_id,
+			camac_busi_channel_keymsg.create_time
+		FROM camac_busi_channel_keymsg
+		]]>
+	</sql>
+
+	<sql id="sql_where">
+		<if test="keymsgId != null and keymsgId != ''">
+			<![CDATA[AND camac_busi_channel_keymsg.keymsg_id = #{keymsgId}]]>
+		</if>
+		<if test="keymsgId == null or keymsgId == ''">
+			<if test="keymsgIdAst != null and keymsgIdAst != ''">
+				<![CDATA[AND camac_busi_channel_keymsg.keymsg_id >= #{keymsgIdAst}]]>
+			</if>
+			<if test="keymsgIdAed != null and keymsgIdAed != ''">
+				<![CDATA[AND camac_busi_channel_keymsg.keymsg_id <= #{keymsgIdAed}]]>
+			</if>
+			<if test="keymsgIds != null">
+				AND camac_busi_channel_keymsg.keymsg_id IN 
+				<foreach collection="keymsgIds" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+			<if test="keymsgIdAlk != null and keymsgIdAlk != ''">
+				<![CDATA[AND CAST(camac_busi_channel_keymsg.keymsg_id AS CHAR) LIKE CONCAT('%',#{keymsgIdAlk},'%')]]>
+			</if>
+		</if>
+		<if test="catalogId != null and catalogId != ''">
+		<![CDATA[AND camac_busi_channel_keymsg.catalog_id = #{catalogId}]]>
+		</if>
+		<if test="catalogId == null or catalogId == ''">
+		<if test="catalogIdAst != null and catalogIdAst != ''">
+			<![CDATA[AND camac_busi_channel_keymsg.catalog_id >= #{catalogIdAst}]]>
+		</if>
+		<if test="catalogIdAed != null and catalogIdAed != ''">
+			<![CDATA[AND camac_busi_channel_keymsg.catalog_id <= #{catalogIdAed}]]>
+		</if>
+		<if test="catalogIds != null">
+			AND camac_busi_channel_keymsg.catalog_id IN
+			<foreach collection="catalogIds" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="catalogIdAlk != null and catalogIdAlk != ''">
+			<![CDATA[AND CAST(camac_busi_channel_keymsg.catalog_id AS CHAR) LIKE CONCAT('%',#{catalogIdAlk},'%')]]>
+		</if>
+		</if>
+		<if test="productId != null and productId != ''">
+		<![CDATA[AND camac_busi_channel_keymsg.product_id = #{productId}]]>
+		</if>
+		<if test="productId == null or productId == ''">
+		<if test="productIdAst != null and productIdAst != ''">
+			<![CDATA[AND camac_busi_channel_keymsg.product_id >= #{productIdAst}]]>
+		</if>
+		<if test="productIdAed != null and productIdAed != ''">
+			<![CDATA[AND camac_busi_channel_keymsg.product_id <= #{productIdAed}]]>
+		</if>
+		<if test="productIds != null">
+			AND camac_busi_channel_keymsg.product_id IN
+			<foreach collection="productIds" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="productIdAlk != null and productIdAlk != ''">
+			<![CDATA[AND CAST(camac_busi_channel_keymsg.product_id AS CHAR) LIKE CONCAT('%',#{productIdAlk},'%')]]>
+		</if>
+		</if>
+		<if test="keyMsgContent != null and keyMsgContent != ''">
+			<![CDATA[AND camac_busi_channel_keymsg.key_msg_content = #{keyMsgContent}]]>
+		</if>
+		<if test="keyMsgContent == null or keyMsgContent == ''">
+			<if test="keyMsgContentAlk != null and keyMsgContentAlk != ''">
+				<![CDATA[AND camac_busi_channel_keymsg.key_msg_content LIKE CONCAT('%',#{keyMsgContentAlk},'%')]]>
+			</if>
+			<if test="keyMsgContents != null">
+				AND camac_busi_channel_keymsg.key_msg_content IN 
+				<foreach collection="keyMsgContents" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="keyMsgEvidence != null and keyMsgEvidence != ''">
+			<![CDATA[AND camac_busi_channel_keymsg.key_msg_evidence = #{keyMsgEvidence}]]>
+		</if>
+		<if test="keyMsgEvidence == null or keyMsgEvidence == ''">
+			<if test="keyMsgEvidenceAlk != null and keyMsgEvidenceAlk != ''">
+				<![CDATA[AND camac_busi_channel_keymsg.key_msg_evidence LIKE CONCAT('%',#{keyMsgEvidenceAlk},'%')]]>
+			</if>
+			<if test="keyMsgEvidences != null">
+				AND camac_busi_channel_keymsg.key_msg_evidence IN 
+				<foreach collection="keyMsgEvidences" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="userId != null and userId != ''">
+		<![CDATA[AND camac_busi_channel_keymsg.user_id = #{userId}]]>
+		</if>
+		<if test="userId == null or userId == ''">
+		<if test="userIdAst != null and userIdAst != ''">
+			<![CDATA[AND camac_busi_channel_keymsg.user_id >= #{userIdAst}]]>
+		</if>
+		<if test="userIdAed != null and userIdAed != ''">
+			<![CDATA[AND camac_busi_channel_keymsg.user_id <= #{userIdAed}]]>
+		</if>
+		<if test="userIds != null">
+			AND camac_busi_channel_keymsg.user_id IN
+			<foreach collection="userIds" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="userIdAlk != null and userIdAlk != ''">
+			<![CDATA[AND CAST(camac_busi_channel_keymsg.user_id AS CHAR) LIKE CONCAT('%',#{userIdAlk},'%')]]>
+		</if>
+		</if>
+		<if test="createTime != null and createTime != ''">
+			<![CDATA[AND date_format(camac_busi_channel_keymsg.create_time,'%Y-%m-%d') = #{createTime}]]>
+		</if>
+		<if test="createTime == null or createTime == ''">
+			<if test="createTimeAst != null and createTimeAst != ''">
+				<![CDATA[AND date_format(camac_busi_channel_keymsg.create_time,'%Y-%m-%d') >= #{createTimeAst}]]>
+			</if>
+			<if test="createTimeAed != null and createTimeAed != ''">
+				<![CDATA[AND date_format(camac_busi_channel_keymsg.create_time,'%Y-%m-%d') <= #{createTimeAed}]]>
+			</if>
+			<if test="createTimes != null">
+				AND date_format(camac_busi_channel_keymsg.create_time,'%Y-%m-%d') IN 
+				<foreach collection="createTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+			<if test="createTimeAlk != null and createTimeAlk != ''">
+				<![CDATA[AND date_format(camac_busi_channel_keymsg.create_time,'%Y-%m-%d') LIKE CONCAT('%',#{createTimeAlk},'%')]]>
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="sql_order">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+		<if test="sort == 'keymsgId' and (order == 'asc' or order == 'desc')">
+			camac_busi_channel_keymsg.keymsg_id ${order},
+		</if>
+		<if test="sort == 'catalogId' and (order == 'asc' or order == 'desc')">
+			camac_busi_channel_keymsg.catalog_id ${order},
+		</if>
+		<if test="sort == 'productId' and (order == 'asc' or order == 'desc')">
+			camac_busi_channel_keymsg.product_id ${order},
+		</if>
+		<if test="sort == 'keyMsgContent' and (order == 'asc' or order == 'desc')">
+			camac_busi_channel_keymsg.key_msg_content ${order},
+		</if>
+		<if test="sort == 'keyMsgEvidence' and (order == 'asc' or order == 'desc')">
+			camac_busi_channel_keymsg.key_msg_evidence ${order},
+		</if>
+		<if test="sort == 'userId' and (order == 'asc' or order == 'desc')">
+			camac_busi_channel_keymsg.user_id ${order},
+		</if>
+		<if test="sort == 'createTime' and (order == 'asc' or order == 'desc')">
+			camac_busi_channel_keymsg.create_time ${order}
+		</if>
+		</trim>
+	</sql>
+	
+	<sql id="sql_page">
+		<if test="page != null and rows != null" >
+		limit #{rows} offset #{page}
+		</if>
+	</sql>
+</mapper>

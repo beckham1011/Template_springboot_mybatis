@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjjoy.bms.setting.dao.CamacBusiKeymsgFeedbkDao">
+	
+	<parameterMap id="pm_camacBusiKeymsgFeedbk" type="cn.bjjoy.bms.setting.entity.CamacBusiKeymsgFeedbk">
+		<parameter property="feedbkId" javaType="Long" jdbcType="BIGINT" />
+		<parameter property="catalogId" javaType="int" jdbcType="INTEGER" />
+		<parameter property="productId" javaType="int" jdbcType="INTEGER" />
+		<parameter property="keyMsgId" javaType="int" jdbcType="INTEGER" />
+		<parameter property="approve" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="oppose" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="userId" javaType="int" jdbcType="INTEGER" />
+		<parameter property="fdContent" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="fdSuggestion" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="fdCustomerSurname" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="fdCustomerType" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="createTime" javaType="Date" jdbcType="TIMESTAMP" />
+	</parameterMap>
+	
+	<resultMap id="rm_camacBusiKeymsgFeedbk" type="cn.bjjoy.bms.setting.entity.CamacBusiKeymsgFeedbk">
+		<result property="feedbkId" column="feedbk_id" javaType="Long" jdbcType="BIGINT" />
+		<result property="catalogId" column="catalog_id" javaType="int" jdbcType="INTEGER" />
+		<result property="productId" column="product_id" javaType="int" jdbcType="INTEGER" />
+		<result property="keyMsgId" column="key_msg_id" javaType="int" jdbcType="INTEGER" />
+		<result property="approve" column="approve" javaType="String" jdbcType="VARCHAR" />
+		<result property="oppose" column="oppose" javaType="String" jdbcType="VARCHAR" />
+		<result property="userId" column="user_id" javaType="int" jdbcType="INTEGER" />
+		<result property="fdContent" column="fd_content" javaType="String" jdbcType="VARCHAR" />
+		<result property="fdSuggestion" column="fd_suggestion" javaType="String" jdbcType="VARCHAR" />
+		<result property="fdCustomerSurname" column="fd_customer_surname" javaType="String" jdbcType="VARCHAR" />
+		<result property="fdCustomerType" column="fd_customer_type" javaType="String" jdbcType="VARCHAR" />
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<insert id="save" parameterMap="pm_camacBusiKeymsgFeedbk" useGeneratedKeys="true" keyProperty="feedbkId" >
+		insert into camac_busi_keymsg_feedbk
+		<trim prefix="(" suffix=")" suffixOverrides="," >	
+			<if test="feedbkId != null">feedbk_id,</if>
+			<if test="catalogId != null">catalog_id,</if>
+			<if test="productId != null">product_id,</if>
+			<if test="keyMsgId != null">key_msg_id,</if>
+			<if test="approve != null">approve,</if>
+			<if test="oppose != null">oppose,</if>
+			<if test="userId != null">user_id,</if>
+			<if test="fdContent != null">fd_content,</if>
+			<if test="fdSuggestion != null">fd_suggestion,</if>
+			<if test="fdCustomerSurname != null">fd_customer_surname,</if>
+			<if test="fdCustomerType != null">fd_customer_type,</if>
+			<if test="createTime != null">create_time</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="feedbkId != null">#{feedbkId},</if>
+			<if test="catalogId != null">#{catalogId},</if>
+			<if test="productId != null">#{productId},</if>
+			<if test="keyMsgId != null">#{keyMsgId},</if>
+			<if test="approve != null">#{approve},</if>
+			<if test="oppose != null">#{oppose},</if>
+			<if test="userId != null">#{userId},</if>
+			<if test="fdContent != null">#{fdContent},</if>
+			<if test="fdSuggestion != null">#{fdSuggestion},</if>
+			<if test="fdCustomerSurname != null">#{fdCustomerSurname},</if>
+			<if test="fdCustomerType != null">#{fdCustomerType},</if>
+			<if test="createTime != null">#{createTime}</if>
+		</trim>
+	</insert>
+		
+	<delete id="deleteOne" parameterType="java.lang.String">
+		DELETE FROM camac_busi_keymsg_feedbk WHERE camac_busi_keymsg_feedbk.feedbk_id = #{feedbkId}
+	</delete>
+	
+	<delete id="delete" parameterType="map">
+		DELETE FROM camac_busi_keymsg_feedbk
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</delete>
+
+	<select id="queryOne" parameterType="java.lang.String" resultMap="rm_camacBusiKeymsgFeedbk">
+		<include refid="sql_select"/>
+		WHERE camac_busi_keymsg_feedbk.feedbk_id = #{feedbkId}
+	</select>
+	
+	<select id="queryList" parameterType="map" resultMap="rm_camacBusiKeymsgFeedbk">
+		<include refid="sql_select" />
+		<where>
+			<include refid="sql_where" />
+		</where>
+		<include refid="sql_order" />
+		<include refid="sql_page" />
+	</select>
+	
+	<select id="queryListCount" parameterType="map" resultType="long">
+		SELECT COUNT(0) FROM camac_busi_keymsg_feedbk
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</select>
+	
+	<update id="updateOne" parameterType="map">
+		UPDATE camac_busi_keymsg_feedbk
+		<set>
+		<if test="_parameter.containsKey('catalogId')">
+		<choose>
+            <when test="catalogId == null">
+			catalog_id = NULL,
+            </when>
+            <otherwise>
+			catalog_id = #{catalogId},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('productId')">
+		<choose>
+            <when test="productId == null">
+			product_id = NULL,
+            </when>
+            <otherwise>
+			product_id = #{productId},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('keyMsgId')">
+		<choose>
+            <when test="keyMsgId == null">
+			key_msg_id = NULL,
+            </when>
+            <otherwise>
+			key_msg_id = #{keyMsgId},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('approve')">
+		<choose>
+            <when test="approve == null or approve == ''">
+			approve = NULL,
+            </when>
+            <otherwise>
+			approve = #{approve},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('oppose')">
+		<choose>
+            <when test="oppose == null or oppose == ''">
+			oppose = NULL,
+            </when>
+            <otherwise>
+			oppose = #{oppose},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('userId')">
+		<choose>
+            <when test="userId == null">
+			user_id = NULL,
+            </when>
+            <otherwise>
+			user_id = #{userId},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('fdContent')">
+		<choose>
+            <when test="fdContent == null or fdContent == ''">
+			fd_content = NULL,
+            </when>
+            <otherwise>
+			fd_content = #{fdContent},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('fdSuggestion')">
+		<choose>
+            <when test="fdSuggestion == null or fdSuggestion == ''">
+			fd_suggestion = NULL,
+            </when>
+            <otherwise>
+			fd_suggestion = #{fdSuggestion},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('fdCustomerSurname')">
+		<choose>
+            <when test="fdCustomerSurname == null or fdCustomerSurname == ''">
+			fd_customer_surname = NULL,
+            </when>
+            <otherwise>
+			fd_customer_surname = #{fdCustomerSurname},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('fdCustomerType')">
+		<choose>
+            <when test="fdCustomerType == null or fdCustomerType == ''">
+			fd_customer_type = NULL,
+            </when>
+            <otherwise>
+			fd_customer_type = #{fdCustomerType},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('createTime')">
+		<choose>
+            <when test="createTime == null or createTime == ''">
+			create_time = NULL
+            </when>
+            <otherwise>
+			create_time = #{createTime}
+            </otherwise>  
+        </choose>
+		</if>
+		</set>
+		<where>
+		feedbk_id = #{feedbkId}
+		</where>
+	</update>
+
+	<update id="update" parameterType="map">
+		UPDATE camac_busi_keymsg_feedbk
+		<set>
+		<if test="_parameter.containsKey('catalogIdAnw')">
+		<choose>
+            <when test="catalogIdAnw == null">
+			catalog_id = NULL,
+            </when>
+            <otherwise>
+			catalog_id = #{catalogIdAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('productIdAnw')">
+		<choose>
+            <when test="productIdAnw == null">
+			product_id = NULL,
+            </when>
+            <otherwise>
+			product_id = #{productIdAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('keyMsgIdAnw')">
+		<choose>
+            <when test="keyMsgIdAnw == null">
+			key_msg_id = NULL,
+            </when>
+            <otherwise>
+			key_msg_id = #{keyMsgIdAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('approveAnw')">
+		<choose>
+            <when test="approveAnw == null or approveAnw == ''">
+			approve = NULL,
+            </when>
+            <otherwise>
+			approve = #{approveAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('opposeAnw')">
+		<choose>
+            <when test="opposeAnw == null or opposeAnw == ''">
+			oppose = NULL,
+            </when>
+            <otherwise>
+			oppose = #{opposeAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('userIdAnw')">
+		<choose>
+            <when test="userIdAnw == null">
+			user_id = NULL,
+            </when>
+            <otherwise>
+			user_id = #{userIdAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('fdContentAnw')">
+		<choose>
+            <when test="fdContentAnw == null or fdContentAnw == ''">
+			fd_content = NULL,
+            </when>
+            <otherwise>
+			fd_content = #{fdContentAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('fdSuggestionAnw')">
+		<choose>
+            <when test="fdSuggestionAnw == null or fdSuggestionAnw == ''">
+			fd_suggestion = NULL,
+            </when>
+            <otherwise>
+			fd_suggestion = #{fdSuggestionAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('fdCustomerSurnameAnw')">
+		<choose>
+            <when test="fdCustomerSurnameAnw == null or fdCustomerSurnameAnw == ''">
+			fd_customer_surname = NULL,
+            </when>
+            <otherwise>
+			fd_customer_surname = #{fdCustomerSurnameAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('fdCustomerTypeAnw')">
+		<choose>
+            <when test="fdCustomerTypeAnw == null or fdCustomerTypeAnw == ''">
+			fd_customer_type = NULL,
+            </when>
+            <otherwise>
+			fd_customer_type = #{fdCustomerTypeAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('createTimeAnw')">
+		<choose>
+            <when test="createTimeAnw == null or createTimeAnw == ''">
+			create_time = NULL
+            </when>
+            <otherwise>
+			create_time = #{createTimeAnw}
+            </otherwise>  
+        </choose>
+		</if>
+		</set>
+		<where>
+			<include refid="sql_where"/>
+		</where>
+	</update>
+	
+	<sql id="sql_select">
+		<![CDATA[
+		SELECT 
+			camac_busi_keymsg_feedbk.feedbk_id,
+			camac_busi_keymsg_feedbk.catalog_id,
+			camac_busi_keymsg_feedbk.product_id,
+			camac_busi_keymsg_feedbk.key_msg_id,
+			camac_busi_keymsg_feedbk.approve,
+			camac_busi_keymsg_feedbk.oppose,
+			camac_busi_keymsg_feedbk.user_id,
+			camac_busi_keymsg_feedbk.fd_content,
+			camac_busi_keymsg_feedbk.fd_suggestion,
+			camac_busi_keymsg_feedbk.fd_customer_surname,
+			camac_busi_keymsg_feedbk.fd_customer_type,
+			camac_busi_keymsg_feedbk.create_time
+		FROM camac_busi_keymsg_feedbk
+		]]>
+	</sql>
+
+	<sql id="sql_where">
+		<if test="feedbkId != null and feedbkId != ''">
+			<![CDATA[AND camac_busi_keymsg_feedbk.feedbk_id = #{feedbkId}]]>
+		</if>
+		<if test="feedbkId == null or feedbkId == ''">
+			<if test="feedbkIdAst != null and feedbkIdAst != ''">
+				<![CDATA[AND camac_busi_keymsg_feedbk.feedbk_id >= #{feedbkIdAst}]]>
+			</if>
+			<if test="feedbkIdAed != null and feedbkIdAed != ''">
+				<![CDATA[AND camac_busi_keymsg_feedbk.feedbk_id <= #{feedbkIdAed}]]>
+			</if>
+			<if test="feedbkIds != null">
+				AND camac_busi_keymsg_feedbk.feedbk_id IN 
+				<foreach collection="feedbkIds" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+			<if test="feedbkIdAlk != null and feedbkIdAlk != ''">
+				<![CDATA[AND CAST(camac_busi_keymsg_feedbk.feedbk_id AS CHAR) LIKE CONCAT('%',#{feedbkIdAlk},'%')]]>
+			</if>
+		</if>
+		<if test="catalogId != null and catalogId != ''">
+		<![CDATA[AND camac_busi_keymsg_feedbk.catalog_id = #{catalogId}]]>
+		</if>
+		<if test="catalogId == null or catalogId == ''">
+		<if test="catalogIdAst != null and catalogIdAst != ''">
+			<![CDATA[AND camac_busi_keymsg_feedbk.catalog_id >= #{catalogIdAst}]]>
+		</if>
+		<if test="catalogIdAed != null and catalogIdAed != ''">
+			<![CDATA[AND camac_busi_keymsg_feedbk.catalog_id <= #{catalogIdAed}]]>
+		</if>
+		<if test="catalogIds != null">
+			AND camac_busi_keymsg_feedbk.catalog_id IN
+			<foreach collection="catalogIds" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="catalogIdAlk != null and catalogIdAlk != ''">
+			<![CDATA[AND CAST(camac_busi_keymsg_feedbk.catalog_id AS CHAR) LIKE CONCAT('%',#{catalogIdAlk},'%')]]>
+		</if>
+		</if>
+		<if test="productId != null and productId != ''">
+		<![CDATA[AND camac_busi_keymsg_feedbk.product_id = #{productId}]]>
+		</if>
+		<if test="productId == null or productId == ''">
+		<if test="productIdAst != null and productIdAst != ''">
+			<![CDATA[AND camac_busi_keymsg_feedbk.product_id >= #{productIdAst}]]>
+		</if>
+		<if test="productIdAed != null and productIdAed != ''">
+			<![CDATA[AND camac_busi_keymsg_feedbk.product_id <= #{productIdAed}]]>
+		</if>
+		<if test="productIds != null">
+			AND camac_busi_keymsg_feedbk.product_id IN
+			<foreach collection="productIds" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="productIdAlk != null and productIdAlk != ''">
+			<![CDATA[AND CAST(camac_busi_keymsg_feedbk.product_id AS CHAR) LIKE CONCAT('%',#{productIdAlk},'%')]]>
+		</if>
+		</if>
+		<if test="keyMsgId != null and keyMsgId != ''">
+		<![CDATA[AND camac_busi_keymsg_feedbk.key_msg_id = #{keyMsgId}]]>
+		</if>
+		<if test="keyMsgId == null or keyMsgId == ''">
+		<if test="keyMsgIdAst != null and keyMsgIdAst != ''">
+			<![CDATA[AND camac_busi_keymsg_feedbk.key_msg_id >= #{keyMsgIdAst}]]>
+		</if>
+		<if test="keyMsgIdAed != null and keyMsgIdAed != ''">
+			<![CDATA[AND camac_busi_keymsg_feedbk.key_msg_id <= #{keyMsgIdAed}]]>
+		</if>
+		<if test="keyMsgIds != null">
+			AND camac_busi_keymsg_feedbk.key_msg_id IN
+			<foreach collection="keyMsgIds" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="keyMsgIdAlk != null and keyMsgIdAlk != ''">
+			<![CDATA[AND CAST(camac_busi_keymsg_feedbk.key_msg_id AS CHAR) LIKE CONCAT('%',#{keyMsgIdAlk},'%')]]>
+		</if>
+		</if>
+		<if test="approve != null and approve != ''">
+			<![CDATA[AND camac_busi_keymsg_feedbk.approve = #{approve}]]>
+		</if>
+		<if test="approve == null or approve == ''">
+			<if test="approveAlk != null and approveAlk != ''">
+				<![CDATA[AND camac_busi_keymsg_feedbk.approve LIKE CONCAT('%',#{approveAlk},'%')]]>
+			</if>
+			<if test="approves != null">
+				AND camac_busi_keymsg_feedbk.approve IN 
+				<foreach collection="approves" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="oppose != null and oppose != ''">
+			<![CDATA[AND camac_busi_keymsg_feedbk.oppose = #{oppose}]]>
+		</if>
+		<if test="oppose == null or oppose == ''">
+			<if test="opposeAlk != null and opposeAlk != ''">
+				<![CDATA[AND camac_busi_keymsg_feedbk.oppose LIKE CONCAT('%',#{opposeAlk},'%')]]>
+			</if>
+			<if test="opposes != null">
+				AND camac_busi_keymsg_feedbk.oppose IN 
+				<foreach collection="opposes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="userId != null and userId != ''">
+		<![CDATA[AND camac_busi_keymsg_feedbk.user_id = #{userId}]]>
+		</if>
+		<if test="userId == null or userId == ''">
+		<if test="userIdAst != null and userIdAst != ''">
+			<![CDATA[AND camac_busi_keymsg_feedbk.user_id >= #{userIdAst}]]>
+		</if>
+		<if test="userIdAed != null and userIdAed != ''">
+			<![CDATA[AND camac_busi_keymsg_feedbk.user_id <= #{userIdAed}]]>
+		</if>
+		<if test="userIds != null">
+			AND camac_busi_keymsg_feedbk.user_id IN
+			<foreach collection="userIds" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="userIdAlk != null and userIdAlk != ''">
+			<![CDATA[AND CAST(camac_busi_keymsg_feedbk.user_id AS CHAR) LIKE CONCAT('%',#{userIdAlk},'%')]]>
+		</if>
+		</if>
+		<if test="fdContent != null and fdContent != ''">
+			<![CDATA[AND camac_busi_keymsg_feedbk.fd_content = #{fdContent}]]>
+		</if>
+		<if test="fdContent == null or fdContent == ''">
+			<if test="fdContentAlk != null and fdContentAlk != ''">
+				<![CDATA[AND camac_busi_keymsg_feedbk.fd_content LIKE CONCAT('%',#{fdContentAlk},'%')]]>
+			</if>
+			<if test="fdContents != null">
+				AND camac_busi_keymsg_feedbk.fd_content IN 
+				<foreach collection="fdContents" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="fdSuggestion != null and fdSuggestion != ''">
+			<![CDATA[AND camac_busi_keymsg_feedbk.fd_suggestion = #{fdSuggestion}]]>
+		</if>
+		<if test="fdSuggestion == null or fdSuggestion == ''">
+			<if test="fdSuggestionAlk != null and fdSuggestionAlk != ''">
+				<![CDATA[AND camac_busi_keymsg_feedbk.fd_suggestion LIKE CONCAT('%',#{fdSuggestionAlk},'%')]]>
+			</if>
+			<if test="fdSuggestions != null">
+				AND camac_busi_keymsg_feedbk.fd_suggestion IN 
+				<foreach collection="fdSuggestions" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="fdCustomerSurname != null and fdCustomerSurname != ''">
+			<![CDATA[AND camac_busi_keymsg_feedbk.fd_customer_surname = #{fdCustomerSurname}]]>
+		</if>
+		<if test="fdCustomerSurname == null or fdCustomerSurname == ''">
+			<if test="fdCustomerSurnameAlk != null and fdCustomerSurnameAlk != ''">
+				<![CDATA[AND camac_busi_keymsg_feedbk.fd_customer_surname LIKE CONCAT('%',#{fdCustomerSurnameAlk},'%')]]>
+			</if>
+			<if test="fdCustomerSurnames != null">
+				AND camac_busi_keymsg_feedbk.fd_customer_surname IN 
+				<foreach collection="fdCustomerSurnames" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="fdCustomerType != null and fdCustomerType != ''">
+			<![CDATA[AND camac_busi_keymsg_feedbk.fd_customer_type = #{fdCustomerType}]]>
+		</if>
+		<if test="fdCustomerType == null or fdCustomerType == ''">
+			<if test="fdCustomerTypeAlk != null and fdCustomerTypeAlk != ''">
+				<![CDATA[AND camac_busi_keymsg_feedbk.fd_customer_type LIKE CONCAT('%',#{fdCustomerTypeAlk},'%')]]>
+			</if>
+			<if test="fdCustomerTypes != null">
+				AND camac_busi_keymsg_feedbk.fd_customer_type IN 
+				<foreach collection="fdCustomerTypes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="createTime != null and createTime != ''">
+			<![CDATA[AND date_format(camac_busi_keymsg_feedbk.create_time,'%Y-%m-%d') = #{createTime}]]>
+		</if>
+		<if test="createTime == null or createTime == ''">
+			<if test="createTimeAst != null and createTimeAst != ''">
+				<![CDATA[AND date_format(camac_busi_keymsg_feedbk.create_time,'%Y-%m-%d') >= #{createTimeAst}]]>
+			</if>
+			<if test="createTimeAed != null and createTimeAed != ''">
+				<![CDATA[AND date_format(camac_busi_keymsg_feedbk.create_time,'%Y-%m-%d') <= #{createTimeAed}]]>
+			</if>
+			<if test="createTimes != null">
+				AND date_format(camac_busi_keymsg_feedbk.create_time,'%Y-%m-%d') IN 
+				<foreach collection="createTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+			<if test="createTimeAlk != null and createTimeAlk != ''">
+				<![CDATA[AND date_format(camac_busi_keymsg_feedbk.create_time,'%Y-%m-%d') LIKE CONCAT('%',#{createTimeAlk},'%')]]>
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="sql_order">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+		<if test="sort == 'feedbkId' and (order == 'asc' or order == 'desc')">
+			camac_busi_keymsg_feedbk.feedbk_id ${order},
+		</if>
+		<if test="sort == 'catalogId' and (order == 'asc' or order == 'desc')">
+			camac_busi_keymsg_feedbk.catalog_id ${order},
+		</if>
+		<if test="sort == 'productId' and (order == 'asc' or order == 'desc')">
+			camac_busi_keymsg_feedbk.product_id ${order},
+		</if>
+		<if test="sort == 'keyMsgId' and (order == 'asc' or order == 'desc')">
+			camac_busi_keymsg_feedbk.key_msg_id ${order},
+		</if>
+		<if test="sort == 'approve' and (order == 'asc' or order == 'desc')">
+			camac_busi_keymsg_feedbk.approve ${order},
+		</if>
+		<if test="sort == 'oppose' and (order == 'asc' or order == 'desc')">
+			camac_busi_keymsg_feedbk.oppose ${order},
+		</if>
+		<if test="sort == 'userId' and (order == 'asc' or order == 'desc')">
+			camac_busi_keymsg_feedbk.user_id ${order},
+		</if>
+		<if test="sort == 'fdContent' and (order == 'asc' or order == 'desc')">
+			camac_busi_keymsg_feedbk.fd_content ${order},
+		</if>
+		<if test="sort == 'fdSuggestion' and (order == 'asc' or order == 'desc')">
+			camac_busi_keymsg_feedbk.fd_suggestion ${order},
+		</if>
+		<if test="sort == 'fdCustomerSurname' and (order == 'asc' or order == 'desc')">
+			camac_busi_keymsg_feedbk.fd_customer_surname ${order},
+		</if>
+		<if test="sort == 'fdCustomerType' and (order == 'asc' or order == 'desc')">
+			camac_busi_keymsg_feedbk.fd_customer_type ${order},
+		</if>
+		<if test="sort == 'createTime' and (order == 'asc' or order == 'desc')">
+			camac_busi_keymsg_feedbk.create_time ${order}
+		</if>
+		</trim>
+	</sql>
+	
+	<sql id="sql_page">
+		<if test="page != null and rows != null" >
+		limit #{rows} offset #{page}
+		</if>
+	</sql>
+</mapper>

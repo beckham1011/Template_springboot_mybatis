@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjjoy.bms.setting.dao.CamacUserDao">
+	
+	<parameterMap id="pm_camacUser" type="cn.bjjoy.bms.setting.entity.CamacUser">
+		<parameter property="userId" javaType="Long" jdbcType="BIGINT" />
+		<parameter property="username" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="email" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="password" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="phone" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="title" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="firstname" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="lastname" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="roleId" javaType="int" jdbcType="INTEGER" />
+		<parameter property="createTime" javaType="Date" jdbcType="TIMESTAMP" />
+	</parameterMap>
+	
+	<resultMap id="rm_camacUser" type="cn.bjjoy.bms.setting.entity.CamacUser">
+		<result property="userId" column="user_id" javaType="Long" jdbcType="BIGINT" />
+		<result property="username" column="username" javaType="String" jdbcType="VARCHAR" />
+		<result property="email" column="email" javaType="String" jdbcType="VARCHAR" />
+		<result property="password" column="password" javaType="String" jdbcType="VARCHAR" />
+		<result property="phone" column="phone" javaType="String" jdbcType="VARCHAR" />
+		<result property="title" column="title" javaType="String" jdbcType="VARCHAR" />
+		<result property="firstname" column="firstname" javaType="String" jdbcType="VARCHAR" />
+		<result property="lastname" column="lastname" javaType="String" jdbcType="VARCHAR" />
+		<result property="roleId" column="role_id" javaType="int" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<insert id="save" parameterMap="pm_camacUser" useGeneratedKeys="true" keyProperty="userId" >
+		insert into camac_user
+		<trim prefix="(" suffix=")" suffixOverrides="," >	
+			<if test="userId != null">user_id,</if>
+			<if test="username != null">username,</if>
+			<if test="email != null">email,</if>
+			<if test="password != null">password,</if>
+			<if test="phone != null">phone,</if>
+			<if test="title != null">title,</if>
+			<if test="firstname != null">firstname,</if>
+			<if test="lastname != null">lastname,</if>
+			<if test="roleId != null">role_id,</if>
+			<if test="createTime != null">create_time</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="userId != null">#{userId},</if>
+			<if test="username != null">#{username},</if>
+			<if test="email != null">#{email},</if>
+			<if test="password != null">#{password},</if>
+			<if test="phone != null">#{phone},</if>
+			<if test="title != null">#{title},</if>
+			<if test="firstname != null">#{firstname},</if>
+			<if test="lastname != null">#{lastname},</if>
+			<if test="roleId != null">#{roleId},</if>
+			<if test="createTime != null">#{createTime}</if>
+		</trim>
+	</insert>
+		
+	<delete id="deleteOne" parameterType="java.lang.String">
+		DELETE FROM camac_user WHERE camac_user.user_id = #{userId}
+	</delete>
+	
+	<delete id="delete" parameterType="map">
+		DELETE FROM camac_user
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</delete>
+
+	<select id="queryOne" parameterType="java.lang.String" resultMap="rm_camacUser">
+		<include refid="sql_select"/>
+		WHERE camac_user.user_id = #{userId}
+	</select>
+	
+	<select id="queryList" parameterType="map" resultMap="rm_camacUser">
+		<include refid="sql_select" />
+		<where>
+			<include refid="sql_where" />
+		</where>
+		<include refid="sql_order" />
+		<include refid="sql_page" />
+	</select>
+	
+	<select id="queryListCount" parameterType="map" resultType="long">
+		SELECT COUNT(0) FROM camac_user
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</select>
+	
+	<update id="updateOne" parameterType="map">
+		UPDATE camac_user
+		<set>
+		<if test="_parameter.containsKey('username')">
+		<choose>
+            <when test="username == null or username == ''">
+			username = NULL,
+            </when>
+            <otherwise>
+			username = #{username},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('email')">
+		<choose>
+            <when test="email == null or email == ''">
+			email = NULL,
+            </when>
+            <otherwise>
+			email = #{email},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('password')">
+		<choose>
+            <when test="password == null or password == ''">
+			password = NULL,
+            </when>
+            <otherwise>
+			password = #{password},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('phone')">
+		<choose>
+            <when test="phone == null or phone == ''">
+			phone = NULL,
+            </when>
+            <otherwise>
+			phone = #{phone},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('title')">
+		<choose>
+            <when test="title == null or title == ''">
+			title = NULL,
+            </when>
+            <otherwise>
+			title = #{title},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('firstname')">
+		<choose>
+            <when test="firstname == null or firstname == ''">
+			firstname = NULL,
+            </when>
+            <otherwise>
+			firstname = #{firstname},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('lastname')">
+		<choose>
+            <when test="lastname == null or lastname == ''">
+			lastname = NULL,
+            </when>
+            <otherwise>
+			lastname = #{lastname},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('roleId')">
+		<choose>
+            <when test="roleId == null">
+			role_id = NULL,
+            </when>
+            <otherwise>
+			role_id = #{roleId},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('createTime')">
+		<choose>
+            <when test="createTime == null or createTime == ''">
+			create_time = NULL
+            </when>
+            <otherwise>
+			create_time = #{createTime}
+            </otherwise>  
+        </choose>
+		</if>
+		</set>
+		<where>
+		user_id = #{userId}
+		</where>
+	</update>
+
+	<update id="update" parameterType="map">
+		UPDATE camac_user
+		<set>
+		<if test="_parameter.containsKey('usernameAnw')">
+		<choose>
+            <when test="usernameAnw == null or usernameAnw == ''">
+			username = NULL,
+            </when>
+            <otherwise>
+			username = #{usernameAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('emailAnw')">
+		<choose>
+            <when test="emailAnw == null or emailAnw == ''">
+			email = NULL,
+            </when>
+            <otherwise>
+			email = #{emailAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('passwordAnw')">
+		<choose>
+            <when test="passwordAnw == null or passwordAnw == ''">
+			password = NULL,
+            </when>
+            <otherwise>
+			password = #{passwordAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('phoneAnw')">
+		<choose>
+            <when test="phoneAnw == null or phoneAnw == ''">
+			phone = NULL,
+            </when>
+            <otherwise>
+			phone = #{phoneAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('titleAnw')">
+		<choose>
+            <when test="titleAnw == null or titleAnw == ''">
+			title = NULL,
+            </when>
+            <otherwise>
+			title = #{titleAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('firstnameAnw')">
+		<choose>
+            <when test="firstnameAnw == null or firstnameAnw == ''">
+			firstname = NULL,
+            </when>
+            <otherwise>
+			firstname = #{firstnameAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('lastnameAnw')">
+		<choose>
+            <when test="lastnameAnw == null or lastnameAnw == ''">
+			lastname = NULL,
+            </when>
+            <otherwise>
+			lastname = #{lastnameAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('roleIdAnw')">
+		<choose>
+            <when test="roleIdAnw == null">
+			role_id = NULL,
+            </when>
+            <otherwise>
+			role_id = #{roleIdAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('createTimeAnw')">
+		<choose>
+            <when test="createTimeAnw == null or createTimeAnw == ''">
+			create_time = NULL
+            </when>
+            <otherwise>
+			create_time = #{createTimeAnw}
+            </otherwise>  
+        </choose>
+		</if>
+		</set>
+		<where>
+			<include refid="sql_where"/>
+		</where>
+	</update>
+	
+	<sql id="sql_select">
+		<![CDATA[
+		SELECT 
+			camac_user.user_id,
+			camac_user.username,
+			camac_user.email,
+			camac_user.password,
+			camac_user.phone,
+			camac_user.title,
+			camac_user.firstname,
+			camac_user.lastname,
+			camac_user.role_id,
+			camac_user.create_time
+		FROM camac_user
+		]]>
+	</sql>
+
+	<sql id="sql_where">
+		<if test="userId != null and userId != ''">
+			<![CDATA[AND camac_user.user_id = #{userId}]]>
+		</if>
+		<if test="userId == null or userId == ''">
+			<if test="userIdAst != null and userIdAst != ''">
+				<![CDATA[AND camac_user.user_id >= #{userIdAst}]]>
+			</if>
+			<if test="userIdAed != null and userIdAed != ''">
+				<![CDATA[AND camac_user.user_id <= #{userIdAed}]]>
+			</if>
+			<if test="userIds != null">
+				AND camac_user.user_id IN 
+				<foreach collection="userIds" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+			<if test="userIdAlk != null and userIdAlk != ''">
+				<![CDATA[AND CAST(camac_user.user_id AS CHAR) LIKE CONCAT('%',#{userIdAlk},'%')]]>
+			</if>
+		</if>
+		<if test="username != null and username != ''">
+			<![CDATA[AND camac_user.username = #{username}]]>
+		</if>
+		<if test="username == null or username == ''">
+			<if test="usernameAlk != null and usernameAlk != ''">
+				<![CDATA[AND camac_user.username LIKE CONCAT('%',#{usernameAlk},'%')]]>
+			</if>
+			<if test="usernames != null">
+				AND camac_user.username IN 
+				<foreach collection="usernames" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="email != null and email != ''">
+			<![CDATA[AND camac_user.email = #{email}]]>
+		</if>
+		<if test="email == null or email == ''">
+			<if test="emailAlk != null and emailAlk != ''">
+				<![CDATA[AND camac_user.email LIKE CONCAT('%',#{emailAlk},'%')]]>
+			</if>
+			<if test="emails != null">
+				AND camac_user.email IN 
+				<foreach collection="emails" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="password != null and password != ''">
+			<![CDATA[AND camac_user.password = #{password}]]>
+		</if>
+		<if test="password == null or password == ''">
+			<if test="passwordAlk != null and passwordAlk != ''">
+				<![CDATA[AND camac_user.password LIKE CONCAT('%',#{passwordAlk},'%')]]>
+			</if>
+			<if test="passwords != null">
+				AND camac_user.password IN 
+				<foreach collection="passwords" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="phone != null and phone != ''">
+			<![CDATA[AND camac_user.phone = #{phone}]]>
+		</if>
+		<if test="phone == null or phone == ''">
+			<if test="phoneAlk != null and phoneAlk != ''">
+				<![CDATA[AND camac_user.phone LIKE CONCAT('%',#{phoneAlk},'%')]]>
+			</if>
+			<if test="phones != null">
+				AND camac_user.phone IN 
+				<foreach collection="phones" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="title != null and title != ''">
+			<![CDATA[AND camac_user.title = #{title}]]>
+		</if>
+		<if test="title == null or title == ''">
+			<if test="titleAlk != null and titleAlk != ''">
+				<![CDATA[AND camac_user.title LIKE CONCAT('%',#{titleAlk},'%')]]>
+			</if>
+			<if test="titles != null">
+				AND camac_user.title IN 
+				<foreach collection="titles" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="firstname != null and firstname != ''">
+			<![CDATA[AND camac_user.firstname = #{firstname}]]>
+		</if>
+		<if test="firstname == null or firstname == ''">
+			<if test="firstnameAlk != null and firstnameAlk != ''">
+				<![CDATA[AND camac_user.firstname LIKE CONCAT('%',#{firstnameAlk},'%')]]>
+			</if>
+			<if test="firstnames != null">
+				AND camac_user.firstname IN 
+				<foreach collection="firstnames" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="lastname != null and lastname != ''">
+			<![CDATA[AND camac_user.lastname = #{lastname}]]>
+		</if>
+		<if test="lastname == null or lastname == ''">
+			<if test="lastnameAlk != null and lastnameAlk != ''">
+				<![CDATA[AND camac_user.lastname LIKE CONCAT('%',#{lastnameAlk},'%')]]>
+			</if>
+			<if test="lastnames != null">
+				AND camac_user.lastname IN 
+				<foreach collection="lastnames" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="roleId != null and roleId != ''">
+		<![CDATA[AND camac_user.role_id = #{roleId}]]>
+		</if>
+		<if test="roleId == null or roleId == ''">
+		<if test="roleIdAst != null and roleIdAst != ''">
+			<![CDATA[AND camac_user.role_id >= #{roleIdAst}]]>
+		</if>
+		<if test="roleIdAed != null and roleIdAed != ''">
+			<![CDATA[AND camac_user.role_id <= #{roleIdAed}]]>
+		</if>
+		<if test="roleIds != null">
+			AND camac_user.role_id IN
+			<foreach collection="roleIds" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="roleIdAlk != null and roleIdAlk != ''">
+			<![CDATA[AND CAST(camac_user.role_id AS CHAR) LIKE CONCAT('%',#{roleIdAlk},'%')]]>
+		</if>
+		</if>
+		<if test="createTime != null and createTime != ''">
+			<![CDATA[AND date_format(camac_user.create_time,'%Y-%m-%d') = #{createTime}]]>
+		</if>
+		<if test="createTime == null or createTime == ''">
+			<if test="createTimeAst != null and createTimeAst != ''">
+				<![CDATA[AND date_format(camac_user.create_time,'%Y-%m-%d') >= #{createTimeAst}]]>
+			</if>
+			<if test="createTimeAed != null and createTimeAed != ''">
+				<![CDATA[AND date_format(camac_user.create_time,'%Y-%m-%d') <= #{createTimeAed}]]>
+			</if>
+			<if test="createTimes != null">
+				AND date_format(camac_user.create_time,'%Y-%m-%d') IN 
+				<foreach collection="createTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+			<if test="createTimeAlk != null and createTimeAlk != ''">
+				<![CDATA[AND date_format(camac_user.create_time,'%Y-%m-%d') LIKE CONCAT('%',#{createTimeAlk},'%')]]>
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="sql_order">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+		<if test="sort == 'userId' and (order == 'asc' or order == 'desc')">
+			camac_user.user_id ${order},
+		</if>
+		<if test="sort == 'username' and (order == 'asc' or order == 'desc')">
+			camac_user.username ${order},
+		</if>
+		<if test="sort == 'email' and (order == 'asc' or order == 'desc')">
+			camac_user.email ${order},
+		</if>
+		<if test="sort == 'password' and (order == 'asc' or order == 'desc')">
+			camac_user.password ${order},
+		</if>
+		<if test="sort == 'phone' and (order == 'asc' or order == 'desc')">
+			camac_user.phone ${order},
+		</if>
+		<if test="sort == 'title' and (order == 'asc' or order == 'desc')">
+			camac_user.title ${order},
+		</if>
+		<if test="sort == 'firstname' and (order == 'asc' or order == 'desc')">
+			camac_user.firstname ${order},
+		</if>
+		<if test="sort == 'lastname' and (order == 'asc' or order == 'desc')">
+			camac_user.lastname ${order},
+		</if>
+		<if test="sort == 'roleId' and (order == 'asc' or order == 'desc')">
+			camac_user.role_id ${order},
+		</if>
+		<if test="sort == 'createTime' and (order == 'asc' or order == 'desc')">
+			camac_user.create_time ${order}
+		</if>
+		</trim>
+	</sql>
+	
+	<sql id="sql_page">
+		<if test="page != null and rows != null" >
+		limit #{rows} offset #{page}
+		</if>
+	</sql>
+</mapper>

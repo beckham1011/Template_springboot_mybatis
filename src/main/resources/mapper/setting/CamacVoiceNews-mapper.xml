@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjjoy.bms.setting.dao.CamacVoiceNewsDao">
+	
+	<parameterMap id="pm_camacVoiceNews" type="cn.bjjoy.bms.setting.entity.CamacVoiceNews">
+		<parameter property="newsId" javaType="Long" jdbcType="BIGINT" />
+		<parameter property="userId" javaType="int" jdbcType="INTEGER" />
+		<parameter property="title" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="content" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="url" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="imgPath" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="createTime" javaType="Date" jdbcType="TIMESTAMP" />
+	</parameterMap>
+	
+	<resultMap id="rm_camacVoiceNews" type="cn.bjjoy.bms.setting.entity.CamacVoiceNews">
+		<result property="newsId" column="news_id" javaType="Long" jdbcType="BIGINT" />
+		<result property="userId" column="user_id" javaType="int" jdbcType="INTEGER" />
+		<result property="title" column="title" javaType="String" jdbcType="VARCHAR" />
+		<result property="content" column="content" javaType="String" jdbcType="VARCHAR" />
+		<result property="url" column="url" javaType="String" jdbcType="VARCHAR" />
+		<result property="imgPath" column="img_path" javaType="String" jdbcType="VARCHAR" />
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<insert id="save" parameterMap="pm_camacVoiceNews" useGeneratedKeys="true" keyProperty="newsId" >
+		insert into camac_voice_news
+		<trim prefix="(" suffix=")" suffixOverrides="," >	
+			<if test="newsId != null">news_id,</if>
+			<if test="userId != null">user_id,</if>
+			<if test="title != null">title,</if>
+			<if test="content != null">content,</if>
+			<if test="url != null">url,</if>
+			<if test="imgPath != null">img_path,</if>
+			<if test="createTime != null">create_time</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="newsId != null">#{newsId},</if>
+			<if test="userId != null">#{userId},</if>
+			<if test="title != null">#{title},</if>
+			<if test="content != null">#{content},</if>
+			<if test="url != null">#{url},</if>
+			<if test="imgPath != null">#{imgPath},</if>
+			<if test="createTime != null">#{createTime}</if>
+		</trim>
+	</insert>
+		
+	<delete id="deleteOne" parameterType="java.lang.String">
+		DELETE FROM camac_voice_news WHERE camac_voice_news.news_id = #{newsId}
+	</delete>
+	
+	<delete id="delete" parameterType="map">
+		DELETE FROM camac_voice_news
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</delete>
+
+	<select id="queryOne" parameterType="java.lang.String" resultMap="rm_camacVoiceNews">
+		<include refid="sql_select"/>
+		WHERE camac_voice_news.news_id = #{newsId}
+	</select>
+	
+	<select id="queryList" parameterType="map" resultMap="rm_camacVoiceNews">
+		<include refid="sql_select" />
+		<where>
+			<include refid="sql_where" />
+		</where>
+		<include refid="sql_order" />
+		<include refid="sql_page" />
+	</select>
+	
+	<select id="queryListCount" parameterType="map" resultType="long">
+		SELECT COUNT(0) FROM camac_voice_news
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</select>
+	
+	<update id="updateOne" parameterType="map">
+		UPDATE camac_voice_news
+		<set>
+		<if test="_parameter.containsKey('userId')">
+		<choose>
+            <when test="userId == null">
+			user_id = NULL,
+            </when>
+            <otherwise>
+			user_id = #{userId},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('title')">
+		<choose>
+            <when test="title == null or title == ''">
+			title = NULL,
+            </when>
+            <otherwise>
+			title = #{title},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('content')">
+		<choose>
+            <when test="content == null or content == ''">
+			content = NULL,
+            </when>
+            <otherwise>
+			content = #{content},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('url')">
+		<choose>
+            <when test="url == null or url == ''">
+			url = NULL,
+            </when>
+            <otherwise>
+			url = #{url},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('imgPath')">
+		<choose>
+            <when test="imgPath == null or imgPath == ''">
+			img_path = NULL,
+            </when>
+            <otherwise>
+			img_path = #{imgPath},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('createTime')">
+		<choose>
+            <when test="createTime == null or createTime == ''">
+			create_time = NULL
+            </when>
+            <otherwise>
+			create_time = #{createTime}
+            </otherwise>  
+        </choose>
+		</if>
+		</set>
+		<where>
+		news_id = #{newsId}
+		</where>
+	</update>
+
+	<update id="update" parameterType="map">
+		UPDATE camac_voice_news
+		<set>
+		<if test="_parameter.containsKey('userIdAnw')">
+		<choose>
+            <when test="userIdAnw == null">
+			user_id = NULL,
+            </when>
+            <otherwise>
+			user_id = #{userIdAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('titleAnw')">
+		<choose>
+            <when test="titleAnw == null or titleAnw == ''">
+			title = NULL,
+            </when>
+            <otherwise>
+			title = #{titleAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('contentAnw')">
+		<choose>
+            <when test="contentAnw == null or contentAnw == ''">
+			content = NULL,
+            </when>
+            <otherwise>
+			content = #{contentAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('urlAnw')">
+		<choose>
+            <when test="urlAnw == null or urlAnw == ''">
+			url = NULL,
+            </when>
+            <otherwise>
+			url = #{urlAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('imgPathAnw')">
+		<choose>
+            <when test="imgPathAnw == null or imgPathAnw == ''">
+			img_path = NULL,
+            </when>
+            <otherwise>
+			img_path = #{imgPathAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('createTimeAnw')">
+		<choose>
+            <when test="createTimeAnw == null or createTimeAnw == ''">
+			create_time = NULL
+            </when>
+            <otherwise>
+			create_time = #{createTimeAnw}
+            </otherwise>  
+        </choose>
+		</if>
+		</set>
+		<where>
+			<include refid="sql_where"/>
+		</where>
+	</update>
+	
+	<sql id="sql_select">
+		<![CDATA[
+		SELECT 
+			camac_voice_news.news_id,
+			camac_voice_news.user_id,
+			camac_voice_news.title,
+			camac_voice_news.content,
+			camac_voice_news.url,
+			camac_voice_news.img_path,
+			camac_voice_news.create_time
+		FROM camac_voice_news
+		]]>
+	</sql>
+
+	<sql id="sql_where">
+		<if test="newsId != null and newsId != ''">
+			<![CDATA[AND camac_voice_news.news_id = #{newsId}]]>
+		</if>
+		<if test="newsId == null or newsId == ''">
+			<if test="newsIdAst != null and newsIdAst != ''">
+				<![CDATA[AND camac_voice_news.news_id >= #{newsIdAst}]]>
+			</if>
+			<if test="newsIdAed != null and newsIdAed != ''">
+				<![CDATA[AND camac_voice_news.news_id <= #{newsIdAed}]]>
+			</if>
+			<if test="newsIds != null">
+				AND camac_voice_news.news_id IN 
+				<foreach collection="newsIds" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+			<if test="newsIdAlk != null and newsIdAlk != ''">
+				<![CDATA[AND CAST(camac_voice_news.news_id AS CHAR) LIKE CONCAT('%',#{newsIdAlk},'%')]]>
+			</if>
+		</if>
+		<if test="userId != null and userId != ''">
+		<![CDATA[AND camac_voice_news.user_id = #{userId}]]>
+		</if>
+		<if test="userId == null or userId == ''">
+		<if test="userIdAst != null and userIdAst != ''">
+			<![CDATA[AND camac_voice_news.user_id >= #{userIdAst}]]>
+		</if>
+		<if test="userIdAed != null and userIdAed != ''">
+			<![CDATA[AND camac_voice_news.user_id <= #{userIdAed}]]>
+		</if>
+		<if test="userIds != null">
+			AND camac_voice_news.user_id IN
+			<foreach collection="userIds" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="userIdAlk != null and userIdAlk != ''">
+			<![CDATA[AND CAST(camac_voice_news.user_id AS CHAR) LIKE CONCAT('%',#{userIdAlk},'%')]]>
+		</if>
+		</if>
+		<if test="title != null and title != ''">
+			<![CDATA[AND camac_voice_news.title = #{title}]]>
+		</if>
+		<if test="title == null or title == ''">
+			<if test="titleAlk != null and titleAlk != ''">
+				<![CDATA[AND camac_voice_news.title LIKE CONCAT('%',#{titleAlk},'%')]]>
+			</if>
+			<if test="titles != null">
+				AND camac_voice_news.title IN 
+				<foreach collection="titles" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="content != null and content != ''">
+			<![CDATA[AND camac_voice_news.content = #{content}]]>
+		</if>
+		<if test="content == null or content == ''">
+			<if test="contentAlk != null and contentAlk != ''">
+				<![CDATA[AND camac_voice_news.content LIKE CONCAT('%',#{contentAlk},'%')]]>
+			</if>
+			<if test="contents != null">
+				AND camac_voice_news.content IN 
+				<foreach collection="contents" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="url != null and url != ''">
+			<![CDATA[AND camac_voice_news.url = #{url}]]>
+		</if>
+		<if test="url == null or url == ''">
+			<if test="urlAlk != null and urlAlk != ''">
+				<![CDATA[AND camac_voice_news.url LIKE CONCAT('%',#{urlAlk},'%')]]>
+			</if>
+			<if test="urls != null">
+				AND camac_voice_news.url IN 
+				<foreach collection="urls" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="imgPath != null and imgPath != ''">
+			<![CDATA[AND camac_voice_news.img_path = #{imgPath}]]>
+		</if>
+		<if test="imgPath == null or imgPath == ''">
+			<if test="imgPathAlk != null and imgPathAlk != ''">
+				<![CDATA[AND camac_voice_news.img_path LIKE CONCAT('%',#{imgPathAlk},'%')]]>
+			</if>
+			<if test="imgPaths != null">
+				AND camac_voice_news.img_path IN 
+				<foreach collection="imgPaths" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="createTime != null and createTime != ''">
+			<![CDATA[AND date_format(camac_voice_news.create_time,'%Y-%m-%d') = #{createTime}]]>
+		</if>
+		<if test="createTime == null or createTime == ''">
+			<if test="createTimeAst != null and createTimeAst != ''">
+				<![CDATA[AND date_format(camac_voice_news.create_time,'%Y-%m-%d') >= #{createTimeAst}]]>
+			</if>
+			<if test="createTimeAed != null and createTimeAed != ''">
+				<![CDATA[AND date_format(camac_voice_news.create_time,'%Y-%m-%d') <= #{createTimeAed}]]>
+			</if>
+			<if test="createTimes != null">
+				AND date_format(camac_voice_news.create_time,'%Y-%m-%d') IN 
+				<foreach collection="createTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+			<if test="createTimeAlk != null and createTimeAlk != ''">
+				<![CDATA[AND date_format(camac_voice_news.create_time,'%Y-%m-%d') LIKE CONCAT('%',#{createTimeAlk},'%')]]>
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="sql_order">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+		<if test="sort == 'newsId' and (order == 'asc' or order == 'desc')">
+			camac_voice_news.news_id ${order},
+		</if>
+		<if test="sort == 'userId' and (order == 'asc' or order == 'desc')">
+			camac_voice_news.user_id ${order},
+		</if>
+		<if test="sort == 'title' and (order == 'asc' or order == 'desc')">
+			camac_voice_news.title ${order},
+		</if>
+		<if test="sort == 'content' and (order == 'asc' or order == 'desc')">
+			camac_voice_news.content ${order},
+		</if>
+		<if test="sort == 'url' and (order == 'asc' or order == 'desc')">
+			camac_voice_news.url ${order},
+		</if>
+		<if test="sort == 'imgPath' and (order == 'asc' or order == 'desc')">
+			camac_voice_news.img_path ${order},
+		</if>
+		<if test="sort == 'createTime' and (order == 'asc' or order == 'desc')">
+			camac_voice_news.create_time ${order}
+		</if>
+		</trim>
+	</sql>
+	
+	<sql id="sql_page">
+		<if test="page != null and rows != null" >
+		limit #{rows} offset #{page}
+		</if>
+	</sql>
+</mapper>

@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjjoy.bms.setting.dao.CamacVoiceMeetingDao">
+	
+	<parameterMap id="pm_camacVoiceMeeting" type="cn.bjjoy.bms.setting.entity.CamacVoiceMeeting">
+		<parameter property="meetingId" javaType="Long" jdbcType="BIGINT" />
+		<parameter property="userId" javaType="int" jdbcType="INTEGER" />
+		<parameter property="meetingTopic" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="meetingAddress" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="meetingContent" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="meetingParticipation" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="createTime" javaType="Date" jdbcType="TIMESTAMP" />
+	</parameterMap>
+	
+	<resultMap id="rm_camacVoiceMeeting" type="cn.bjjoy.bms.setting.entity.CamacVoiceMeeting">
+		<result property="meetingId" column="meeting_id" javaType="Long" jdbcType="BIGINT" />
+		<result property="userId" column="user_id" javaType="int" jdbcType="INTEGER" />
+		<result property="meetingTopic" column="meeting_topic" javaType="String" jdbcType="VARCHAR" />
+		<result property="meetingAddress" column="meeting_address" javaType="String" jdbcType="VARCHAR" />
+		<result property="meetingContent" column="meeting_content" javaType="String" jdbcType="VARCHAR" />
+		<result property="meetingParticipation" column="meeting_participation" javaType="String" jdbcType="VARCHAR" />
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<insert id="save" parameterMap="pm_camacVoiceMeeting" useGeneratedKeys="true" keyProperty="meetingId" >
+		insert into camac_voice_meeting
+		<trim prefix="(" suffix=")" suffixOverrides="," >	
+			<if test="meetingId != null">meeting_id,</if>
+			<if test="userId != null">user_id,</if>
+			<if test="meetingTopic != null">meeting_topic,</if>
+			<if test="meetingAddress != null">meeting_address,</if>
+			<if test="meetingContent != null">meeting_content,</if>
+			<if test="meetingParticipation != null">meeting_participation,</if>
+			<if test="createTime != null">create_time</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="meetingId != null">#{meetingId},</if>
+			<if test="userId != null">#{userId},</if>
+			<if test="meetingTopic != null">#{meetingTopic},</if>
+			<if test="meetingAddress != null">#{meetingAddress},</if>
+			<if test="meetingContent != null">#{meetingContent},</if>
+			<if test="meetingParticipation != null">#{meetingParticipation},</if>
+			<if test="createTime != null">#{createTime}</if>
+		</trim>
+	</insert>
+		
+	<delete id="deleteOne" parameterType="java.lang.String">
+		DELETE FROM camac_voice_meeting WHERE camac_voice_meeting.meeting_id = #{meetingId}
+	</delete>
+	
+	<delete id="delete" parameterType="map">
+		DELETE FROM camac_voice_meeting
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</delete>
+
+	<select id="queryOne" parameterType="java.lang.String" resultMap="rm_camacVoiceMeeting">
+		<include refid="sql_select"/>
+		WHERE camac_voice_meeting.meeting_id = #{meetingId}
+	</select>
+	
+	<select id="queryList" parameterType="map" resultMap="rm_camacVoiceMeeting">
+		<include refid="sql_select" />
+		<where>
+			<include refid="sql_where" />
+		</where>
+		<include refid="sql_order" />
+		<include refid="sql_page" />
+	</select>
+	
+	<select id="queryListCount" parameterType="map" resultType="long">
+		SELECT COUNT(0) FROM camac_voice_meeting
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</select>
+	
+	<update id="updateOne" parameterType="map">
+		UPDATE camac_voice_meeting
+		<set>
+		<if test="_parameter.containsKey('userId')">
+		<choose>
+            <when test="userId == null">
+			user_id = NULL,
+            </when>
+            <otherwise>
+			user_id = #{userId},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('meetingTopic')">
+		<choose>
+            <when test="meetingTopic == null or meetingTopic == ''">
+			meeting_topic = NULL,
+            </when>
+            <otherwise>
+			meeting_topic = #{meetingTopic},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('meetingAddress')">
+		<choose>
+            <when test="meetingAddress == null or meetingAddress == ''">
+			meeting_address = NULL,
+            </when>
+            <otherwise>
+			meeting_address = #{meetingAddress},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('meetingContent')">
+		<choose>
+            <when test="meetingContent == null or meetingContent == ''">
+			meeting_content = NULL,
+            </when>
+            <otherwise>
+			meeting_content = #{meetingContent},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('meetingParticipation')">
+		<choose>
+            <when test="meetingParticipation == null or meetingParticipation == ''">
+			meeting_participation = NULL,
+            </when>
+            <otherwise>
+			meeting_participation = #{meetingParticipation},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('createTime')">
+		<choose>
+            <when test="createTime == null or createTime == ''">
+			create_time = NULL
+            </when>
+            <otherwise>
+			create_time = #{createTime}
+            </otherwise>  
+        </choose>
+		</if>
+		</set>
+		<where>
+		meeting_id = #{meetingId}
+		</where>
+	</update>
+
+	<update id="update" parameterType="map">
+		UPDATE camac_voice_meeting
+		<set>
+		<if test="_parameter.containsKey('userIdAnw')">
+		<choose>
+            <when test="userIdAnw == null">
+			user_id = NULL,
+            </when>
+            <otherwise>
+			user_id = #{userIdAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('meetingTopicAnw')">
+		<choose>
+            <when test="meetingTopicAnw == null or meetingTopicAnw == ''">
+			meeting_topic = NULL,
+            </when>
+            <otherwise>
+			meeting_topic = #{meetingTopicAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('meetingAddressAnw')">
+		<choose>
+            <when test="meetingAddressAnw == null or meetingAddressAnw == ''">
+			meeting_address = NULL,
+            </when>
+            <otherwise>
+			meeting_address = #{meetingAddressAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('meetingContentAnw')">
+		<choose>
+            <when test="meetingContentAnw == null or meetingContentAnw == ''">
+			meeting_content = NULL,
+            </when>
+            <otherwise>
+			meeting_content = #{meetingContentAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('meetingParticipationAnw')">
+		<choose>
+            <when test="meetingParticipationAnw == null or meetingParticipationAnw == ''">
+			meeting_participation = NULL,
+            </when>
+            <otherwise>
+			meeting_participation = #{meetingParticipationAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('createTimeAnw')">
+		<choose>
+            <when test="createTimeAnw == null or createTimeAnw == ''">
+			create_time = NULL
+            </when>
+            <otherwise>
+			create_time = #{createTimeAnw}
+            </otherwise>  
+        </choose>
+		</if>
+		</set>
+		<where>
+			<include refid="sql_where"/>
+		</where>
+	</update>
+	
+	<sql id="sql_select">
+		<![CDATA[
+		SELECT 
+			camac_voice_meeting.meeting_id,
+			camac_voice_meeting.user_id,
+			camac_voice_meeting.meeting_topic,
+			camac_voice_meeting.meeting_address,
+			camac_voice_meeting.meeting_content,
+			camac_voice_meeting.meeting_participation,
+			camac_voice_meeting.create_time
+		FROM camac_voice_meeting
+		]]>
+	</sql>
+
+	<sql id="sql_where">
+		<if test="meetingId != null and meetingId != ''">
+			<![CDATA[AND camac_voice_meeting.meeting_id = #{meetingId}]]>
+		</if>
+		<if test="meetingId == null or meetingId == ''">
+			<if test="meetingIdAst != null and meetingIdAst != ''">
+				<![CDATA[AND camac_voice_meeting.meeting_id >= #{meetingIdAst}]]>
+			</if>
+			<if test="meetingIdAed != null and meetingIdAed != ''">
+				<![CDATA[AND camac_voice_meeting.meeting_id <= #{meetingIdAed}]]>
+			</if>
+			<if test="meetingIds != null">
+				AND camac_voice_meeting.meeting_id IN 
+				<foreach collection="meetingIds" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+			<if test="meetingIdAlk != null and meetingIdAlk != ''">
+				<![CDATA[AND CAST(camac_voice_meeting.meeting_id AS CHAR) LIKE CONCAT('%',#{meetingIdAlk},'%')]]>
+			</if>
+		</if>
+		<if test="userId != null and userId != ''">
+		<![CDATA[AND camac_voice_meeting.user_id = #{userId}]]>
+		</if>
+		<if test="userId == null or userId == ''">
+		<if test="userIdAst != null and userIdAst != ''">
+			<![CDATA[AND camac_voice_meeting.user_id >= #{userIdAst}]]>
+		</if>
+		<if test="userIdAed != null and userIdAed != ''">
+			<![CDATA[AND camac_voice_meeting.user_id <= #{userIdAed}]]>
+		</if>
+		<if test="userIds != null">
+			AND camac_voice_meeting.user_id IN
+			<foreach collection="userIds" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="userIdAlk != null and userIdAlk != ''">
+			<![CDATA[AND CAST(camac_voice_meeting.user_id AS CHAR) LIKE CONCAT('%',#{userIdAlk},'%')]]>
+		</if>
+		</if>
+		<if test="meetingTopic != null and meetingTopic != ''">
+			<![CDATA[AND camac_voice_meeting.meeting_topic = #{meetingTopic}]]>
+		</if>
+		<if test="meetingTopic == null or meetingTopic == ''">
+			<if test="meetingTopicAlk != null and meetingTopicAlk != ''">
+				<![CDATA[AND camac_voice_meeting.meeting_topic LIKE CONCAT('%',#{meetingTopicAlk},'%')]]>
+			</if>
+			<if test="meetingTopics != null">
+				AND camac_voice_meeting.meeting_topic IN 
+				<foreach collection="meetingTopics" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="meetingAddress != null and meetingAddress != ''">
+			<![CDATA[AND camac_voice_meeting.meeting_address = #{meetingAddress}]]>
+		</if>
+		<if test="meetingAddress == null or meetingAddress == ''">
+			<if test="meetingAddressAlk != null and meetingAddressAlk != ''">
+				<![CDATA[AND camac_voice_meeting.meeting_address LIKE CONCAT('%',#{meetingAddressAlk},'%')]]>
+			</if>
+			<if test="meetingAddresss != null">
+				AND camac_voice_meeting.meeting_address IN 
+				<foreach collection="meetingAddresss" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="meetingContent != null and meetingContent != ''">
+			<![CDATA[AND camac_voice_meeting.meeting_content = #{meetingContent}]]>
+		</if>
+		<if test="meetingContent == null or meetingContent == ''">
+			<if test="meetingContentAlk != null and meetingContentAlk != ''">
+				<![CDATA[AND camac_voice_meeting.meeting_content LIKE CONCAT('%',#{meetingContentAlk},'%')]]>
+			</if>
+			<if test="meetingContents != null">
+				AND camac_voice_meeting.meeting_content IN 
+				<foreach collection="meetingContents" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="meetingParticipation != null and meetingParticipation != ''">
+			<![CDATA[AND camac_voice_meeting.meeting_participation = #{meetingParticipation}]]>
+		</if>
+		<if test="meetingParticipation == null or meetingParticipation == ''">
+			<if test="meetingParticipationAlk != null and meetingParticipationAlk != ''">
+				<![CDATA[AND camac_voice_meeting.meeting_participation LIKE CONCAT('%',#{meetingParticipationAlk},'%')]]>
+			</if>
+			<if test="meetingParticipations != null">
+				AND camac_voice_meeting.meeting_participation IN 
+				<foreach collection="meetingParticipations" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="createTime != null and createTime != ''">
+			<![CDATA[AND date_format(camac_voice_meeting.create_time,'%Y-%m-%d') = #{createTime}]]>
+		</if>
+		<if test="createTime == null or createTime == ''">
+			<if test="createTimeAst != null and createTimeAst != ''">
+				<![CDATA[AND date_format(camac_voice_meeting.create_time,'%Y-%m-%d') >= #{createTimeAst}]]>
+			</if>
+			<if test="createTimeAed != null and createTimeAed != ''">
+				<![CDATA[AND date_format(camac_voice_meeting.create_time,'%Y-%m-%d') <= #{createTimeAed}]]>
+			</if>
+			<if test="createTimes != null">
+				AND date_format(camac_voice_meeting.create_time,'%Y-%m-%d') IN 
+				<foreach collection="createTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+			<if test="createTimeAlk != null and createTimeAlk != ''">
+				<![CDATA[AND date_format(camac_voice_meeting.create_time,'%Y-%m-%d') LIKE CONCAT('%',#{createTimeAlk},'%')]]>
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="sql_order">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+		<if test="sort == 'meetingId' and (order == 'asc' or order == 'desc')">
+			camac_voice_meeting.meeting_id ${order},
+		</if>
+		<if test="sort == 'userId' and (order == 'asc' or order == 'desc')">
+			camac_voice_meeting.user_id ${order},
+		</if>
+		<if test="sort == 'meetingTopic' and (order == 'asc' or order == 'desc')">
+			camac_voice_meeting.meeting_topic ${order},
+		</if>
+		<if test="sort == 'meetingAddress' and (order == 'asc' or order == 'desc')">
+			camac_voice_meeting.meeting_address ${order},
+		</if>
+		<if test="sort == 'meetingContent' and (order == 'asc' or order == 'desc')">
+			camac_voice_meeting.meeting_content ${order},
+		</if>
+		<if test="sort == 'meetingParticipation' and (order == 'asc' or order == 'desc')">
+			camac_voice_meeting.meeting_participation ${order},
+		</if>
+		<if test="sort == 'createTime' and (order == 'asc' or order == 'desc')">
+			camac_voice_meeting.create_time ${order}
+		</if>
+		</trim>
+	</sql>
+	
+	<sql id="sql_page">
+		<if test="page != null and rows != null" >
+		limit #{rows} offset #{page}
+		</if>
+	</sql>
+</mapper>
