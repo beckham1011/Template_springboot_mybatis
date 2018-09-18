@@ -158,7 +158,7 @@ public class MenuController {
     }
 
 	/**
-	 * 构造上级资源列表
+	 * 构造上级资源列表getMenuList
 	 */
 	private List<Menu> getMenuList(){
 		List<Menu> list = menuService.getMenuList();

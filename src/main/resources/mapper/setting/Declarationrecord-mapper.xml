@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjjoy.bms.setting.persist.mapper.DeclarationrecordDao">
+	
+	<parameterMap id="pm_declarationrecord" type="cn.bjjoy.bms.setting.persist.model.Declarationrecord">
+		<parameter property="id" javaType="int" jdbcType="INTEGER" />
+		<parameter property="unitName" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="MeasuringPoint" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="failure" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="reportingTime" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="reportingPer" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="reportingPhone" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="acceptTime" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="acceptPer" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="acceptPhone" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="results" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="failureDescribe" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="addTime" javaType="String" jdbcType="VARCHAR" />
+	</parameterMap>
+	
+	<resultMap id="rm_declarationrecord" type="cn.bjjoy.bms.setting.persist.model.Declarationrecord">
+		<result property="id" column="id" javaType="int" jdbcType="INTEGER" />
+		<result property="unitName" column="unitName" javaType="String" jdbcType="VARCHAR" />
+		<result property="MeasuringPoint" column="MeasuringPoint" javaType="String" jdbcType="VARCHAR" />
+		<result property="failure" column="failure" javaType="String" jdbcType="VARCHAR" />
+		<result property="reportingTime" column="reporting_time" javaType="String" jdbcType="VARCHAR" />
+		<result property="reportingPer" column="reporting_per" javaType="String" jdbcType="VARCHAR" />
+		<result property="reportingPhone" column="reporting_phone" javaType="String" jdbcType="VARCHAR" />
+		<result property="acceptTime" column="accept_time" javaType="String" jdbcType="VARCHAR" />
+		<result property="acceptPer" column="accept_per" javaType="String" jdbcType="VARCHAR" />
+		<result property="acceptPhone" column="accept_phone" javaType="String" jdbcType="VARCHAR" />
+		<result property="results" column="results" javaType="String" jdbcType="VARCHAR" />
+		<result property="failureDescribe" column="failureDescribe" javaType="String" jdbcType="VARCHAR" />
+		<result property="addTime" column="add_time" javaType="String" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="save" parameterMap="pm_declarationrecord" useGeneratedKeys="true" keyProperty="id" >
+		insert into declarationrecord
+		<trim prefix="(" suffix=")" suffixOverrides="," >	
+			<if test="id != null">id,</if>
+			<if test="unitName != null">unitName,</if>
+			<if test="MeasuringPoint != null">MeasuringPoint,</if>
+			<if test="failure != null">failure,</if>
+			<if test="reportingTime != null">reporting_time,</if>
+			<if test="reportingPer != null">reporting_per,</if>
+			<if test="reportingPhone != null">reporting_phone,</if>
+			<if test="acceptTime != null">accept_time,</if>
+			<if test="acceptPer != null">accept_per,</if>
+			<if test="acceptPhone != null">accept_phone,</if>
+			<if test="results != null">results,</if>
+			<if test="failureDescribe != null">failureDescribe,</if>
+			<if test="addTime != null">add_time</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null">#{id},</if>
+			<if test="unitName != null">#{unitName},</if>
+			<if test="MeasuringPoint != null">#{MeasuringPoint},</if>
+			<if test="failure != null">#{failure},</if>
+			<if test="reportingTime != null">#{reportingTime},</if>
+			<if test="reportingPer != null">#{reportingPer},</if>
+			<if test="reportingPhone != null">#{reportingPhone},</if>
+			<if test="acceptTime != null">#{acceptTime},</if>
+			<if test="acceptPer != null">#{acceptPer},</if>
+			<if test="acceptPhone != null">#{acceptPhone},</if>
+			<if test="results != null">#{results},</if>
+			<if test="failureDescribe != null">#{failureDescribe},</if>
+			<if test="addTime != null">#{addTime}</if>
+		</trim>
+	</insert>
+		
+	<delete id="deleteOne" parameterType="java.lang.String">
+		DELETE FROM declarationrecord WHERE declarationrecord.id = #{id}
+	</delete>
+	
+	<delete id="delete" parameterType="map">
+		DELETE FROM declarationrecord
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</delete>
+
+	<select id="queryOne" parameterType="java.lang.String" resultMap="rm_declarationrecord">
+		<include refid="sql_select"/>
+		WHERE declarationrecord.id = #{id}
+	</select>
+	
+	<select id="queryList" parameterType="map" resultMap="rm_declarationrecord">
+		<include refid="sql_select" />
+		<where>
+			<include refid="sql_where" />
+		</where>
+		<include refid="sql_order" />
+		<include refid="sql_page" />
+	</select>
+	
+	<select id="queryListCount" parameterType="map" resultType="long">
+		SELECT COUNT(0) FROM declarationrecord
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</select>
+	
+	<update id="updateOne" parameterType="map">
+		UPDATE declarationrecord
+		<set>
+		<if test="_parameter.containsKey('unitName')">
+		<choose>
+            <when test="unitName == null or unitName == ''">
+			unitName = NULL,
+            </when>
+            <otherwise>
+			unitName = #{unitName},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('MeasuringPoint')">
+		<choose>
+            <when test="MeasuringPoint == null or MeasuringPoint == ''">
+			MeasuringPoint = NULL,
+            </when>
+            <otherwise>
+			MeasuringPoint = #{MeasuringPoint},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('failure')">
+		<choose>
+            <when test="failure == null or failure == ''">
+			failure = NULL,
+            </when>
+            <otherwise>
+			failure = #{failure},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('reportingTime')">
+		<choose>
+            <when test="reportingTime == null or reportingTime == ''">
+			reporting_time = NULL,
+            </when>
+            <otherwise>
+			reporting_time = #{reportingTime},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('reportingPer')">
+		<choose>
+            <when test="reportingPer == null or reportingPer == ''">
+			reporting_per = NULL,
+            </when>
+            <otherwise>
+			reporting_per = #{reportingPer},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('reportingPhone')">
+		<choose>
+            <when test="reportingPhone == null or reportingPhone == ''">
+			reporting_phone = NULL,
+            </when>
+            <otherwise>
+			reporting_phone = #{reportingPhone},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('acceptTime')">
+		<choose>
+            <when test="acceptTime == null or acceptTime == ''">
+			accept_time = NULL,
+            </when>
+            <otherwise>
+			accept_time = #{acceptTime},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('acceptPer')">
+		<choose>
+            <when test="acceptPer == null or acceptPer == ''">
+			accept_per = NULL,
+            </when>
+            <otherwise>
+			accept_per = #{acceptPer},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('acceptPhone')">
+		<choose>
+            <when test="acceptPhone == null or acceptPhone == ''">
+			accept_phone = NULL,
+            </when>
+            <otherwise>
+			accept_phone = #{acceptPhone},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('results')">
+		<choose>
+            <when test="results == null or results == ''">
+			results = NULL,
+            </when>
+            <otherwise>
+			results = #{results},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('failureDescribe')">
+		<choose>
+            <when test="failureDescribe == null or failureDescribe == ''">
+			failureDescribe = NULL,
+            </when>
+            <otherwise>
+			failureDescribe = #{failureDescribe},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('addTime')">
+		<choose>
+            <when test="addTime == null or addTime == ''">
+			add_time = NULL
+            </when>
+            <otherwise>
+			add_time = #{addTime}
+            </otherwise>
+        </choose>
+		</if>
+		</set>
+		<where>
+		id = #{id}
+		</where>
+	</update>
+
+	<update id="update" parameterType="map">
+		UPDATE declarationrecord
+		<set>
+		<if test="_parameter.containsKey('unitNameAnw')">
+		<choose>
+            <when test="unitNameAnw == null or unitNameAnw == ''">
+			unitName = NULL,
+            </when>
+            <otherwise>
+			unitName = #{unitNameAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('MeasuringPointAnw')">
+		<choose>
+            <when test="MeasuringPointAnw == null or MeasuringPointAnw == ''">
+			MeasuringPoint = NULL,
+            </when>
+            <otherwise>
+			MeasuringPoint = #{MeasuringPointAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('failureAnw')">
+		<choose>
+            <when test="failureAnw == null or failureAnw == ''">
+			failure = NULL,
+            </when>
+            <otherwise>
+			failure = #{failureAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('reportingTimeAnw')">
+		<choose>
+            <when test="reportingTimeAnw == null or reportingTimeAnw == ''">
+			reporting_time = NULL,
+            </when>
+            <otherwise>
+			reporting_time = #{reportingTimeAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('reportingPerAnw')">
+		<choose>
+            <when test="reportingPerAnw == null or reportingPerAnw == ''">
+			reporting_per = NULL,
+            </when>
+            <otherwise>
+			reporting_per = #{reportingPerAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('reportingPhoneAnw')">
+		<choose>
+            <when test="reportingPhoneAnw == null or reportingPhoneAnw == ''">
+			reporting_phone = NULL,
+            </when>
+            <otherwise>
+			reporting_phone = #{reportingPhoneAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('acceptTimeAnw')">
+		<choose>
+            <when test="acceptTimeAnw == null or acceptTimeAnw == ''">
+			accept_time = NULL,
+            </when>
+            <otherwise>
+			accept_time = #{acceptTimeAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('acceptPerAnw')">
+		<choose>
+            <when test="acceptPerAnw == null or acceptPerAnw == ''">
+			accept_per = NULL,
+            </when>
+            <otherwise>
+			accept_per = #{acceptPerAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('acceptPhoneAnw')">
+		<choose>
+            <when test="acceptPhoneAnw == null or acceptPhoneAnw == ''">
+			accept_phone = NULL,
+            </when>
+            <otherwise>
+			accept_phone = #{acceptPhoneAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('resultsAnw')">
+		<choose>
+            <when test="resultsAnw == null or resultsAnw == ''">
+			results = NULL,
+            </when>
+            <otherwise>
+			results = #{resultsAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('failureDescribeAnw')">
+		<choose>
+            <when test="failureDescribeAnw == null or failureDescribeAnw == ''">
+			failureDescribe = NULL,
+            </when>
+            <otherwise>
+			failureDescribe = #{failureDescribeAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('addTimeAnw')">
+		<choose>
+            <when test="addTimeAnw == null or addTimeAnw == ''">
+			add_time = NULL
+            </when>
+            <otherwise>
+			add_time = #{addTimeAnw}
+            </otherwise>  
+        </choose>
+		</if>
+		</set>
+		<where>
+			<include refid="sql_where"/>
+		</where>
+	</update>
+	
+	<sql id="sql_select">
+		<![CDATA[
+		SELECT 
+			declarationrecord.id,
+			declarationrecord.unitName,
+			declarationrecord.MeasuringPoint,
+			declarationrecord.failure,
+			declarationrecord.reporting_time,
+			declarationrecord.reporting_per,
+			declarationrecord.reporting_phone,
+			declarationrecord.accept_time,
+			declarationrecord.accept_per,
+			declarationrecord.accept_phone,
+			declarationrecord.results,
+			declarationrecord.failureDescribe,
+			declarationrecord.add_time
+		FROM declarationrecord
+		]]>
+	</sql>
+
+	<sql id="sql_where">
+		<if test="id != null and id != ''">
+		<![CDATA[AND declarationrecord.id = #{id}]]>
+		</if>
+		<if test="id == null or id == ''">
+		<if test="idAst != null and idAst != ''">
+			<![CDATA[AND declarationrecord.id >= #{idAst}]]>
+		</if>
+		<if test="idAed != null and idAed != ''">
+			<![CDATA[AND declarationrecord.id <= #{idAed}]]>
+		</if>
+		<if test="ids != null">
+			AND declarationrecord.id IN
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="idAlk != null and idAlk != ''">
+			<![CDATA[AND CAST(declarationrecord.id AS CHAR) LIKE CONCAT('%',#{idAlk},'%')]]>
+		</if>
+		</if>
+		<if test="unitName != null and unitName != ''">
+			<![CDATA[AND declarationrecord.unitName = #{unitName}]]>
+		</if>
+		<if test="unitName == null or unitName == ''">
+			<if test="unitNameAlk != null and unitNameAlk != ''">
+				<![CDATA[AND declarationrecord.unitName LIKE CONCAT('%',#{unitNameAlk},'%')]]>
+			</if>
+			<if test="unitNames != null">
+				AND declarationrecord.unitName IN 
+				<foreach collection="unitNames" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="MeasuringPoint != null and MeasuringPoint != ''">
+			<![CDATA[AND declarationrecord.MeasuringPoint = #{MeasuringPoint}]]>
+		</if>
+		<if test="MeasuringPoint == null or MeasuringPoint == ''">
+			<if test="MeasuringPointAlk != null and MeasuringPointAlk != ''">
+				<![CDATA[AND declarationrecord.MeasuringPoint LIKE CONCAT('%',#{MeasuringPointAlk},'%')]]>
+			</if>
+			<if test="MeasuringPoints != null">
+				AND declarationrecord.MeasuringPoint IN 
+				<foreach collection="MeasuringPoints" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="failure != null and failure != ''">
+			<![CDATA[AND declarationrecord.failure = #{failure}]]>
+		</if>
+		<if test="failure == null or failure == ''">
+			<if test="failureAlk != null and failureAlk != ''">
+				<![CDATA[AND declarationrecord.failure LIKE CONCAT('%',#{failureAlk},'%')]]>
+			</if>
+			<if test="failures != null">
+				AND declarationrecord.failure IN 
+				<foreach collection="failures" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="reportingTime != null and reportingTime != ''">
+			<![CDATA[AND declarationrecord.reporting_time = #{reportingTime}]]>
+		</if>
+		<if test="reportingTime == null or reportingTime == ''">
+			<if test="reportingTimeAlk != null and reportingTimeAlk != ''">
+				<![CDATA[AND declarationrecord.reporting_time LIKE CONCAT('%',#{reportingTimeAlk},'%')]]>
+			</if>
+			<if test="reportingTimes != null">
+				AND declarationrecord.reporting_time IN 
+				<foreach collection="reportingTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="reportingPer != null and reportingPer != ''">
+			<![CDATA[AND declarationrecord.reporting_per = #{reportingPer}]]>
+		</if>
+		<if test="reportingPer == null or reportingPer == ''">
+			<if test="reportingPerAlk != null and reportingPerAlk != ''">
+				<![CDATA[AND declarationrecord.reporting_per LIKE CONCAT('%',#{reportingPerAlk},'%')]]>
+			</if>
+			<if test="reportingPers != null">
+				AND declarationrecord.reporting_per IN 
+				<foreach collection="reportingPers" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="reportingPhone != null and reportingPhone != ''">
+			<![CDATA[AND declarationrecord.reporting_phone = #{reportingPhone}]]>
+		</if>
+		<if test="reportingPhone == null or reportingPhone == ''">
+			<if test="reportingPhoneAlk != null and reportingPhoneAlk != ''">
+				<![CDATA[AND declarationrecord.reporting_phone LIKE CONCAT('%',#{reportingPhoneAlk},'%')]]>
+			</if>
+			<if test="reportingPhones != null">
+				AND declarationrecord.reporting_phone IN 
+				<foreach collection="reportingPhones" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="acceptTime != null and acceptTime != ''">
+			<![CDATA[AND declarationrecord.accept_time = #{acceptTime}]]>
+		</if>
+		<if test="acceptTime == null or acceptTime == ''">
+			<if test="acceptTimeAlk != null and acceptTimeAlk != ''">
+				<![CDATA[AND declarationrecord.accept_time LIKE CONCAT('%',#{acceptTimeAlk},'%')]]>
+			</if>
+			<if test="acceptTimes != null">
+				AND declarationrecord.accept_time IN 
+				<foreach collection="acceptTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="acceptPer != null and acceptPer != ''">
+			<![CDATA[AND declarationrecord.accept_per = #{acceptPer}]]>
+		</if>
+		<if test="acceptPer == null or acceptPer == ''">
+			<if test="acceptPerAlk != null and acceptPerAlk != ''">
+				<![CDATA[AND declarationrecord.accept_per LIKE CONCAT('%',#{acceptPerAlk},'%')]]>
+			</if>
+			<if test="acceptPers != null">
+				AND declarationrecord.accept_per IN 
+				<foreach collection="acceptPers" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="acceptPhone != null and acceptPhone != ''">
+			<![CDATA[AND declarationrecord.accept_phone = #{acceptPhone}]]>
+		</if>
+		<if test="acceptPhone == null or acceptPhone == ''">
+			<if test="acceptPhoneAlk != null and acceptPhoneAlk != ''">
+				<![CDATA[AND declarationrecord.accept_phone LIKE CONCAT('%',#{acceptPhoneAlk},'%')]]>
+			</if>
+			<if test="acceptPhones != null">
+				AND declarationrecord.accept_phone IN 
+				<foreach collection="acceptPhones" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="results != null and results != ''">
+			<![CDATA[AND declarationrecord.results = #{results}]]>
+		</if>
+		<if test="results == null or results == ''">
+			<if test="resultsAlk != null and resultsAlk != ''">
+				<![CDATA[AND declarationrecord.results LIKE CONCAT('%',#{resultsAlk},'%')]]>
+			</if>
+			<if test="resultss != null">
+				AND declarationrecord.results IN 
+				<foreach collection="resultss" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="failureDescribe != null and failureDescribe != ''">
+			<![CDATA[AND declarationrecord.failureDescribe = #{failureDescribe}]]>
+		</if>
+		<if test="failureDescribe == null or failureDescribe == ''">
+			<if test="failureDescribeAlk != null and failureDescribeAlk != ''">
+				<![CDATA[AND declarationrecord.failureDescribe LIKE CONCAT('%',#{failureDescribeAlk},'%')]]>
+			</if>
+			<if test="failureDescribes != null">
+				AND declarationrecord.failureDescribe IN 
+				<foreach collection="failureDescribes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="addTime != null and addTime != ''">
+			<![CDATA[AND declarationrecord.add_time = #{addTime}]]>
+		</if>
+		<if test="addTime == null or addTime == ''">
+			<if test="addTimeAlk != null and addTimeAlk != ''">
+				<![CDATA[AND declarationrecord.add_time LIKE CONCAT('%',#{addTimeAlk},'%')]]>
+			</if>
+			<if test="addTimes != null">
+				AND declarationrecord.add_time IN 
+				<foreach collection="addTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="sql_order">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+		<if test="sort == 'id' and (order == 'asc' or order == 'desc')">
+			declarationrecord.id ${order},
+		</if>
+		<if test="sort == 'unitName' and (order == 'asc' or order == 'desc')">
+			declarationrecord.unitName ${order},
+		</if>
+		<if test="sort == 'MeasuringPoint' and (order == 'asc' or order == 'desc')">
+			declarationrecord.MeasuringPoint ${order},
+		</if>
+		<if test="sort == 'failure' and (order == 'asc' or order == 'desc')">
+			declarationrecord.failure ${order},
+		</if>
+		<if test="sort == 'reportingTime' and (order == 'asc' or order == 'desc')">
+			declarationrecord.reporting_time ${order},
+		</if>
+		<if test="sort == 'reportingPer' and (order == 'asc' or order == 'desc')">
+			declarationrecord.reporting_per ${order},
+		</if>
+		<if test="sort == 'reportingPhone' and (order == 'asc' or order == 'desc')">
+			declarationrecord.reporting_phone ${order},
+		</if>
+		<if test="sort == 'acceptTime' and (order == 'asc' or order == 'desc')">
+			declarationrecord.accept_time ${order},
+		</if>
+		<if test="sort == 'acceptPer' and (order == 'asc' or order == 'desc')">
+			declarationrecord.accept_per ${order},
+		</if>
+		<if test="sort == 'acceptPhone' and (order == 'asc' or order == 'desc')">
+			declarationrecord.accept_phone ${order},
+		</if>
+		<if test="sort == 'results' and (order == 'asc' or order == 'desc')">
+			declarationrecord.results ${order},
+		</if>
+		<if test="sort == 'failureDescribe' and (order == 'asc' or order == 'desc')">
+			declarationrecord.failureDescribe ${order},
+		</if>
+		<if test="sort == 'addTime' and (order == 'asc' or order == 'desc')">
+			declarationrecord.add_time ${order}
+		</if>
+		</trim>
+	</sql>
+	
+	<sql id="sql_page">
+		<if test="page != null and rows != null" >
+		limit #{rows} offset #{page}
+		</if>
+	</sql>
+</mapper>

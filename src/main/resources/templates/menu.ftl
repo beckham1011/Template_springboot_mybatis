@@ -52,15 +52,13 @@
 
             <ul class="submenu">
                 <li>
-                    <a href="${ctx}/user/index.ftl">
-                        <i class="icon-double-angle-right"></i>
-                       实时数据
+                    <a href="${ctx}/equipdata/index.ftl">
+                        <i class="icon-double-angle-right"></i> 实时数据
                     </a>
                 </li>
                 <li>
-                    <a href="${ctx}/role/index.ftl">
-                        <i class="icon-double-angle-right"></i>
-                        电子地图
+                    <a href="${ctx}/equipdata/map.ftl">
+                        <i class="icon-double-angle-right"></i> 电子地图
                     </a>
                 </li>
             </ul>
@@ -76,15 +74,13 @@
 
             <ul class="submenu">
                 <li>
-                    <a href="${ctx}/user/index.ftl">
-                        <i class="icon-double-angle-right"></i>
-                        历史查询
+                    <a href="${ctx}/history/index.ftl">
+                        <i class="icon-double-angle-right"></i> 历史查询
                     </a>
                 </li>
                 <li>
                     <a href="${ctx}/menu/index.ftl">
-                        <i class="icon-double-angle-right"></i>
-                        报警查询
+                        <i class="icon-double-angle-right"></i> 报警查询
                     </a>
                 </li>
             </ul>
@@ -101,14 +97,12 @@
             <ul class="submenu">
                 <li>
                     <a href="${ctx}/user/index.ftl">
-                        <i class="icon-double-angle-right"></i>
-                        通用报表
+                        <i class="icon-double-angle-right"></i> 通用报表
                     </a>
                 </li>
                 <li>
                     <a href="${ctx}/menu/index.ftl">
-                        <i class="icon-double-angle-right"></i>
-                        曲线分析
+                        <i class="icon-double-angle-right"></i> 曲线分析
                     </a>
                 </li>
             </ul>
@@ -125,20 +119,17 @@
             <ul class="submenu">
                 <li>
                     <a href="${ctx}/user/index.ftl">
-                        <i class="icon-double-angle-right"></i>
-                       数据卡维护
+                        <i class="icon-double-angle-right"></i> 数据卡维护
                     </a>
                 </li>
                 <li>
                     <a href="${ctx}/role/index.ftl">
-                        <i class="icon-double-angle-right"></i>
-                        申报记录
+                        <i class="icon-double-angle-right"></i> 申报记录
                     </a>
                 </li>
                 <li>
                     <a href="${ctx}/menu/index.ftl">
-                        <i class="icon-double-angle-right"></i>
-                        维修记录
+                        <i class="icon-double-angle-right"></i> 维修记录
                     </a>
                 </li>
             </ul>

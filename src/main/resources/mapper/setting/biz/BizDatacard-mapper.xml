@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjjoy.bms.setting.persist.mapper.DatacardDao">
+
+	<select id="queryOneMap" resultType="map" parameterType="java.lang.String">
+		SELECT 
+			datacard.id AS id,
+			datacard.unitName AS unitName,
+			datacard.equipName AS equipName,
+			datacard.mobilePhone AS mobilePhone,
+			datacard.amount AS amount,
+			datacard.refill_time AS refillTime,
+			datacard.balance AS balance,
+			datacard.currentState AS currentState,
+			datacard.add_per AS addPer,
+			datacard.add_time AS addTime,
+			datacard.costStandard AS costStandard
+		FROM 
+			datacard
+		WHERE 
+			datacard.id = #{id}
+	</select>
+	
+	<select id="queryMapList" resultType="map" parameterType="map">
+		<![CDATA[
+		SELECT 
+			datacard.id AS id,
+			datacard.unitName AS unitName,
+			datacard.equipName AS equipName,
+			datacard.mobilePhone AS mobilePhone,
+			datacard.amount AS amount,
+			datacard.refill_time AS refillTime,
+			datacard.balance AS balance,
+			datacard.currentState AS currentState,
+			datacard.add_per AS addPer,
+			datacard.add_time AS addTime,
+			datacard.costStandard AS costStandard
+		FROM datacard
+		]]>
+		<where>
+			<include refid="sql_map_where" />
+		</where>
+		<include refid="sql_map_order" />
+		<include refid="sql_map_page" />
+	</select>
+
+	<select id="queryMapListCount" parameterType="map" resultType="long">
+		SELECT 
+			COUNT(0) 
+		FROM 
+			datacard
+		<where>
+			<include refid="sql_map_where" />
+		</where>
+	</select>
+
+	<sql id="sql_map_where">
+		<if test="search != null and search != ''">
+			<![CDATA[
+			AND (
+					CAST(datacard.id as CHAR) LIKE CONCAT('%',#{search},'%') OR
+					datacard.unitName LIKE CONCAT('%',#{search},'%') OR
+					datacard.equipName LIKE CONCAT('%',#{search},'%') OR
+					datacard.mobilePhone LIKE CONCAT('%',#{search},'%') OR
+					datacard.amount LIKE CONCAT('%',#{search},'%') OR
+					datacard.refill_time LIKE CONCAT('%',#{search},'%') OR
+					datacard.balance LIKE CONCAT('%',#{search},'%') OR
+					datacard.currentState LIKE CONCAT('%',#{search},'%') OR
+					datacard.add_per LIKE CONCAT('%',#{search},'%') OR
+					datacard.add_time LIKE CONCAT('%',#{search},'%') OR
+					datacard.costStandard LIKE CONCAT('%',#{search},'%') 
+			)
+			]]>
+		</if>
+		<if test="id != null and id != ''">
+		<![CDATA[AND datacard.id = #{id}]]>
+		</if>
+		<if test="id == null or id == ''">
+		<if test="idAst != null and idAst != ''">
+			<![CDATA[AND datacard.id >= #{idAst}]]>
+		</if>
+		<if test="idAed != null and idAed != ''">
+			<![CDATA[AND datacard.id <= #{idAed}]]>
+		</if>
+		<if test="ids != null">
+			AND datacard.id IN
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="idAlk != null and idAlk != ''">
+			<![CDATA[AND CAST(datacard.id AS CHAR) LIKE CONCAT('%',#{idAlk},'%')]]>
+		</if>
+		</if>
+		<if test="unitName != null and unitName != ''">
+			<![CDATA[AND datacard.unitName = #{unitName}]]>
+		</if>
+		<if test="unitName == null or unitName == ''">
+			<if test="unitNameAlk != null and unitNameAlk != ''">
+				<![CDATA[AND datacard.unitName LIKE CONCAT('%',#{unitNameAlk},'%')]]>
+			</if>
+			<if test="unitNames != null">
+				AND datacard.unitName IN 
+				<foreach collection="unitNames" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="equipName != null and equipName != ''">
+			<![CDATA[AND datacard.equipName = #{equipName}]]>
+		</if>
+		<if test="equipName == null or equipName == ''">
+			<if test="equipNameAlk != null and equipNameAlk != ''">
+				<![CDATA[AND datacard.equipName LIKE CONCAT('%',#{equipNameAlk},'%')]]>
+			</if>
+			<if test="equipNames != null">
+				AND datacard.equipName IN 
+				<foreach collection="equipNames" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="mobilePhone != null and mobilePhone != ''">
+			<![CDATA[AND datacard.mobilePhone = #{mobilePhone}]]>
+		</if>
+		<if test="mobilePhone == null or mobilePhone == ''">
+			<if test="mobilePhoneAlk != null and mobilePhoneAlk != ''">
+				<![CDATA[AND datacard.mobilePhone LIKE CONCAT('%',#{mobilePhoneAlk},'%')]]>
+			</if>
+			<if test="mobilePhones != null">
+				AND datacard.mobilePhone IN 
+				<foreach collection="mobilePhones" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="amount != null and amount != ''">
+			<![CDATA[AND datacard.amount = #{amount}]]>
+		</if>
+		<if test="amount == null or amount == ''">
+			<if test="amountAlk != null and amountAlk != ''">
+				<![CDATA[AND datacard.amount LIKE CONCAT('%',#{amountAlk},'%')]]>
+			</if>
+			<if test="amounts != null">
+				AND datacard.amount IN 
+				<foreach collection="amounts" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="refillTime != null and refillTime != ''">
+			<![CDATA[AND datacard.refill_time = #{refillTime}]]>
+		</if>
+		<if test="refillTime == null or refillTime == ''">
+			<if test="refillTimeAlk != null and refillTimeAlk != ''">
+				<![CDATA[AND datacard.refill_time LIKE CONCAT('%',#{refillTimeAlk},'%')]]>
+			</if>
+			<if test="refillTimes != null">
+				AND datacard.refill_time IN 
+				<foreach collection="refillTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="balance != null and balance != ''">
+			<![CDATA[AND datacard.balance = #{balance}]]>
+		</if>
+		<if test="balance == null or balance == ''">
+			<if test="balanceAlk != null and balanceAlk != ''">
+				<![CDATA[AND datacard.balance LIKE CONCAT('%',#{balanceAlk},'%')]]>
+			</if>
+			<if test="balances != null">
+				AND datacard.balance IN 
+				<foreach collection="balances" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="currentState != null and currentState != ''">
+			<![CDATA[AND datacard.currentState = #{currentState}]]>
+		</if>
+		<if test="currentState == null or currentState == ''">
+			<if test="currentStateAlk != null and currentStateAlk != ''">
+				<![CDATA[AND datacard.currentState LIKE CONCAT('%',#{currentStateAlk},'%')]]>
+			</if>
+			<if test="currentStates != null">
+				AND datacard.currentState IN 
+				<foreach collection="currentStates" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="addPer != null and addPer != ''">
+			<![CDATA[AND datacard.add_per = #{addPer}]]>
+		</if>
+		<if test="addPer == null or addPer == ''">
+			<if test="addPerAlk != null and addPerAlk != ''">
+				<![CDATA[AND datacard.add_per LIKE CONCAT('%',#{addPerAlk},'%')]]>
+			</if>
+			<if test="addPers != null">
+				AND datacard.add_per IN 
+				<foreach collection="addPers" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="addTime != null and addTime != ''">
+			<![CDATA[AND datacard.add_time = #{addTime}]]>
+		</if>
+		<if test="addTime == null or addTime == ''">
+			<if test="addTimeAlk != null and addTimeAlk != ''">
+				<![CDATA[AND datacard.add_time LIKE CONCAT('%',#{addTimeAlk},'%')]]>
+			</if>
+			<if test="addTimes != null">
+				AND datacard.add_time IN 
+				<foreach collection="addTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="costStandard != null and costStandard != ''">
+			<![CDATA[AND datacard.costStandard = #{costStandard}]]>
+		</if>
+		<if test="costStandard == null or costStandard == ''">
+			<if test="costStandardAlk != null and costStandardAlk != ''">
+				<![CDATA[AND datacard.costStandard LIKE CONCAT('%',#{costStandardAlk},'%')]]>
+			</if>
+			<if test="costStandards != null">
+				AND datacard.costStandard IN 
+				<foreach collection="costStandards" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+	</sql>
+
+	<sql id="sql_map_order">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+		<if test="sort == 'id' and (order == 'asc' or order == 'desc')">
+			datacard.id ${order},
+		</if>
+		<if test="sort == 'unitName' and (order == 'asc' or order == 'desc')">
+			datacard.unitName ${order},
+		</if>
+		<if test="sort == 'equipName' and (order == 'asc' or order == 'desc')">
+			datacard.equipName ${order},
+		</if>
+		<if test="sort == 'mobilePhone' and (order == 'asc' or order == 'desc')">
+			datacard.mobilePhone ${order},
+		</if>
+		<if test="sort == 'amount' and (order == 'asc' or order == 'desc')">
+			datacard.amount ${order},
+		</if>
+		<if test="sort == 'refillTime' and (order == 'asc' or order == 'desc')">
+			datacard.refill_time ${order},
+		</if>
+		<if test="sort == 'balance' and (order == 'asc' or order == 'desc')">
+			datacard.balance ${order},
+		</if>
+		<if test="sort == 'currentState' and (order == 'asc' or order == 'desc')">
+			datacard.currentState ${order},
+		</if>
+		<if test="sort == 'addPer' and (order == 'asc' or order == 'desc')">
+			datacard.add_per ${order},
+		</if>
+		<if test="sort == 'addTime' and (order == 'asc' or order == 'desc')">
+			datacard.add_time ${order},
+		</if>
+		<if test="sort == 'costStandard' and (order == 'asc' or order == 'desc')">
+			datacard.costStandard ${order},
+		</if>
+		</trim>
+	</sql>
+
+	<sql id="sql_map_page">
+		<if test="page != null and rows != null" >
+		limit #{rows} offset #{page}
+		</if>
+	</sql>
+	
+</mapper>

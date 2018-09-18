@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjjoy.bms.setting.persist.mapper.EquipdataDao">
+	
+	<parameterMap id="pm_equipdata" type="cn.bjjoy.bms.setting.persist.model.Equipdata">
+		<parameter property="id" javaType="int" jdbcType="INTEGER" />
+		<parameter property="addressCode" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="EquipTypeId" javaType="int" jdbcType="INTEGER" />
+		<parameter property="waterStatus" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="flowRate" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<parameter property="NetCumulative" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<parameter property="AreCumulative" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<parameter property="SignalQuality" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="CommunicationStatus" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="addPer" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="addTime" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="alarm" javaType="String" jdbcType="VARCHAR" />
+	</parameterMap>
+	
+	<resultMap id="rm_equipdata" type="cn.bjjoy.bms.setting.persist.model.Equipdata">
+		<result property="id" column="id" javaType="int" jdbcType="INTEGER" />
+		<result property="addressCode" column="addressCode" javaType="String" jdbcType="VARCHAR" />
+		<result property="EquipTypeId" column="EquipTypeId" javaType="int" jdbcType="INTEGER" />
+		<result property="waterStatus" column="waterStatus" javaType="String" jdbcType="VARCHAR" />
+		<result property="flowRate" column="flowRate" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result property="NetCumulative" column="NetCumulative" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result property="AreCumulative" column="AreCumulative" javaType="BigDecimal" jdbcType="NUMERIC" />
+		<result property="SignalQuality" column="SignalQuality" javaType="String" jdbcType="VARCHAR" />
+		<result property="CommunicationStatus" column="CommunicationStatus" javaType="String" jdbcType="VARCHAR" />
+		<result property="addPer" column="add_per" javaType="String" jdbcType="VARCHAR" />
+		<result property="addTime" column="add_time" javaType="String" jdbcType="VARCHAR" />
+		<result property="alarm" column="alarm" javaType="String" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="save" parameterMap="pm_equipdata" useGeneratedKeys="true" keyProperty="id" >
+		insert into equipdata
+		<trim prefix="(" suffix=")" suffixOverrides="," >	
+			<if test="id != null">id,</if>
+			<if test="addressCode != null">addressCode,</if>
+			<if test="EquipTypeId != null">EquipTypeId,</if>
+			<if test="waterStatus != null">waterStatus,</if>
+			<if test="flowRate != null">flowRate,</if>
+			<if test="NetCumulative != null">NetCumulative,</if>
+			<if test="AreCumulative != null">AreCumulative,</if>
+			<if test="SignalQuality != null">SignalQuality,</if>
+			<if test="CommunicationStatus != null">CommunicationStatus,</if>
+			<if test="addPer != null">add_per,</if>
+			<if test="addTime != null">add_time,</if>
+			<if test="alarm != null">alarm</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null">#{id},</if>
+			<if test="addressCode != null">#{addressCode},</if>
+			<if test="EquipTypeId != null">#{EquipTypeId},</if>
+			<if test="waterStatus != null">#{waterStatus},</if>
+			<if test="flowRate != null">#{flowRate},</if>
+			<if test="NetCumulative != null">#{NetCumulative},</if>
+			<if test="AreCumulative != null">#{AreCumulative},</if>
+			<if test="SignalQuality != null">#{SignalQuality},</if>
+			<if test="CommunicationStatus != null">#{CommunicationStatus},</if>
+			<if test="addPer != null">#{addPer},</if>
+			<if test="addTime != null">#{addTime},</if>
+			<if test="alarm != null">#{alarm}</if>
+		</trim>
+	</insert>
+		
+	<delete id="deleteOne" parameterType="java.lang.String">
+		DELETE FROM equipdata WHERE equipdata.id = #{id}
+	</delete>
+	
+	<delete id="delete" parameterType="map">
+		DELETE FROM equipdata
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</delete>
+
+	<select id="queryOne" parameterType="java.lang.String" resultMap="rm_equipdata">
+		<include refid="sql_select"/>
+		WHERE equipdata.id = #{id}
+	</select>
+	
+	<select id="queryList" parameterType="map" resultMap="rm_equipdata">
+		<include refid="sql_select" />
+		<where>
+			<include refid="sql_where" />
+		</where>
+		<include refid="sql_order" />
+		<include refid="sql_page" />
+	</select>
+	
+	<select id="queryListCount" parameterType="map" resultType="long">
+		SELECT COUNT(0) FROM equipdata
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</select>
+	
+	<update id="updateOne" parameterType="map">
+		UPDATE equipdata
+		<set>
+		<if test="_parameter.containsKey('addressCode')">
+		<choose>
+            <when test="addressCode == null or addressCode == ''">
+			addressCode = NULL,
+            </when>
+            <otherwise>
+			addressCode = #{addressCode},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('EquipTypeId')">
+		<choose>
+            <when test="EquipTypeId == null">
+			EquipTypeId = NULL,
+            </when>
+            <otherwise>
+			EquipTypeId = #{EquipTypeId},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('waterStatus')">
+		<choose>
+            <when test="waterStatus == null or waterStatus == ''">
+			waterStatus = NULL,
+            </when>
+            <otherwise>
+			waterStatus = #{waterStatus},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('flowRate')">
+		<choose>
+            <when test="flowRate == null">
+			flowRate = NULL,
+            </when>
+            <otherwise>
+			flowRate = #{flowRate},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('NetCumulative')">
+		<choose>
+            <when test="NetCumulative == null">
+			NetCumulative = NULL,
+            </when>
+            <otherwise>
+			NetCumulative = #{NetCumulative},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('AreCumulative')">
+		<choose>
+            <when test="AreCumulative == null">
+			AreCumulative = NULL,
+            </when>
+            <otherwise>
+			AreCumulative = #{AreCumulative},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('SignalQuality')">
+		<choose>
+            <when test="SignalQuality == null or SignalQuality == ''">
+			SignalQuality = NULL,
+            </when>
+            <otherwise>
+			SignalQuality = #{SignalQuality},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('CommunicationStatus')">
+		<choose>
+            <when test="CommunicationStatus == null or CommunicationStatus == ''">
+			CommunicationStatus = NULL,
+            </when>
+            <otherwise>
+			CommunicationStatus = #{CommunicationStatus},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('addPer')">
+		<choose>
+            <when test="addPer == null or addPer == ''">
+			add_per = NULL,
+            </when>
+            <otherwise>
+			add_per = #{addPer},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('addTime')">
+		<choose>
+            <when test="addTime == null or addTime == ''">
+			add_time = NULL,
+            </when>
+            <otherwise>
+			add_time = #{addTime},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('alarm')">
+		<choose>
+            <when test="alarm == null or alarm == ''">
+			alarm = NULL
+            </when>
+            <otherwise>
+			alarm = #{alarm}
+            </otherwise>
+        </choose>
+		</if>
+		</set>
+		<where>
+		id = #{id}
+		</where>
+	</update>
+
+	<update id="update" parameterType="map">
+		UPDATE equipdata
+		<set>
+		<if test="_parameter.containsKey('addressCodeAnw')">
+		<choose>
+            <when test="addressCodeAnw == null or addressCodeAnw == ''">
+			addressCode = NULL,
+            </when>
+            <otherwise>
+			addressCode = #{addressCodeAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('EquipTypeIdAnw')">
+		<choose>
+            <when test="EquipTypeIdAnw == null">
+			EquipTypeId = NULL,
+            </when>
+            <otherwise>
+			EquipTypeId = #{EquipTypeIdAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('waterStatusAnw')">
+		<choose>
+            <when test="waterStatusAnw == null or waterStatusAnw == ''">
+			waterStatus = NULL,
+            </when>
+            <otherwise>
+			waterStatus = #{waterStatusAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('flowRateAnw')">
+		<choose>
+            <when test="flowRateAnw == null">
+			flowRate = NULL,
+            </when>
+            <otherwise>
+			flowRate = #{flowRateAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('NetCumulativeAnw')">
+		<choose>
+            <when test="NetCumulativeAnw == null">
+			NetCumulative = NULL,
+            </when>
+            <otherwise>
+			NetCumulative = #{NetCumulativeAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('AreCumulativeAnw')">
+		<choose>
+            <when test="AreCumulativeAnw == null">
+			AreCumulative = NULL,
+            </when>
+            <otherwise>
+			AreCumulative = #{AreCumulativeAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('SignalQualityAnw')">
+		<choose>
+            <when test="SignalQualityAnw == null or SignalQualityAnw == ''">
+			SignalQuality = NULL,
+            </when>
+            <otherwise>
+			SignalQuality = #{SignalQualityAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('CommunicationStatusAnw')">
+		<choose>
+            <when test="CommunicationStatusAnw == null or CommunicationStatusAnw == ''">
+			CommunicationStatus = NULL,
+            </when>
+            <otherwise>
+			CommunicationStatus = #{CommunicationStatusAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('addPerAnw')">
+		<choose>
+            <when test="addPerAnw == null or addPerAnw == ''">
+			add_per = NULL,
+            </when>
+            <otherwise>
+			add_per = #{addPerAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('addTimeAnw')">
+		<choose>
+            <when test="addTimeAnw == null or addTimeAnw == ''">
+			add_time = NULL,
+            </when>
+            <otherwise>
+			add_time = #{addTimeAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('alarmAnw')">
+		<choose>
+            <when test="alarmAnw == null or alarmAnw == ''">
+			alarm = NULL
+            </when>
+            <otherwise>
+			alarm = #{alarmAnw}
+            </otherwise>  
+        </choose>
+		</if>
+		</set>
+		<where>
+			<include refid="sql_where"/>
+		</where>
+	</update>
+	
+	<sql id="sql_select">
+		<![CDATA[
+		SELECT 
+			equipdata.id,
+			equipdata.addressCode,
+			equipdata.EquipTypeId,
+			equipdata.waterStatus,
+			equipdata.flowRate,
+			equipdata.NetCumulative,
+			equipdata.AreCumulative,
+			equipdata.SignalQuality,
+			equipdata.CommunicationStatus,
+			equipdata.add_per,
+			equipdata.add_time,
+			equipdata.alarm
+		FROM equipdata
+		]]>
+	</sql>
+
+	<sql id="sql_where">
+		<if test="id != null and id != ''">
+		<![CDATA[AND equipdata.id = #{id}]]>
+		</if>
+		<if test="id == null or id == ''">
+		<if test="idAst != null and idAst != ''">
+			<![CDATA[AND equipdata.id >= #{idAst}]]>
+		</if>
+		<if test="idAed != null and idAed != ''">
+			<![CDATA[AND equipdata.id <= #{idAed}]]>
+		</if>
+		<if test="ids != null">
+			AND equipdata.id IN
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="idAlk != null and idAlk != ''">
+			<![CDATA[AND CAST(equipdata.id AS CHAR) LIKE CONCAT('%',#{idAlk},'%')]]>
+		</if>
+		</if>
+		<if test="addressCode != null and addressCode != ''">
+			<![CDATA[AND equipdata.addressCode = #{addressCode}]]>
+		</if>
+		<if test="addressCode == null or addressCode == ''">
+			<if test="addressCodeAlk != null and addressCodeAlk != ''">
+				<![CDATA[AND equipdata.addressCode LIKE CONCAT('%',#{addressCodeAlk},'%')]]>
+			</if>
+			<if test="addressCodes != null">
+				AND equipdata.addressCode IN 
+				<foreach collection="addressCodes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="EquipTypeId != null and EquipTypeId != ''">
+		<![CDATA[AND equipdata.EquipTypeId = #{EquipTypeId}]]>
+		</if>
+		<if test="EquipTypeId == null or EquipTypeId == ''">
+		<if test="EquipTypeIdAst != null and EquipTypeIdAst != ''">
+			<![CDATA[AND equipdata.EquipTypeId >= #{EquipTypeIdAst}]]>
+		</if>
+		<if test="EquipTypeIdAed != null and EquipTypeIdAed != ''">
+			<![CDATA[AND equipdata.EquipTypeId <= #{EquipTypeIdAed}]]>
+		</if>
+		<if test="EquipTypeIds != null">
+			AND equipdata.EquipTypeId IN
+			<foreach collection="EquipTypeIds" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="EquipTypeIdAlk != null and EquipTypeIdAlk != ''">
+			<![CDATA[AND CAST(equipdata.EquipTypeId AS CHAR) LIKE CONCAT('%',#{EquipTypeIdAlk},'%')]]>
+		</if>
+		</if>
+		<if test="waterStatus != null and waterStatus != ''">
+			<![CDATA[AND equipdata.waterStatus = #{waterStatus}]]>
+		</if>
+		<if test="waterStatus == null or waterStatus == ''">
+			<if test="waterStatusAlk != null and waterStatusAlk != ''">
+				<![CDATA[AND equipdata.waterStatus LIKE CONCAT('%',#{waterStatusAlk},'%')]]>
+			</if>
+			<if test="waterStatuss != null">
+				AND equipdata.waterStatus IN 
+				<foreach collection="waterStatuss" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="flowRate != null and flowRate != ''">
+			<![CDATA[AND equipdata.flowRate = #{flowRate}]]>
+		</if>
+		<if test="flowRate == null or flowRate == ''">
+			<if test="flowRateAst != null and flowRateAst != ''">
+				<![CDATA[AND equipdata.flowRate >= #{flowRateAst}]]>
+			</if>
+			<if test="flowRateAed != null and flowRateAed != ''">
+				<![CDATA[AND equipdata.flowRate <= #{flowRateAed}]]>
+			</if>
+			<if test="flowRates != null">
+				 and equipdata.flowRate IN 
+				<foreach collection="flowRates" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+			<if test="flowRateAlk != null and flowRateAlk != ''">
+				<![CDATA[AND CAST(equipdata.flowRate AS CHAR) LIKE CONCAT('%',#{flowRateAlk},'%')]]>
+			</if>
+		</if>
+		<if test="NetCumulative != null and NetCumulative != ''">
+			<![CDATA[AND equipdata.NetCumulative = #{NetCumulative}]]>
+		</if>
+		<if test="NetCumulative == null or NetCumulative == ''">
+			<if test="NetCumulativeAst != null and NetCumulativeAst != ''">
+				<![CDATA[AND equipdata.NetCumulative >= #{NetCumulativeAst}]]>
+			</if>
+			<if test="NetCumulativeAed != null and NetCumulativeAed != ''">
+				<![CDATA[AND equipdata.NetCumulative <= #{NetCumulativeAed}]]>
+			</if>
+			<if test="NetCumulatives != null">
+				 and equipdata.NetCumulative IN 
+				<foreach collection="NetCumulatives" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+			<if test="NetCumulativeAlk != null and NetCumulativeAlk != ''">
+				<![CDATA[AND CAST(equipdata.NetCumulative AS CHAR) LIKE CONCAT('%',#{NetCumulativeAlk},'%')]]>
+			</if>
+		</if>
+		<if test="AreCumulative != null and AreCumulative != ''">
+			<![CDATA[AND equipdata.AreCumulative = #{AreCumulative}]]>
+		</if>
+		<if test="AreCumulative == null or AreCumulative == ''">
+			<if test="AreCumulativeAst != null and AreCumulativeAst != ''">
+				<![CDATA[AND equipdata.AreCumulative >= #{AreCumulativeAst}]]>
+			</if>
+			<if test="AreCumulativeAed != null and AreCumulativeAed != ''">
+				<![CDATA[AND equipdata.AreCumulative <= #{AreCumulativeAed}]]>
+			</if>
+			<if test="AreCumulatives != null">
+				 and equipdata.AreCumulative IN 
+				<foreach collection="AreCumulatives" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+			<if test="AreCumulativeAlk != null and AreCumulativeAlk != ''">
+				<![CDATA[AND CAST(equipdata.AreCumulative AS CHAR) LIKE CONCAT('%',#{AreCumulativeAlk},'%')]]>
+			</if>
+		</if>
+		<if test="SignalQuality != null and SignalQuality != ''">
+			<![CDATA[AND equipdata.SignalQuality = #{SignalQuality}]]>
+		</if>
+		<if test="SignalQuality == null or SignalQuality == ''">
+			<if test="SignalQualityAlk != null and SignalQualityAlk != ''">
+				<![CDATA[AND equipdata.SignalQuality LIKE CONCAT('%',#{SignalQualityAlk},'%')]]>
+			</if>
+			<if test="SignalQualitys != null">
+				AND equipdata.SignalQuality IN 
+				<foreach collection="SignalQualitys" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="CommunicationStatus != null and CommunicationStatus != ''">
+			<![CDATA[AND equipdata.CommunicationStatus = #{CommunicationStatus}]]>
+		</if>
+		<if test="CommunicationStatus == null or CommunicationStatus == ''">
+			<if test="CommunicationStatusAlk != null and CommunicationStatusAlk != ''">
+				<![CDATA[AND equipdata.CommunicationStatus LIKE CONCAT('%',#{CommunicationStatusAlk},'%')]]>
+			</if>
+			<if test="CommunicationStatuss != null">
+				AND equipdata.CommunicationStatus IN 
+				<foreach collection="CommunicationStatuss" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="addPer != null and addPer != ''">
+			<![CDATA[AND equipdata.add_per = #{addPer}]]>
+		</if>
+		<if test="addPer == null or addPer == ''">
+			<if test="addPerAlk != null and addPerAlk != ''">
+				<![CDATA[AND equipdata.add_per LIKE CONCAT('%',#{addPerAlk},'%')]]>
+			</if>
+			<if test="addPers != null">
+				AND equipdata.add_per IN 
+				<foreach collection="addPers" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="addTime != null and addTime != ''">
+			<![CDATA[AND equipdata.add_time = #{addTime}]]>
+		</if>
+		<if test="addTime == null or addTime == ''">
+			<if test="addTimeAlk != null and addTimeAlk != ''">
+				<![CDATA[AND equipdata.add_time LIKE CONCAT('%',#{addTimeAlk},'%')]]>
+			</if>
+			<if test="addTimes != null">
+				AND equipdata.add_time IN 
+				<foreach collection="addTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="alarm != null and alarm != ''">
+			<![CDATA[AND equipdata.alarm = #{alarm}]]>
+		</if>
+		<if test="alarm == null or alarm == ''">
+			<if test="alarmAlk != null and alarmAlk != ''">
+				<![CDATA[AND equipdata.alarm LIKE CONCAT('%',#{alarmAlk},'%')]]>
+			</if>
+			<if test="alarms != null">
+				AND equipdata.alarm IN 
+				<foreach collection="alarms" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="sql_order">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+		<if test="sort == 'id' and (order == 'asc' or order == 'desc')">
+			equipdata.id ${order},
+		</if>
+		<if test="sort == 'addressCode' and (order == 'asc' or order == 'desc')">
+			equipdata.addressCode ${order},
+		</if>
+		<if test="sort == 'EquipTypeId' and (order == 'asc' or order == 'desc')">
+			equipdata.EquipTypeId ${order},
+		</if>
+		<if test="sort == 'waterStatus' and (order == 'asc' or order == 'desc')">
+			equipdata.waterStatus ${order},
+		</if>
+		<if test="sort == 'flowRate' and (order == 'asc' or order == 'desc')">
+			equipdata.flowRate ${order},
+		</if>
+		<if test="sort == 'NetCumulative' and (order == 'asc' or order == 'desc')">
+			equipdata.NetCumulative ${order},
+		</if>
+		<if test="sort == 'AreCumulative' and (order == 'asc' or order == 'desc')">
+			equipdata.AreCumulative ${order},
+		</if>
+		<if test="sort == 'SignalQuality' and (order == 'asc' or order == 'desc')">
+			equipdata.SignalQuality ${order},
+		</if>
+		<if test="sort == 'CommunicationStatus' and (order == 'asc' or order == 'desc')">
+			equipdata.CommunicationStatus ${order},
+		</if>
+		<if test="sort == 'addPer' and (order == 'asc' or order == 'desc')">
+			equipdata.add_per ${order},
+		</if>
+		<if test="sort == 'addTime' and (order == 'asc' or order == 'desc')">
+			equipdata.add_time ${order},
+		</if>
+		<if test="sort == 'alarm' and (order == 'asc' or order == 'desc')">
+			equipdata.alarm ${order}
+		</if>
+		</trim>
+	</sql>
+	
+	<sql id="sql_page">
+		<if test="page != null and rows != null" >
+		limit #{rows} offset #{page}
+		</if>
+	</sql>
+</mapper>

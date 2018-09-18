@@ -1,23 +1,21 @@
 package cn.bjjoy.bms.setting.service.impl;
 
-import cn.bjjoy.bms.setting.dao.CamacAnswerMapper;
-import cn.bjjoy.bms.setting.dao.UserMapper;
-import cn.bjjoy.bms.setting.dao.UserRoleMapper;
-import cn.bjjoy.bms.setting.dto.UserDto;
-import cn.bjjoy.bms.setting.entity.CamacAnswer;
-import cn.bjjoy.bms.setting.entity.User;
-import cn.bjjoy.bms.setting.entity.UserRole;
-import cn.bjjoy.bms.setting.service.UserService;
-import cn.bjjoy.bms.util.DataUtils;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import cn.bjjoy.bms.setting.dao.UserMapper;
+import cn.bjjoy.bms.setting.dao.UserRoleMapper;
+import cn.bjjoy.bms.setting.dto.UserDto;
+import cn.bjjoy.bms.setting.entity.User;
+import cn.bjjoy.bms.setting.entity.UserRole;
+import cn.bjjoy.bms.setting.service.UserService;
+import cn.bjjoy.bms.util.DataUtils;
 
 /**
  * Created by bjjoy on 2017/11/02.
@@ -27,9 +25,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
-
-    @Autowired
-    private CamacAnswerMapper answerMapper;
 
     @Autowired
     private UserRoleMapper userRoleMapper;

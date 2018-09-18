@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjjoy.bms.setting.persist.mapper.MaintenanceDao">
+
+	<select id="queryOneMap" resultType="map" parameterType="java.lang.String">
+		SELECT 
+			maintenance.id AS id,
+			maintenance.start_time AS startTime,
+			maintenance.end_time AS endTime,
+			maintenance.methods AS methods,
+			maintenance.m_per AS mPer,
+			maintenance.describe AS describe,
+			maintenance.results AS results,
+			maintenance.cost AS cost,
+			maintenance.add_per AS addPer,
+			maintenance.add_time AS addTime
+		FROM 
+			maintenance
+		WHERE 
+			maintenance.id = #{id}
+	</select>
+	
+	<select id="queryMapList" resultType="map" parameterType="map">
+		<![CDATA[
+		SELECT 
+			maintenance.id AS id,
+			maintenance.start_time AS startTime,
+			maintenance.end_time AS endTime,
+			maintenance.methods AS methods,
+			maintenance.m_per AS mPer,
+			maintenance.describe AS describe,
+			maintenance.results AS results,
+			maintenance.cost AS cost,
+			maintenance.add_per AS addPer,
+			maintenance.add_time AS addTime
+		FROM maintenance
+		]]>
+		<where>
+			<include refid="sql_map_where" />
+		</where>
+		<include refid="sql_map_order" />
+		<include refid="sql_map_page" />
+	</select>
+
+	<select id="queryMapListCount" parameterType="map" resultType="long">
+		SELECT 
+			COUNT(0) 
+		FROM 
+			maintenance
+		<where>
+			<include refid="sql_map_where" />
+		</where>
+	</select>
+
+	<sql id="sql_map_where">
+		<if test="search != null and search != ''">
+			<![CDATA[
+			AND (
+					CAST(maintenance.id as CHAR) LIKE CONCAT('%',#{search},'%') OR
+					maintenance.start_time LIKE CONCAT('%',#{search},'%') OR
+					maintenance.end_time LIKE CONCAT('%',#{search},'%') OR
+					maintenance.methods LIKE CONCAT('%',#{search},'%') OR
+					maintenance.m_per LIKE CONCAT('%',#{search},'%') OR
+					maintenance.describe LIKE CONCAT('%',#{search},'%') OR
+					maintenance.results LIKE CONCAT('%',#{search},'%') OR
+					maintenance.cost LIKE CONCAT('%',#{search},'%') OR
+					maintenance.add_per LIKE CONCAT('%',#{search},'%') OR
+					maintenance.add_time LIKE CONCAT('%',#{search},'%') 
+			)
+			]]>
+		</if>
+		<if test="id != null and id != ''">
+		<![CDATA[AND maintenance.id = #{id}]]>
+		</if>
+		<if test="id == null or id == ''">
+		<if test="idAst != null and idAst != ''">
+			<![CDATA[AND maintenance.id >= #{idAst}]]>
+		</if>
+		<if test="idAed != null and idAed != ''">
+			<![CDATA[AND maintenance.id <= #{idAed}]]>
+		</if>
+		<if test="ids != null">
+			AND maintenance.id IN
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="idAlk != null and idAlk != ''">
+			<![CDATA[AND CAST(maintenance.id AS CHAR) LIKE CONCAT('%',#{idAlk},'%')]]>
+		</if>
+		</if>
+		<if test="startTime != null and startTime != ''">
+			<![CDATA[AND maintenance.start_time = #{startTime}]]>
+		</if>
+		<if test="startTime == null or startTime == ''">
+			<if test="startTimeAlk != null and startTimeAlk != ''">
+				<![CDATA[AND maintenance.start_time LIKE CONCAT('%',#{startTimeAlk},'%')]]>
+			</if>
+			<if test="startTimes != null">
+				AND maintenance.start_time IN 
+				<foreach collection="startTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="endTime != null and endTime != ''">
+			<![CDATA[AND maintenance.end_time = #{endTime}]]>
+		</if>
+		<if test="endTime == null or endTime == ''">
+			<if test="endTimeAlk != null and endTimeAlk != ''">
+				<![CDATA[AND maintenance.end_time LIKE CONCAT('%',#{endTimeAlk},'%')]]>
+			</if>
+			<if test="endTimes != null">
+				AND maintenance.end_time IN 
+				<foreach collection="endTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="methods != null and methods != ''">
+			<![CDATA[AND maintenance.methods = #{methods}]]>
+		</if>
+		<if test="methods == null or methods == ''">
+			<if test="methodsAlk != null and methodsAlk != ''">
+				<![CDATA[AND maintenance.methods LIKE CONCAT('%',#{methodsAlk},'%')]]>
+			</if>
+			<if test="methodss != null">
+				AND maintenance.methods IN 
+				<foreach collection="methodss" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="mPer != null and mPer != ''">
+			<![CDATA[AND maintenance.m_per = #{mPer}]]>
+		</if>
+		<if test="mPer == null or mPer == ''">
+			<if test="mPerAlk != null and mPerAlk != ''">
+				<![CDATA[AND maintenance.m_per LIKE CONCAT('%',#{mPerAlk},'%')]]>
+			</if>
+			<if test="mPers != null">
+				AND maintenance.m_per IN 
+				<foreach collection="mPers" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="describe != null and describe != ''">
+			<![CDATA[AND maintenance.describe = #{describe}]]>
+		</if>
+		<if test="describe == null or describe == ''">
+			<if test="describeAlk != null and describeAlk != ''">
+				<![CDATA[AND maintenance.describe LIKE CONCAT('%',#{describeAlk},'%')]]>
+			</if>
+			<if test="describes != null">
+				AND maintenance.describe IN 
+				<foreach collection="describes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="results != null and results != ''">
+			<![CDATA[AND maintenance.results = #{results}]]>
+		</if>
+		<if test="results == null or results == ''">
+			<if test="resultsAlk != null and resultsAlk != ''">
+				<![CDATA[AND maintenance.results LIKE CONCAT('%',#{resultsAlk},'%')]]>
+			</if>
+			<if test="resultss != null">
+				AND maintenance.results IN 
+				<foreach collection="resultss" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="cost != null and cost != ''">
+			<![CDATA[AND maintenance.cost = #{cost}]]>
+		</if>
+		<if test="cost == null or cost == ''">
+			<if test="costAlk != null and costAlk != ''">
+				<![CDATA[AND maintenance.cost LIKE CONCAT('%',#{costAlk},'%')]]>
+			</if>
+			<if test="costs != null">
+				AND maintenance.cost IN 
+				<foreach collection="costs" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="addPer != null and addPer != ''">
+			<![CDATA[AND maintenance.add_per = #{addPer}]]>
+		</if>
+		<if test="addPer == null or addPer == ''">
+			<if test="addPerAlk != null and addPerAlk != ''">
+				<![CDATA[AND maintenance.add_per LIKE CONCAT('%',#{addPerAlk},'%')]]>
+			</if>
+			<if test="addPers != null">
+				AND maintenance.add_per IN 
+				<foreach collection="addPers" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="addTime != null and addTime != ''">
+			<![CDATA[AND maintenance.add_time = #{addTime}]]>
+		</if>
+		<if test="addTime == null or addTime == ''">
+			<if test="addTimeAlk != null and addTimeAlk != ''">
+				<![CDATA[AND maintenance.add_time LIKE CONCAT('%',#{addTimeAlk},'%')]]>
+			</if>
+			<if test="addTimes != null">
+				AND maintenance.add_time IN 
+				<foreach collection="addTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+	</sql>
+
+	<sql id="sql_map_order">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+		<if test="sort == 'id' and (order == 'asc' or order == 'desc')">
+			maintenance.id ${order},
+		</if>
+		<if test="sort == 'startTime' and (order == 'asc' or order == 'desc')">
+			maintenance.start_time ${order},
+		</if>
+		<if test="sort == 'endTime' and (order == 'asc' or order == 'desc')">
+			maintenance.end_time ${order},
+		</if>
+		<if test="sort == 'methods' and (order == 'asc' or order == 'desc')">
+			maintenance.methods ${order},
+		</if>
+		<if test="sort == 'mPer' and (order == 'asc' or order == 'desc')">
+			maintenance.m_per ${order},
+		</if>
+		<if test="sort == 'describe' and (order == 'asc' or order == 'desc')">
+			maintenance.describe ${order},
+		</if>
+		<if test="sort == 'results' and (order == 'asc' or order == 'desc')">
+			maintenance.results ${order},
+		</if>
+		<if test="sort == 'cost' and (order == 'asc' or order == 'desc')">
+			maintenance.cost ${order},
+		</if>
+		<if test="sort == 'addPer' and (order == 'asc' or order == 'desc')">
+			maintenance.add_per ${order},
+		</if>
+		<if test="sort == 'addTime' and (order == 'asc' or order == 'desc')">
+			maintenance.add_time ${order},
+		</if>
+		</trim>
+	</sql>
+
+	<sql id="sql_map_page">
+		<if test="page != null and rows != null" >
+		limit #{rows} offset #{page}
+		</if>
+	</sql>
+	
+</mapper>

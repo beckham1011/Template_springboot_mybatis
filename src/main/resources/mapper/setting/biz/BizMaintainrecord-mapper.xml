@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjjoy.bms.setting.persist.mapper.MaintainrecordDao">
+
+	<select id="queryOneMap" resultType="map" parameterType="java.lang.String">
+		SELECT 
+			maintainrecord.id AS id,
+			maintainrecord.start_time AS startTime,
+			maintainrecord.end_time AS endTime,
+			maintainrecord.method AS method,
+			maintainrecord.maintain_per AS maintainPer,
+			maintainrecord.Describe AS Describe,
+			maintainrecord.results AS results,
+			maintainrecord.money AS money,
+			maintainrecord.DeclarationRecord_id AS DeclarationRecordId,
+			maintainrecord.reason AS reason
+		FROM 
+			maintainrecord
+		WHERE 
+			maintainrecord.id = #{id}
+	</select>
+	
+	<select id="queryMapList" resultType="map" parameterType="map">
+		<![CDATA[
+		SELECT 
+			maintainrecord.id AS id,
+			maintainrecord.start_time AS startTime,
+			maintainrecord.end_time AS endTime,
+			maintainrecord.method AS method,
+			maintainrecord.maintain_per AS maintainPer,
+			maintainrecord.Describe AS Describe,
+			maintainrecord.results AS results,
+			maintainrecord.money AS money,
+			maintainrecord.DeclarationRecord_id AS DeclarationRecordId,
+			maintainrecord.reason AS reason
+		FROM maintainrecord
+		]]>
+		<where>
+			<include refid="sql_map_where" />
+		</where>
+		<include refid="sql_map_order" />
+		<include refid="sql_map_page" />
+	</select>
+
+	<select id="queryMapListCount" parameterType="map" resultType="long">
+		SELECT 
+			COUNT(0) 
+		FROM 
+			maintainrecord
+		<where>
+			<include refid="sql_map_where" />
+		</where>
+	</select>
+
+	<sql id="sql_map_where">
+		<if test="search != null and search != ''">
+			<![CDATA[
+			AND (
+					CAST(maintainrecord.id as CHAR) LIKE CONCAT('%',#{search},'%') OR
+					maintainrecord.start_time LIKE CONCAT('%',#{search},'%') OR
+					maintainrecord.end_time LIKE CONCAT('%',#{search},'%') OR
+					maintainrecord.method LIKE CONCAT('%',#{search},'%') OR
+					maintainrecord.maintain_per LIKE CONCAT('%',#{search},'%') OR
+					maintainrecord.Describe LIKE CONCAT('%',#{search},'%') OR
+					maintainrecord.results LIKE CONCAT('%',#{search},'%') OR
+					maintainrecord.money LIKE CONCAT('%',#{search},'%') OR
+					CAST(maintainrecord.DeclarationRecord_id as CHAR) LIKE CONCAT('%',#{search},'%') OR
+					maintainrecord.reason LIKE CONCAT('%',#{search},'%') 
+			)
+			]]>
+		</if>
+		<if test="id != null and id != ''">
+		<![CDATA[AND maintainrecord.id = #{id}]]>
+		</if>
+		<if test="id == null or id == ''">
+		<if test="idAst != null and idAst != ''">
+			<![CDATA[AND maintainrecord.id >= #{idAst}]]>
+		</if>
+		<if test="idAed != null and idAed != ''">
+			<![CDATA[AND maintainrecord.id <= #{idAed}]]>
+		</if>
+		<if test="ids != null">
+			AND maintainrecord.id IN
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="idAlk != null and idAlk != ''">
+			<![CDATA[AND CAST(maintainrecord.id AS CHAR) LIKE CONCAT('%',#{idAlk},'%')]]>
+		</if>
+		</if>
+		<if test="startTime != null and startTime != ''">
+			<![CDATA[AND maintainrecord.start_time = #{startTime}]]>
+		</if>
+		<if test="startTime == null or startTime == ''">
+			<if test="startTimeAlk != null and startTimeAlk != ''">
+				<![CDATA[AND maintainrecord.start_time LIKE CONCAT('%',#{startTimeAlk},'%')]]>
+			</if>
+			<if test="startTimes != null">
+				AND maintainrecord.start_time IN 
+				<foreach collection="startTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="endTime != null and endTime != ''">
+			<![CDATA[AND maintainrecord.end_time = #{endTime}]]>
+		</if>
+		<if test="endTime == null or endTime == ''">
+			<if test="endTimeAlk != null and endTimeAlk != ''">
+				<![CDATA[AND maintainrecord.end_time LIKE CONCAT('%',#{endTimeAlk},'%')]]>
+			</if>
+			<if test="endTimes != null">
+				AND maintainrecord.end_time IN 
+				<foreach collection="endTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="method != null and method != ''">
+			<![CDATA[AND maintainrecord.method = #{method}]]>
+		</if>
+		<if test="method == null or method == ''">
+			<if test="methodAlk != null and methodAlk != ''">
+				<![CDATA[AND maintainrecord.method LIKE CONCAT('%',#{methodAlk},'%')]]>
+			</if>
+			<if test="methods != null">
+				AND maintainrecord.method IN 
+				<foreach collection="methods" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="maintainPer != null and maintainPer != ''">
+			<![CDATA[AND maintainrecord.maintain_per = #{maintainPer}]]>
+		</if>
+		<if test="maintainPer == null or maintainPer == ''">
+			<if test="maintainPerAlk != null and maintainPerAlk != ''">
+				<![CDATA[AND maintainrecord.maintain_per LIKE CONCAT('%',#{maintainPerAlk},'%')]]>
+			</if>
+			<if test="maintainPers != null">
+				AND maintainrecord.maintain_per IN 
+				<foreach collection="maintainPers" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="Describe != null and Describe != ''">
+			<![CDATA[AND maintainrecord.Describe = #{Describe}]]>
+		</if>
+		<if test="Describe == null or Describe == ''">
+			<if test="DescribeAlk != null and DescribeAlk != ''">
+				<![CDATA[AND maintainrecord.Describe LIKE CONCAT('%',#{DescribeAlk},'%')]]>
+			</if>
+			<if test="Describes != null">
+				AND maintainrecord.Describe IN 
+				<foreach collection="Describes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="results != null and results != ''">
+			<![CDATA[AND maintainrecord.results = #{results}]]>
+		</if>
+		<if test="results == null or results == ''">
+			<if test="resultsAlk != null and resultsAlk != ''">
+				<![CDATA[AND maintainrecord.results LIKE CONCAT('%',#{resultsAlk},'%')]]>
+			</if>
+			<if test="resultss != null">
+				AND maintainrecord.results IN 
+				<foreach collection="resultss" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="money != null and money != ''">
+			<![CDATA[AND maintainrecord.money = #{money}]]>
+		</if>
+		<if test="money == null or money == ''">
+			<if test="moneyAlk != null and moneyAlk != ''">
+				<![CDATA[AND maintainrecord.money LIKE CONCAT('%',#{moneyAlk},'%')]]>
+			</if>
+			<if test="moneys != null">
+				AND maintainrecord.money IN 
+				<foreach collection="moneys" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="DeclarationRecordId != null and DeclarationRecordId != ''">
+		<![CDATA[AND maintainrecord.DeclarationRecord_id = #{DeclarationRecordId}]]>
+		</if>
+		<if test="DeclarationRecordId == null or DeclarationRecordId == ''">
+		<if test="DeclarationRecordIdAst != null and DeclarationRecordIdAst != ''">
+			<![CDATA[AND maintainrecord.DeclarationRecord_id >= #{DeclarationRecordIdAst}]]>
+		</if>
+		<if test="DeclarationRecordIdAed != null and DeclarationRecordIdAed != ''">
+			<![CDATA[AND maintainrecord.DeclarationRecord_id <= #{DeclarationRecordIdAed}]]>
+		</if>
+		<if test="DeclarationRecordIds != null">
+			AND maintainrecord.DeclarationRecord_id IN
+			<foreach collection="DeclarationRecordIds" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="DeclarationRecordIdAlk != null and DeclarationRecordIdAlk != ''">
+			<![CDATA[AND CAST(maintainrecord.DeclarationRecord_id AS CHAR) LIKE CONCAT('%',#{DeclarationRecordIdAlk},'%')]]>
+		</if>
+		</if>
+		<if test="reason != null and reason != ''">
+			<![CDATA[AND maintainrecord.reason = #{reason}]]>
+		</if>
+		<if test="reason == null or reason == ''">
+			<if test="reasonAlk != null and reasonAlk != ''">
+				<![CDATA[AND maintainrecord.reason LIKE CONCAT('%',#{reasonAlk},'%')]]>
+			</if>
+			<if test="reasons != null">
+				AND maintainrecord.reason IN 
+				<foreach collection="reasons" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+	</sql>
+
+	<sql id="sql_map_order">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+		<if test="sort == 'id' and (order == 'asc' or order == 'desc')">
+			maintainrecord.id ${order},
+		</if>
+		<if test="sort == 'startTime' and (order == 'asc' or order == 'desc')">
+			maintainrecord.start_time ${order},
+		</if>
+		<if test="sort == 'endTime' and (order == 'asc' or order == 'desc')">
+			maintainrecord.end_time ${order},
+		</if>
+		<if test="sort == 'method' and (order == 'asc' or order == 'desc')">
+			maintainrecord.method ${order},
+		</if>
+		<if test="sort == 'maintainPer' and (order == 'asc' or order == 'desc')">
+			maintainrecord.maintain_per ${order},
+		</if>
+		<if test="sort == 'Describe' and (order == 'asc' or order == 'desc')">
+			maintainrecord.Describe ${order},
+		</if>
+		<if test="sort == 'results' and (order == 'asc' or order == 'desc')">
+			maintainrecord.results ${order},
+		</if>
+		<if test="sort == 'money' and (order == 'asc' or order == 'desc')">
+			maintainrecord.money ${order},
+		</if>
+		<if test="sort == 'DeclarationRecordId' and (order == 'asc' or order == 'desc')">
+			maintainrecord.DeclarationRecord_id ${order},
+		</if>
+		<if test="sort == 'reason' and (order == 'asc' or order == 'desc')">
+			maintainrecord.reason ${order},
+		</if>
+		</trim>
+	</sql>
+
+	<sql id="sql_map_page">
+		<if test="page != null and rows != null" >
+		limit #{rows} offset #{page}
+		</if>
+	</sql>
+	
+</mapper>

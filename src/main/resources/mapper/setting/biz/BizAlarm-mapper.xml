@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjjoy.bms.setting.persist.mapper.AlarmDao">
+
+	<select id="queryOneMap" resultType="map" parameterType="java.lang.String">
+		SELECT 
+			alarm.id AS id,
+			alarm.alarm AS alarm
+		FROM 
+			alarm
+		WHERE 
+			alarm.id = #{id}
+	</select>
+	
+	<select id="queryMapList" resultType="map" parameterType="map">
+		<![CDATA[
+		SELECT 
+			alarm.id AS id,
+			alarm.alarm AS alarm
+		FROM alarm
+		]]>
+		<where>
+			<include refid="sql_map_where" />
+		</where>
+		<include refid="sql_map_order" />
+		<include refid="sql_map_page" />
+	</select>
+
+	<select id="queryMapListCount" parameterType="map" resultType="long">
+		SELECT 
+			COUNT(0) 
+		FROM 
+			alarm
+		<where>
+			<include refid="sql_map_where" />
+		</where>
+	</select>
+
+	<sql id="sql_map_where">
+		<if test="search != null and search != ''">
+			<![CDATA[
+			AND (
+					CAST(alarm.id as CHAR) LIKE CONCAT('%',#{search},'%') OR
+					alarm.alarm LIKE CONCAT('%',#{search},'%') 
+			)
+			]]>
+		</if>
+		<if test="id != null and id != ''">
+		<![CDATA[AND alarm.id = #{id}]]>
+		</if>
+		<if test="id == null or id == ''">
+		<if test="idAst != null and idAst != ''">
+			<![CDATA[AND alarm.id >= #{idAst}]]>
+		</if>
+		<if test="idAed != null and idAed != ''">
+			<![CDATA[AND alarm.id <= #{idAed}]]>
+		</if>
+		<if test="ids != null">
+			AND alarm.id IN
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="idAlk != null and idAlk != ''">
+			<![CDATA[AND CAST(alarm.id AS CHAR) LIKE CONCAT('%',#{idAlk},'%')]]>
+		</if>
+		</if>
+		<if test="alarm != null and alarm != ''">
+			<![CDATA[AND alarm.alarm = #{alarm}]]>
+		</if>
+		<if test="alarm == null or alarm == ''">
+			<if test="alarmAlk != null and alarmAlk != ''">
+				<![CDATA[AND alarm.alarm LIKE CONCAT('%',#{alarmAlk},'%')]]>
+			</if>
+			<if test="alarms != null">
+				AND alarm.alarm IN 
+				<foreach collection="alarms" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+	</sql>
+
+	<sql id="sql_map_order">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+		<if test="sort == 'id' and (order == 'asc' or order == 'desc')">
+			alarm.id ${order},
+		</if>
+		<if test="sort == 'alarm' and (order == 'asc' or order == 'desc')">
+			alarm.alarm ${order},
+		</if>
+		</trim>
+	</sql>
+
+	<sql id="sql_map_page">
+		<if test="page != null and rows != null" >
+		limit #{rows} offset #{page}
+		</if>
+	</sql>
+	
+</mapper>

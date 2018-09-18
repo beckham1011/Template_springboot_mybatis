@@ -1,1 +1,0 @@
-package cn.bjjoy.bms.setting.service;import cn.bjjoy.bms.setting.entity.CamacVoiceMeeting;/** * 类描述   : CAMAC_会议 * 创建人	：system * 创建时间 ：2018-09-12 16:16:57 * @version 1.0 */public interface CamacVoiceMeetingService extends BaseService<CamacVoiceMeeting> {}

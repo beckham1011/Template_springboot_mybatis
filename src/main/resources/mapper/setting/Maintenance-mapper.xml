@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjjoy.bms.setting.persist.mapper.MaintenanceDao">
+	
+	<parameterMap id="pm_maintenance" type="cn.bjjoy.bms.setting.persist.model.Maintenance">
+		<parameter property="id" javaType="int" jdbcType="INTEGER" />
+		<parameter property="startTime" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="endTime" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="methods" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="mPer" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="describe" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="results" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="cost" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="addPer" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="addTime" javaType="String" jdbcType="VARCHAR" />
+	</parameterMap>
+	
+	<resultMap id="rm_maintenance" type="cn.bjjoy.bms.setting.persist.model.Maintenance">
+		<result property="id" column="id" javaType="int" jdbcType="INTEGER" />
+		<result property="startTime" column="start_time" javaType="String" jdbcType="VARCHAR" />
+		<result property="endTime" column="end_time" javaType="String" jdbcType="VARCHAR" />
+		<result property="methods" column="methods" javaType="String" jdbcType="VARCHAR" />
+		<result property="mPer" column="m_per" javaType="String" jdbcType="VARCHAR" />
+		<result property="describe" column="describe" javaType="String" jdbcType="VARCHAR" />
+		<result property="results" column="results" javaType="String" jdbcType="VARCHAR" />
+		<result property="cost" column="cost" javaType="String" jdbcType="VARCHAR" />
+		<result property="addPer" column="add_per" javaType="String" jdbcType="VARCHAR" />
+		<result property="addTime" column="add_time" javaType="String" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="save" parameterMap="pm_maintenance" useGeneratedKeys="true" keyProperty="id" >
+		insert into maintenance
+		<trim prefix="(" suffix=")" suffixOverrides="," >	
+			<if test="id != null">id,</if>
+			<if test="startTime != null">start_time,</if>
+			<if test="endTime != null">end_time,</if>
+			<if test="methods != null">methods,</if>
+			<if test="mPer != null">m_per,</if>
+			<if test="describe != null">describe,</if>
+			<if test="results != null">results,</if>
+			<if test="cost != null">cost,</if>
+			<if test="addPer != null">add_per,</if>
+			<if test="addTime != null">add_time</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null">#{id},</if>
+			<if test="startTime != null">#{startTime},</if>
+			<if test="endTime != null">#{endTime},</if>
+			<if test="methods != null">#{methods},</if>
+			<if test="mPer != null">#{mPer},</if>
+			<if test="describe != null">#{describe},</if>
+			<if test="results != null">#{results},</if>
+			<if test="cost != null">#{cost},</if>
+			<if test="addPer != null">#{addPer},</if>
+			<if test="addTime != null">#{addTime}</if>
+		</trim>
+	</insert>
+		
+	<delete id="deleteOne" parameterType="java.lang.String">
+		DELETE FROM maintenance WHERE maintenance.id = #{id}
+	</delete>
+	
+	<delete id="delete" parameterType="map">
+		DELETE FROM maintenance
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</delete>
+
+	<select id="queryOne" parameterType="java.lang.String" resultMap="rm_maintenance">
+		<include refid="sql_select"/>
+		WHERE maintenance.id = #{id}
+	</select>
+	
+	<select id="queryList" parameterType="map" resultMap="rm_maintenance">
+		<include refid="sql_select" />
+		<where>
+			<include refid="sql_where" />
+		</where>
+		<include refid="sql_order" />
+		<include refid="sql_page" />
+	</select>
+	
+	<select id="queryListCount" parameterType="map" resultType="long">
+		SELECT COUNT(0) FROM maintenance
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</select>
+	
+	<update id="updateOne" parameterType="map">
+		UPDATE maintenance
+		<set>
+		<if test="_parameter.containsKey('startTime')">
+		<choose>
+            <when test="startTime == null or startTime == ''">
+			start_time = NULL,
+            </when>
+            <otherwise>
+			start_time = #{startTime},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('endTime')">
+		<choose>
+            <when test="endTime == null or endTime == ''">
+			end_time = NULL,
+            </when>
+            <otherwise>
+			end_time = #{endTime},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('methods')">
+		<choose>
+            <when test="methods == null or methods == ''">
+			methods = NULL,
+            </when>
+            <otherwise>
+			methods = #{methods},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('mPer')">
+		<choose>
+            <when test="mPer == null or mPer == ''">
+			m_per = NULL,
+            </when>
+            <otherwise>
+			m_per = #{mPer},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('describe')">
+		<choose>
+            <when test="describe == null or describe == ''">
+			describe = NULL,
+            </when>
+            <otherwise>
+			describe = #{describe},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('results')">
+		<choose>
+            <when test="results == null or results == ''">
+			results = NULL,
+            </when>
+            <otherwise>
+			results = #{results},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('cost')">
+		<choose>
+            <when test="cost == null or cost == ''">
+			cost = NULL,
+            </when>
+            <otherwise>
+			cost = #{cost},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('addPer')">
+		<choose>
+            <when test="addPer == null or addPer == ''">
+			add_per = NULL,
+            </when>
+            <otherwise>
+			add_per = #{addPer},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('addTime')">
+		<choose>
+            <when test="addTime == null or addTime == ''">
+			add_time = NULL
+            </when>
+            <otherwise>
+			add_time = #{addTime}
+            </otherwise>
+        </choose>
+		</if>
+		</set>
+		<where>
+		id = #{id}
+		</where>
+	</update>
+
+	<update id="update" parameterType="map">
+		UPDATE maintenance
+		<set>
+		<if test="_parameter.containsKey('startTimeAnw')">
+		<choose>
+            <when test="startTimeAnw == null or startTimeAnw == ''">
+			start_time = NULL,
+            </when>
+            <otherwise>
+			start_time = #{startTimeAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('endTimeAnw')">
+		<choose>
+            <when test="endTimeAnw == null or endTimeAnw == ''">
+			end_time = NULL,
+            </when>
+            <otherwise>
+			end_time = #{endTimeAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('methodsAnw')">
+		<choose>
+            <when test="methodsAnw == null or methodsAnw == ''">
+			methods = NULL,
+            </when>
+            <otherwise>
+			methods = #{methodsAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('mPerAnw')">
+		<choose>
+            <when test="mPerAnw == null or mPerAnw == ''">
+			m_per = NULL,
+            </when>
+            <otherwise>
+			m_per = #{mPerAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('describeAnw')">
+		<choose>
+            <when test="describeAnw == null or describeAnw == ''">
+			describe = NULL,
+            </when>
+            <otherwise>
+			describe = #{describeAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('resultsAnw')">
+		<choose>
+            <when test="resultsAnw == null or resultsAnw == ''">
+			results = NULL,
+            </when>
+            <otherwise>
+			results = #{resultsAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('costAnw')">
+		<choose>
+            <when test="costAnw == null or costAnw == ''">
+			cost = NULL,
+            </when>
+            <otherwise>
+			cost = #{costAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('addPerAnw')">
+		<choose>
+            <when test="addPerAnw == null or addPerAnw == ''">
+			add_per = NULL,
+            </when>
+            <otherwise>
+			add_per = #{addPerAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('addTimeAnw')">
+		<choose>
+            <when test="addTimeAnw == null or addTimeAnw == ''">
+			add_time = NULL
+            </when>
+            <otherwise>
+			add_time = #{addTimeAnw}
+            </otherwise>  
+        </choose>
+		</if>
+		</set>
+		<where>
+			<include refid="sql_where"/>
+		</where>
+	</update>
+	
+	<sql id="sql_select">
+		<![CDATA[
+		SELECT 
+			maintenance.id,
+			maintenance.start_time,
+			maintenance.end_time,
+			maintenance.methods,
+			maintenance.m_per,
+			maintenance.describe,
+			maintenance.results,
+			maintenance.cost,
+			maintenance.add_per,
+			maintenance.add_time
+		FROM maintenance
+		]]>
+	</sql>
+
+	<sql id="sql_where">
+		<if test="id != null and id != ''">
+		<![CDATA[AND maintenance.id = #{id}]]>
+		</if>
+		<if test="id == null or id == ''">
+		<if test="idAst != null and idAst != ''">
+			<![CDATA[AND maintenance.id >= #{idAst}]]>
+		</if>
+		<if test="idAed != null and idAed != ''">
+			<![CDATA[AND maintenance.id <= #{idAed}]]>
+		</if>
+		<if test="ids != null">
+			AND maintenance.id IN
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="idAlk != null and idAlk != ''">
+			<![CDATA[AND CAST(maintenance.id AS CHAR) LIKE CONCAT('%',#{idAlk},'%')]]>
+		</if>
+		</if>
+		<if test="startTime != null and startTime != ''">
+			<![CDATA[AND maintenance.start_time = #{startTime}]]>
+		</if>
+		<if test="startTime == null or startTime == ''">
+			<if test="startTimeAlk != null and startTimeAlk != ''">
+				<![CDATA[AND maintenance.start_time LIKE CONCAT('%',#{startTimeAlk},'%')]]>
+			</if>
+			<if test="startTimes != null">
+				AND maintenance.start_time IN 
+				<foreach collection="startTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="endTime != null and endTime != ''">
+			<![CDATA[AND maintenance.end_time = #{endTime}]]>
+		</if>
+		<if test="endTime == null or endTime == ''">
+			<if test="endTimeAlk != null and endTimeAlk != ''">
+				<![CDATA[AND maintenance.end_time LIKE CONCAT('%',#{endTimeAlk},'%')]]>
+			</if>
+			<if test="endTimes != null">
+				AND maintenance.end_time IN 
+				<foreach collection="endTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="methods != null and methods != ''">
+			<![CDATA[AND maintenance.methods = #{methods}]]>
+		</if>
+		<if test="methods == null or methods == ''">
+			<if test="methodsAlk != null and methodsAlk != ''">
+				<![CDATA[AND maintenance.methods LIKE CONCAT('%',#{methodsAlk},'%')]]>
+			</if>
+			<if test="methodss != null">
+				AND maintenance.methods IN 
+				<foreach collection="methodss" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="mPer != null and mPer != ''">
+			<![CDATA[AND maintenance.m_per = #{mPer}]]>
+		</if>
+		<if test="mPer == null or mPer == ''">
+			<if test="mPerAlk != null and mPerAlk != ''">
+				<![CDATA[AND maintenance.m_per LIKE CONCAT('%',#{mPerAlk},'%')]]>
+			</if>
+			<if test="mPers != null">
+				AND maintenance.m_per IN 
+				<foreach collection="mPers" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="describe != null and describe != ''">
+			<![CDATA[AND maintenance.describe = #{describe}]]>
+		</if>
+		<if test="describe == null or describe == ''">
+			<if test="describeAlk != null and describeAlk != ''">
+				<![CDATA[AND maintenance.describe LIKE CONCAT('%',#{describeAlk},'%')]]>
+			</if>
+			<if test="describes != null">
+				AND maintenance.describe IN 
+				<foreach collection="describes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="results != null and results != ''">
+			<![CDATA[AND maintenance.results = #{results}]]>
+		</if>
+		<if test="results == null or results == ''">
+			<if test="resultsAlk != null and resultsAlk != ''">
+				<![CDATA[AND maintenance.results LIKE CONCAT('%',#{resultsAlk},'%')]]>
+			</if>
+			<if test="resultss != null">
+				AND maintenance.results IN 
+				<foreach collection="resultss" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="cost != null and cost != ''">
+			<![CDATA[AND maintenance.cost = #{cost}]]>
+		</if>
+		<if test="cost == null or cost == ''">
+			<if test="costAlk != null and costAlk != ''">
+				<![CDATA[AND maintenance.cost LIKE CONCAT('%',#{costAlk},'%')]]>
+			</if>
+			<if test="costs != null">
+				AND maintenance.cost IN 
+				<foreach collection="costs" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="addPer != null and addPer != ''">
+			<![CDATA[AND maintenance.add_per = #{addPer}]]>
+		</if>
+		<if test="addPer == null or addPer == ''">
+			<if test="addPerAlk != null and addPerAlk != ''">
+				<![CDATA[AND maintenance.add_per LIKE CONCAT('%',#{addPerAlk},'%')]]>
+			</if>
+			<if test="addPers != null">
+				AND maintenance.add_per IN 
+				<foreach collection="addPers" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="addTime != null and addTime != ''">
+			<![CDATA[AND maintenance.add_time = #{addTime}]]>
+		</if>
+		<if test="addTime == null or addTime == ''">
+			<if test="addTimeAlk != null and addTimeAlk != ''">
+				<![CDATA[AND maintenance.add_time LIKE CONCAT('%',#{addTimeAlk},'%')]]>
+			</if>
+			<if test="addTimes != null">
+				AND maintenance.add_time IN 
+				<foreach collection="addTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="sql_order">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+		<if test="sort == 'id' and (order == 'asc' or order == 'desc')">
+			maintenance.id ${order},
+		</if>
+		<if test="sort == 'startTime' and (order == 'asc' or order == 'desc')">
+			maintenance.start_time ${order},
+		</if>
+		<if test="sort == 'endTime' and (order == 'asc' or order == 'desc')">
+			maintenance.end_time ${order},
+		</if>
+		<if test="sort == 'methods' and (order == 'asc' or order == 'desc')">
+			maintenance.methods ${order},
+		</if>
+		<if test="sort == 'mPer' and (order == 'asc' or order == 'desc')">
+			maintenance.m_per ${order},
+		</if>
+		<if test="sort == 'describe' and (order == 'asc' or order == 'desc')">
+			maintenance.describe ${order},
+		</if>
+		<if test="sort == 'results' and (order == 'asc' or order == 'desc')">
+			maintenance.results ${order},
+		</if>
+		<if test="sort == 'cost' and (order == 'asc' or order == 'desc')">
+			maintenance.cost ${order},
+		</if>
+		<if test="sort == 'addPer' and (order == 'asc' or order == 'desc')">
+			maintenance.add_per ${order},
+		</if>
+		<if test="sort == 'addTime' and (order == 'asc' or order == 'desc')">
+			maintenance.add_time ${order}
+		</if>
+		</trim>
+	</sql>
+	
+	<sql id="sql_page">
+		<if test="page != null and rows != null" >
+		limit #{rows} offset #{page}
+		</if>
+	</sql>
+</mapper>

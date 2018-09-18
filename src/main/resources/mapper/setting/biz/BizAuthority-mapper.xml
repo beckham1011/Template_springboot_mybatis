@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjjoy.bms.setting.persist.mapper.AuthorityDao">
+
+	<select id="queryOneMap" resultType="map" parameterType="java.lang.String">
+		SELECT 
+			authority.id AS id,
+			authority.authority AS authority,
+			authority.describe AS describe
+		FROM 
+			authority
+		WHERE 
+			authority.id = #{id}
+	</select>
+	
+	<select id="queryMapList" resultType="map" parameterType="map">
+		<![CDATA[
+		SELECT 
+			authority.id AS id,
+			authority.authority AS authority,
+			authority.describe AS describe
+		FROM authority
+		]]>
+		<where>
+			<include refid="sql_map_where" />
+		</where>
+		<include refid="sql_map_order" />
+		<include refid="sql_map_page" />
+	</select>
+
+	<select id="queryMapListCount" parameterType="map" resultType="long">
+		SELECT 
+			COUNT(0) 
+		FROM 
+			authority
+		<where>
+			<include refid="sql_map_where" />
+		</where>
+	</select>
+
+	<sql id="sql_map_where">
+		<if test="search != null and search != ''">
+			<![CDATA[
+			AND (
+					CAST(authority.id as CHAR) LIKE CONCAT('%',#{search},'%') OR
+					authority.authority LIKE CONCAT('%',#{search},'%') OR
+					authority.describe LIKE CONCAT('%',#{search},'%') 
+			)
+			]]>
+		</if>
+		<if test="id != null and id != ''">
+		<![CDATA[AND authority.id = #{id}]]>
+		</if>
+		<if test="id == null or id == ''">
+		<if test="idAst != null and idAst != ''">
+			<![CDATA[AND authority.id >= #{idAst}]]>
+		</if>
+		<if test="idAed != null and idAed != ''">
+			<![CDATA[AND authority.id <= #{idAed}]]>
+		</if>
+		<if test="ids != null">
+			AND authority.id IN
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="idAlk != null and idAlk != ''">
+			<![CDATA[AND CAST(authority.id AS CHAR) LIKE CONCAT('%',#{idAlk},'%')]]>
+		</if>
+		</if>
+		<if test="authority != null and authority != ''">
+			<![CDATA[AND authority.authority = #{authority}]]>
+		</if>
+		<if test="authority == null or authority == ''">
+			<if test="authorityAlk != null and authorityAlk != ''">
+				<![CDATA[AND authority.authority LIKE CONCAT('%',#{authorityAlk},'%')]]>
+			</if>
+			<if test="authoritys != null">
+				AND authority.authority IN 
+				<foreach collection="authoritys" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="describe != null and describe != ''">
+			<![CDATA[AND authority.describe = #{describe}]]>
+		</if>
+		<if test="describe == null or describe == ''">
+			<if test="describeAlk != null and describeAlk != ''">
+				<![CDATA[AND authority.describe LIKE CONCAT('%',#{describeAlk},'%')]]>
+			</if>
+			<if test="describes != null">
+				AND authority.describe IN 
+				<foreach collection="describes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+	</sql>
+
+	<sql id="sql_map_order">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+		<if test="sort == 'id' and (order == 'asc' or order == 'desc')">
+			authority.id ${order},
+		</if>
+		<if test="sort == 'authority' and (order == 'asc' or order == 'desc')">
+			authority.authority ${order},
+		</if>
+		<if test="sort == 'describe' and (order == 'asc' or order == 'desc')">
+			authority.describe ${order},
+		</if>
+		</trim>
+	</sql>
+
+	<sql id="sql_map_page">
+		<if test="page != null and rows != null" >
+		limit #{rows} offset #{page}
+		</if>
+	</sql>
+	
+</mapper>

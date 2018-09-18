@@ -1,0 +1,969 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjjoy.bms.setting.persist.mapper.EquiptypeDao">
+	
+	<parameterMap id="pm_equiptype" type="cn.bjjoy.bms.setting.persist.model.Equiptype">
+		<parameter property="id" javaType="int" jdbcType="INTEGER" />
+		<parameter property="parentId" javaType="int" jdbcType="INTEGER" />
+		<parameter property="name" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="addPer" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="addTime" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="typeLayer" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="addressCode" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="systemId" javaType="int" jdbcType="INTEGER" />
+		<parameter property="longitude" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="latitude" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="IP" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="ZguanliPer" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="ZguanliPhone" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="CguanliPer" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="CguanliPhone" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="JguanliPer" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="JguanliPhone" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="bengxing" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="koujing" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="gonglv" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="xinhao" javaType="String" jdbcType="VARCHAR" />
+	</parameterMap>
+	
+	<resultMap id="rm_equiptype" type="cn.bjjoy.bms.setting.persist.model.Equiptype">
+		<result property="id" column="id" javaType="int" jdbcType="INTEGER" />
+		<result property="parentId" column="parent_id" javaType="int" jdbcType="INTEGER" />
+		<result property="name" column="name" javaType="String" jdbcType="VARCHAR" />
+		<result property="addPer" column="add_per" javaType="String" jdbcType="VARCHAR" />
+		<result property="addTime" column="add_time" javaType="String" jdbcType="VARCHAR" />
+		<result property="typeLayer" column="type_layer" javaType="String" jdbcType="VARCHAR" />
+		<result property="addressCode" column="addressCode" javaType="String" jdbcType="VARCHAR" />
+		<result property="systemId" column="system_id" javaType="int" jdbcType="INTEGER" />
+		<result property="longitude" column="longitude" javaType="String" jdbcType="VARCHAR" />
+		<result property="latitude" column="latitude" javaType="String" jdbcType="VARCHAR" />
+		<result property="IP" column="IP" javaType="String" jdbcType="VARCHAR" />
+		<result property="ZguanliPer" column="Zguanli_per" javaType="String" jdbcType="VARCHAR" />
+		<result property="ZguanliPhone" column="Zguanli_phone" javaType="String" jdbcType="VARCHAR" />
+		<result property="CguanliPer" column="Cguanli_per" javaType="String" jdbcType="VARCHAR" />
+		<result property="CguanliPhone" column="Cguanli_phone" javaType="String" jdbcType="VARCHAR" />
+		<result property="JguanliPer" column="Jguanli_per" javaType="String" jdbcType="VARCHAR" />
+		<result property="JguanliPhone" column="Jguanli_phone" javaType="String" jdbcType="VARCHAR" />
+		<result property="bengxing" column="bengxing" javaType="String" jdbcType="VARCHAR" />
+		<result property="koujing" column="koujing" javaType="String" jdbcType="VARCHAR" />
+		<result property="gonglv" column="gonglv" javaType="String" jdbcType="VARCHAR" />
+		<result property="xinhao" column="xinhao" javaType="String" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="save" parameterMap="pm_equiptype" useGeneratedKeys="true" keyProperty="id" >
+		insert into equiptype
+		<trim prefix="(" suffix=")" suffixOverrides="," >	
+			<if test="id != null">id,</if>
+			<if test="parentId != null">parent_id,</if>
+			<if test="name != null">name,</if>
+			<if test="addPer != null">add_per,</if>
+			<if test="addTime != null">add_time,</if>
+			<if test="typeLayer != null">type_layer,</if>
+			<if test="addressCode != null">addressCode,</if>
+			<if test="systemId != null">system_id,</if>
+			<if test="longitude != null">longitude,</if>
+			<if test="latitude != null">latitude,</if>
+			<if test="IP != null">IP,</if>
+			<if test="ZguanliPer != null">Zguanli_per,</if>
+			<if test="ZguanliPhone != null">Zguanli_phone,</if>
+			<if test="CguanliPer != null">Cguanli_per,</if>
+			<if test="CguanliPhone != null">Cguanli_phone,</if>
+			<if test="JguanliPer != null">Jguanli_per,</if>
+			<if test="JguanliPhone != null">Jguanli_phone,</if>
+			<if test="bengxing != null">bengxing,</if>
+			<if test="koujing != null">koujing,</if>
+			<if test="gonglv != null">gonglv,</if>
+			<if test="xinhao != null">xinhao</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null">#{id},</if>
+			<if test="parentId != null">#{parentId},</if>
+			<if test="name != null">#{name},</if>
+			<if test="addPer != null">#{addPer},</if>
+			<if test="addTime != null">#{addTime},</if>
+			<if test="typeLayer != null">#{typeLayer},</if>
+			<if test="addressCode != null">#{addressCode},</if>
+			<if test="systemId != null">#{systemId},</if>
+			<if test="longitude != null">#{longitude},</if>
+			<if test="latitude != null">#{latitude},</if>
+			<if test="IP != null">#{IP},</if>
+			<if test="ZguanliPer != null">#{ZguanliPer},</if>
+			<if test="ZguanliPhone != null">#{ZguanliPhone},</if>
+			<if test="CguanliPer != null">#{CguanliPer},</if>
+			<if test="CguanliPhone != null">#{CguanliPhone},</if>
+			<if test="JguanliPer != null">#{JguanliPer},</if>
+			<if test="JguanliPhone != null">#{JguanliPhone},</if>
+			<if test="bengxing != null">#{bengxing},</if>
+			<if test="koujing != null">#{koujing},</if>
+			<if test="gonglv != null">#{gonglv},</if>
+			<if test="xinhao != null">#{xinhao}</if>
+		</trim>
+	</insert>
+		
+	<delete id="deleteOne" parameterType="java.lang.String">
+		DELETE FROM equiptype WHERE equiptype.id = #{id}
+	</delete>
+	
+	<delete id="delete" parameterType="map">
+		DELETE FROM equiptype
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</delete>
+
+	<select id="queryOne" parameterType="java.lang.String" resultMap="rm_equiptype">
+		<include refid="sql_select"/>
+		WHERE equiptype.id = #{id}
+	</select>
+	
+	<select id="queryList" parameterType="map" resultMap="rm_equiptype">
+		<include refid="sql_select" />
+		<where>
+			<include refid="sql_where" />
+		</where>
+		<include refid="sql_order" />
+		<include refid="sql_page" />
+	</select>
+	
+	<select id="queryListCount" parameterType="map" resultType="long">
+		SELECT COUNT(0) FROM equiptype
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</select>
+	
+	<update id="updateOne" parameterType="map">
+		UPDATE equiptype
+		<set>
+		<if test="_parameter.containsKey('parentId')">
+		<choose>
+            <when test="parentId == null">
+			parent_id = NULL,
+            </when>
+            <otherwise>
+			parent_id = #{parentId},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('name')">
+		<choose>
+            <when test="name == null or name == ''">
+			name = NULL,
+            </when>
+            <otherwise>
+			name = #{name},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('addPer')">
+		<choose>
+            <when test="addPer == null or addPer == ''">
+			add_per = NULL,
+            </when>
+            <otherwise>
+			add_per = #{addPer},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('addTime')">
+		<choose>
+            <when test="addTime == null or addTime == ''">
+			add_time = NULL,
+            </when>
+            <otherwise>
+			add_time = #{addTime},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('typeLayer')">
+		<choose>
+            <when test="typeLayer == null or typeLayer == ''">
+			type_layer = NULL,
+            </when>
+            <otherwise>
+			type_layer = #{typeLayer},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('addressCode')">
+		<choose>
+            <when test="addressCode == null or addressCode == ''">
+			addressCode = NULL,
+            </when>
+            <otherwise>
+			addressCode = #{addressCode},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('systemId')">
+		<choose>
+            <when test="systemId == null">
+			system_id = NULL,
+            </when>
+            <otherwise>
+			system_id = #{systemId},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('longitude')">
+		<choose>
+            <when test="longitude == null or longitude == ''">
+			longitude = NULL,
+            </when>
+            <otherwise>
+			longitude = #{longitude},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('latitude')">
+		<choose>
+            <when test="latitude == null or latitude == ''">
+			latitude = NULL,
+            </when>
+            <otherwise>
+			latitude = #{latitude},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('IP')">
+		<choose>
+            <when test="IP == null or IP == ''">
+			IP = NULL,
+            </when>
+            <otherwise>
+			IP = #{IP},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('ZguanliPer')">
+		<choose>
+            <when test="ZguanliPer == null or ZguanliPer == ''">
+			Zguanli_per = NULL,
+            </when>
+            <otherwise>
+			Zguanli_per = #{ZguanliPer},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('ZguanliPhone')">
+		<choose>
+            <when test="ZguanliPhone == null or ZguanliPhone == ''">
+			Zguanli_phone = NULL,
+            </when>
+            <otherwise>
+			Zguanli_phone = #{ZguanliPhone},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('CguanliPer')">
+		<choose>
+            <when test="CguanliPer == null or CguanliPer == ''">
+			Cguanli_per = NULL,
+            </when>
+            <otherwise>
+			Cguanli_per = #{CguanliPer},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('CguanliPhone')">
+		<choose>
+            <when test="CguanliPhone == null or CguanliPhone == ''">
+			Cguanli_phone = NULL,
+            </when>
+            <otherwise>
+			Cguanli_phone = #{CguanliPhone},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('JguanliPer')">
+		<choose>
+            <when test="JguanliPer == null or JguanliPer == ''">
+			Jguanli_per = NULL,
+            </when>
+            <otherwise>
+			Jguanli_per = #{JguanliPer},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('JguanliPhone')">
+		<choose>
+            <when test="JguanliPhone == null or JguanliPhone == ''">
+			Jguanli_phone = NULL,
+            </when>
+            <otherwise>
+			Jguanli_phone = #{JguanliPhone},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('bengxing')">
+		<choose>
+            <when test="bengxing == null or bengxing == ''">
+			bengxing = NULL,
+            </when>
+            <otherwise>
+			bengxing = #{bengxing},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('koujing')">
+		<choose>
+            <when test="koujing == null or koujing == ''">
+			koujing = NULL,
+            </when>
+            <otherwise>
+			koujing = #{koujing},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('gonglv')">
+		<choose>
+            <when test="gonglv == null or gonglv == ''">
+			gonglv = NULL,
+            </when>
+            <otherwise>
+			gonglv = #{gonglv},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('xinhao')">
+		<choose>
+            <when test="xinhao == null or xinhao == ''">
+			xinhao = NULL
+            </when>
+            <otherwise>
+			xinhao = #{xinhao}
+            </otherwise>
+        </choose>
+		</if>
+		</set>
+		<where>
+		id = #{id}
+		</where>
+	</update>
+
+	<update id="update" parameterType="map">
+		UPDATE equiptype
+		<set>
+		<if test="_parameter.containsKey('parentIdAnw')">
+		<choose>
+            <when test="parentIdAnw == null">
+			parent_id = NULL,
+            </when>
+            <otherwise>
+			parent_id = #{parentIdAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('nameAnw')">
+		<choose>
+            <when test="nameAnw == null or nameAnw == ''">
+			name = NULL,
+            </when>
+            <otherwise>
+			name = #{nameAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('addPerAnw')">
+		<choose>
+            <when test="addPerAnw == null or addPerAnw == ''">
+			add_per = NULL,
+            </when>
+            <otherwise>
+			add_per = #{addPerAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('addTimeAnw')">
+		<choose>
+            <when test="addTimeAnw == null or addTimeAnw == ''">
+			add_time = NULL,
+            </when>
+            <otherwise>
+			add_time = #{addTimeAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('typeLayerAnw')">
+		<choose>
+            <when test="typeLayerAnw == null or typeLayerAnw == ''">
+			type_layer = NULL,
+            </when>
+            <otherwise>
+			type_layer = #{typeLayerAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('addressCodeAnw')">
+		<choose>
+            <when test="addressCodeAnw == null or addressCodeAnw == ''">
+			addressCode = NULL,
+            </when>
+            <otherwise>
+			addressCode = #{addressCodeAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('systemIdAnw')">
+		<choose>
+            <when test="systemIdAnw == null">
+			system_id = NULL,
+            </when>
+            <otherwise>
+			system_id = #{systemIdAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('longitudeAnw')">
+		<choose>
+            <when test="longitudeAnw == null or longitudeAnw == ''">
+			longitude = NULL,
+            </when>
+            <otherwise>
+			longitude = #{longitudeAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('latitudeAnw')">
+		<choose>
+            <when test="latitudeAnw == null or latitudeAnw == ''">
+			latitude = NULL,
+            </when>
+            <otherwise>
+			latitude = #{latitudeAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('IPAnw')">
+		<choose>
+            <when test="IPAnw == null or IPAnw == ''">
+			IP = NULL,
+            </when>
+            <otherwise>
+			IP = #{IPAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('ZguanliPerAnw')">
+		<choose>
+            <when test="ZguanliPerAnw == null or ZguanliPerAnw == ''">
+			Zguanli_per = NULL,
+            </when>
+            <otherwise>
+			Zguanli_per = #{ZguanliPerAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('ZguanliPhoneAnw')">
+		<choose>
+            <when test="ZguanliPhoneAnw == null or ZguanliPhoneAnw == ''">
+			Zguanli_phone = NULL,
+            </when>
+            <otherwise>
+			Zguanli_phone = #{ZguanliPhoneAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('CguanliPerAnw')">
+		<choose>
+            <when test="CguanliPerAnw == null or CguanliPerAnw == ''">
+			Cguanli_per = NULL,
+            </when>
+            <otherwise>
+			Cguanli_per = #{CguanliPerAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('CguanliPhoneAnw')">
+		<choose>
+            <when test="CguanliPhoneAnw == null or CguanliPhoneAnw == ''">
+			Cguanli_phone = NULL,
+            </when>
+            <otherwise>
+			Cguanli_phone = #{CguanliPhoneAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('JguanliPerAnw')">
+		<choose>
+            <when test="JguanliPerAnw == null or JguanliPerAnw == ''">
+			Jguanli_per = NULL,
+            </when>
+            <otherwise>
+			Jguanli_per = #{JguanliPerAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('JguanliPhoneAnw')">
+		<choose>
+            <when test="JguanliPhoneAnw == null or JguanliPhoneAnw == ''">
+			Jguanli_phone = NULL,
+            </when>
+            <otherwise>
+			Jguanli_phone = #{JguanliPhoneAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('bengxingAnw')">
+		<choose>
+            <when test="bengxingAnw == null or bengxingAnw == ''">
+			bengxing = NULL,
+            </when>
+            <otherwise>
+			bengxing = #{bengxingAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('koujingAnw')">
+		<choose>
+            <when test="koujingAnw == null or koujingAnw == ''">
+			koujing = NULL,
+            </when>
+            <otherwise>
+			koujing = #{koujingAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('gonglvAnw')">
+		<choose>
+            <when test="gonglvAnw == null or gonglvAnw == ''">
+			gonglv = NULL,
+            </when>
+            <otherwise>
+			gonglv = #{gonglvAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('xinhaoAnw')">
+		<choose>
+            <when test="xinhaoAnw == null or xinhaoAnw == ''">
+			xinhao = NULL
+            </when>
+            <otherwise>
+			xinhao = #{xinhaoAnw}
+            </otherwise>  
+        </choose>
+		</if>
+		</set>
+		<where>
+			<include refid="sql_where"/>
+		</where>
+	</update>
+	
+	<sql id="sql_select">
+		<![CDATA[
+		SELECT 
+			equiptype.id,
+			equiptype.parent_id,
+			equiptype.name,
+			equiptype.add_per,
+			equiptype.add_time,
+			equiptype.type_layer,
+			equiptype.addressCode,
+			equiptype.system_id,
+			equiptype.longitude,
+			equiptype.latitude,
+			equiptype.IP,
+			equiptype.Zguanli_per,
+			equiptype.Zguanli_phone,
+			equiptype.Cguanli_per,
+			equiptype.Cguanli_phone,
+			equiptype.Jguanli_per,
+			equiptype.Jguanli_phone,
+			equiptype.bengxing,
+			equiptype.koujing,
+			equiptype.gonglv,
+			equiptype.xinhao
+		FROM equiptype
+		]]>
+	</sql>
+
+	<sql id="sql_where">
+		<if test="id != null and id != ''">
+		<![CDATA[AND equiptype.id = #{id}]]>
+		</if>
+		<if test="id == null or id == ''">
+		<if test="idAst != null and idAst != ''">
+			<![CDATA[AND equiptype.id >= #{idAst}]]>
+		</if>
+		<if test="idAed != null and idAed != ''">
+			<![CDATA[AND equiptype.id <= #{idAed}]]>
+		</if>
+		<if test="ids != null">
+			AND equiptype.id IN
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="idAlk != null and idAlk != ''">
+			<![CDATA[AND CAST(equiptype.id AS CHAR) LIKE CONCAT('%',#{idAlk},'%')]]>
+		</if>
+		</if>
+		<if test="parentId != null and parentId != ''">
+		<![CDATA[AND equiptype.parent_id = #{parentId}]]>
+		</if>
+		<if test="parentId == null or parentId == ''">
+		<if test="parentIdAst != null and parentIdAst != ''">
+			<![CDATA[AND equiptype.parent_id >= #{parentIdAst}]]>
+		</if>
+		<if test="parentIdAed != null and parentIdAed != ''">
+			<![CDATA[AND equiptype.parent_id <= #{parentIdAed}]]>
+		</if>
+		<if test="parentIds != null">
+			AND equiptype.parent_id IN
+			<foreach collection="parentIds" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="parentIdAlk != null and parentIdAlk != ''">
+			<![CDATA[AND CAST(equiptype.parent_id AS CHAR) LIKE CONCAT('%',#{parentIdAlk},'%')]]>
+		</if>
+		</if>
+		<if test="name != null and name != ''">
+			<![CDATA[AND equiptype.name = #{name}]]>
+		</if>
+		<if test="name == null or name == ''">
+			<if test="nameAlk != null and nameAlk != ''">
+				<![CDATA[AND equiptype.name LIKE CONCAT('%',#{nameAlk},'%')]]>
+			</if>
+			<if test="names != null">
+				AND equiptype.name IN 
+				<foreach collection="names" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="addPer != null and addPer != ''">
+			<![CDATA[AND equiptype.add_per = #{addPer}]]>
+		</if>
+		<if test="addPer == null or addPer == ''">
+			<if test="addPerAlk != null and addPerAlk != ''">
+				<![CDATA[AND equiptype.add_per LIKE CONCAT('%',#{addPerAlk},'%')]]>
+			</if>
+			<if test="addPers != null">
+				AND equiptype.add_per IN 
+				<foreach collection="addPers" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="addTime != null and addTime != ''">
+			<![CDATA[AND equiptype.add_time = #{addTime}]]>
+		</if>
+		<if test="addTime == null or addTime == ''">
+			<if test="addTimeAlk != null and addTimeAlk != ''">
+				<![CDATA[AND equiptype.add_time LIKE CONCAT('%',#{addTimeAlk},'%')]]>
+			</if>
+			<if test="addTimes != null">
+				AND equiptype.add_time IN 
+				<foreach collection="addTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="typeLayer != null and typeLayer != ''">
+			<![CDATA[AND equiptype.type_layer = #{typeLayer}]]>
+		</if>
+		<if test="typeLayer == null or typeLayer == ''">
+			<if test="typeLayerAlk != null and typeLayerAlk != ''">
+				<![CDATA[AND equiptype.type_layer LIKE CONCAT('%',#{typeLayerAlk},'%')]]>
+			</if>
+			<if test="typeLayers != null">
+				AND equiptype.type_layer IN 
+				<foreach collection="typeLayers" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="addressCode != null and addressCode != ''">
+			<![CDATA[AND equiptype.addressCode = #{addressCode}]]>
+		</if>
+		<if test="addressCode == null or addressCode == ''">
+			<if test="addressCodeAlk != null and addressCodeAlk != ''">
+				<![CDATA[AND equiptype.addressCode LIKE CONCAT('%',#{addressCodeAlk},'%')]]>
+			</if>
+			<if test="addressCodes != null">
+				AND equiptype.addressCode IN 
+				<foreach collection="addressCodes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="systemId != null and systemId != ''">
+		<![CDATA[AND equiptype.system_id = #{systemId}]]>
+		</if>
+		<if test="systemId == null or systemId == ''">
+		<if test="systemIdAst != null and systemIdAst != ''">
+			<![CDATA[AND equiptype.system_id >= #{systemIdAst}]]>
+		</if>
+		<if test="systemIdAed != null and systemIdAed != ''">
+			<![CDATA[AND equiptype.system_id <= #{systemIdAed}]]>
+		</if>
+		<if test="systemIds != null">
+			AND equiptype.system_id IN
+			<foreach collection="systemIds" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="systemIdAlk != null and systemIdAlk != ''">
+			<![CDATA[AND CAST(equiptype.system_id AS CHAR) LIKE CONCAT('%',#{systemIdAlk},'%')]]>
+		</if>
+		</if>
+		<if test="longitude != null and longitude != ''">
+			<![CDATA[AND equiptype.longitude = #{longitude}]]>
+		</if>
+		<if test="longitude == null or longitude == ''">
+			<if test="longitudeAlk != null and longitudeAlk != ''">
+				<![CDATA[AND equiptype.longitude LIKE CONCAT('%',#{longitudeAlk},'%')]]>
+			</if>
+			<if test="longitudes != null">
+				AND equiptype.longitude IN 
+				<foreach collection="longitudes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="latitude != null and latitude != ''">
+			<![CDATA[AND equiptype.latitude = #{latitude}]]>
+		</if>
+		<if test="latitude == null or latitude == ''">
+			<if test="latitudeAlk != null and latitudeAlk != ''">
+				<![CDATA[AND equiptype.latitude LIKE CONCAT('%',#{latitudeAlk},'%')]]>
+			</if>
+			<if test="latitudes != null">
+				AND equiptype.latitude IN 
+				<foreach collection="latitudes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="IP != null and IP != ''">
+			<![CDATA[AND equiptype.IP = #{IP}]]>
+		</if>
+		<if test="IP == null or IP == ''">
+			<if test="IPAlk != null and IPAlk != ''">
+				<![CDATA[AND equiptype.IP LIKE CONCAT('%',#{IPAlk},'%')]]>
+			</if>
+			<if test="IPs != null">
+				AND equiptype.IP IN 
+				<foreach collection="IPs" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="ZguanliPer != null and ZguanliPer != ''">
+			<![CDATA[AND equiptype.Zguanli_per = #{ZguanliPer}]]>
+		</if>
+		<if test="ZguanliPer == null or ZguanliPer == ''">
+			<if test="ZguanliPerAlk != null and ZguanliPerAlk != ''">
+				<![CDATA[AND equiptype.Zguanli_per LIKE CONCAT('%',#{ZguanliPerAlk},'%')]]>
+			</if>
+			<if test="ZguanliPers != null">
+				AND equiptype.Zguanli_per IN 
+				<foreach collection="ZguanliPers" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="ZguanliPhone != null and ZguanliPhone != ''">
+			<![CDATA[AND equiptype.Zguanli_phone = #{ZguanliPhone}]]>
+		</if>
+		<if test="ZguanliPhone == null or ZguanliPhone == ''">
+			<if test="ZguanliPhoneAlk != null and ZguanliPhoneAlk != ''">
+				<![CDATA[AND equiptype.Zguanli_phone LIKE CONCAT('%',#{ZguanliPhoneAlk},'%')]]>
+			</if>
+			<if test="ZguanliPhones != null">
+				AND equiptype.Zguanli_phone IN 
+				<foreach collection="ZguanliPhones" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="CguanliPer != null and CguanliPer != ''">
+			<![CDATA[AND equiptype.Cguanli_per = #{CguanliPer}]]>
+		</if>
+		<if test="CguanliPer == null or CguanliPer == ''">
+			<if test="CguanliPerAlk != null and CguanliPerAlk != ''">
+				<![CDATA[AND equiptype.Cguanli_per LIKE CONCAT('%',#{CguanliPerAlk},'%')]]>
+			</if>
+			<if test="CguanliPers != null">
+				AND equiptype.Cguanli_per IN 
+				<foreach collection="CguanliPers" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="CguanliPhone != null and CguanliPhone != ''">
+			<![CDATA[AND equiptype.Cguanli_phone = #{CguanliPhone}]]>
+		</if>
+		<if test="CguanliPhone == null or CguanliPhone == ''">
+			<if test="CguanliPhoneAlk != null and CguanliPhoneAlk != ''">
+				<![CDATA[AND equiptype.Cguanli_phone LIKE CONCAT('%',#{CguanliPhoneAlk},'%')]]>
+			</if>
+			<if test="CguanliPhones != null">
+				AND equiptype.Cguanli_phone IN 
+				<foreach collection="CguanliPhones" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="JguanliPer != null and JguanliPer != ''">
+			<![CDATA[AND equiptype.Jguanli_per = #{JguanliPer}]]>
+		</if>
+		<if test="JguanliPer == null or JguanliPer == ''">
+			<if test="JguanliPerAlk != null and JguanliPerAlk != ''">
+				<![CDATA[AND equiptype.Jguanli_per LIKE CONCAT('%',#{JguanliPerAlk},'%')]]>
+			</if>
+			<if test="JguanliPers != null">
+				AND equiptype.Jguanli_per IN 
+				<foreach collection="JguanliPers" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="JguanliPhone != null and JguanliPhone != ''">
+			<![CDATA[AND equiptype.Jguanli_phone = #{JguanliPhone}]]>
+		</if>
+		<if test="JguanliPhone == null or JguanliPhone == ''">
+			<if test="JguanliPhoneAlk != null and JguanliPhoneAlk != ''">
+				<![CDATA[AND equiptype.Jguanli_phone LIKE CONCAT('%',#{JguanliPhoneAlk},'%')]]>
+			</if>
+			<if test="JguanliPhones != null">
+				AND equiptype.Jguanli_phone IN 
+				<foreach collection="JguanliPhones" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="bengxing != null and bengxing != ''">
+			<![CDATA[AND equiptype.bengxing = #{bengxing}]]>
+		</if>
+		<if test="bengxing == null or bengxing == ''">
+			<if test="bengxingAlk != null and bengxingAlk != ''">
+				<![CDATA[AND equiptype.bengxing LIKE CONCAT('%',#{bengxingAlk},'%')]]>
+			</if>
+			<if test="bengxings != null">
+				AND equiptype.bengxing IN 
+				<foreach collection="bengxings" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="koujing != null and koujing != ''">
+			<![CDATA[AND equiptype.koujing = #{koujing}]]>
+		</if>
+		<if test="koujing == null or koujing == ''">
+			<if test="koujingAlk != null and koujingAlk != ''">
+				<![CDATA[AND equiptype.koujing LIKE CONCAT('%',#{koujingAlk},'%')]]>
+			</if>
+			<if test="koujings != null">
+				AND equiptype.koujing IN 
+				<foreach collection="koujings" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="gonglv != null and gonglv != ''">
+			<![CDATA[AND equiptype.gonglv = #{gonglv}]]>
+		</if>
+		<if test="gonglv == null or gonglv == ''">
+			<if test="gonglvAlk != null and gonglvAlk != ''">
+				<![CDATA[AND equiptype.gonglv LIKE CONCAT('%',#{gonglvAlk},'%')]]>
+			</if>
+			<if test="gonglvs != null">
+				AND equiptype.gonglv IN 
+				<foreach collection="gonglvs" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="xinhao != null and xinhao != ''">
+			<![CDATA[AND equiptype.xinhao = #{xinhao}]]>
+		</if>
+		<if test="xinhao == null or xinhao == ''">
+			<if test="xinhaoAlk != null and xinhaoAlk != ''">
+				<![CDATA[AND equiptype.xinhao LIKE CONCAT('%',#{xinhaoAlk},'%')]]>
+			</if>
+			<if test="xinhaos != null">
+				AND equiptype.xinhao IN 
+				<foreach collection="xinhaos" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="sql_order">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+		<if test="sort == 'id' and (order == 'asc' or order == 'desc')">
+			equiptype.id ${order},
+		</if>
+		<if test="sort == 'parentId' and (order == 'asc' or order == 'desc')">
+			equiptype.parent_id ${order},
+		</if>
+		<if test="sort == 'name' and (order == 'asc' or order == 'desc')">
+			equiptype.name ${order},
+		</if>
+		<if test="sort == 'addPer' and (order == 'asc' or order == 'desc')">
+			equiptype.add_per ${order},
+		</if>
+		<if test="sort == 'addTime' and (order == 'asc' or order == 'desc')">
+			equiptype.add_time ${order},
+		</if>
+		<if test="sort == 'typeLayer' and (order == 'asc' or order == 'desc')">
+			equiptype.type_layer ${order},
+		</if>
+		<if test="sort == 'addressCode' and (order == 'asc' or order == 'desc')">
+			equiptype.addressCode ${order},
+		</if>
+		<if test="sort == 'systemId' and (order == 'asc' or order == 'desc')">
+			equiptype.system_id ${order},
+		</if>
+		<if test="sort == 'longitude' and (order == 'asc' or order == 'desc')">
+			equiptype.longitude ${order},
+		</if>
+		<if test="sort == 'latitude' and (order == 'asc' or order == 'desc')">
+			equiptype.latitude ${order},
+		</if>
+		<if test="sort == 'IP' and (order == 'asc' or order == 'desc')">
+			equiptype.IP ${order},
+		</if>
+		<if test="sort == 'ZguanliPer' and (order == 'asc' or order == 'desc')">
+			equiptype.Zguanli_per ${order},
+		</if>
+		<if test="sort == 'ZguanliPhone' and (order == 'asc' or order == 'desc')">
+			equiptype.Zguanli_phone ${order},
+		</if>
+		<if test="sort == 'CguanliPer' and (order == 'asc' or order == 'desc')">
+			equiptype.Cguanli_per ${order},
+		</if>
+		<if test="sort == 'CguanliPhone' and (order == 'asc' or order == 'desc')">
+			equiptype.Cguanli_phone ${order},
+		</if>
+		<if test="sort == 'JguanliPer' and (order == 'asc' or order == 'desc')">
+			equiptype.Jguanli_per ${order},
+		</if>
+		<if test="sort == 'JguanliPhone' and (order == 'asc' or order == 'desc')">
+			equiptype.Jguanli_phone ${order},
+		</if>
+		<if test="sort == 'bengxing' and (order == 'asc' or order == 'desc')">
+			equiptype.bengxing ${order},
+		</if>
+		<if test="sort == 'koujing' and (order == 'asc' or order == 'desc')">
+			equiptype.koujing ${order},
+		</if>
+		<if test="sort == 'gonglv' and (order == 'asc' or order == 'desc')">
+			equiptype.gonglv ${order},
+		</if>
+		<if test="sort == 'xinhao' and (order == 'asc' or order == 'desc')">
+			equiptype.xinhao ${order}
+		</if>
+		</trim>
+	</sql>
+	
+	<sql id="sql_page">
+		<if test="page != null and rows != null" >
+		limit #{rows} offset #{page}
+		</if>
+	</sql>
+</mapper>

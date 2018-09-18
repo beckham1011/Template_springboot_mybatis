@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjjoy.bms.setting.persist.mapper.AlarmDao">
+	
+	<parameterMap id="pm_alarm" type="cn.bjjoy.bms.setting.persist.model.Alarm">
+		<parameter property="id" javaType="int" jdbcType="INTEGER" />
+		<parameter property="alarm" javaType="String" jdbcType="VARCHAR" />
+	</parameterMap>
+	
+	<resultMap id="rm_alarm" type="cn.bjjoy.bms.setting.persist.model.Alarm">
+		<result property="id" column="id" javaType="int" jdbcType="INTEGER" />
+		<result property="alarm" column="alarm" javaType="String" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="save" parameterMap="pm_alarm" useGeneratedKeys="true" keyProperty="id" >
+		insert into alarm
+		<trim prefix="(" suffix=")" suffixOverrides="," >	
+			<if test="id != null">id,</if>
+			<if test="alarm != null">alarm</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null">#{id},</if>
+			<if test="alarm != null">#{alarm}</if>
+		</trim>
+	</insert>
+		
+	<delete id="deleteOne" parameterType="java.lang.String">
+		DELETE FROM alarm WHERE alarm.id = #{id}
+	</delete>
+	
+	<delete id="delete" parameterType="map">
+		DELETE FROM alarm
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</delete>
+
+	<select id="queryOne" parameterType="java.lang.String" resultMap="rm_alarm">
+		<include refid="sql_select"/>
+		WHERE alarm.id = #{id}
+	</select>
+	
+	<select id="queryList" parameterType="map" resultMap="rm_alarm">
+		<include refid="sql_select" />
+		<where>
+			<include refid="sql_where" />
+		</where>
+		<include refid="sql_order" />
+		<include refid="sql_page" />
+	</select>
+	
+	<select id="queryListCount" parameterType="map" resultType="long">
+		SELECT COUNT(0) FROM alarm
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</select>
+	
+	<update id="updateOne" parameterType="map">
+		UPDATE alarm
+		<set>
+		<if test="_parameter.containsKey('alarm')">
+		<choose>
+            <when test="alarm == null or alarm == ''">
+			alarm = NULL
+            </when>
+            <otherwise>
+			alarm = #{alarm}
+            </otherwise>
+        </choose>
+		</if>
+		</set>
+		<where>
+		id = #{id}
+		</where>
+	</update>
+
+	<update id="update" parameterType="map">
+		UPDATE alarm
+		<set>
+		<if test="_parameter.containsKey('alarmAnw')">
+		<choose>
+            <when test="alarmAnw == null or alarmAnw == ''">
+			alarm = NULL
+            </when>
+            <otherwise>
+			alarm = #{alarmAnw}
+            </otherwise>  
+        </choose>
+		</if>
+		</set>
+		<where>
+			<include refid="sql_where"/>
+		</where>
+	</update>
+	
+	<sql id="sql_select">
+		<![CDATA[
+		SELECT 
+			alarm.id,
+			alarm.alarm
+		FROM alarm
+		]]>
+	</sql>
+
+	<sql id="sql_where">
+		<if test="id != null and id != ''">
+		<![CDATA[AND alarm.id = #{id}]]>
+		</if>
+		<if test="id == null or id == ''">
+		<if test="idAst != null and idAst != ''">
+			<![CDATA[AND alarm.id >= #{idAst}]]>
+		</if>
+		<if test="idAed != null and idAed != ''">
+			<![CDATA[AND alarm.id <= #{idAed}]]>
+		</if>
+		<if test="ids != null">
+			AND alarm.id IN
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="idAlk != null and idAlk != ''">
+			<![CDATA[AND CAST(alarm.id AS CHAR) LIKE CONCAT('%',#{idAlk},'%')]]>
+		</if>
+		</if>
+		<if test="alarm != null and alarm != ''">
+			<![CDATA[AND alarm.alarm = #{alarm}]]>
+		</if>
+		<if test="alarm == null or alarm == ''">
+			<if test="alarmAlk != null and alarmAlk != ''">
+				<![CDATA[AND alarm.alarm LIKE CONCAT('%',#{alarmAlk},'%')]]>
+			</if>
+			<if test="alarms != null">
+				AND alarm.alarm IN 
+				<foreach collection="alarms" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="sql_order">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+		<if test="sort == 'id' and (order == 'asc' or order == 'desc')">
+			alarm.id ${order},
+		</if>
+		<if test="sort == 'alarm' and (order == 'asc' or order == 'desc')">
+			alarm.alarm ${order}
+		</if>
+		</trim>
+	</sql>
+	
+	<sql id="sql_page">
+		<if test="page != null and rows != null" >
+		limit #{rows} offset #{page}
+		</if>
+	</sql>
+</mapper>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjjoy.bms.setting.persist.mapper.AuthorityDao">
+	
+	<parameterMap id="pm_authority" type="cn.bjjoy.bms.setting.persist.model.Authority">
+		<parameter property="id" javaType="int" jdbcType="INTEGER" />
+		<parameter property="authority" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="describe" javaType="String" jdbcType="VARCHAR" />
+	</parameterMap>
+	
+	<resultMap id="rm_authority" type="cn.bjjoy.bms.setting.persist.model.Authority">
+		<result property="id" column="id" javaType="int" jdbcType="INTEGER" />
+		<result property="authority" column="authority" javaType="String" jdbcType="VARCHAR" />
+		<result property="describe" column="describe" javaType="String" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="save" parameterMap="pm_authority" useGeneratedKeys="true" keyProperty="id" >
+		insert into authority
+		<trim prefix="(" suffix=")" suffixOverrides="," >	
+			<if test="id != null">id,</if>
+			<if test="authority != null">authority,</if>
+			<if test="describe != null">describe</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null">#{id},</if>
+			<if test="authority != null">#{authority},</if>
+			<if test="describe != null">#{describe}</if>
+		</trim>
+	</insert>
+		
+	<delete id="deleteOne" parameterType="java.lang.String">
+		DELETE FROM authority WHERE authority.id = #{id}
+	</delete>
+	
+	<delete id="delete" parameterType="map">
+		DELETE FROM authority
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</delete>
+
+	<select id="queryOne" parameterType="java.lang.String" resultMap="rm_authority">
+		<include refid="sql_select"/>
+		WHERE authority.id = #{id}
+	</select>
+	
+	<select id="queryList" parameterType="map" resultMap="rm_authority">
+		<include refid="sql_select" />
+		<where>
+			<include refid="sql_where" />
+		</where>
+		<include refid="sql_order" />
+		<include refid="sql_page" />
+	</select>
+	
+	<select id="queryListCount" parameterType="map" resultType="long">
+		SELECT COUNT(0) FROM authority
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</select>
+	
+	<update id="updateOne" parameterType="map">
+		UPDATE authority
+		<set>
+		<if test="_parameter.containsKey('authority')">
+		<choose>
+            <when test="authority == null or authority == ''">
+			authority = NULL,
+            </when>
+            <otherwise>
+			authority = #{authority},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('describe')">
+		<choose>
+            <when test="describe == null or describe == ''">
+			describe = NULL
+            </when>
+            <otherwise>
+			describe = #{describe}
+            </otherwise>
+        </choose>
+		</if>
+		</set>
+		<where>
+		id = #{id}
+		</where>
+	</update>
+
+	<update id="update" parameterType="map">
+		UPDATE authority
+		<set>
+		<if test="_parameter.containsKey('authorityAnw')">
+		<choose>
+            <when test="authorityAnw == null or authorityAnw == ''">
+			authority = NULL,
+            </when>
+            <otherwise>
+			authority = #{authorityAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('describeAnw')">
+		<choose>
+            <when test="describeAnw == null or describeAnw == ''">
+			describe = NULL
+            </when>
+            <otherwise>
+			describe = #{describeAnw}
+            </otherwise>  
+        </choose>
+		</if>
+		</set>
+		<where>
+			<include refid="sql_where"/>
+		</where>
+	</update>
+	
+	<sql id="sql_select">
+		<![CDATA[
+		SELECT 
+			authority.id,
+			authority.authority,
+			authority.describe
+		FROM authority
+		]]>
+	</sql>
+
+	<sql id="sql_where">
+		<if test="id != null and id != ''">
+		<![CDATA[AND authority.id = #{id}]]>
+		</if>
+		<if test="id == null or id == ''">
+		<if test="idAst != null and idAst != ''">
+			<![CDATA[AND authority.id >= #{idAst}]]>
+		</if>
+		<if test="idAed != null and idAed != ''">
+			<![CDATA[AND authority.id <= #{idAed}]]>
+		</if>
+		<if test="ids != null">
+			AND authority.id IN
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="idAlk != null and idAlk != ''">
+			<![CDATA[AND CAST(authority.id AS CHAR) LIKE CONCAT('%',#{idAlk},'%')]]>
+		</if>
+		</if>
+		<if test="authority != null and authority != ''">
+			<![CDATA[AND authority.authority = #{authority}]]>
+		</if>
+		<if test="authority == null or authority == ''">
+			<if test="authorityAlk != null and authorityAlk != ''">
+				<![CDATA[AND authority.authority LIKE CONCAT('%',#{authorityAlk},'%')]]>
+			</if>
+			<if test="authoritys != null">
+				AND authority.authority IN 
+				<foreach collection="authoritys" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="describe != null and describe != ''">
+			<![CDATA[AND authority.describe = #{describe}]]>
+		</if>
+		<if test="describe == null or describe == ''">
+			<if test="describeAlk != null and describeAlk != ''">
+				<![CDATA[AND authority.describe LIKE CONCAT('%',#{describeAlk},'%')]]>
+			</if>
+			<if test="describes != null">
+				AND authority.describe IN 
+				<foreach collection="describes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="sql_order">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+		<if test="sort == 'id' and (order == 'asc' or order == 'desc')">
+			authority.id ${order},
+		</if>
+		<if test="sort == 'authority' and (order == 'asc' or order == 'desc')">
+			authority.authority ${order},
+		</if>
+		<if test="sort == 'describe' and (order == 'asc' or order == 'desc')">
+			authority.describe ${order}
+		</if>
+		</trim>
+	</sql>
+	
+	<sql id="sql_page">
+		<if test="page != null and rows != null" >
+		limit #{rows} offset #{page}
+		</if>
+	</sql>
+</mapper>

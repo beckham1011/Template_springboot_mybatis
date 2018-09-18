@@ -1,28 +1,30 @@
 package cn.bjjoy.bms.setting.service.impl;
 
-import cn.bjjoy.bms.setting.entity.Role;
-import cn.bjjoy.bms.setting.dao.MenuMapper;
-import cn.bjjoy.bms.util.DataUtils;
-import cn.bjjoy.bms.setting.dto.MenuDto;
-import cn.bjjoy.bms.setting.dto.RoleDto;
-import cn.bjjoy.bms.setting.entity.CamacAnswer;
-import cn.bjjoy.bms.setting.entity.Menu;
-import cn.bjjoy.bms.setting.entity.RoleMenu;
-import cn.bjjoy.bms.setting.dao.CamacAnswerMapper;
-import cn.bjjoy.bms.setting.dao.RoleMapper;
-import cn.bjjoy.bms.setting.dao.RoleMenuMapper;
-import cn.bjjoy.bms.setting.dao.UserRoleMapper;
-import cn.bjjoy.bms.setting.service.RoleService;
-
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import cn.bjjoy.bms.setting.dao.MenuMapper;
+import cn.bjjoy.bms.setting.dao.RoleMapper;
+import cn.bjjoy.bms.setting.dao.RoleMenuMapper;
+import cn.bjjoy.bms.setting.dao.UserRoleMapper;
+import cn.bjjoy.bms.setting.dto.MenuDto;
+import cn.bjjoy.bms.setting.dto.RoleDto;
+import cn.bjjoy.bms.setting.entity.Menu;
+import cn.bjjoy.bms.setting.entity.Role;
+import cn.bjjoy.bms.setting.entity.RoleMenu;
+import cn.bjjoy.bms.setting.service.RoleService;
+import cn.bjjoy.bms.util.DataUtils;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 /**
  * Created by bjjoy on 2017/11/02.
@@ -33,9 +35,6 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleMapper roleMapper;
 
-    @Autowired
-    private CamacAnswerMapper answerMapper;
-    
     @Autowired
     private RoleMenuMapper roleMenuMapper;
 

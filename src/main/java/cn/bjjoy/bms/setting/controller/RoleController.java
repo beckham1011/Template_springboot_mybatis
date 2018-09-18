@@ -1,7 +1,6 @@
 package cn.bjjoy.bms.setting.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.bjjoy.bms.base.Codes;
 import cn.bjjoy.bms.base.ResponseResult;
 import cn.bjjoy.bms.setting.dto.RoleDto;
-import cn.bjjoy.bms.setting.entity.CamacQuestion;
 import cn.bjjoy.bms.setting.entity.Role;
-import cn.bjjoy.bms.setting.service.CamacQuestionService;
 import cn.bjjoy.bms.setting.service.RoleService;
 
 import com.github.pagehelper.PageInfo;
@@ -31,15 +28,12 @@ import com.github.pagehelper.PageInfo;
  */
 @Controller
 @CrossOrigin
-@RequestMapping("/role2")
+@RequestMapping("/role")
 public class RoleController {
 
     @Autowired
     private RoleService roleService;
 
-    @Autowired
-    CamacQuestionService questionService ;
-    
 	/**
 	 * 角色管理初始化页面
 	 * @return
@@ -60,9 +54,6 @@ public class RoleController {
         PageInfo<Role> page = roleService.getPage(pageNumber, pageSize);
         
         Map<String , Object> map = new HashMap<>() ;
-        
-        List<CamacQuestion> questions = questionService.queryList(map);
-        System.out.println(questions.size());
         
         return ResponseResult.ok(page);
     }

@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjjoy.bms.setting.persist.mapper.DatacardDao">
+	
+	<parameterMap id="pm_datacard" type="cn.bjjoy.bms.setting.persist.model.Datacard">
+		<parameter property="id" javaType="int" jdbcType="INTEGER" />
+		<parameter property="unitName" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="equipName" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="mobilePhone" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="amount" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="refillTime" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="balance" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="currentState" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="addPer" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="addTime" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="costStandard" javaType="String" jdbcType="VARCHAR" />
+	</parameterMap>
+	
+	<resultMap id="rm_datacard" type="cn.bjjoy.bms.setting.persist.model.Datacard">
+		<result property="id" column="id" javaType="int" jdbcType="INTEGER" />
+		<result property="unitName" column="unitName" javaType="String" jdbcType="VARCHAR" />
+		<result property="equipName" column="equipName" javaType="String" jdbcType="VARCHAR" />
+		<result property="mobilePhone" column="mobilePhone" javaType="String" jdbcType="VARCHAR" />
+		<result property="amount" column="amount" javaType="String" jdbcType="VARCHAR" />
+		<result property="refillTime" column="refill_time" javaType="String" jdbcType="VARCHAR" />
+		<result property="balance" column="balance" javaType="String" jdbcType="VARCHAR" />
+		<result property="currentState" column="currentState" javaType="String" jdbcType="VARCHAR" />
+		<result property="addPer" column="add_per" javaType="String" jdbcType="VARCHAR" />
+		<result property="addTime" column="add_time" javaType="String" jdbcType="VARCHAR" />
+		<result property="costStandard" column="costStandard" javaType="String" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="save" parameterMap="pm_datacard" useGeneratedKeys="true" keyProperty="id" >
+		insert into datacard
+		<trim prefix="(" suffix=")" suffixOverrides="," >	
+			<if test="id != null">id,</if>
+			<if test="unitName != null">unitName,</if>
+			<if test="equipName != null">equipName,</if>
+			<if test="mobilePhone != null">mobilePhone,</if>
+			<if test="amount != null">amount,</if>
+			<if test="refillTime != null">refill_time,</if>
+			<if test="balance != null">balance,</if>
+			<if test="currentState != null">currentState,</if>
+			<if test="addPer != null">add_per,</if>
+			<if test="addTime != null">add_time,</if>
+			<if test="costStandard != null">costStandard</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null">#{id},</if>
+			<if test="unitName != null">#{unitName},</if>
+			<if test="equipName != null">#{equipName},</if>
+			<if test="mobilePhone != null">#{mobilePhone},</if>
+			<if test="amount != null">#{amount},</if>
+			<if test="refillTime != null">#{refillTime},</if>
+			<if test="balance != null">#{balance},</if>
+			<if test="currentState != null">#{currentState},</if>
+			<if test="addPer != null">#{addPer},</if>
+			<if test="addTime != null">#{addTime},</if>
+			<if test="costStandard != null">#{costStandard}</if>
+		</trim>
+	</insert>
+		
+	<delete id="deleteOne" parameterType="java.lang.String">
+		DELETE FROM datacard WHERE datacard.id = #{id}
+	</delete>
+	
+	<delete id="delete" parameterType="map">
+		DELETE FROM datacard
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</delete>
+
+	<select id="queryOne" parameterType="java.lang.String" resultMap="rm_datacard">
+		<include refid="sql_select"/>
+		WHERE datacard.id = #{id}
+	</select>
+	
+	<select id="queryList" parameterType="map" resultMap="rm_datacard">
+		<include refid="sql_select" />
+		<where>
+			<include refid="sql_where" />
+		</where>
+		<include refid="sql_order" />
+		<include refid="sql_page" />
+	</select>
+	
+	<select id="queryListCount" parameterType="map" resultType="long">
+		SELECT COUNT(0) FROM datacard
+		<where>
+			<include refid="sql_where" />
+		</where>
+	</select>
+	
+	<update id="updateOne" parameterType="map">
+		UPDATE datacard
+		<set>
+		<if test="_parameter.containsKey('unitName')">
+		<choose>
+            <when test="unitName == null or unitName == ''">
+			unitName = NULL,
+            </when>
+            <otherwise>
+			unitName = #{unitName},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('equipName')">
+		<choose>
+            <when test="equipName == null or equipName == ''">
+			equipName = NULL,
+            </when>
+            <otherwise>
+			equipName = #{equipName},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('mobilePhone')">
+		<choose>
+            <when test="mobilePhone == null or mobilePhone == ''">
+			mobilePhone = NULL,
+            </when>
+            <otherwise>
+			mobilePhone = #{mobilePhone},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('amount')">
+		<choose>
+            <when test="amount == null or amount == ''">
+			amount = NULL,
+            </when>
+            <otherwise>
+			amount = #{amount},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('refillTime')">
+		<choose>
+            <when test="refillTime == null or refillTime == ''">
+			refill_time = NULL,
+            </when>
+            <otherwise>
+			refill_time = #{refillTime},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('balance')">
+		<choose>
+            <when test="balance == null or balance == ''">
+			balance = NULL,
+            </when>
+            <otherwise>
+			balance = #{balance},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('currentState')">
+		<choose>
+            <when test="currentState == null or currentState == ''">
+			currentState = NULL,
+            </when>
+            <otherwise>
+			currentState = #{currentState},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('addPer')">
+		<choose>
+            <when test="addPer == null or addPer == ''">
+			add_per = NULL,
+            </when>
+            <otherwise>
+			add_per = #{addPer},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('addTime')">
+		<choose>
+            <when test="addTime == null or addTime == ''">
+			add_time = NULL,
+            </when>
+            <otherwise>
+			add_time = #{addTime},
+            </otherwise>
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('costStandard')">
+		<choose>
+            <when test="costStandard == null or costStandard == ''">
+			costStandard = NULL
+            </when>
+            <otherwise>
+			costStandard = #{costStandard}
+            </otherwise>
+        </choose>
+		</if>
+		</set>
+		<where>
+		id = #{id}
+		</where>
+	</update>
+
+	<update id="update" parameterType="map">
+		UPDATE datacard
+		<set>
+		<if test="_parameter.containsKey('unitNameAnw')">
+		<choose>
+            <when test="unitNameAnw == null or unitNameAnw == ''">
+			unitName = NULL,
+            </when>
+            <otherwise>
+			unitName = #{unitNameAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('equipNameAnw')">
+		<choose>
+            <when test="equipNameAnw == null or equipNameAnw == ''">
+			equipName = NULL,
+            </when>
+            <otherwise>
+			equipName = #{equipNameAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('mobilePhoneAnw')">
+		<choose>
+            <when test="mobilePhoneAnw == null or mobilePhoneAnw == ''">
+			mobilePhone = NULL,
+            </when>
+            <otherwise>
+			mobilePhone = #{mobilePhoneAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('amountAnw')">
+		<choose>
+            <when test="amountAnw == null or amountAnw == ''">
+			amount = NULL,
+            </when>
+            <otherwise>
+			amount = #{amountAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('refillTimeAnw')">
+		<choose>
+            <when test="refillTimeAnw == null or refillTimeAnw == ''">
+			refill_time = NULL,
+            </when>
+            <otherwise>
+			refill_time = #{refillTimeAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('balanceAnw')">
+		<choose>
+            <when test="balanceAnw == null or balanceAnw == ''">
+			balance = NULL,
+            </when>
+            <otherwise>
+			balance = #{balanceAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('currentStateAnw')">
+		<choose>
+            <when test="currentStateAnw == null or currentStateAnw == ''">
+			currentState = NULL,
+            </when>
+            <otherwise>
+			currentState = #{currentStateAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('addPerAnw')">
+		<choose>
+            <when test="addPerAnw == null or addPerAnw == ''">
+			add_per = NULL,
+            </when>
+            <otherwise>
+			add_per = #{addPerAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('addTimeAnw')">
+		<choose>
+            <when test="addTimeAnw == null or addTimeAnw == ''">
+			add_time = NULL,
+            </when>
+            <otherwise>
+			add_time = #{addTimeAnw},
+            </otherwise>  
+        </choose>
+		</if>
+		<if test="_parameter.containsKey('costStandardAnw')">
+		<choose>
+            <when test="costStandardAnw == null or costStandardAnw == ''">
+			costStandard = NULL
+            </when>
+            <otherwise>
+			costStandard = #{costStandardAnw}
+            </otherwise>  
+        </choose>
+		</if>
+		</set>
+		<where>
+			<include refid="sql_where"/>
+		</where>
+	</update>
+	
+	<sql id="sql_select">
+		<![CDATA[
+		SELECT 
+			datacard.id,
+			datacard.unitName,
+			datacard.equipName,
+			datacard.mobilePhone,
+			datacard.amount,
+			datacard.refill_time,
+			datacard.balance,
+			datacard.currentState,
+			datacard.add_per,
+			datacard.add_time,
+			datacard.costStandard
+		FROM datacard
+		]]>
+	</sql>
+
+	<sql id="sql_where">
+		<if test="id != null and id != ''">
+		<![CDATA[AND datacard.id = #{id}]]>
+		</if>
+		<if test="id == null or id == ''">
+		<if test="idAst != null and idAst != ''">
+			<![CDATA[AND datacard.id >= #{idAst}]]>
+		</if>
+		<if test="idAed != null and idAed != ''">
+			<![CDATA[AND datacard.id <= #{idAed}]]>
+		</if>
+		<if test="ids != null">
+			AND datacard.id IN
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="idAlk != null and idAlk != ''">
+			<![CDATA[AND CAST(datacard.id AS CHAR) LIKE CONCAT('%',#{idAlk},'%')]]>
+		</if>
+		</if>
+		<if test="unitName != null and unitName != ''">
+			<![CDATA[AND datacard.unitName = #{unitName}]]>
+		</if>
+		<if test="unitName == null or unitName == ''">
+			<if test="unitNameAlk != null and unitNameAlk != ''">
+				<![CDATA[AND datacard.unitName LIKE CONCAT('%',#{unitNameAlk},'%')]]>
+			</if>
+			<if test="unitNames != null">
+				AND datacard.unitName IN 
+				<foreach collection="unitNames" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="equipName != null and equipName != ''">
+			<![CDATA[AND datacard.equipName = #{equipName}]]>
+		</if>
+		<if test="equipName == null or equipName == ''">
+			<if test="equipNameAlk != null and equipNameAlk != ''">
+				<![CDATA[AND datacard.equipName LIKE CONCAT('%',#{equipNameAlk},'%')]]>
+			</if>
+			<if test="equipNames != null">
+				AND datacard.equipName IN 
+				<foreach collection="equipNames" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="mobilePhone != null and mobilePhone != ''">
+			<![CDATA[AND datacard.mobilePhone = #{mobilePhone}]]>
+		</if>
+		<if test="mobilePhone == null or mobilePhone == ''">
+			<if test="mobilePhoneAlk != null and mobilePhoneAlk != ''">
+				<![CDATA[AND datacard.mobilePhone LIKE CONCAT('%',#{mobilePhoneAlk},'%')]]>
+			</if>
+			<if test="mobilePhones != null">
+				AND datacard.mobilePhone IN 
+				<foreach collection="mobilePhones" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="amount != null and amount != ''">
+			<![CDATA[AND datacard.amount = #{amount}]]>
+		</if>
+		<if test="amount == null or amount == ''">
+			<if test="amountAlk != null and amountAlk != ''">
+				<![CDATA[AND datacard.amount LIKE CONCAT('%',#{amountAlk},'%')]]>
+			</if>
+			<if test="amounts != null">
+				AND datacard.amount IN 
+				<foreach collection="amounts" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="refillTime != null and refillTime != ''">
+			<![CDATA[AND datacard.refill_time = #{refillTime}]]>
+		</if>
+		<if test="refillTime == null or refillTime == ''">
+			<if test="refillTimeAlk != null and refillTimeAlk != ''">
+				<![CDATA[AND datacard.refill_time LIKE CONCAT('%',#{refillTimeAlk},'%')]]>
+			</if>
+			<if test="refillTimes != null">
+				AND datacard.refill_time IN 
+				<foreach collection="refillTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="balance != null and balance != ''">
+			<![CDATA[AND datacard.balance = #{balance}]]>
+		</if>
+		<if test="balance == null or balance == ''">
+			<if test="balanceAlk != null and balanceAlk != ''">
+				<![CDATA[AND datacard.balance LIKE CONCAT('%',#{balanceAlk},'%')]]>
+			</if>
+			<if test="balances != null">
+				AND datacard.balance IN 
+				<foreach collection="balances" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="currentState != null and currentState != ''">
+			<![CDATA[AND datacard.currentState = #{currentState}]]>
+		</if>
+		<if test="currentState == null or currentState == ''">
+			<if test="currentStateAlk != null and currentStateAlk != ''">
+				<![CDATA[AND datacard.currentState LIKE CONCAT('%',#{currentStateAlk},'%')]]>
+			</if>
+			<if test="currentStates != null">
+				AND datacard.currentState IN 
+				<foreach collection="currentStates" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="addPer != null and addPer != ''">
+			<![CDATA[AND datacard.add_per = #{addPer}]]>
+		</if>
+		<if test="addPer == null or addPer == ''">
+			<if test="addPerAlk != null and addPerAlk != ''">
+				<![CDATA[AND datacard.add_per LIKE CONCAT('%',#{addPerAlk},'%')]]>
+			</if>
+			<if test="addPers != null">
+				AND datacard.add_per IN 
+				<foreach collection="addPers" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="addTime != null and addTime != ''">
+			<![CDATA[AND datacard.add_time = #{addTime}]]>
+		</if>
+		<if test="addTime == null or addTime == ''">
+			<if test="addTimeAlk != null and addTimeAlk != ''">
+				<![CDATA[AND datacard.add_time LIKE CONCAT('%',#{addTimeAlk},'%')]]>
+			</if>
+			<if test="addTimes != null">
+				AND datacard.add_time IN 
+				<foreach collection="addTimes" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+		<if test="costStandard != null and costStandard != ''">
+			<![CDATA[AND datacard.costStandard = #{costStandard}]]>
+		</if>
+		<if test="costStandard == null or costStandard == ''">
+			<if test="costStandardAlk != null and costStandardAlk != ''">
+				<![CDATA[AND datacard.costStandard LIKE CONCAT('%',#{costStandardAlk},'%')]]>
+			</if>
+			<if test="costStandards != null">
+				AND datacard.costStandard IN 
+				<foreach collection="costStandards" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="sql_order">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+		<if test="sort == 'id' and (order == 'asc' or order == 'desc')">
+			datacard.id ${order},
+		</if>
+		<if test="sort == 'unitName' and (order == 'asc' or order == 'desc')">
+			datacard.unitName ${order},
+		</if>
+		<if test="sort == 'equipName' and (order == 'asc' or order == 'desc')">
+			datacard.equipName ${order},
+		</if>
+		<if test="sort == 'mobilePhone' and (order == 'asc' or order == 'desc')">
+			datacard.mobilePhone ${order},
+		</if>
+		<if test="sort == 'amount' and (order == 'asc' or order == 'desc')">
+			datacard.amount ${order},
+		</if>
+		<if test="sort == 'refillTime' and (order == 'asc' or order == 'desc')">
+			datacard.refill_time ${order},
+		</if>
+		<if test="sort == 'balance' and (order == 'asc' or order == 'desc')">
+			datacard.balance ${order},
+		</if>
+		<if test="sort == 'currentState' and (order == 'asc' or order == 'desc')">
+			datacard.currentState ${order},
+		</if>
+		<if test="sort == 'addPer' and (order == 'asc' or order == 'desc')">
+			datacard.add_per ${order},
+		</if>
+		<if test="sort == 'addTime' and (order == 'asc' or order == 'desc')">
+			datacard.add_time ${order},
+		</if>
+		<if test="sort == 'costStandard' and (order == 'asc' or order == 'desc')">
+			datacard.costStandard ${order}
+		</if>
+		</trim>
+	</sql>
+	
+	<sql id="sql_page">
+		<if test="page != null and rows != null" >
+		limit #{rows} offset #{page}
+		</if>
+	</sql>
+</mapper>
