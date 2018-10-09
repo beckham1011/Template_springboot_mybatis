@@ -341,7 +341,7 @@
 		select count(1)
 		from equiptype eqtp 
 		LEFT JOIN (
-			select  eqda.addresscode ,  eqda.add_time ,eqda.waterstatus , eqda.flowrate , eqda.netcumulative ,     eqda.signalquality ,eqda.communicationStatus 
+			select  eqda.addresscode ,  timestampdiff(hour, eqda.add_time  , now()) diffhour ,  eqda.add_time ,eqda.waterstatus , eqda.flowrate , eqda.netcumulative ,     eqda.signalquality ,eqda.communicationStatus 
 			from equipdata eqda inner JOIN  ( select max(id) mxid , addresscode from equipdata   group by addressCode  ) out1
 			where eqda.id = out1.mxid and eqda.addresscode = out1.addresscode ) out2 on eqtp.addresscode = out2.addresscode
 		where 1 = 1   
@@ -358,17 +358,22 @@
 			<![CDATA[ and (instr(name ,#{stationName}) or instr(eqtp.addressCode,#{stationName})) ]]>
 		</if>
 		<if test="waterStatus != null and waterStatus != ''">
-			<![CDATA[ and waterStatus = #{waterStatus} ]]>
+			<if test=" waterStatus == 1">
+				and <![CDATA[ diffhour < 24  ]]>
+			</if>
+			<if test=" waterStatus == 0">
+				and <![CDATA[ ( diffhour >= 24 or diffhour is null ) ]]>
+			</if>
 		</if>
 	</select>
 	
 	<select id="getNewestData" resultType="map" parameterType="map">
 		select eqtp.name , eqtp.bengxing , eqtp.koujing ,eqtp.gonglv  , eqtp.id , eqtp.update_time, 
 		out2.addresscode , out2.add_time ,out2.waterstatus , out2.flowrate , out2.netcumulative ,
-		out2.signalquality ,out2.communicationStatus , out2.signalquality , out2.communicationStatus 
+		out2.signalquality ,out2.communicationStatus , out2.signalquality , out2.communicationStatus , diffhour
 		from equiptype eqtp 
 		LEFT JOIN (
-			select  eqda.addresscode ,  eqda.add_time ,eqda.waterstatus , eqda.flowrate , eqda.netcumulative ,     eqda.signalquality ,eqda.communicationStatus 
+			select  eqda.addresscode , timestampdiff(hour, eqda.add_time  , now()) diffhour , eqda.add_time ,eqda.waterstatus , eqda.flowrate , eqda.netcumulative ,     eqda.signalquality ,eqda.communicationStatus 
 			from equipdata eqda inner JOIN  ( select max(id) mxid , addresscode from equipdata   group by addressCode  ) out1
 			where eqda.id = out1.mxid and eqda.addresscode = out1.addresscode ) out2 on eqtp.addresscode = out2.addresscode
 		where 1 = 1   
@@ -385,7 +390,12 @@
 			<![CDATA[ and (instr(name ,#{stationName}) or instr(eqtp.addressCode,#{stationName})) ]]>
 		</if>
 		<if test="waterStatus != null and waterStatus != ''">
-			<![CDATA[ and waterStatus = #{waterStatus} ]]>
+			<if test=" waterStatus == 1">
+				and <![CDATA[ diffhour < 24  ]]>
+			</if>
+			<if test=" waterStatus == 0">
+				and <![CDATA[ ( diffhour >= 24 or diffhour is null ) ]]>
+			</if>
 		</if>
 	 	order by  out2.add_time desc
 	 	<include refid="sql_map_page" />
@@ -422,7 +432,7 @@
 		eqtp.id  
 		from equipdata eqda
 		LEFT JOIN equiptype eqtp on eqda.addresscode = eqtp.addresscode
-		where 1=1 
+		where 1=1 and eqda.add_time is not null
 		<if test="ids != null">
 			AND  eqtp.id IN 
 			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
@@ -446,17 +456,22 @@
 	
 	<select id="queryOnlineAndOffLineNums"  resultType="map" parameterType="map">
 		select  rawstatus.diffhour , count(1) nums from (
-		select timestampdiff(hour, eqtp.update_time, now()) diffhour from equiptype eqtp 
-		where 1 = 1 
-		<if test="ids != null">
-			AND  eqtp.id IN 
-			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
-				#{item}
-			</foreach>
-		</if>
-		<if test="systemId != null and systemId != ''">
-			AND system_id = #{systemId} 
-		</if>
+			select timestampdiff(hour, out2.add_time  , now()) diffhour
+				from equiptype eqtp 
+				LEFT JOIN (
+					select  eqda.addresscode ,  eqda.add_time 
+					from equipdata eqda inner JOIN  ( select max(id) mxid , addresscode from equipdata   group by addressCode  ) out1
+					where eqda.id = out1.mxid and eqda.addresscode = out1.addresscode ) out2 on eqtp.addresscode = out2.addresscode
+				where 1 = 1  
+				<if test="ids != null">
+					AND  eqtp.id IN 
+					<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
+						#{item}
+					</foreach>
+				</if>
+				<if test="systemId != null and systemId != ''">
+					AND system_id = #{systemId} 
+				</if>
 		) as rawstatus
 		group by rawstatus.diffhour 
 	</select>

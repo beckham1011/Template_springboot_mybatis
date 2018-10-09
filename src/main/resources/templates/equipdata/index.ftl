@@ -87,10 +87,10 @@
 	                                        	<option value="-3" >请选择站点---</option>
 		                                    </select>&nbsp;&nbsp;
 											<label>
-												<input type="checkbox" id="online" name="online"/>在线
+												<input type="checkbox" id="online" name="online" onclick="getOnlineOfflineData()"/>在线
 											</label>
 											<label>
-												<input type="checkbox" id="offline" name="offline"/>离线
+												<input type="checkbox" id="offline" name="offline" onclick="getOnlineOfflineData()"/>离线
 											</label>
 		                                    <div style="float:right">
 	                                        	<input id="stationName" placeholder="请输入泵站名称" name="stationName" type="text"/>
@@ -306,6 +306,10 @@
                 $('#userListTable').bootstrapTable("refresh");
             }
             
+            function getOnlineOfflineData(){
+                $('#userListTable').bootstrapTable("refresh");
+            }
+            
             function refreshEquiptypeData(id){
 				$.ajax({
                     type: "GET",
@@ -359,7 +363,6 @@
                 });
             }
             
-            
             function refreshAllStation(){
                 layer.confirm('确定刷新所有泵站数据吗?', {icon: 3, title:'危险操作'}, function(index){
 	                $.ajax({
@@ -373,7 +376,6 @@
 	                });
 	            });
             }
-            
             
             function typeSelect3Change(){
             	var parentId = $('#typeSelect3').val().replace(/\$|\,/g, '');
