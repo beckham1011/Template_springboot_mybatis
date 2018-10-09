@@ -20,11 +20,20 @@ import cn.bjjoy.bms.setting.persist.model.Equiptype;
  */
 @Mapper
 @Repository
+@SuppressWarnings("rawtypes")
 public interface EquiptypeDao extends BaseDao<Equiptype> {
 
-	public List<Map<String,Object>> queryMapListNoPage(Map map) throws DaoException ;
+	public List<Map<String,Object>> queryMapListNoPage( Map map) throws DaoException ;
 
 	public LinkedList<Map<String, Object>> querySubTypes(Map map);
 	
 	public LinkedList<Map<String, Object>> getSubTypes(Map map) ;
+
+	public void updateByAddressCode(Map map);
+
+	public String getAddressCodeByIp(String ip);
+	
+	public String getIPByAddressCode(String addressCode);
+	
+	
 }

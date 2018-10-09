@@ -36,6 +36,7 @@ import cn.bjjoy.bms.util.EncryptUtils;
  * @date 2017/8/28
  */
 @Controller
+@SuppressWarnings("rawtypes")
 @RequestMapping("/user")
 @CrossOrigin
 public class UserController {
@@ -75,7 +76,13 @@ public class UserController {
 		}else {
 			return ResponseResult.error(Codes.PARAM_ERROR);
 		}
-		this.userService.insert(userDto);
+		
+		try {
+			this.userService.insert(userDto);
+		} catch (Exception e) {
+			logger.error(e.getMessage() , e);
+			e.printStackTrace();
+		}
 		Integer userId = userDto.getId();
         return ResponseResult.ok(userId);
     }
@@ -85,25 +92,30 @@ public class UserController {
      */
     @RequestMapping(value = "/getUser", method = RequestMethod.GET)
     public ResponseResult getUser(@RequestParam Integer id){
-        User user = this.userService.getUserDetail(id);
-        List<Role> roleList = this.roleService.getList(new HashMap());
-        List<UserRoleDto> userRoleList = DataUtils.getDataArray(roleList, UserRoleDto.class);
-        UserDto userDto = DataUtils.getData(user, UserDto.class);
-        userDto.setRoleList(userRoleList);
+        UserDto userDto = null;
+		try {
+			User user = this.userService.getUserDetail(id);
+			userDto = DataUtils.getData(user, UserDto.class);
+			List<Role> roleList = this.roleService.getList(new HashMap());
+			List<UserRoleDto> userRoleList = DataUtils.getDataArray(roleList, UserRoleDto.class);
+			userDto.setRoleList(userRoleList);
 
-        //获取角色信息
-        List<Integer> userIdList = new ArrayList<>();
-        userIdList.add(id);
-        List<UserRoleDto> userRoleDtoList = this.userRoleService.getUserRoleList(userIdList);
+			//获取角色信息
+			List<Integer> userIdList = new ArrayList<>();
+			userIdList.add(id);
+			List<UserRoleDto> userRoleDtoList = this.userRoleService.getUserRoleList(userIdList);
 
-        //用户对应角色列表是否被选中
-        for (UserRoleDto userRoleDto : userDto.getRoleList()){
-            for (UserRoleDto selectRole : userRoleDtoList){
-                if (userRoleDto.getId().equals(selectRole.getRoleId())){
-                    userRoleDto.setIsSelect(1);
-                }
-            }
-        }
+			//用户对应角色列表是否被选中
+			for (UserRoleDto userRoleDto : userDto.getRoleList()){
+			    for (UserRoleDto selectRole : userRoleDtoList){
+			        if (userRoleDto.getId().equals(selectRole.getRoleId())){
+			            userRoleDto.setIsSelect(1);
+			        }
+			    }
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage() , e);
+		}
 
         return ResponseResult.ok(userDto);
     }
@@ -147,49 +159,57 @@ public class UserController {
      * 获取用户列表
      * @param userDtoParam
      */
+	
+	@SuppressWarnings("unchecked")
 	@ResponseBody
     @RequestMapping(value = "/getList", method = RequestMethod.GET)
-    public ResponseResult getList(UserDto userDtoParam,
-                                  @RequestParam(defaultValue = "1") Integer pageNumber,
-                                  @RequestParam(defaultValue = "10") Integer pageSize){
-        Map param = new HashMap();
-        param.put("pageSize", pageSize);
-        param.put("startRow", (pageNumber - 1) * pageSize);
-        if (StringUtils.isNotBlank(userDtoParam.getLoginName())){
-            param.put("loginName", userDtoParam.getLoginName());
-        }
-        List<Map> userMapList = this.userService.getList(param);
-        //没有用户数据直接返回
-        if(userMapList == null || userMapList.size() == 0){
-            Map<String, Object> responseResult = new HashMap<>();
-            responseResult.put("userList", new ArrayList<>());
-            responseResult.put("count", 0);
-            return ResponseResult.ok(responseResult);
-        }
+    public ResponseResult getList(UserDto userDtoParam, @RequestParam(defaultValue = "1") Integer pageNumber, @RequestParam(defaultValue = "10") Integer pageSize){
+		Integer count = 0;
+		List<UserDto> userList = null;
+		try {
+			count = 0; 
+			
+			Map param = new HashMap();
+			param.put("pageSize", pageSize);
+			param.put("startRow", (pageNumber - 1) * pageSize);
+			if (StringUtils.isNotBlank(userDtoParam.getLoginName())){
+			    param.put("loginName", userDtoParam.getLoginName());
+			}
+			List<Map> userMapList = this.userService.getList(param);
+			//没有用户数据直接返回
+			if(userMapList == null || userMapList.size() == 0){
+			    Map<String, Object> responseResult = new HashMap<>();
+			    responseResult.put("userList", new ArrayList<>());
+			    responseResult.put("count", 0);
+			    return ResponseResult.ok(responseResult);
+			}
 
-        List<UserDto> userList = DataUtils.getDataArray(userMapList, UserDto.class);
+			userList = DataUtils.getDataArray(userMapList, UserDto.class);
 
-        List<Integer> userIdList = new ArrayList<>();
-        for(UserDto userDto : userList){
-            userIdList.add(userDto.getId());
-        }
-        //获取用户角色信息
-        List<UserRoleDto> userRoleVOList = this.userRoleService.getUserRoleList(userIdList);
-        for(UserDto userDto : userList){
-            //添加角色list
-            for(UserRoleDto userRoleDto : userRoleVOList){
-                if(userDto.getId().equals(userRoleDto.getUserId())){
-                    if(userDto.getRoleList() == null){
-                        userDto.setRoleList(new ArrayList<>());
-                        userDto.getRoleList().add(userRoleDto);
-                    }else{
-                        userDto.getRoleList().add(userRoleDto);
-                    }
-                }
-            }
-        }
+			List<Integer> userIdList = new ArrayList<>();
+			for(UserDto userDto : userList){
+			    userIdList.add(userDto.getId());
+			}
+			//获取用户角色信息
+			List<UserRoleDto> userRoleVOList = this.userRoleService.getUserRoleList(userIdList);
+			for(UserDto userDto : userList){
+			    //添加角色list
+			    for(UserRoleDto userRoleDto : userRoleVOList){
+			        if(userDto.getId().equals(userRoleDto.getUserId())){
+			            if(userDto.getRoleList() == null){
+			                userDto.setRoleList(new ArrayList<>());
+			                userDto.getRoleList().add(userRoleDto);
+			            }else{
+			                userDto.getRoleList().add(userRoleDto);
+			            }
+			        }
+			    }
+			}
 
-        Integer count = this.userService.getCount(param);
+			count = this.userService.getCount(param);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         Map<String, Object> responseResult = new HashMap<>();
         responseResult.put("userList",userList);
         responseResult.put("count", count);

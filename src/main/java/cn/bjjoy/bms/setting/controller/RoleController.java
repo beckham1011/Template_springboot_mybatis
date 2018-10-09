@@ -82,7 +82,7 @@ public class RoleController {
      */
     @RequestMapping(value = "/getRole", method = RequestMethod.GET)
     public ResponseResult getRole(@RequestParam Integer id, String traceID){
-        Map resultMap = roleService.getRole(id);
+        Map<String , Object> resultMap = roleService.getRole(id);
         return ResponseResult.ok(resultMap);
     }
 

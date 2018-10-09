@@ -548,6 +548,9 @@
 			equiptype.xinhao AS xinhao
 		FROM equiptype
 		where parent_id = #{parentId}
+		<if test="systemId != null and systemId != ''">
+			AND system_id = #{systemId} 
+		</if>
 	</select>
 	
 	<select id="getSubTypes" resultType="map" parameterType="map">
@@ -574,6 +577,21 @@
 			equiptype.gonglv AS gonglv,
 			equiptype.xinhao AS xinhao
 	 	FROM equiptype WHERE FIND_IN_SET(id, getTypeChild(#{parentId}))
+		<if test="systemId != null and systemId != ''">
+			AND system_id = #{systemId} 
+		</if>
 	</select>
+	
+	<update id="updateByAddressCode" parameterType="map">
+		update equiptype set ip = #{ip} , update_time = now()  where addressCode = #{addressCode}
+	</update>
+	
+	<select id="getAddressCodeByIp" parameterType="java.lang.String" resultType="java.lang.String">
+		select addresscode from equiptype where ip = #{ip} limit 1
+	</select>	
+	
+	<select id="getIPByAddressCode" parameterType="java.lang.String" resultType="java.lang.String">
+		select ip from equiptype where addressCode = #{addressCode} limit 1
+	</select>	
 	
 </mapper>

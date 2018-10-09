@@ -338,31 +338,56 @@
 	</sql>
 	
 	<select id="getNewestDataCount" resultType="long">
- 		select 
- 		count(0)
-		from equipdata eqda
-		inner join ( select max(id) mxid from equipdata   group by addressCode ) out2 on eqda.id = out2.mxid 
-		LEFT JOIN equiptype eqtp on eqda.addresscode = eqtp.addresscode 
+		select count(1)
+		from equiptype eqtp 
+		LEFT JOIN (
+			select  eqda.addresscode ,  eqda.add_time ,eqda.waterstatus , eqda.flowrate , eqda.netcumulative ,     eqda.signalquality ,eqda.communicationStatus 
+			from equipdata eqda inner JOIN  ( select max(id) mxid , addresscode from equipdata   group by addressCode  ) out1
+			where eqda.id = out1.mxid and eqda.addresscode = out1.addresscode ) out2 on eqtp.addresscode = out2.addresscode
+		where 1 = 1   
+		<if test="ids != null">
+			AND  eqtp.id IN 
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
+				#{item}
+			</foreach>
+		</if>
+		<if test="systemId != null and systemId != ''">
+			AND system_id = #{systemId} 
+		</if>
+		<if test="stationName != null and stationName != ''">
+			<![CDATA[ and (instr(name ,#{stationName}) or instr(eqtp.addressCode,#{stationName})) ]]>
+		</if>
+		<if test="waterStatus != null and waterStatus != ''">
+			<![CDATA[ and waterStatus = #{waterStatus} ]]>
+		</if>
 	</select>
 	
 	<select id="getNewestData" resultType="map" parameterType="map">
- 		select 
- 		eqda.addresscode ,
- 		eqda.add_time ,
- 		eqda.waterstatus ,
- 		eqda.flowrate , 
- 		eqda.netcumulative , 
- 		eqda.signalquality , 
- 		eqda.communicationStatus , 
-		eqtp.name  , 
-		eqtp.bengxing  , 
-		eqtp.koujing  , 
-		eqtp.gonglv  , 
-		eqtp.id  
-		from equipdata eqda
-		inner join ( select max(id) mxid from equipdata   group by addressCode ) out2 on eqda.id = out2.mxid 
-		LEFT JOIN equiptype eqtp on eqda.addresscode = eqtp.addresscode
-	 	order by eqda.id 
+		select eqtp.name , eqtp.bengxing , eqtp.koujing ,eqtp.gonglv  , eqtp.id , eqtp.update_time, 
+		out2.addresscode , out2.add_time ,out2.waterstatus , out2.flowrate , out2.netcumulative ,
+		out2.signalquality ,out2.communicationStatus , out2.signalquality , out2.communicationStatus 
+		from equiptype eqtp 
+		LEFT JOIN (
+			select  eqda.addresscode ,  eqda.add_time ,eqda.waterstatus , eqda.flowrate , eqda.netcumulative ,     eqda.signalquality ,eqda.communicationStatus 
+			from equipdata eqda inner JOIN  ( select max(id) mxid , addresscode from equipdata   group by addressCode  ) out1
+			where eqda.id = out1.mxid and eqda.addresscode = out1.addresscode ) out2 on eqtp.addresscode = out2.addresscode
+		where 1 = 1   
+		<if test="ids != null">
+			AND  eqtp.id IN 
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
+				#{item}
+			</foreach>
+		</if>
+		<if test="systemId != null and systemId != ''">
+			AND system_id = #{systemId} 
+		</if>
+		<if test="stationName != null and stationName != ''">
+			<![CDATA[ and (instr(name ,#{stationName}) or instr(eqtp.addressCode,#{stationName})) ]]>
+		</if>
+		<if test="waterStatus != null and waterStatus != ''">
+			<![CDATA[ and waterStatus = #{waterStatus} ]]>
+		</if>
+	 	order by  out2.add_time desc
 	 	<include refid="sql_map_page" />
 	</select>
 	
@@ -370,8 +395,15 @@
 	<select id="getDataNoPageCount" resultType="long">
  		select 
  		count(0)
-		from equipdata eqda
-		LEFT JOIN equiptype eqtp on eqda.addresscode = eqtp.addresscode 
+		from equiptype eqtp
+		LEFT JOIN equipdata eqda on eqda.addresscode = eqtp.addresscode 
+		where 1=1 
+		<if test="ids != null">
+			AND  eqtp.id IN 
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
+				#{item}
+			</foreach>
+		</if>
 	</select>
 	
 	<select id="getDataNoPage" resultType="map" parameterType="map">
@@ -390,8 +422,43 @@
 		eqtp.id  
 		from equipdata eqda
 		LEFT JOIN equiptype eqtp on eqda.addresscode = eqtp.addresscode
+		where 1=1 
+		<if test="ids != null">
+			AND  eqtp.id IN 
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
+				#{item}
+			</foreach>
+		</if>
+		
 	 	order by eqda.id 
 	 	<include refid="sql_map_page" />
+	</select>
+	
+	<select id="commonAnalysis" resultType="map" parameterType="map">
+		select  eqt.name name, FORMAT(mx1.mxflwrate , 2) mxflwrate , FORMAT(mx1.mnflwrate ,2 )  mnflwrate, FORMAT( mx1.avgflwrate , 2) avgflwrate,
+			FORMAT( mx1.mxcumlate, 2) mxcumlate, FORMAT(  mx1.mncumlate , 2) mncumlate, FORMAT( mx1.avgcumlate, 2) avgcumlate from (
+		select addresscode , max(flowrate) mxflwrate, min(flowrate) mnflwrate, avg(flowrate) avgflwrate, 
+			max(netcumulative) mxcumlate, min(netcumulative) mncumlate, avg(netcumulative) avgcumlate 
+		from equipdata eqa 
+		group by addresscode ) mx1 , equiptype eqt
+		where mx1.addresscode = eqt.addresscode  
+	</select>
+	
+	<select id="queryOnlineAndOffLineNums"  resultType="map" parameterType="map">
+		select  rawstatus.diffhour , count(1) nums from (
+		select timestampdiff(hour, eqtp.update_time, now()) diffhour from equiptype eqtp 
+		where 1 = 1 
+		<if test="ids != null">
+			AND  eqtp.id IN 
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
+				#{item}
+			</foreach>
+		</if>
+		<if test="systemId != null and systemId != ''">
+			AND system_id = #{systemId} 
+		</if>
+		) as rawstatus
+		group by rawstatus.diffhour 
 	</select>
 	
 	

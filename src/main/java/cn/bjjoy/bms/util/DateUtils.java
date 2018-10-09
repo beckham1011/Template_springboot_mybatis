@@ -21,6 +21,8 @@ public class DateUtils {
 
     public static final String YYYYMMDD_ZH = "yyyy年MM月dd日";
 
+    static String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
+    
     /**
      * 年月日 时分秒
      */
@@ -46,6 +48,17 @@ public class DateUtils {
         return formatDate(dt, format);
     }
 
+    /**
+     * 获取当前日期时间
+     * 
+     * @param format
+     * @return
+     */
+    public static String getCurrentDateZZ() {
+        Date dt = new Date();
+        return formatDate(dt, YYYYMMDD_ZH);
+    }
+    
     /**
      * 获取当前日期时间
      * 
@@ -244,6 +257,20 @@ public class DateUtils {
         return calendar.getTime();
     }
 
+    
+    /**
+     * 计算两个日期相差小时数。 用第一个日期减去第二个。如果前一个日期小于后一个日期，则返回负数
+     * 
+     * @param one
+     *            第一个日期数，作为基准
+     * @param two
+     *            第二个日期数，作为比较
+     * @return 两个日期相差小时数
+     */
+    public static Long diffHours(Date one, Date two) {
+        return (one.getTime() - two.getTime()) / (3600 * 1000);
+    }
+    
     /**
      * 计算两个日期相差天数。 用第一个日期减去第二个。如果前一个日期小于后一个日期，则返回负数
      * 
@@ -468,6 +495,31 @@ public class DateUtils {
         return calendar.get(Calendar.WEEK_OF_YEAR);
     }
     
+    
+    /**
+     * @Title getCurrentDayOfWeek
+     * @Description 获取今天是周几
+     * @date 2018年2月28日 下午1:37:10
+     */
+    public static int getCurrentDayOfWeek() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.DAY_OF_WEEK);
+    }
+
+    /**
+     * @Title getCurrentWeekOfMonth
+     * @Description 获取今天是周几
+     * @date 2018年2月28日 下午1:37:10
+     */
+    public static String getCurrentDayOfWeekZZ() {
+        Calendar calendar = Calendar.getInstance();
+        int w = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        if (w < 0)
+            w = 0;
+
+        return weekDays[w];
+    }
+    
     /**
      * @Title getCurrentWeekOfMonth
      * @Description 获取当前是今月第几周
@@ -586,4 +638,16 @@ public class DateUtils {
         
         return org.apache.commons.lang3.time.DateUtils.isSameDay(date1, date2);
     }
+    
+    public static Long getDiffHour(String time) {
+    	Date d = null;
+		try {
+			d = convertStringToDate(DEFAULT_DATE_FORMAT , time);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+    	return diffHours(getDate(), d) ;
+    }
+    
+    
 }

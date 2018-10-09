@@ -8,7 +8,7 @@
 		<parameter property="endTime" javaType="String" jdbcType="VARCHAR" />
 		<parameter property="method" javaType="String" jdbcType="VARCHAR" />
 		<parameter property="maintainPer" javaType="String" jdbcType="VARCHAR" />
-		<parameter property="Describe" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="Description" javaType="String" jdbcType="VARCHAR" />
 		<parameter property="results" javaType="String" jdbcType="VARCHAR" />
 		<parameter property="money" javaType="String" jdbcType="VARCHAR" />
 		<parameter property="DeclarationRecordId" javaType="int" jdbcType="INTEGER" />
@@ -21,7 +21,7 @@
 		<result property="endTime" column="end_time" javaType="String" jdbcType="VARCHAR" />
 		<result property="method" column="method" javaType="String" jdbcType="VARCHAR" />
 		<result property="maintainPer" column="maintain_per" javaType="String" jdbcType="VARCHAR" />
-		<result property="Describe" column="Describe" javaType="String" jdbcType="VARCHAR" />
+		<result property="Description" column="Description" javaType="String" jdbcType="VARCHAR" />
 		<result property="results" column="results" javaType="String" jdbcType="VARCHAR" />
 		<result property="money" column="money" javaType="String" jdbcType="VARCHAR" />
 		<result property="DeclarationRecordId" column="DeclarationRecord_id" javaType="int" jdbcType="INTEGER" />
@@ -36,7 +36,7 @@
 			<if test="endTime != null">end_time,</if>
 			<if test="method != null">method,</if>
 			<if test="maintainPer != null">maintain_per,</if>
-			<if test="Describe != null">Describe,</if>
+			<if test="Description != null">Description,</if>
 			<if test="results != null">results,</if>
 			<if test="money != null">money,</if>
 			<if test="DeclarationRecordId != null">DeclarationRecord_id,</if>
@@ -48,7 +48,7 @@
 			<if test="endTime != null">#{endTime},</if>
 			<if test="method != null">#{method},</if>
 			<if test="maintainPer != null">#{maintainPer},</if>
-			<if test="Describe != null">#{Describe},</if>
+			<if test="Description != null">#{Description},</if>
 			<if test="results != null">#{results},</if>
 			<if test="money != null">#{money},</if>
 			<if test="DeclarationRecordId != null">#{DeclarationRecordId},</if>
@@ -131,13 +131,13 @@
             </otherwise>
         </choose>
 		</if>
-		<if test="_parameter.containsKey('Describe')">
+		<if test="_parameter.containsKey('Description')">
 		<choose>
-            <when test="Describe == null or Describe == ''">
-			Describe = NULL,
+            <when test="Description == null or Description == ''">
+			Description = NULL,
             </when>
             <otherwise>
-			Describe = #{Describe},
+			Description = #{Description},
             </otherwise>
         </choose>
 		</if>
@@ -230,13 +230,13 @@
             </otherwise>  
         </choose>
 		</if>
-		<if test="_parameter.containsKey('DescribeAnw')">
+		<if test="_parameter.containsKey('DescriptionAnw')">
 		<choose>
-            <when test="DescribeAnw == null or DescribeAnw == ''">
-			Describe = NULL,
+            <when test="DescriptionAnw == null or DescriptionAnw == ''">
+			Description = NULL,
             </when>
             <otherwise>
-			Describe = #{DescribeAnw},
+			Description = #{DescriptionAnw},
             </otherwise>  
         </choose>
 		</if>
@@ -294,7 +294,7 @@
 			maintainrecord.end_time,
 			maintainrecord.method,
 			maintainrecord.maintain_per,
-			maintainrecord.Describe,
+			maintainrecord.Description,
 			maintainrecord.results,
 			maintainrecord.money,
 			maintainrecord.DeclarationRecord_id,
@@ -380,16 +380,16 @@
 				</foreach>
 			</if>
 		</if>
-		<if test="Describe != null and Describe != ''">
-			<![CDATA[AND maintainrecord.Describe = #{Describe}]]>
+		<if test="Description != null and Description != ''">
+			<![CDATA[AND maintainrecord.Description = #{Description}]]>
 		</if>
-		<if test="Describe == null or Describe == ''">
-			<if test="DescribeAlk != null and DescribeAlk != ''">
-				<![CDATA[AND maintainrecord.Describe LIKE CONCAT('%',#{DescribeAlk},'%')]]>
+		<if test="Description == null or Description == ''">
+			<if test="DescriptionAlk != null and DescriptionAlk != ''">
+				<![CDATA[AND maintainrecord.Description LIKE CONCAT('%',#{DescriptionAlk},'%')]]>
 			</if>
-			<if test="Describes != null">
-				AND maintainrecord.Describe IN 
-				<foreach collection="Describes" index="index" item="item" open="(" separator="," close=")">   
+			<if test="Descriptions != null">
+				AND maintainrecord.Description IN 
+				<foreach collection="Descriptions" index="index" item="item" open="(" separator="," close=")">   
 					#{item}
 				</foreach>
 			</if>
@@ -475,8 +475,8 @@
 		<if test="sort == 'maintainPer' and (order == 'asc' or order == 'desc')">
 			maintainrecord.maintain_per ${order},
 		</if>
-		<if test="sort == 'Describe' and (order == 'asc' or order == 'desc')">
-			maintainrecord.Describe ${order},
+		<if test="sort == 'Description' and (order == 'asc' or order == 'desc')">
+			maintainrecord.Description ${order},
 		</if>
 		<if test="sort == 'results' and (order == 'asc' or order == 'desc')">
 			maintainrecord.results ${order},

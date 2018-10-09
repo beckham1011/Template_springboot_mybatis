@@ -9,7 +9,7 @@
 			maintainrecord.end_time AS endTime,
 			maintainrecord.method AS method,
 			maintainrecord.maintain_per AS maintainPer,
-			maintainrecord.Describe AS Describe,
+			maintainrecord.Description AS Description,
 			maintainrecord.results AS results,
 			maintainrecord.money AS money,
 			maintainrecord.DeclarationRecord_id AS DeclarationRecordId,
@@ -28,7 +28,7 @@
 			maintainrecord.end_time AS endTime,
 			maintainrecord.method AS method,
 			maintainrecord.maintain_per AS maintainPer,
-			maintainrecord.Describe AS Describe,
+			maintainrecord.Description AS Description,
 			maintainrecord.results AS results,
 			maintainrecord.money AS money,
 			maintainrecord.DeclarationRecord_id AS DeclarationRecordId,
@@ -61,7 +61,7 @@
 					maintainrecord.end_time LIKE CONCAT('%',#{search},'%') OR
 					maintainrecord.method LIKE CONCAT('%',#{search},'%') OR
 					maintainrecord.maintain_per LIKE CONCAT('%',#{search},'%') OR
-					maintainrecord.Describe LIKE CONCAT('%',#{search},'%') OR
+					maintainrecord.Description LIKE CONCAT('%',#{search},'%') OR
 					maintainrecord.results LIKE CONCAT('%',#{search},'%') OR
 					maintainrecord.money LIKE CONCAT('%',#{search},'%') OR
 					CAST(maintainrecord.DeclarationRecord_id as CHAR) LIKE CONCAT('%',#{search},'%') OR
@@ -145,16 +145,16 @@
 				</foreach>
 			</if>
 		</if>
-		<if test="Describe != null and Describe != ''">
-			<![CDATA[AND maintainrecord.Describe = #{Describe}]]>
+		<if test="Description != null and Description != ''">
+			<![CDATA[AND maintainrecord.Description = #{Description}]]>
 		</if>
-		<if test="Describe == null or Describe == ''">
-			<if test="DescribeAlk != null and DescribeAlk != ''">
-				<![CDATA[AND maintainrecord.Describe LIKE CONCAT('%',#{DescribeAlk},'%')]]>
+		<if test="Description == null or Description == ''">
+			<if test="DescriptionAlk != null and DescriptionAlk != ''">
+				<![CDATA[AND maintainrecord.Description LIKE CONCAT('%',#{DescriptionAlk},'%')]]>
 			</if>
-			<if test="Describes != null">
-				AND maintainrecord.Describe IN 
-				<foreach collection="Describes" index="index" item="item" open="(" separator="," close=")">   
+			<if test="Descriptions != null">
+				AND maintainrecord.Description IN 
+				<foreach collection="Descriptions" index="index" item="item" open="(" separator="," close=")">   
 					#{item}
 				</foreach>
 			</if>
@@ -240,8 +240,8 @@
 		<if test="sort == 'maintainPer' and (order == 'asc' or order == 'desc')">
 			maintainrecord.maintain_per ${order},
 		</if>
-		<if test="sort == 'Describe' and (order == 'asc' or order == 'desc')">
-			maintainrecord.Describe ${order},
+		<if test="sort == 'Description' and (order == 'asc' or order == 'desc')">
+			maintainrecord.Description ${order},
 		</if>
 		<if test="sort == 'results' and (order == 'asc' or order == 'desc')">
 			maintainrecord.results ${order},

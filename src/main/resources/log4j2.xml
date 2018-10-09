@@ -10,7 +10,7 @@
         <pattern>%d %p %C{1.} [%t] %X %m%n</pattern>
       </PatternLayout>
     </Console>
-    <RollingFile name="RollingFile" fileName="${log-path}/bms_demo.log" filePattern="${log-path}/bms_demo-%d{yyyy-MM-dd}-%i.log" >
+    <RollingFile name="RollingFile" fileName="${log-path}/smartwater.log" filePattern="${log-path}/smartwater-%d{yyyy-MM-dd}-%i.log" >
       <PatternLayout>
         <charset>utf-8</charset>
         <pattern>%d %p %C{1.} [%t] %X %m%n</pattern>

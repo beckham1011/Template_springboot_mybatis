@@ -79,7 +79,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="${ctx}/menu/index.ftl">
+                    <a href="${ctx}/alarm/index.ftl">
                         <i class="icon-double-angle-right"></i> 报警查询
                     </a>
                 </li>
@@ -96,7 +96,7 @@
 
             <ul class="submenu">
                 <li>
-                    <a href="${ctx}/user/index.ftl">
+                    <a href="${ctx}/analysis/index.ftl">
                         <i class="icon-double-angle-right"></i> 通用报表
                     </a>
                 </li>
@@ -118,25 +118,22 @@
 
             <ul class="submenu">
                 <li>
-                    <a href="${ctx}/user/index.ftl">
+                    <a href="${ctx}/datacard/index.ftl">
                         <i class="icon-double-angle-right"></i> 数据卡维护
                     </a>
                 </li>
                 <li>
-                    <a href="${ctx}/role/index.ftl">
+                    <a href="${ctx}/declarationrecord/index.ftl">
                         <i class="icon-double-angle-right"></i> 申报记录
                     </a>
                 </li>
                 <li>
-                    <a href="${ctx}/menu/index.ftl">
+                    <a href="${ctx}/maintainrecord/index.ftl">
                         <i class="icon-double-angle-right"></i> 维修记录
                     </a>
                 </li>
             </ul>
         </li>
-
-
-
 
         <li>
             <a href="#" class="dropdown-toggle">
@@ -144,6 +141,18 @@
                 <span class="menu-text"> 用户中心 </span>
                 <b class="arrow icon-angle-down"></b>
             </a>
+			<ul class="submenu">
+                <li>
+                    <a href="${ctx}/equiptype/index.ftl">
+                        <i class="icon-double-angle-right"></i> 泵站管理
+                    </a>
+                </li>
+                <li>
+                    <a href="${ctx}/user/index.ftl">
+                        <i class="icon-double-angle-right"></i> 用户管理
+                    </a>
+                </li>
+            </ul>            
         </li>
 
     </ul><!-- /.nav-list -->

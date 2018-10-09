@@ -4,6 +4,18 @@ public class Constants {
 
 	public static final String CHARSET_UTF8 = "UTF-8";
 
+	public static final String All = "All" ;
+	
+	public static final String All_MSG = "All" ;
+	
+	public static final String MSG_8082 = "01041010001674C1" ;
+	public static final String MSG_8084 = "010300020004E5C9" ;
+	
+	public static final String SOCKET_SERVER_IP = "127.0.0.1";
+	
+	public static final Integer SOCKET_8082_PORT = 8082 ;
+	public static final Integer SOCKET_8084_PORT = 8084 ;
+	
 	public static final String Y = "Y";
 	public static final String N = "N";
 
@@ -35,6 +47,11 @@ public class Constants {
 	
 	public static final String MESSAGE_STATUS_READ = "READ";// 已读
 	public static final String MESSAGE_STATUS_UNREAD = "UNREAD";// 未读
+	
+
+	public static final int LENGTH_RAW = 2 ;
+	public static final int LENGTH_MORE = 11 ;
+	
 	
 	//系统默认发送人
 	public static final String MESSAGE_SENDER_ID = "1";

@@ -1,11 +1,11 @@
 package cn.bjjoy.bms.setting.dao;
 
-import cn.bjjoy.bms.setting.entity.Menu;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Map;
+import cn.bjjoy.bms.setting.entity.Menu;
 
 @Mapper
 @Repository

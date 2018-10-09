@@ -1,5 +1,7 @@
 package cn.bjjoy.bms.util;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import com.alibaba.fastjson.JSONObject;
  * Created by bjjoy on 2017/11/02.
  */
 public class DataUtils {
+	
     private static final Logger logger = LoggerFactory.getLogger(DataUtils.class);
     
     /**
@@ -41,4 +44,31 @@ public class DataUtils {
         String jsonString = JSONObject.toJSONString(data);
         return JSONObject.parseObject(jsonString, clazz);
     }
+    
+    
+    public static String formattedOutputDecimal(double decimal){
+        DecimalFormat df=new DecimalFormat("######0.00");  
+        String result=df.format(decimal);  
+        return result;
+    }
+	
+    public static String formattedDecimalToPercentage(double decimal){
+    	//获取格式化对象
+    	NumberFormat nt = NumberFormat.getPercentInstance();
+    	//设置百分数精确度2即保留两位小数
+    	nt.setMinimumFractionDigits(2);
+    	return nt.format(decimal);
+    }
+    
+    public static String formattedDecimalToPercentage(Long val1 , Long val2 ){
+    	double val = 0.0;
+    	try {
+			val = val1 / (double)(val1 + val2) ;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return formattedDecimalToPercentage(val) ;
+    }
+    
+    
 }

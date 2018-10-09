@@ -22,11 +22,15 @@ public interface EquipdataDao extends BaseDao<Equipdata> {
 
 	public List<Map<String, Object>> getNewestData(Map map) ;
 	
-	public long  getNewestDataCount() ;
-	
+	public long  getNewestDataCount(Map map) ;
 	
 	public List<Map<String, Object>> getDataNoPage(Map map) ;
 	
 	public long  getDataNoPageCount() ;
+
+	public List<Map<String,Object>> commonAnalysis(Map map) ;
+
+	public List<Map<String, Object>> queryOnlineAndOffLineNums(Map map);
+	
 	
 }

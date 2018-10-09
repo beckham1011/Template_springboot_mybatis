@@ -36,6 +36,7 @@ public class CurrentEquipData {
 	private String communicationStatus ;
 	
 	private String add_time ;
+	private String update_time ;
 
 	public int getId() {
 		return id;
@@ -131,6 +132,14 @@ public class CurrentEquipData {
 
 	public void setAdd_time(String add_time) {
 		this.add_time = add_time;
+	}
+
+	public String getUpdate_time() {
+		return update_time;
+	}
+
+	public void setUpdate_time(String update_time) {
+		this.update_time = update_time;
 	}
 	
 }

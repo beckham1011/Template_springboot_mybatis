@@ -82,10 +82,8 @@
 								<div class="row ">
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">历史查询</h3>
-                                        <select id="typeSelect1" name="typeSelect1" class="form-control" style="width:180px;  float:left;" onChange="typeSelect1Change(this)">
-                                        	<option value="-1" >
-                                                All--
-                                            </option>
+	                                	<select id="typeSelect1" name="typeSelect1" class="form-control" style="width:180px;  float:left;" onChange="typeSelect1Change(this)">
+                                        	<option value="-1" >请选择---</option>
 	                                        <#list subTypeList1 as type>
 	                                            <option value="${type.id}" >
 	                                                ${type.name}
@@ -93,17 +91,13 @@
 	                                        </#list>
 	                                    </select>
 	                                    <select name="typeSelect2" id="typeSelect2" class="form-control"  style="width:180px; float:left;" onChange="typeSelect2Change(this)">
-                                    		<option value="-2" >
-                                                All--
-                                            </option>
+                                    		<option value="-2" >请选择---</option>
 	                                    </select>
 	                                    <select name="typeSelect3" id="typeSelect3" class="form-control"  style="width:180px;  float:left;" onChange="typeSelect3Change()">>
-                                        	<option value="-3" >
-                                                All--
-                                            </option>
+                                        	<option value="-3" >请选择---</option>
 	                                    </select>
 	                                    <div  style="float:right">
-                                        	<input id="loginName" placeholder="请输入泵站名称" name="loginName" type="text"/>
+                                        	<input id="stationName" placeholder="请输入泵站名称" name="stationName" type="text"/>
 	                                        <button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
                                     	</div>
                                     </div>
@@ -260,7 +254,7 @@
                     //必须设置，不然request.getParameter获取不到请求参数
                     contentType: "application/x-www-form-urlencoded",
                     //获取数据的Servlet地址
-                    url: "${ctx}/equipdata/list",
+                    url: "${ctx}/history/newest",
                     //表格显示条纹
                     striped: true,
                     //启动分页
@@ -341,12 +335,17 @@
 
             function getQueryParams(params){
                 var params={
-                    "page":params.pageNumber,
-                    "rows":params.pageSize,
-                    "loginName":$("#loginName").val()
+                    "page":		   params.pageNumber,
+                    "rows":		   params.pageSize,
+                    "loginName":   $("#loginName").val(),
+                    "parentId1" :  $("#typeSelect1").val().replace(/\$|\,/g, ''),
+                    "parentId2" :  $("#typeSelect2").val().replace(/\$|\,/g, ''),
+                    "parentId3" :  $("#typeSelect3").val().replace(/\$|\,/g, ''),
+                    "stationName": $("#stationName").val().trim()
                 }
                 return params;
             }
+            
             function search() {
                 var params = {"loginName":$("#loginName").val()};
                 $('#userListTable').bootstrapTable("refresh");
@@ -405,6 +404,49 @@
                     });
                 });
             }
+            function typeSelect1Change(obj){
+            	var parentId = $('#typeSelect1').val().replace(/\$|\,/g, '');
+                $('#userListTable').bootstrapTable("refresh");
+                
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: "${ctx}/equiptype/subTypelist/?parentId=" + parentId,
+                    success: function(msg){
+                        var typeSelect2Html = [];
+                        typeSelect2Html.push('<option value=-2>All--</option>');
+		                for(var i = 0; i < msg.data.subTypeList.length; i ++){
+			                typeSelect2Html.push('<option value="' + msg.data.subTypeList[i].id  + '">' + msg.data.subTypeList[i].name + '</option>');
+		                }
+						$('#typeSelect2').html(typeSelect2Html);
+                    }
+                });
+            }
+            
+            function typeSelect2Change(obj){
+            	var parentId = $('#typeSelect2').val().replace(/\$|\,/g, '');
+            	$('#userListTable').bootstrapTable("refresh");
+                
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: "${ctx}/equiptype/subTypelist/?parentId=" + parentId,
+                    success: function(msg){
+                        var typeSelect3Html = [];
+                        typeSelect3Html.push('<option value=-3>All--</option>');
+		                for(var i = 0; i < msg.data.subTypeList.length; i ++){
+			                typeSelect3Html.push('<option value="' + msg.data.subTypeList[i].id  + '">' + msg.data.subTypeList[i].name + '</option>');
+		                }
+						$('#typeSelect3').html(typeSelect3Html);
+                    }
+                });
+            }
+            
+            function typeSelect3Change(){
+            	var parentId = $('#typeSelect3').val().replace(/\$|\,/g, '');
+            	var params = {"parentId":parentId};
+            	$('#userListTable').bootstrapTable("refresh");
+            }            
 		</script>
 </body>
 </html>

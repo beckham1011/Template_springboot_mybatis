@@ -53,7 +53,7 @@
 	<insert id="save" parameterMap="pm_equiptype" useGeneratedKeys="true" keyProperty="id" >
 		insert into equiptype
 		<trim prefix="(" suffix=")" suffixOverrides="," >	
-			<if test="id != null">id,</if>
+			<if test="id != null or id == ''">id,</if>
 			<if test="parentId != null">parent_id,</if>
 			<if test="name != null">name,</if>
 			<if test="addPer != null">add_per,</if>
@@ -76,7 +76,7 @@
 			<if test="xinhao != null">xinhao</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides="," >
-			<if test="id != null">#{id},</if>
+			<if test="id != null or id == ''">#{id},</if>
 			<if test="parentId != null">#{parentId},</if>
 			<if test="name != null">#{name},</if>
 			<if test="addPer != null">#{addPer},</if>

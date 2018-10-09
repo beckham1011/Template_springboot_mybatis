@@ -61,14 +61,6 @@
 							<li class="active">实时数据</li>
 						</ul><!-- .breadcrumb -->
 
-						<div class="nav-search" id="nav-search">
-							<form class="form-search">
-								<span class="input-icon">
-									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-									<i class="icon-search nav-search-icon"></i>
-								</span>
-							</form>
-						</div><!-- #nav-search -->
 					</div>
 
 					<div class="page-content" >
@@ -81,9 +73,7 @@
                                         <h3 class="header smaller lighter blue">实时数据</h3>
                                         <div class="form-group">
 		                                	<select id="typeSelect1" name="typeSelect1" class="form-control" style="width:180px;  float:left;" onChange="typeSelect1Change(this)">
-	                                        	<option value="-1" >
-	                                                All--
-	                                            </option>
+	                                        	<option value="-1" >请选择镇泵站---</option>
 		                                        <#list subTypeList1 as type>
 		                                            <option value="${type.id}" >
 		                                                ${type.name}
@@ -91,24 +81,21 @@
 		                                        </#list>
 		                                    </select>
 		                                    <select name="typeSelect2" id="typeSelect2" class="form-control"  style="width:180px; float:left;" onChange="typeSelect2Change(this)">
-	                                    		<option value="-2" >
-	                                                All--
-	                                            </option>
+	                                    		<option value="-2" >请选择村泵站---</option>
 		                                    </select>
 		                                    <select name="typeSelect3" id="typeSelect3" class="form-control"  style="width:180px;  float:left;" onChange="typeSelect3Change()">>
-	                                        	<option value="-3" >
-	                                                All--
-	                                            </option>
-		                                    </select>
+	                                        	<option value="-3" >请选择站点---</option>
+		                                    </select>&nbsp;&nbsp;
 											<label>
-												<input type="checkbox" value="0" name="roleIdList">在线
+												<input type="checkbox" id="online" name="online"/>在线
 											</label>
 											<label>
-												<input type="checkbox" value="1" name="roleIdList">离线
+												<input type="checkbox" id="offline" name="offline"/>离线
 											</label>
-		                                    <div  style="float:right">
-	                                        	<input id="loginName" placeholder="请输入泵站名称" name="loginName" type="text"/>
+		                                    <div style="float:right">
+	                                        	<input id="stationName" placeholder="请输入泵站名称" name="stationName" type="text"/>
 		                                        <button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
+		                                        <button class="btn btn-xs btn-danger" onclick="refreshAllStation();"><i class=""></i>&nbsp;刷新所有泵站</button>
                                         	</div>
                                         </div>
                                     </div>
@@ -130,33 +117,6 @@
 												</div>
 											</div>
 
-											<div class="modal-body no-padding">
-												<table class="table table-striped table-bordered table-hover no-margin-bottom no-border-top">
-													<thead>
-														<tr>
-															<th>Domain</th>
-															<th>Price</th>
-															<th>Clicks</th>
-
-															<th>
-																<i class="icon-time bigger-110"></i>
-																Update
-															</th>
-														</tr>
-													</thead>
-
-													<tbody>
-														<tr>
-															<td>
-																<a href="#">ace.com</a>
-															</td>
-															<td>$45</td>
-															<td>3,330</td>
-															<td>Feb 12</td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
 
 											<div class="modal-footer no-margin-top">
 												<button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">
@@ -198,53 +158,7 @@
 					</div><!-- /.page-content -->
 				</div><!-- /.main-content -->
 
-				<div class="ace-settings-container" id="ace-settings-container">
-					<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
-						<i class="icon-cog bigger-150"></i>
-					</div>
 
-					<div class="ace-settings-box" id="ace-settings-box">
-						<div>
-							<div class="pull-left">
-								<select id="skin-colorpicker" class="hide">
-									<option data-skin="default" value="#438EB9">#438EB9</option>
-									<option data-skin="skin-1" value="#222A2D">#222A2D</option>
-									<option data-skin="skin-2" value="#C6487E">#C6487E</option>
-									<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
-								</select>
-							</div>
-							<span>&nbsp; Choose Skin</span>
-						</div>
-
-						<div>
-							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
-							<label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
-						</div>
-
-						<div>
-							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
-							<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
-						</div>
-
-						<div>
-							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
-							<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
-						</div>
-
-						<div>
-							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
-							<label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
-						</div>
-
-						<div>
-							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container" />
-							<label class="lbl" for="ace-settings-add-container">
-								Inside
-								<b>.container</b>
-							</label>
-						</div>
-					</div>
-				</div><!-- /#ace-settings-container -->
 			</div><!-- /.main-container-inner -->
 
 			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
@@ -314,8 +228,17 @@
 
                     },{
                         title: "用水状态",
-                        field: "waterstatus"
-
+                        field: "waterstatus",
+                        align: 'center',
+	                    formatter: function(value,row,index){
+	                    	var waterstatushtml = '' ;
+                    		if(value == '1'){
+                    			waterstatushtml = '<img src="${ctx}/images/big_online.gif" style="height: 25px;" class="img-rounded" />' ;
+                    		}else{
+                    			waterstatushtml = '<img src="${ctx}/images/big_red.png" style="height: 25px;" class="img-rounded" />' ;
+                    		}
+	                        return waterstatushtml;
+	                    }
                     },{
                         title: "瞬时流量（M3/h）",
                         field: "flowrate"
@@ -323,17 +246,36 @@
                     },{
                         title: "正累积（M3）",
                         field: "netcumulative"
-
                     },{
                         title: "信号质量",
                         field: "signalquality"
-                        
                     },{
                         title: "通讯状态",
-                        field: "communicationStatus"                              
+                        field: "communicationStatus",
+                        align: 'center',
+	                    formatter: function(value,row,index){
+                    		var communicationStatushtml ;
+                    		if(value == '4'){
+	                    		communicationStatushtml = '<img src="${ctx}/images/wifi4.png" style="height: 25px;" class="img-rounded" />' ;
+	                		}else if(value == '3'){
+	                    		communicationStatushtml = '<img src="${ctx}/images/wifi3.png" style="height: 25px;" class="img-rounded" />' ;
+	                		}else if(value == '2'){
+	                    		communicationStatushtml = '<img src="${ctx}/images/wifi2.png" style="height: 25px;" class="img-rounded" />' ;
+	                		}else{
+	                    		communicationStatushtml = '<img src="${ctx}/images/wifi2.png" style="height: 25px;" class="img-rounded" />' ;
+                    		}
+	                        return communicationStatushtml;
+	                    }
                     },{
                         title: "更新时间",
-                        field: "add_time"                  
+                        field: "add_time"
+                    },{
+                        title: "操作",
+                        field: "empty",
+                        formatter: function (value, row, index) {
+                            var operateHtml = '<button class="btn btn-primary btn-xs" type="button" onclick="refreshEquiptypeData(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;刷新</button>';
+                            return operateHtml;
+                        }
                     }]
                 });
             });
@@ -346,93 +288,60 @@
 
             function getQueryParams(params){
                 var params={
-                    "page":params.pageNumber,
-                    "rows":params.pageSize,
-                    "loginName":$("#loginName").val(),
-                    "parentId" : $("#typeSelect1").val().replace(/\$|\,/g, '')
+                    "page":		   params.pageNumber,
+                    "rows":		   params.pageSize,
+                    "parentId1" :  $("#typeSelect1").val().replace(/\$|\,/g, ''),
+                    "parentId2" :  $("#typeSelect2").val().replace(/\$|\,/g, ''),
+                    "parentId3" :  $("#typeSelect3").val().replace(/\$|\,/g, ''),
+                    "stationName": $("#stationName").val().trim()
+                }
+                if( !($("#online").is(':checked') == $("#offline").is(':checked'))){
+                	params.waterStatus = $("#online").is(':checked') ? 1 : ( $("#offline").is(':checked') ? 0 : 1)
                 }
                 return params;
             }
+            
             function search() {
                 var params = {"loginName":$("#loginName").val()};
                 $('#userListTable').bootstrapTable("refresh");
             }
-            function add(){
-                layer.open({
-                    type: 2,
-                    title: '用户添加',
-                    shadeClose: true,
-                    shade: false,
-                    area: ['800px', '600px'],
-                    content: '${ctx}/user/add',
-                    end: function(index){
-                        $('#userListTable').bootstrapTable("refresh");
+            
+            function refreshEquiptypeData(id){
+				$.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: '${ctx}/socket?param='  + id,
+                    success: function(msg){
+					    $('#userListTable').bootstrapTable("refresh");
                     }
                 });
             }
-            function grant(id){
-                layer.open({
-                    type: 2,
-                    title: '关联角色',
-                    shadeClose: true,
-                    shade: false,
-                    area: ['800px', '600px'],
-                    content: '${ctx}/user/grant/'  + id,
-                    end: function(index){
-                        $('#userListTable').bootstrapTable("refresh");
-                    }
-                });
-            }
-            function edit(id){
-                layer.open({
-                    type: 2,
-                    title: '编辑用户',
-                    shadeClose: true,
-                    shade: false,
-                    area: ['800px', '600px'],
-                    content: '${ctx}/user/edit/'  + id,
-                    end: function(index){
-                        $('#userListTable').bootstrapTable("refresh");
-                    }
-                });
-            }
-            function del(id){
-                layer.confirm('确定删除吗?', {icon: 3, title:'提示'}, function(index){
-                    $.ajax({
-                        type: "POST",
-                        dataType: "json",
-                        url: "${ctx}/user/delete/" + id,
-                        success: function(msg){
-                            layer.msg(msg.msg, {time: 1500},function(){
-                                $('#userListTable').bootstrapTable("refresh");
-                                layer.close(index);
-                            });
-                        }
-                    });
-                });
-            }
+            
             function typeSelect1Change(obj){
             	var parentId = $('#typeSelect1').val().replace(/\$|\,/g, '');
                 $('#userListTable').bootstrapTable("refresh");
-                
+				$('#stationName').val('');
+				
                 $.ajax({
                     type: "GET",
                     dataType: "json",
                     url: "${ctx}/equiptype/subTypelist/?parentId=" + parentId,
                     success: function(msg){
                         var typeSelect2Html = [];
-                        typeSelect2Html.push('<option value=0>All--</option>');
+                        typeSelect2Html.push('<option value=-2>All--</option>');
+                        var typeSelect3Html = [];
+                        typeSelect3Html.push('<option value=-3>All--</option>');
 		                for(var i = 0; i < msg.data.subTypeList.length; i ++){
 			                typeSelect2Html.push('<option value="' + msg.data.subTypeList[i].id  + '">' + msg.data.subTypeList[i].name + '</option>');
 		                }
 						$('#typeSelect2').html(typeSelect2Html);
+						$('#typeSelect3').html(typeSelect3Html);
                     }
                 });
             }
             
             function typeSelect2Change(obj){
             	var parentId = $('#typeSelect2').val().replace(/\$|\,/g, '');
-            	var params = {"parentId":parentId};
             	$('#userListTable').bootstrapTable("refresh");
                 
                 $.ajax({
@@ -441,7 +350,7 @@
                     url: "${ctx}/equiptype/subTypelist/?parentId=" + parentId,
                     success: function(msg){
                         var typeSelect3Html = [];
-                        typeSelect3Html.push('<option value=0>All--</option>');
+                        typeSelect3Html.push('<option value=-3>All--</option>');
 		                for(var i = 0; i < msg.data.subTypeList.length; i ++){
 			                typeSelect3Html.push('<option value="' + msg.data.subTypeList[i].id  + '">' + msg.data.subTypeList[i].name + '</option>');
 		                }
@@ -449,6 +358,22 @@
                     }
                 });
             }
+            
+            
+            function refreshAllStation(){
+                layer.confirm('确定刷新所有泵站数据吗?', {icon: 3, title:'危险操作'}, function(index){
+	                $.ajax({
+	                    type: "GET",
+	                    dataType: "json",
+	                    url: '${ctx}/socket8082?param=all' ,
+	                    success: function(msg){
+	                    	layer.close(index);
+						    $('#userListTable').bootstrapTable("refresh");
+	                    }
+	                });
+	            });
+            }
+            
             
             function typeSelect3Change(){
             	var parentId = $('#typeSelect3').val().replace(/\$|\,/g, '');

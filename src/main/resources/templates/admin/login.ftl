@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>登录</title>
+		<title>厚水智能-登录</title>
 		<meta name="keywords" content="" />
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,13 +23,11 @@
 				<div class="row">
 					<div class="col-sm-10 col-sm-offset-1">
 						<div class="login-container">
-							<div class="center">
+							<div class="center"></br></br></br>
 								<h1>
 									<i class="icon-leaf green"></i>
-									<span class="red">Bjjoy</span>
-									<span class="white">运营后台管理</span>
+									<span class="white">厚水智能-远程监测系统</span>
 								</h1>
-								<h4 class="blue">&copy; Bjjoy demo</h4>
 							</div>
 
 							<div class="space-6"></div>

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title>添加资源</title>
+    <title>添加泵站</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 

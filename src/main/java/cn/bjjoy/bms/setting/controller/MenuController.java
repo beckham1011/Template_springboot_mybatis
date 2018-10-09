@@ -109,7 +109,7 @@ public class MenuController {
     @RequestMapping(value = "/getMenu", method = RequestMethod.GET)
     public ResponseResult getMenu(@RequestParam Integer id, String traceID){
         Menu menu = menuService.getMenu(id);
-        Map resultMap = DataUtils.getData(menu, Map.class);
+        Map<String , Object> resultMap = DataUtils.getData(menu, Map.class);
         if(null != menu.getParentId()) {
             Menu parentMenu = menuService.getMenu(menu.getParentId());
             resultMap.put("parentName", parentMenu.getName());

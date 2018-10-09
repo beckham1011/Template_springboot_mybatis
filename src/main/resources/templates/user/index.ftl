@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>厚水智能-实时监测</title>
+		<title>厚水智能-用户管理</title>
 		<meta name="keywords" content="" />
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -60,8 +60,8 @@
 								<i class="icon-home home-icon"></i>
 								<a href="#">控制台</a>
 							</li>
-							<li><a href="#">实时监测</a></li>
-							<li class="active">实时数据</li>
+							<li><a href="#">用户中心</a></li>
+							<li class="active">用户管理</li>
 						</ul><!-- .breadcrumb -->
 
 						<div class="nav-search" id="nav-search">
@@ -81,12 +81,10 @@
 
 								<div class="row ">
                                     <div class="col-xs-12">
-                                        <h3 class="header smaller lighter blue">实时数据</h3>
-                                        <div class="form-group">泵站名称：<input id="loginName" name="loginName" type="text"/>
-                                        <button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
-                                        <@shiro.hasPermission name="system:user:add">
+                                    	<h3 class="header smaller lighter blue">用户管理</h3>
+                                    	<div class="form-group">用户名：<input id="loginName" name="loginName" type="text"/>
+                                        	<button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
                                             <button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>
-                                        </@shiro.hasPermission>
                                         </div>
                                     </div>
 								</div>
@@ -246,7 +244,7 @@
                     //表格显示条纹
                     striped: true,
                     //启动分页
-                    pagination: true,
+                    pagination: false,
                     //每页显示的记录数
                     pageSize: 10,
                     //当前第几页
@@ -277,10 +275,13 @@
                         field: "id",
                         sortable: true
                     },{
-                        title: "泵站名称",
+                        title: "用户名",
+                        field: "name"
+                    },{
+                        title: "账号",
                         field: "loginName"
                     },{
-                        title: "泵型",
+                        title: "角色列表",
                         field: "roleList",
                         formatter: function(value, row, index) {
                             var r = "";
@@ -290,35 +291,18 @@
                             return r;
                         }
                     },{
-                        title: "口径",
+                        title: "电话",
                         field: "phone"
                     },{
-                        title: "功率",
+                        title: "邮箱",
                         field: "email"
-                    },{
-                        title: "用水状态",
-                        field: "phone"
-                    },{
-                        title: "瞬时流量（M3/h）",
-                        field: "email"
-                    },{
-                        title: "正累积（M3）",
-                        field: "phone"
-                    },{
-                        title: "信号质量",
-                        field: "email"
-                    },{
-                        title: "通讯状态",
-                        field: "email"
-                    },{
-                        title: "更新时间",
-                        field: "phone"
                     },{
                         title: "操作",
                         field: "empty",
                         formatter: function (value, row, index) {
-                            var operateHtml = '<@shiro.hasPermission name="system:user:edit"><button class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;刷新</button> &nbsp;</@shiro.hasPermission>';
-                            operateHtml = operateHtml + '<@shiro.hasPermission name="system:user:grant"><button class="btn btn-info btn-xs" type="button" onclick="grant(\''+row.id+'\')"><i class="fa fa-arrows"></i>&nbsp;详情</button></@shiro.hasPermission>';
+                            var operateHtml = '<@shiro.hasPermission name="system:user:edit"><button class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;编辑用户</button> &nbsp;</@shiro.hasPermission>';
+                            operateHtml = operateHtml + '<button class="btn btn-info btn-xs" type="button" onclick="grant(\''+row.id+'\')"><i class="fa fa-arrows"></i>&nbsp;角色关联</button>';
+                        	//operateHtml = operateHtml + '<button class="btn btn-info btn-xs" type="button" onclick="grant(\''+row.id+'\')"><i class="fa fa-arrows"></i>&nbsp;删除用户</button>';
                             return operateHtml;
                         }
                     }]
