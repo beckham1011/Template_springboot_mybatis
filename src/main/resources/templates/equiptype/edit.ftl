@@ -26,82 +26,115 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
                         <form class="form-horizontal m-t" id="userForm">
-                        	<input type="hidden" id="id" name="id" value="">
+                        	<input type="hidden" id="id" name="id" value="${equiptype.id?c}">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">泵站名称：<label style="color:red">*</label></label>
                                 <div class="col-sm-8">
-                                    <input id="name" name="name" class="form-control" type="text" value="" />
+                                    <input id="name" name="name" class="form-control" type="text" value="${equiptype.name}" />
                                 </div>
                             </div>
 	                        <div class="form-group">
 	                            <label class="col-sm-3 control-label">父节点：<label style="color:red">*</label></label>
 	                            <div class="col-sm-8">
-	                                <select id="typeSelect1" name="typeSelect1" class="form-control" style="width:180px;float:left;height:auto;" onChange="typeSelect1Change(this)">
-                                    	<option value="-1" >请选择父节点---</option>
-                                        <#list subTypeList1 as type>
-                                            <option value="${type.id}" >
-                                                ${type.name}
-                                            </option>
-                                        </#list>
-                                    </select>
-                                    <select name="typeSelect2" id="typeSelect2" class="form-control"  style="width:180px;float:left;height:auto;" onChange="typeSelect2Change(this)">
-                                		<option value="-2" >请选择父节点---</option>
-                                    </select>
+	                                <select name="typeSelect0" id="typeSelect0" class="form-control"  style="width:160px;float:left;height:auto;">
+	                            		<option value="1" >智慧抄表云平台</option>
+	                                </select>
+
+	                                <#if equiptype.typeLayer != null>
+		                                <select id="typeSelect1" name="typeSelect1" class="form-control" style="width:160px;float:left;height:auto;" >
+		                                	<#if parentParentTypes != null>
+		                            			<option value="${parentParentTypes.id}" >${parentParentTypes.name}</option>
+		                            		</#if>
+		                                </select>
+		                                <select name="typeSelect2" id="typeSelect2" class="form-control"  style="width:160px;float:left;height:auto;" >
+		                            		<#if parentTypes != null>
+		                            			<option value="${parentTypes.id}" >${parentTypes.name}</option>
+		                            		</#if>
+		                                </select>
+	                                </#if>
+	                                <#if equiptype.typeLayer == null>
+		                                <select id="typeSelect1" name="typeSelect1" class="form-control" style="width:160px;float:left;height:auto;" onChange="typeSelect1Change(this)">
+	                                    	<option value="-1" >请选择父节点---</option>
+	                                        <#list subTypeList1 as type>
+	                                            <option value="${type.id}" >
+	                                                ${type.name}
+	                                            </option>
+	                                        </#list>
+	                                    </select>
+	                                    <select name="typeSelect2" id="typeSelect2" class="form-control"  style="width:160px;float:left;height:auto;" onChange="typeSelect2Change(this)">
+	                                		<option value="-2" >请选择父节点---</option>
+	                                    </select>
+	                                </#if>
 	                            </div>
 	                        </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">设备地址码：<label style="color:red">*</label></label>
                                 <div class="col-sm-8">
-                                    <input id="addressCode" name="addressCode" class="form-control" type="text" value="" />
+                                    <input id="addressCode" name="addressCode" class="form-control" type="text" disabled="disabled" value="${equiptype.addressCode}" />
                                 </div>
                             </div>
                             <div class="form-group">
+	                            <label class="col-sm-3 control-label">SystemId：</label>
+	                            <div class="col-sm-8">
+	                                <select name="systemId" id="systemId" class="form-control"  style="width:260px;height: 34px; float:left;" >
+	                                	<#list systemList as stm>
+	                                		<#if equiptype.systemId == 0 >
+		                                		<option value="${stm.id}" selected> ${stm.system} </option>
+	                                		</#if>
+	                                		<#if equiptype.systemId != 0 && stm.id == equiptype.systemId>
+		                                		<option value="${stm.id}" selected> ${stm.system} </option>
+	                                		</#if>
+	                                	</#list>
+                                    </select>
+	                            </div>
+	                        </div>                            
+                            <div class="form-group">
                                 <label class="col-sm-3 control-label">泵型：<label style="color:red">*</label></label>
                                 <div class="col-sm-8">
-                                    <input id="bengxing" name="bengxing" class="form-control" type="text" value="">
+                                    <input id="bengxing" name="bengxing" class="form-control" type="text" value="${equiptype.bengxing}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">口径：<label style="color:red">*</label></label>
                                 <div class="col-sm-8">
-                                    <input id="koujing" name="koujing" class="form-control" type="text" value="">
+                                    <input id="koujing" name="koujing" class="form-control" type="text" value="${equiptype.koujing}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">功率：<label style="color:red">*</label></label>
                                 <div class="col-sm-8">
-                                    <input id="gonglv" name="gonglv" class="form-control" type="text" value="">
+                                    <input id="gonglv" name="gonglv" class="form-control" type="text" value="${equiptype.gonglv}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">纬度：</label>
                                 <div class="col-sm-8">
-                                    <input id="latitude" name="latitude" class="form-control" value="">
+                                    <input id="latitude" name="latitude" class="form-control" value="${equiptype.latitude}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">经度：</label>
                                 <div class="col-sm-8">
-                                    <input id="longitude" name="longitude" class="form-control" value="" />
+                                    <input id="longitude" name="longitude" class="form-control" value="${equiptype.longitude}" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">IP：</label>
                                 <div class="col-sm-8">
-                                    <input id="iP" name="iP" class="form-control" value="">
+                                    <input id="iP" name="iP" class="form-control" value="${equiptype.iP}">
                                 </div>
                             </div>
                             
 	                        <div class="form-group">
 	                            <label class="col-sm-3 control-label">镇水利站管理人员：<label style="color:red">*</label></label>
 	                            <div class="col-sm-8">
-	                                <input id="zguanliPer" name="zguanliPer" class="form-control" value="" />
+	                                <input id="zguanliPer" name="zguanliPer" class="form-control" value="${equiptype.zguanliPer}" />
 	                            </div>
 	                        </div>
 	                        <div class="form-group">
 	                            <label class="col-sm-3 control-label">镇管理人员电话：</label>
 	                            <div class="col-sm-8">
-	                                <input id="zguanliPhone" name="zguanliPhone" class="form-control" value="">
+	                                <input id="zguanliPhone" name="zguanliPhone" class="form-control" value="${equiptype.zguanliPhone}">
 	                            </div>
 	                        </div>
                                                         
@@ -109,13 +142,13 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">村管理人员:<label style="color:red">*</label></label>
                                 <div class="col-sm-8">
-                                    <input id="cguanliPer" name="cguanliPer" class="form-control" value="" />
+                                    <input id="cguanliPer" name="cguanliPer" class="form-control" value="${equiptype.cguanliPer}" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">村管理人员电话：</label>
                                 <div class="col-sm-8">
-                                    <input id="cguanliPhone" name="cguanliPhone" class="form-control" value="">
+                                    <input id="cguanliPhone" name="cguanliPhone" class="form-control" value="${equiptype.cguanliPhone}">
                                 </div>
                             </div>
                             
@@ -123,13 +156,13 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">具体管理人员：<label style="color:red">*</label></label>
                                 <div class="col-sm-8">
-                                    <input id="jguanliPer" name="jguanliPer" class="form-control" value="" />
+                                    <input id="jguanliPer" name="jguanliPer" class="form-control" value="${equiptype.jguanliPer}" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">具体管理人员电话：</label>
                                 <div class="col-sm-8">
-                                    <input id="jguanliPhone" name="jguanliPhone" class="form-control" value="">
+                                    <input id="jguanliPhone" name="jguanliPhone" class="form-control" value="${equiptype.jguanliPhone}">
                                 </div>
                             </div>                                                        
                             
@@ -159,9 +192,6 @@
     	        minlength: 4,
     	    	maxlength: 10
     	      },
-    	      	typeSelect1: {
-    	        required: true
-    	      },
     	      	name: {
     	        required: true,
     	        minlength: 4,
@@ -189,9 +219,9 @@
     	    messages: {},
     	    submitHandler:function(form){
     	    	$.ajax({
-   	    		   type: "POST",
+   	    		   type: "PUT",
    	    		   dataType: "json",
-   	    		   url: "${ctx}/equiptype/save",
+   	    		   url: "${ctx}/equiptype/update",
    	    		   data: $(form).serialize(),
    	    		   success: function(msg){
 	   	    			layer.msg(msg.msg, {time: 2000},function(){
@@ -203,7 +233,6 @@
             }
     	});
     });
-    
     
     
     function typeSelect1Change(obj){
@@ -243,6 +272,8 @@
             }
         });
     }
+    
+    
     
 </script>
 

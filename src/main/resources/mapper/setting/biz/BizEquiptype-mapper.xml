@@ -594,4 +594,8 @@
 		select ip from equiptype where addressCode = #{addressCode} limit 1
 	</select>	
 	
+	<select id="getAddressCodeNull" resultType="java.lang.String">
+		SELECT addressCode from equiptype WHERE parent_id is null 
+	</select>
+	
 </mapper>

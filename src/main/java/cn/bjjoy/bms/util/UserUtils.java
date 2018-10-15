@@ -31,6 +31,11 @@ public class UserUtils {
 		User user = getTokerUser() ;
 		return userSystemIdMap.get(user.getLoginName()) ;
 	}
+
+	public static int getSystemId(String loginName){
+		return userSystemIdMap.get(loginName) ;
+	}
+
 	
 	public static int getTopTypeId(){
 		User user = getTokerUser() ;

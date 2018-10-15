@@ -55,4 +55,12 @@ public class Constants {
 	
 	//系统默认发送人
 	public static final String MESSAGE_SENDER_ID = "1";
+	
+	public static String MAIL_SENDER_HOST = "smtp.126.com" ;
+	public static String MAIL_SENDER_ACCOUNT = "xuzj850329@126.com" ;
+	public static String MAIL_SENDER_PASSWORD = "OIvyx7" ;
+
+	public static String MAIL_RECEIVER_ADMIN = "996937629@qq.com" ;
+	
+	
 }

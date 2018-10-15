@@ -17,9 +17,14 @@ import java.util.Set;
 
 import cn.bjjoy.bms.setting.constants.Constants;
 
-
 // https://blog.csdn.net/tang9140/article/details/39052877?locationNum=10&fps=1
 public class NIOSSocketServer {
+
+	
+    public static void main(String[] args) {
+    	NIOSSocketServer server = new NIOSSocketServer(8087) ;
+    	server.listen();
+	}
 	
 	private static final String All_MSG = "All" ;
 	
@@ -91,7 +96,7 @@ public class NIOSSocketServer {
 		        }
 			}
 		}).start();
-    	System.out.println("Listen8084...");
+    	System.out.println("Listen" + port + "...");
  
     }
     
@@ -226,5 +231,6 @@ public class NIOSSocketServer {
 			e.printStackTrace();
 		}
     }
+
 
 }

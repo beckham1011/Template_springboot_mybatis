@@ -18,7 +18,14 @@
       <Policies>
         <SizeBasedTriggeringPolicy size="10 MB" />
       </Policies>
-      <DefaultRolloverStrategy max="100"/>
+      
+      <DefaultRolloverStrategy max="100">
+       	<Delete basePath="${log-path}/logs/" maxDepth="1">
+		   <IfFileName glob="*.log" />
+		   <IfLastModified age="4d" />
+	   	</Delete>
+      </DefaultRolloverStrategy>
+      
     </RollingFile>
   </Appenders>
   <Loggers>

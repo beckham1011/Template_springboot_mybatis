@@ -78,7 +78,7 @@
                                     
 								</div>
                                 <div class="space-6"></div>
-	                            <div class="table-responsive">
+	                            <div class="table-responsive table-bordered">
 	                                <table id="equiptypelist"></table>
 	                            </div>
 
@@ -196,8 +196,8 @@
                     //是否启用查询
                     search: false,
                     //是否启用详细信息视图
-                    detailView:false,
-                    detailFormatter:detailFormatter,
+                    detailView: false,
+                    detailFormatter: detailFormatter,
                     //表示服务端请求
                     sidePagination: "server",
                     //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
@@ -212,61 +212,120 @@
                         };
                     },
                     //数据列
-                    columns: [{
+                    columns: [[{
                         title: "序号",
                         field: "id",
-                        sortable: true
+                        sortable: true,
+                        align : 'center',
+						valign : 'middle',                        
+						colspan: 1,
+						rowspan: 2
                     },{
                         title: "泵站名称",
-                        field: "name"                   
+                        field: "name",
+                        align : 'center',
+						valign : 'middle',                        
+						colspan: 1,
+						rowspan: 2
                     },{
-                        title: "设备地址码:",
-                        field: "addressCode"
+                        title: "设备地址码",
+                        field: "addressCode",
+                        align : 'center',
+						valign : 'middle',                        
+						colspan: 1,
+						rowspan: 2
                     },{
-                        title: "泵型",
-                        field: "bengxing"                        
-                    },{
-                        title: "口径",
-                        field: "koujing"
-                    },{
-                        title: "功率",
-                        field: "gonglv"
+                        title: "泵站信息",
+                        align : 'center',
+						colspan: 3,
+						rowspan: 1
                     },{
                         title: "纬度",
-                        field: "latitude"
+                        field: "latitude",
+                        align : 'center',
+						valign : 'middle',                        
+						colspan: 1,
+						rowspan: 2
                     },{
                         title: "经度",
-                        field: "longitude"
+                        field: "longitude",
+                        align : 'center',
+						valign : 'middle',                        
+						colspan: 1,
+						rowspan: 2
                     },{
                         title: "IP",
-                        field: "iP"
+                        field: "iP",
+                        align : 'center',
+						valign : 'middle',
+						colspan: 1,
+						rowspan: 2
                     },{
                         title: "镇水利站管理人员",
-                        field: "zguanliPer"   
+                        field: "zguanliPer",
+                        align : 'center',
+						valign : 'middle',                        
+						colspan: 1,
+						rowspan: 2
                     },{
                         title: "镇管理人员电话",
-                        field: "zguanliPhone"
+                        field: "zguanliPhone",
+                        align : 'center',
+						valign : 'middle',                        
+						colspan: 1,
+						rowspan: 2
                     },{
                         title: "村管理人员",
-                        field: "cguanliPer"   
+                        field: "cguanliPer",
+                        align : 'center',
+						valign : 'middle',
+						colspan: 1,
+						rowspan: 2
                     },{
                         title: "村管理人员电话",
-                        field: "cguanliPhone"
+                        field: "cguanliPhone",
+                        align : 'center',
+						valign : 'middle',
+						colspan: 1,
+						rowspan: 2
                     },{
                         title: "具体管理人员",
-                        field: "jguanliPer"   
+                        field: "jguanliPer",
+                        align : 'center',
+						valign : 'middle',
+						colspan: 1,
+						rowspan: 2
                     },{
                         title: "具体管理人员电话",
-                        field: "jguanliPhone"                        
+                        field: "jguanliPhone",
+                        align : 'center',
+						valign : 'middle',
+						colspan: 1,
+						rowspan: 2
                     },{
                         title: "操作",
                         field: "empty",
+                        align : 'center',
+						valign : 'middle',
+						colspan: 1,
+						rowspan: 2,
                         formatter: function (value, row, index) {
                             var operateHtml = '<button class="btn btn-primary btn-xs" type="button" onclick="editEquiptype(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;编辑</button> &nbsp;';
                             operateHtml += '<button class="btn btn-danger btn-xs" type="button" onclick="deleteEquiptype(\''+row.id+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button>';
                             return operateHtml;
                         }
-                    }]
+                    }],[
+						{
+							title: "泵型",
+							field: "bengxing"
+						},{
+							title: "口径",
+							field: "koujing"
+						},{
+							title: "功率",
+							field: "gonglv"
+						}
+                    ]]
                 });
             });
 
@@ -312,7 +371,7 @@
                     title: '编辑泵站',
                     shadeClose: true,
                     shade: false,
-                    area: ['800px', '900px'],
+                    area: ['900px', '900px'],
                     content: '${ctx}/eqiuptype/edit?id=' + id,
                     end: function(index){
                     	layer.close(index);

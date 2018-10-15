@@ -3,6 +3,7 @@ package cn.bjjoy.bms;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import cn.bjjoy.bms.setting.constants.Constants;
@@ -13,6 +14,7 @@ import cn.bjjoy.bms.socket_multi_nio.NIOSServer8084;
 
 @SpringBootApplication
 @EnableCaching
+@EnableAsync
 @EnableScheduling
 public class BmsApplication {
 

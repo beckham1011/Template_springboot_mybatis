@@ -36,7 +36,7 @@
 	                        <div class="form-group">
 	                            <label class="col-sm-3 control-label">父节点：</label>
 	                            <div class="col-sm-8">
-	                                <select name="typeSelect0" id="typeSelect0" class="form-control"  style="width:160px;float:left;height:auto;" onChange="typeSelect2Change(this)">
+	                                <select name="typeSelect0" id="typeSelect0" class="form-control"  style="width:160px;float:left;height:auto;">
 	                            		<option value="1" >智慧抄表云平台</option>
 	                                </select>	                            
 	                                <select id="typeSelect1" name="typeSelect1" class="form-control" style="width:160px;float:left;height:auto;" onChange="typeSelect1Change(this)">
@@ -58,6 +58,18 @@
                                     <input id="addressCode" name="addressCode" class="form-control" type="text" value="" />
                                 </div>
                             </div>
+                            
+                            <div class="form-group">
+	                            <label class="col-sm-3 control-label">SystemId：</label>
+	                            <div class="col-sm-8">
+	                                <select name="systemId" id="systemId" class="form-control"  style="width:260px; float:left;" >
+	                                	<#list systemList as stm>
+	                                		<option value="${stm.id}"> ${stm.system} </option>
+	                                	</#list>
+                                    </select>
+	                            </div>
+	                        </div>
+                            
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">泵型：<label style="color:red">*</label></label>
                                 <div class="col-sm-8">
@@ -246,6 +258,8 @@
             }
         });
     }
+    
+    
     
 </script>
 

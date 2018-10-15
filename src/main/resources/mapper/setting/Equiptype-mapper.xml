@@ -14,12 +14,12 @@
 		<parameter property="longitude" javaType="String" jdbcType="VARCHAR" />
 		<parameter property="latitude" javaType="String" jdbcType="VARCHAR" />
 		<parameter property="IP" javaType="String" jdbcType="VARCHAR" />
-		<parameter property="ZguanliPer" javaType="String" jdbcType="VARCHAR" />
-		<parameter property="ZguanliPhone" javaType="String" jdbcType="VARCHAR" />
-		<parameter property="CguanliPer" javaType="String" jdbcType="VARCHAR" />
-		<parameter property="CguanliPhone" javaType="String" jdbcType="VARCHAR" />
-		<parameter property="JguanliPer" javaType="String" jdbcType="VARCHAR" />
-		<parameter property="JguanliPhone" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="zguanliPer" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="zguanliPhone" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="cguanliPer" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="cguanliPhone" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="jguanliPer" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="jguanliPhone" javaType="String" jdbcType="VARCHAR" />
 		<parameter property="bengxing" javaType="String" jdbcType="VARCHAR" />
 		<parameter property="koujing" javaType="String" jdbcType="VARCHAR" />
 		<parameter property="gonglv" javaType="String" jdbcType="VARCHAR" />
@@ -38,12 +38,12 @@
 		<result property="longitude" column="longitude" javaType="String" jdbcType="VARCHAR" />
 		<result property="latitude" column="latitude" javaType="String" jdbcType="VARCHAR" />
 		<result property="IP" column="IP" javaType="String" jdbcType="VARCHAR" />
-		<result property="ZguanliPer" column="Zguanli_per" javaType="String" jdbcType="VARCHAR" />
-		<result property="ZguanliPhone" column="Zguanli_phone" javaType="String" jdbcType="VARCHAR" />
-		<result property="CguanliPer" column="Cguanli_per" javaType="String" jdbcType="VARCHAR" />
-		<result property="CguanliPhone" column="Cguanli_phone" javaType="String" jdbcType="VARCHAR" />
-		<result property="JguanliPer" column="Jguanli_per" javaType="String" jdbcType="VARCHAR" />
-		<result property="JguanliPhone" column="Jguanli_phone" javaType="String" jdbcType="VARCHAR" />
+		<result property="zguanliPer" column="zguanli_per" javaType="String" jdbcType="VARCHAR" />
+		<result property="zguanliPhone" column="zguanli_phone" javaType="String" jdbcType="VARCHAR" />
+		<result property="cguanliPer" column="cguanli_per" javaType="String" jdbcType="VARCHAR" />
+		<result property="cguanliPhone" column="cguanli_phone" javaType="String" jdbcType="VARCHAR" />
+		<result property="jguanliPer" column="jguanli_per" javaType="String" jdbcType="VARCHAR" />
+		<result property="jguanliPhone" column="jguanli_phone" javaType="String" jdbcType="VARCHAR" />
 		<result property="bengxing" column="bengxing" javaType="String" jdbcType="VARCHAR" />
 		<result property="koujing" column="koujing" javaType="String" jdbcType="VARCHAR" />
 		<result property="gonglv" column="gonglv" javaType="String" jdbcType="VARCHAR" />
@@ -64,12 +64,12 @@
 			<if test="longitude != null">longitude,</if>
 			<if test="latitude != null">latitude,</if>
 			<if test="IP != null">IP,</if>
-			<if test="ZguanliPer != null">Zguanli_per,</if>
-			<if test="ZguanliPhone != null">Zguanli_phone,</if>
-			<if test="CguanliPer != null">Cguanli_per,</if>
-			<if test="CguanliPhone != null">Cguanli_phone,</if>
-			<if test="JguanliPer != null">Jguanli_per,</if>
-			<if test="JguanliPhone != null">Jguanli_phone,</if>
+			<if test="zguanliPer != null">zguanli_per,</if>
+			<if test="zguanliPhone != null">zguanli_phone,</if>
+			<if test="cguanliPer != null">cguanli_per,</if>
+			<if test="cguanliPhone != null">cguanli_phone,</if>
+			<if test="jguanliPer != null">jguanli_per,</if>
+			<if test="jguanliPhone != null">jguanli_phone,</if>
 			<if test="bengxing != null">bengxing,</if>
 			<if test="koujing != null">koujing,</if>
 			<if test="gonglv != null">gonglv,</if>
@@ -87,12 +87,12 @@
 			<if test="longitude != null">#{longitude},</if>
 			<if test="latitude != null">#{latitude},</if>
 			<if test="IP != null">#{IP},</if>
-			<if test="ZguanliPer != null">#{ZguanliPer},</if>
-			<if test="ZguanliPhone != null">#{ZguanliPhone},</if>
-			<if test="CguanliPer != null">#{CguanliPer},</if>
-			<if test="CguanliPhone != null">#{CguanliPhone},</if>
-			<if test="JguanliPer != null">#{JguanliPer},</if>
-			<if test="JguanliPhone != null">#{JguanliPhone},</if>
+			<if test="zguanliPer != null">#{zguanliPer},</if>
+			<if test="zguanliPhone != null">#{zguanliPhone},</if>
+			<if test="cguanliPer != null">#{cguanliPer},</if>
+			<if test="cguanliPhone != null">#{cguanliPhone},</if>
+			<if test="jguanliPer != null">#{jguanliPer},</if>
+			<if test="jguanliPhone != null">#{jguanliPhone},</if>
 			<if test="bengxing != null">#{bengxing},</if>
 			<if test="koujing != null">#{koujing},</if>
 			<if test="gonglv != null">#{gonglv},</if>
@@ -235,63 +235,63 @@
             </otherwise>
         </choose>
 		</if>
-		<if test="_parameter.containsKey('ZguanliPer')">
+		<if test="_parameter.containsKey('zguanliPer')">
 		<choose>
-            <when test="ZguanliPer == null or ZguanliPer == ''">
-			Zguanli_per = NULL,
+            <when test="zguanliPer == null or zguanliPer == ''">
+			zguanli_per = NULL,
             </when>
             <otherwise>
-			Zguanli_per = #{ZguanliPer},
+			zguanli_per = #{zguanliPer},
             </otherwise>
         </choose>
 		</if>
-		<if test="_parameter.containsKey('ZguanliPhone')">
+		<if test="_parameter.containsKey('zguanliPhone')">
 		<choose>
-            <when test="ZguanliPhone == null or ZguanliPhone == ''">
-			Zguanli_phone = NULL,
+            <when test="zguanliPhone == null or zguanliPhone == ''">
+			zguanli_phone = NULL,
             </when>
             <otherwise>
-			Zguanli_phone = #{ZguanliPhone},
+			zguanli_phone = #{zguanliPhone},
             </otherwise>
         </choose>
 		</if>
-		<if test="_parameter.containsKey('CguanliPer')">
+		<if test="_parameter.containsKey('cguanliPer')">
 		<choose>
-            <when test="CguanliPer == null or CguanliPer == ''">
-			Cguanli_per = NULL,
+            <when test="cguanliPer == null or cguanliPer == ''">
+			cguanli_per = NULL,
             </when>
             <otherwise>
-			Cguanli_per = #{CguanliPer},
+			cguanli_per = #{cguanliPer},
             </otherwise>
         </choose>
 		</if>
-		<if test="_parameter.containsKey('CguanliPhone')">
+		<if test="_parameter.containsKey('cguanliPhone')">
 		<choose>
-            <when test="CguanliPhone == null or CguanliPhone == ''">
-			Cguanli_phone = NULL,
+            <when test="cguanliPhone == null or cguanliPhone == ''">
+			cguanli_phone = NULL,
             </when>
             <otherwise>
-			Cguanli_phone = #{CguanliPhone},
+			cguanli_phone = #{cguanliPhone},
             </otherwise>
         </choose>
 		</if>
-		<if test="_parameter.containsKey('JguanliPer')">
+		<if test="_parameter.containsKey('jguanliPer')">
 		<choose>
-            <when test="JguanliPer == null or JguanliPer == ''">
-			Jguanli_per = NULL,
+            <when test="jguanliPer == null or jguanliPer == ''">
+			jguanli_per = NULL,
             </when>
             <otherwise>
-			Jguanli_per = #{JguanliPer},
+			jguanli_per = #{jguanliPer},
             </otherwise>
         </choose>
 		</if>
-		<if test="_parameter.containsKey('JguanliPhone')">
+		<if test="_parameter.containsKey('jguanliPhone')">
 		<choose>
-            <when test="JguanliPhone == null or JguanliPhone == ''">
-			Jguanli_phone = NULL,
+            <when test="jguanliPhone == null or jguanliPhone == ''">
+			jguanli_phone = NULL,
             </when>
             <otherwise>
-			Jguanli_phone = #{JguanliPhone},
+			jguanli_phone = #{jguanliPhone},
             </otherwise>
         </choose>
 		</if>
@@ -444,63 +444,63 @@
             </otherwise>  
         </choose>
 		</if>
-		<if test="_parameter.containsKey('ZguanliPerAnw')">
+		<if test="_parameter.containsKey('zguanliPerAnw')">
 		<choose>
-            <when test="ZguanliPerAnw == null or ZguanliPerAnw == ''">
-			Zguanli_per = NULL,
+            <when test="zguanliPerAnw == null or zguanliPerAnw == ''">
+			zguanli_per = NULL,
             </when>
             <otherwise>
-			Zguanli_per = #{ZguanliPerAnw},
+			zguanli_per = #{zguanliPerAnw},
             </otherwise>  
         </choose>
 		</if>
-		<if test="_parameter.containsKey('ZguanliPhoneAnw')">
+		<if test="_parameter.containsKey('zguanliPhoneAnw')">
 		<choose>
-            <when test="ZguanliPhoneAnw == null or ZguanliPhoneAnw == ''">
-			Zguanli_phone = NULL,
+            <when test="zguanliPhoneAnw == null or zguanliPhoneAnw == ''">
+			zguanli_phone = NULL,
             </when>
             <otherwise>
-			Zguanli_phone = #{ZguanliPhoneAnw},
+			zguanli_phone = #{zguanliPhoneAnw},
             </otherwise>  
         </choose>
 		</if>
-		<if test="_parameter.containsKey('CguanliPerAnw')">
+		<if test="_parameter.containsKey('cguanliPerAnw')">
 		<choose>
-            <when test="CguanliPerAnw == null or CguanliPerAnw == ''">
-			Cguanli_per = NULL,
+            <when test="cguanliPerAnw == null or cguanliPerAnw == ''">
+			cguanli_per = NULL,
             </when>
             <otherwise>
-			Cguanli_per = #{CguanliPerAnw},
+			cguanli_per = #{cguanliPerAnw},
             </otherwise>  
         </choose>
 		</if>
-		<if test="_parameter.containsKey('CguanliPhoneAnw')">
+		<if test="_parameter.containsKey('cguanliPhoneAnw')">
 		<choose>
-            <when test="CguanliPhoneAnw == null or CguanliPhoneAnw == ''">
-			Cguanli_phone = NULL,
+            <when test="cguanliPhoneAnw == null or cguanliPhoneAnw == ''">
+			cguanli_phone = NULL,
             </when>
             <otherwise>
-			Cguanli_phone = #{CguanliPhoneAnw},
+			cguanli_phone = #{cguanliPhoneAnw},
             </otherwise>  
         </choose>
 		</if>
-		<if test="_parameter.containsKey('JguanliPerAnw')">
+		<if test="_parameter.containsKey('jguanliPerAnw')">
 		<choose>
-            <when test="JguanliPerAnw == null or JguanliPerAnw == ''">
-			Jguanli_per = NULL,
+            <when test="jguanliPerAnw == null or jguanliPerAnw == ''">
+			jguanli_per = NULL,
             </when>
             <otherwise>
-			Jguanli_per = #{JguanliPerAnw},
+			jguanli_per = #{jguanliPerAnw},
             </otherwise>  
         </choose>
 		</if>
-		<if test="_parameter.containsKey('JguanliPhoneAnw')">
+		<if test="_parameter.containsKey('jguanliPhoneAnw')">
 		<choose>
-            <when test="JguanliPhoneAnw == null or JguanliPhoneAnw == ''">
-			Jguanli_phone = NULL,
+            <when test="jguanliPhoneAnw == null or jguanliPhoneAnw == ''">
+			jguanli_phone = NULL,
             </when>
             <otherwise>
-			Jguanli_phone = #{JguanliPhoneAnw},
+			jguanli_phone = #{jguanliPhoneAnw},
             </otherwise>  
         </choose>
 		</if>
@@ -564,12 +564,12 @@
 			equiptype.longitude,
 			equiptype.latitude,
 			equiptype.IP,
-			equiptype.Zguanli_per,
-			equiptype.Zguanli_phone,
-			equiptype.Cguanli_per,
-			equiptype.Cguanli_phone,
-			equiptype.Jguanli_per,
-			equiptype.Jguanli_phone,
+			equiptype.zguanli_per,
+			equiptype.zguanli_phone,
+			equiptype.cguanli_per,
+			equiptype.cguanli_phone,
+			equiptype.jguanli_per,
+			equiptype.jguanli_phone,
 			equiptype.bengxing,
 			equiptype.koujing,
 			equiptype.gonglv,
@@ -751,86 +751,86 @@
 				</foreach>
 			</if>
 		</if>
-		<if test="ZguanliPer != null and ZguanliPer != ''">
-			<![CDATA[AND equiptype.Zguanli_per = #{ZguanliPer}]]>
+		<if test="zguanliPer != null and zguanliPer != ''">
+			<![CDATA[AND equiptype.zguanli_per = #{zguanliPer}]]>
 		</if>
-		<if test="ZguanliPer == null or ZguanliPer == ''">
-			<if test="ZguanliPerAlk != null and ZguanliPerAlk != ''">
-				<![CDATA[AND equiptype.Zguanli_per LIKE CONCAT('%',#{ZguanliPerAlk},'%')]]>
+		<if test="zguanliPer == null or zguanliPer == ''">
+			<if test="zguanliPerAlk != null and zguanliPerAlk != ''">
+				<![CDATA[AND equiptype.zguanli_per LIKE CONCAT('%',#{zguanliPerAlk},'%')]]>
 			</if>
-			<if test="ZguanliPers != null">
-				AND equiptype.Zguanli_per IN 
-				<foreach collection="ZguanliPers" index="index" item="item" open="(" separator="," close=")">   
+			<if test="zguanliPers != null">
+				AND equiptype.zguanli_per IN 
+				<foreach collection="zguanliPers" index="index" item="item" open="(" separator="," close=")">   
 					#{item}
 				</foreach>
 			</if>
 		</if>
-		<if test="ZguanliPhone != null and ZguanliPhone != ''">
-			<![CDATA[AND equiptype.Zguanli_phone = #{ZguanliPhone}]]>
+		<if test="zguanliPhone != null and zguanliPhone != ''">
+			<![CDATA[AND equiptype.zguanli_phone = #{zguanliPhone}]]>
 		</if>
-		<if test="ZguanliPhone == null or ZguanliPhone == ''">
-			<if test="ZguanliPhoneAlk != null and ZguanliPhoneAlk != ''">
-				<![CDATA[AND equiptype.Zguanli_phone LIKE CONCAT('%',#{ZguanliPhoneAlk},'%')]]>
+		<if test="zguanliPhone == null or zguanliPhone == ''">
+			<if test="zguanliPhoneAlk != null and zguanliPhoneAlk != ''">
+				<![CDATA[AND equiptype.zguanli_phone LIKE CONCAT('%',#{zguanliPhoneAlk},'%')]]>
 			</if>
-			<if test="ZguanliPhones != null">
-				AND equiptype.Zguanli_phone IN 
-				<foreach collection="ZguanliPhones" index="index" item="item" open="(" separator="," close=")">   
+			<if test="zguanliPhones != null">
+				AND equiptype.zguanli_phone IN 
+				<foreach collection="zguanliPhones" index="index" item="item" open="(" separator="," close=")">   
 					#{item}
 				</foreach>
 			</if>
 		</if>
-		<if test="CguanliPer != null and CguanliPer != ''">
-			<![CDATA[AND equiptype.Cguanli_per = #{CguanliPer}]]>
+		<if test="cguanliPer != null and cguanliPer != ''">
+			<![CDATA[AND equiptype.cguanli_per = #{cguanliPer}]]>
 		</if>
-		<if test="CguanliPer == null or CguanliPer == ''">
-			<if test="CguanliPerAlk != null and CguanliPerAlk != ''">
-				<![CDATA[AND equiptype.Cguanli_per LIKE CONCAT('%',#{CguanliPerAlk},'%')]]>
+		<if test="cguanliPer == null or cguanliPer == ''">
+			<if test="cguanliPerAlk != null and cguanliPerAlk != ''">
+				<![CDATA[AND equiptype.cguanli_per LIKE CONCAT('%',#{cguanliPerAlk},'%')]]>
 			</if>
-			<if test="CguanliPers != null">
-				AND equiptype.Cguanli_per IN 
-				<foreach collection="CguanliPers" index="index" item="item" open="(" separator="," close=")">   
+			<if test="cguanliPers != null">
+				AND equiptype.cguanli_per IN 
+				<foreach collection="cguanliPers" index="index" item="item" open="(" separator="," close=")">   
 					#{item}
 				</foreach>
 			</if>
 		</if>
-		<if test="CguanliPhone != null and CguanliPhone != ''">
-			<![CDATA[AND equiptype.Cguanli_phone = #{CguanliPhone}]]>
+		<if test="cguanliPhone != null and cguanliPhone != ''">
+			<![CDATA[AND equiptype.cguanli_phone = #{cguanliPhone}]]>
 		</if>
-		<if test="CguanliPhone == null or CguanliPhone == ''">
-			<if test="CguanliPhoneAlk != null and CguanliPhoneAlk != ''">
-				<![CDATA[AND equiptype.Cguanli_phone LIKE CONCAT('%',#{CguanliPhoneAlk},'%')]]>
+		<if test="cguanliPhone == null or cguanliPhone == ''">
+			<if test="cguanliPhoneAlk != null and cguanliPhoneAlk != ''">
+				<![CDATA[AND equiptype.cguanli_phone LIKE CONCAT('%',#{cguanliPhoneAlk},'%')]]>
 			</if>
-			<if test="CguanliPhones != null">
-				AND equiptype.Cguanli_phone IN 
-				<foreach collection="CguanliPhones" index="index" item="item" open="(" separator="," close=")">   
+			<if test="cguanliPhones != null">
+				AND equiptype.cguanli_phone IN 
+				<foreach collection="cguanliPhones" index="index" item="item" open="(" separator="," close=")">   
 					#{item}
 				</foreach>
 			</if>
 		</if>
-		<if test="JguanliPer != null and JguanliPer != ''">
-			<![CDATA[AND equiptype.Jguanli_per = #{JguanliPer}]]>
+		<if test="jguanliPer != null and jguanliPer != ''">
+			<![CDATA[AND equiptype.jguanli_per = #{jguanliPer}]]>
 		</if>
-		<if test="JguanliPer == null or JguanliPer == ''">
-			<if test="JguanliPerAlk != null and JguanliPerAlk != ''">
-				<![CDATA[AND equiptype.Jguanli_per LIKE CONCAT('%',#{JguanliPerAlk},'%')]]>
+		<if test="jguanliPer == null or jguanliPer == ''">
+			<if test="jguanliPerAlk != null and jguanliPerAlk != ''">
+				<![CDATA[AND equiptype.jguanli_per LIKE CONCAT('%',#{jguanliPerAlk},'%')]]>
 			</if>
-			<if test="JguanliPers != null">
-				AND equiptype.Jguanli_per IN 
-				<foreach collection="JguanliPers" index="index" item="item" open="(" separator="," close=")">   
+			<if test="jguanliPers != null">
+				AND equiptype.jguanli_per IN 
+				<foreach collection="jguanliPers" index="index" item="item" open="(" separator="," close=")">   
 					#{item}
 				</foreach>
 			</if>
 		</if>
-		<if test="JguanliPhone != null and JguanliPhone != ''">
-			<![CDATA[AND equiptype.Jguanli_phone = #{JguanliPhone}]]>
+		<if test="jguanliPhone != null and jguanliPhone != ''">
+			<![CDATA[AND equiptype.jguanli_phone = #{jguanliPhone}]]>
 		</if>
-		<if test="JguanliPhone == null or JguanliPhone == ''">
-			<if test="JguanliPhoneAlk != null and JguanliPhoneAlk != ''">
-				<![CDATA[AND equiptype.Jguanli_phone LIKE CONCAT('%',#{JguanliPhoneAlk},'%')]]>
+		<if test="jguanliPhone == null or jguanliPhone == ''">
+			<if test="jguanliPhoneAlk != null and jguanliPhoneAlk != ''">
+				<![CDATA[AND equiptype.jguanli_phone LIKE CONCAT('%',#{jguanliPhoneAlk},'%')]]>
 			</if>
-			<if test="JguanliPhones != null">
-				AND equiptype.Jguanli_phone IN 
-				<foreach collection="JguanliPhones" index="index" item="item" open="(" separator="," close=")">   
+			<if test="jguanliPhones != null">
+				AND equiptype.jguanli_phone IN 
+				<foreach collection="jguanliPhones" index="index" item="item" open="(" separator="," close=")">   
 					#{item}
 				</foreach>
 			</if>
@@ -928,23 +928,23 @@
 		<if test="sort == 'IP' and (order == 'asc' or order == 'desc')">
 			equiptype.IP ${order},
 		</if>
-		<if test="sort == 'ZguanliPer' and (order == 'asc' or order == 'desc')">
-			equiptype.Zguanli_per ${order},
+		<if test="sort == 'zguanliPer' and (order == 'asc' or order == 'desc')">
+			equiptype.zguanli_per ${order},
 		</if>
-		<if test="sort == 'ZguanliPhone' and (order == 'asc' or order == 'desc')">
-			equiptype.Zguanli_phone ${order},
+		<if test="sort == 'zguanliPhone' and (order == 'asc' or order == 'desc')">
+			equiptype.zguanli_phone ${order},
 		</if>
-		<if test="sort == 'CguanliPer' and (order == 'asc' or order == 'desc')">
-			equiptype.Cguanli_per ${order},
+		<if test="sort == 'cguanliPer' and (order == 'asc' or order == 'desc')">
+			equiptype.cguanli_per ${order},
 		</if>
-		<if test="sort == 'CguanliPhone' and (order == 'asc' or order == 'desc')">
-			equiptype.Cguanli_phone ${order},
+		<if test="sort == 'cguanliPhone' and (order == 'asc' or order == 'desc')">
+			equiptype.cguanli_phone ${order},
 		</if>
-		<if test="sort == 'JguanliPer' and (order == 'asc' or order == 'desc')">
-			equiptype.Jguanli_per ${order},
+		<if test="sort == 'jguanliPer' and (order == 'asc' or order == 'desc')">
+			equiptype.jguanli_per ${order},
 		</if>
-		<if test="sort == 'JguanliPhone' and (order == 'asc' or order == 'desc')">
-			equiptype.Jguanli_phone ${order},
+		<if test="sort == 'jguanliPhone' and (order == 'asc' or order == 'desc')">
+			equiptype.jguanli_phone ${order},
 		</if>
 		<if test="sort == 'bengxing' and (order == 'asc' or order == 'desc')">
 			equiptype.bengxing ${order},

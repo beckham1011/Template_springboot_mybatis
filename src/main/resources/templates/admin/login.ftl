@@ -25,8 +25,8 @@
 						<div class="login-container">
 							<div class="center"></br></br></br>
 								<h1>
-									<i class="icon-leaf green"></i>
-									<span class="white">厚水智能-远程监测系统</span>
+									<img src="${ctx}/images/smartlogo.png" style="height: 25px;" class="img-rounded" />
+									<span class="white">厚水智能-监测系统</span>
 								</h1>
 							</div>
 

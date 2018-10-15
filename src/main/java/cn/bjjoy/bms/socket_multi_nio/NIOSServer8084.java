@@ -224,7 +224,8 @@ public class NIOSServer8084 {
 	
 	//从socket获取的ip，根据ip获取泵站编码地址
     private String getAddressCode(String ip){
-    	return typeService.getAddressCodeByIP(ip);
+//    	return typeService.getAddressCodeByIP(ip);
+    	return ipAddressCodeMap.get(ip) ;
     }
     
     

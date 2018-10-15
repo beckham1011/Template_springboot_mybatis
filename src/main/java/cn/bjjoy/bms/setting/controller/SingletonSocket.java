@@ -1,7 +1,9 @@
 package cn.bjjoy.bms.setting.controller;
 
-import java.io.IOException;
 import java.net.Socket;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cn.bjjoy.bms.setting.constants.Constants;
 
@@ -10,6 +12,8 @@ import cn.bjjoy.bms.setting.constants.Constants;
  */
 public class SingletonSocket {
 
+	Logger logger = LoggerFactory.getLogger(SingletonSocket.class) ;
+	
 	private static SingletonSocket instance = null ;
 	
 	private Socket socket8082 = null ;
@@ -19,8 +23,9 @@ public class SingletonSocket {
 		try {
 			socket8082 = new Socket(Constants.SOCKET_SERVER_IP , Constants.SOCKET_8082_PORT) ;
 			socket8084 = new Socket(Constants.SOCKET_SERVER_IP , Constants.SOCKET_8084_PORT) ;
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error("单例socket实例化失败：", e);
 		}
 	}
 	

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.bjjoy.bms.base.ResponseResult;
 import cn.bjjoy.bms.exception.ControllerException;
 import cn.bjjoy.bms.setting.dto.AnalysisDto;
-import cn.bjjoy.bms.setting.dto.CurrentEquipData;
 import cn.bjjoy.bms.setting.dto.EquiptypeDto;
 import cn.bjjoy.bms.setting.service.EquipdataService;
 import cn.bjjoy.bms.setting.service.EquiptypeService;

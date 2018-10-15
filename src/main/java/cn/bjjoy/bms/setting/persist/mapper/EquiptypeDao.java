@@ -35,5 +35,6 @@ public interface EquiptypeDao extends BaseDao<Equiptype> {
 	
 	public String getIPByAddressCode(String addressCode);
 	
+	public List<String> getAddressCodeNull() ;
 	
 }

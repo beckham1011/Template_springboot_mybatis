@@ -95,7 +95,7 @@
 		                                    <div style="float:right">
 	                                        	<input id="stationName" placeholder="请输入泵站名称" name="stationName" type="text"/>
 		                                        <button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
-		                                        <button class="btn btn-xs btn-danger" onclick="refreshAllStation();"><i class=""></i>&nbsp;刷新所有泵站</button>
+		                                        <button class="btn btn-xs btn-danger" onclick="refreshAllStation();"><i class=""></i>&nbsp;即时刷新泵站</button>
                                         	</div>
                                         </div>
                                     </div>

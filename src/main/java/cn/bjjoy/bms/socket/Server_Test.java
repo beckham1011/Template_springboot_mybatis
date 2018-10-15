@@ -21,7 +21,7 @@ public class Server_Test extends Thread {
 
     //函数入口
     public static void main(String[] args) {
-        Server_Test server = new Server_Test(8082);
+        Server_Test server = new Server_Test(8087);
         server.start();
     }
 

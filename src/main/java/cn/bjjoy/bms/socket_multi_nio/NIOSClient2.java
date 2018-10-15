@@ -10,7 +10,12 @@ import java.util.Scanner;
 import java.util.Set;
  
 public class NIOSClient2 {
-    /*发送数据缓冲区*/
+
+    public static void main(String[] args) throws IOException {
+        new NIOSClient2(8082);
+    }
+	
+	/*发送数据缓冲区*/
     private static ByteBuffer sBuffer = ByteBuffer.allocate(1024);
     
     /*接受数据缓冲区*/
@@ -60,11 +65,7 @@ public class NIOSClient2 {
             e.printStackTrace();
         }
     }
-    
-    public static void main(String[] args) throws IOException {
-        new NIOSClient2(8082);
-    }
-    
+
     private void handle(SelectionKey selectionKey) throws IOException {
         if (selectionKey.isConnectable()) {
             /* 

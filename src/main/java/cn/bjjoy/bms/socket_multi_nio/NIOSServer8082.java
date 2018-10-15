@@ -19,8 +19,11 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import cn.bjjoy.bms.mail.SendMail;
 import cn.bjjoy.bms.setting.constants.Constants;
+import cn.bjjoy.bms.setting.exception.ServiceException;
 import cn.bjjoy.bms.setting.persist.model.Equipdata;
 import cn.bjjoy.bms.setting.persist.model.Equiptype;
 import cn.bjjoy.bms.setting.service.EquipdataService;
@@ -35,12 +38,18 @@ import cn.bjjoy.bms.util.DateUtils;
 import cn.bjjoy.bms.util.IPUtil;
 import cn.bjjoy.bms.util.SpringSocketUtil;
 
+import com.google.common.collect.Lists;
+
 // https://blog.csdn.net/tang9140/article/details/39052877?locationNum=10&fps=1
 public class NIOSServer8082 {
 	
 	Logger logger = LoggerFactory.getLogger(NIOSServer8082.class) ;
 	
 	Map<String , String> ipAddressCodeMap = new HashMap<>();
+	Map<String , String> addressCodeIpMap = new HashMap<>();
+	
+	@Autowired
+	SendMail sendMail ; 
 	
     private Integer port ;
     
@@ -88,6 +97,9 @@ public class NIOSServer8082 {
         	for(Equiptype type : types){
         		if(type.getIP() != null)
         			ipAddressCodeMap.put(type.getIP() , type.getAddressCode() );
+        		if( null!= type.getAddressCode() || !"".equals(type.getAddressCode() )){
+        			addressCodeIpMap.put(type.getAddressCode(), type.getIP());
+        		}
         	}
         }
     }
@@ -166,19 +178,18 @@ public class NIOSServer8082 {
                 rBuffer.flip();
                 receiveText = String.valueOf(cs.decode(rBuffer).array());
                 try {
-                	logger.info("receiveText:" + receiveText);
 					if(Constants.All_MSG.equalsIgnoreCase(receiveText)){
 						logger.info("ISIP-------------client IP:" + s.getInetAddress().getHostAddress() + ", receiveText : " + receiveText);
 						//发送给所有客户端，要数据
 						refreshAllStation(client,Constants.MSG_8082);
 					} else if(IPUtil.isIPv4(receiveText)){
 						//给特定的站点发送发送即时数据请求
-						logger.info("Refresh Special Station---------");
+						logger.info("receiveText:" + receiveText + "Refresh Special Station---------");
 						refreshSpecialStation(clientsMap.get(receiveText) , Constants.MSG_8082);
 					} else {
 						String receiveTextCode = ByteUtil.binaryToHexString(receiveText.getBytes());
-						logger.info("receiveTextCode:" + receiveTextCode);
 						if(receiveText.length() <= 25){
+							logger.info("receiveTextCode:" + receiveTextCode);
 							getAddressCode(client , receiveTextCode) ;
 						}else{
 							saveData(receiveTextCode ,ip ) ;
@@ -192,12 +203,13 @@ public class NIOSServer8082 {
         		client = (SocketChannel)selectionKey.channel();
                 s = client.socket();
                 String name = s.getInetAddress().toString().substring(1)  ;
-                logger.info(ip + " is not connect ,will close ");
+                logger.info(ip + " is not connect ,will close , clientsMap.size: " + clientsMap.size());
         		clientsMap.remove(name) ;
         		client.close();
         	}
         }
     }
+
 
     //从报文种解析泵站编码地址
 	public void getAddressCode (SocketChannel client ,String source){
@@ -209,25 +221,62 @@ public class NIOSServer8082 {
 		}
 		String ip = s.getInetAddress().toString().substring(1);
 		
+		String addCode = addressCode.toString();
 		Map<String,Object> params = new HashMap<>();
-		params.put("addressCode", addressCode.toString());
-		ipAddressCodeMap.put(ip, addressCode.toString()) ;
+		params.put("addressCode", addCode);
+
+		ipAddressCodeMap.put(ip, addCode) ;
+		addressCodeIpMap.put(addCode, ip) ;
+		
 		params.put("ip", ip);
 		if(typeService.queryList(params).size() > 0){
-			logger.info("Equip type update : IP " + ip + "  , addresscode :" + addressCode.toString());
-			typeService.updateByAddressCode(params);
+			logger.info("Equip type update : IP " + ip + "  , addresscode :" + addCode);
+			try {
+				typeService.updateByAddressCode(params);
+			} catch (Exception e) {
+				logger.error("Equiptype Update 失败",e);
+			}
 		}else{
-			logger.info("Equip type create : IP " + ip + "  , addresscode :" + addressCode.toString());
-			Equiptype t = new Equiptype ();
-			t.setIP(ip);
-			t.setAddressCode(addressCode.toString());
-			typeService.save(t);
+			try {
+				logger.info("Equip type create : IP " + ip + "  , addresscode :" + addCode);
+				Equiptype t = new Equiptype ();
+				t.setIP(ip);
+				t.setAddressCode(addCode);
+				t.setAddTime(DateUtils.getCurrentDate());
+				typeService.save(t);
+			} catch (ServiceException e) {
+				e.printStackTrace();
+				logger.error("保存失败",e);
+			}
+			
+			if(addCode != null || !"".equals(addCode)){
+				if( addCode.startsWith("hsg") || addCode.startsWith("") || addCode.startsWith("")){
+					try {
+						//新添加的泵站需要数据维护，发送邮件通知
+						sendMailToAdmin(addCode);
+						logger.info("邮件发送成功" + addCode );
+					} catch (Exception e) {
+						logger.error("邮件发送失败" + addCode,e);
+					}
+				}
+			}
 		}
 	}
+
+	//新添加的泵站需要数据维护，发送邮件通知,异步
+	public void sendMailToAdmin(String addressCode){
+		//新添加的泵站需要数据维护，发送邮件通知
+		String content = "新增加了泵站。地址编码是： " + addressCode + "，需要维护" ;
+		List<String> receivers = Lists.newArrayList();
+		receivers.add(Constants.MAIL_RECEIVER_ADMIN) ;
+		sendMail.sendEmail("新增加了泵站,请维护泵站信息", content, receivers, null);
+	}
+	
 	
 	//从socket获取的ip，根据ip获取泵站编码地址
     private String getAddressCode(String ip){
-    	return typeService.getAddressCodeByIP(ip);
+//    	return typeService.getAddressCodeByIP(ip);
+    	return ipAddressCodeMap.get(ip) ;
     }
     
     
@@ -236,14 +285,19 @@ public class NIOSServer8082 {
     	String[] values = SpringSocketUtil.parse8082SocketData(receiveText);
     	logger.info("ip:" + ip + ",receiveTextCode:" + receiveText);
     	logger.info("values: " + values[0] + " , " + values[1] + " , " + values[2] + " , " + values[3]);
+    	
     	if(getAddressCode(ip) != null){
     		t.setAddressCode(getAddressCode(ip));
     		t.setAreCumulative(new BigDecimal(values[1]));
     		t.setNetCumulative(new BigDecimal(values[2]));
     		t.setFlowRate(new BigDecimal(values[3]));
     		t.setAddTime(DateUtils.getCurrentDate());
-    		logger.info("Save equip data: " + t.toString());
-    		dataService.save(t);
+    		try {
+				dataService.save(t);
+			} catch (ServiceException e) {
+				logger.error(e.getMessage());
+				e.printStackTrace();
+			}
     	}
     	logger.info("Save equip data: " + t.toString() + " , IP:" + ip);
 	}

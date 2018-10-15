@@ -405,9 +405,9 @@
 	<select id="getDataNoPageCount" resultType="long">
  		select 
  		count(0)
-		from equiptype eqtp
-		LEFT JOIN equipdata eqda on eqda.addresscode = eqtp.addresscode 
-		where 1=1 
+		from equiptype eqtp , equipdata eqda 
+		where 1=1 and eqda.add_time is not null
+		and eqda.addresscode = eqtp.addresscode 
 		<if test="ids != null">
 			AND  eqtp.id IN 
 			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
@@ -430,17 +430,15 @@
 		eqtp.koujing  , 
 		eqtp.gonglv  , 
 		eqtp.id  
-		from equipdata eqda
-		LEFT JOIN equiptype eqtp on eqda.addresscode = eqtp.addresscode
-		where 1=1 and eqda.add_time is not null
+		from equipdata eqda , equiptype eqtp  
+		where 1=1 and eqda.add_time is not null and eqda.addresscode = eqtp.addresscode
 		<if test="ids != null">
 			AND  eqtp.id IN 
 			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
 				#{item}
 			</foreach>
 		</if>
-		
-	 	order by eqda.id 
+	 	order by  eqda.add_time desc
 	 	<include refid="sql_map_page" />
 	</select>
 	
