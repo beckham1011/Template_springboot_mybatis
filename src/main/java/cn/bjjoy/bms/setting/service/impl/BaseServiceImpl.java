@@ -60,8 +60,6 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	@Override
 	public List<Map<String, Object>> queryMapList(Map<String, Object> map) throws ServiceException {
 		map.put("isDel", Constants.N);
-		map.put("order", "desc");
-		map.put("isDel", Constants.N);
 		return getBaseDao().queryMapList(map);
 	}
 	

@@ -14,7 +14,7 @@ public class SingletonSocket {
 
 	Logger logger = LoggerFactory.getLogger(SingletonSocket.class) ;
 	
-	private static SingletonSocket instance = null ;
+	private volatile static SingletonSocket instance = null ;
 	
 	private Socket socket8082 = null ;
 	private Socket socket8084 = null ;

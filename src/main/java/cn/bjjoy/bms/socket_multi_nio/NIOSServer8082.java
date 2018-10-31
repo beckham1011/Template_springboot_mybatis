@@ -19,7 +19,6 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.bjjoy.bms.mail.SendMail;
 import cn.bjjoy.bms.setting.constants.Constants;
@@ -47,9 +46,6 @@ public class NIOSServer8082 {
 	
 	Map<String , String> ipAddressCodeMap = new HashMap<>();
 	Map<String , String> addressCodeIpMap = new HashMap<>();
-	
-	@Autowired
-	SendMail sendMail ; 
 	
     private Integer port ;
     
@@ -263,6 +259,7 @@ public class NIOSServer8082 {
 		}
 	}
 
+	private SendMail sendMail = new SendMail();
 	//新添加的泵站需要数据维护，发送邮件通知,异步
 	public void sendMailToAdmin(String addressCode){
 		//新添加的泵站需要数据维护，发送邮件通知
@@ -290,7 +287,7 @@ public class NIOSServer8082 {
     		t.setAddressCode(getAddressCode(ip));
     		t.setAreCumulative(new BigDecimal(values[1]));
     		t.setNetCumulative(new BigDecimal(values[2]));
-    		t.setFlowRate(new BigDecimal(values[3]));
+    		t.setFlowRate(new BigDecimal(values[3]).compareTo(new BigDecimal(10 ^ 7)) > 0 ? new BigDecimal(0.0) : new BigDecimal(values[3]));
     		t.setAddTime(DateUtils.getCurrentDate());
     		try {
 				dataService.save(t);

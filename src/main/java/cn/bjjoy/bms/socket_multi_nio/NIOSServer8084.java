@@ -184,7 +184,6 @@ public class NIOSServer8084 {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-            
         	}else if(count == -1){
         		client = (SocketChannel)selectionKey.channel();
                 s = client.socket();

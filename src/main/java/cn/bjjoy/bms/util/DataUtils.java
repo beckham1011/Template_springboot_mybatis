@@ -27,9 +27,14 @@ public class DataUtils {
     public static <T> LinkedList<T> getDataArray(Object data, Class<T> clazz) {
         String jsonString = JSONObject.toJSONString(data);
         List<T> linkedList = new LinkedList<T>();
-        for(T t : JSONObject.parseArray(jsonString, clazz)){
-        	linkedList.add(t);
-        }
+        try {
+			for(T t : JSONObject.parseArray(jsonString, clazz)){
+				linkedList.add(t);
+			}
+		} catch (Exception e) {
+			logger.error("Parse DataMap Error", e);
+			e.printStackTrace();
+		}
         return (LinkedList<T>) linkedList;
     }
 

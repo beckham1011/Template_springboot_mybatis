@@ -1,5 +1,7 @@
 package cn.bjjoy.bms.setting.persist.mapper;
 
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -16,5 +18,7 @@ import cn.bjjoy.bms.setting.persist.model.Declarationrecord;
 @Mapper
 @Repository
 public interface DeclarationrecordDao extends BaseDao<Declarationrecord> {
+
+	void updateDeclareById(Map map);
 
 }

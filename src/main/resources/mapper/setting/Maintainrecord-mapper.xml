@@ -498,4 +498,18 @@
 		limit #{rows} offset #{page}
 		</if>
 	</sql>
+	
+	<update id="updateById">
+		update maintainrecord record set 
+		record.start_time = #{startTime},
+		record.end_time = #{endTime},
+		record.method = #{method},
+		record.Description = #{description},
+		record.money = #{money},
+		record.results = #{results},
+		record.reason = #{reason}
+		where id = #{id}
+	</update>
+	
+	
 </mapper>

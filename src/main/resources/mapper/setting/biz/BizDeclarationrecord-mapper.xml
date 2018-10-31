@@ -318,4 +318,21 @@
 		</if>
 	</sql>
 	
+	<update id="updateDeclareById" parameterType="map">
+		update declarationrecord decl SET
+			decl.unitName = #{unitName},
+			decl.MeasuringPoint = #{MeasuringPoint},
+			decl.failure = #{failure},
+			decl.failureDescribe = #{failureDescribe},
+			decl.reporting_time =  #{reportingTime},
+			decl.reporting_per = #{reportingPer},
+			decl.reporting_phone = #{reportingPhone},
+			decl.results = #{results},
+			decl.accept_per = #{acceptPer},
+			decl.accept_phone = #{acceptPhone},
+			decl.accept_time = #{acceptTime}
+			where id = #{id}
+	</update>
+	
+	
 </mapper>

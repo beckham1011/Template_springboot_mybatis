@@ -21,8 +21,6 @@ import javax.mail.internet.MimeMultipart;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import com.google.common.collect.Lists;
-
 import cn.bjjoy.bms.setting.constants.Constants;
 
 @Component
@@ -178,7 +176,7 @@ public class SendMail {
 //        fileList.add(file2);
 
         // 执行发送
-        new SendMail().sendEmail(title, htmlContent, receivers, fileList);
+        new SendMail().sendEmail(title, htmlContent, receivers, null);
         System.out.println("sendmail\nlllllll");
     	
     }

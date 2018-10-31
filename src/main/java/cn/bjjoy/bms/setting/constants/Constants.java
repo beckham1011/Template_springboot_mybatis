@@ -60,7 +60,7 @@ public class Constants {
 	public static String MAIL_SENDER_ACCOUNT = "xuzj850329@126.com" ;
 	public static String MAIL_SENDER_PASSWORD = "OIvyx7" ;
 
-	public static String MAIL_RECEIVER_ADMIN = "996937629@qq.com" ;
-	
+	public static String MAIL_RECEIVER_ADMIN = "892285199@qq.com" ;
+	public static String MAIL_RECEIVER_SUB_ADMIN = "512839244@qq.com" ;
 	
 }

@@ -368,7 +368,7 @@
 	</select>
 	
 	<select id="getNewestData" resultType="map" parameterType="map">
-		select eqtp.name , eqtp.bengxing , eqtp.koujing ,eqtp.gonglv  , eqtp.id , eqtp.update_time, 
+		select eqtp.name , eqtp.bengxing , eqtp.koujing ,eqtp.gonglv  , eqtp.id , eqtp.update_time, eqtp.longitude , eqtp.latitude ,
 		out2.addresscode , out2.add_time ,out2.waterstatus , out2.flowrate , out2.netcumulative ,
 		out2.signalquality ,out2.communicationStatus , out2.signalquality , out2.communicationStatus , diffhour
 		from equiptype eqtp 

@@ -255,12 +255,8 @@
                         align: 'center',
 	                    formatter: function(value,row,index){
                     		var communicationStatushtml ;
-                    		if(value == '4'){
+                    		if(value == '2'){
 	                    		communicationStatushtml = '<img src="${ctx}/images/wifi4.png" style="height: 25px;" class="img-rounded" />' ;
-	                		}else if(value == '3'){
-	                    		communicationStatushtml = '<img src="${ctx}/images/wifi3.png" style="height: 25px;" class="img-rounded" />' ;
-	                		}else if(value == '2'){
-	                    		communicationStatushtml = '<img src="${ctx}/images/wifi2.png" style="height: 25px;" class="img-rounded" />' ;
 	                		}else{
 	                    		communicationStatushtml = '<img src="${ctx}/images/wifi2.png" style="height: 25px;" class="img-rounded" />' ;
                     		}

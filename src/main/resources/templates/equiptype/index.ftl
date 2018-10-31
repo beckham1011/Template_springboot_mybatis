@@ -356,7 +356,7 @@
                     title: '添加泵站',
                     shadeClose: true,
                     shade: false,
-                    area: ['900px', '900px'],
+                    area: ['900px', '600px'],
                     content: '${ctx}/eqiuptype/add',
                     end: function(index){
                         layer.close(index);
@@ -371,7 +371,7 @@
                     title: '编辑泵站',
                     shadeClose: true,
                     shade: false,
-                    area: ['900px', '900px'],
+                    area: ['900px', '600px'],
                     content: '${ctx}/eqiuptype/edit?id=' + id,
                     end: function(index){
                     	layer.close(index);

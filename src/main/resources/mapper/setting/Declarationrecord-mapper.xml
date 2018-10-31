@@ -19,7 +19,7 @@
 	</parameterMap>
 	
 	<resultMap id="rm_declarationrecord" type="cn.bjjoy.bms.setting.persist.model.Declarationrecord">
-		<result property="id" column="id" javaType="int" jdbcType="INTEGER" />
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR" />
 		<result property="unitName" column="unitName" javaType="String" jdbcType="VARCHAR" />
 		<result property="MeasuringPoint" column="MeasuringPoint" javaType="String" jdbcType="VARCHAR" />
 		<result property="failure" column="failure" javaType="String" jdbcType="VARCHAR" />
@@ -363,7 +363,7 @@
 		SELECT 
 			declarationrecord.id,
 			declarationrecord.unitName,
-			declarationrecord.MeasuringPoint,
+			declarationrecord.measuringPoint,
 			declarationrecord.failure,
 			declarationrecord.reporting_time,
 			declarationrecord.reporting_per,

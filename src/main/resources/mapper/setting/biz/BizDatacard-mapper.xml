@@ -58,17 +58,9 @@
 		<if test="search != null and search != ''">
 			<![CDATA[
 			AND (
-					CAST(datacard.id as CHAR) LIKE CONCAT('%',#{search},'%') OR
 					datacard.unitName LIKE CONCAT('%',#{search},'%') OR
 					datacard.equipName LIKE CONCAT('%',#{search},'%') OR
-					datacard.mobilePhone LIKE CONCAT('%',#{search},'%') OR
-					datacard.amount LIKE CONCAT('%',#{search},'%') OR
-					datacard.refill_time LIKE CONCAT('%',#{search},'%') OR
-					datacard.balance LIKE CONCAT('%',#{search},'%') OR
-					datacard.currentState LIKE CONCAT('%',#{search},'%') OR
-					datacard.add_per LIKE CONCAT('%',#{search},'%') OR
-					datacard.add_time LIKE CONCAT('%',#{search},'%') OR
-					datacard.costStandard LIKE CONCAT('%',#{search},'%') 
+					datacard.mobilePhone LIKE CONCAT('%',#{search},'%')
 			)
 			]]>
 		</if>
@@ -277,5 +269,18 @@
 		limit #{rows} offset #{page}
 		</if>
 	</sql>
+	
+	<update id="updateDatacardById">
+		update datacard card set 
+		card.unitName = #{unitName},
+		card.costStandard = #{costStandard},
+		card.equipName = #{equipName},
+		card.mobilePhone = #{mobilePhone},
+		card.amount = #{amount},
+		card.refillTime = #{refillTime},
+		card.balance = #{balance},
+		card.currentState = #{currentState}
+		where id = #{id}
+	</update>
 	
 </mapper>

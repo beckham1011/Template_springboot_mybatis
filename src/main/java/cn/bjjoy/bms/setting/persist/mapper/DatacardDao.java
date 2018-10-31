@@ -1,5 +1,7 @@
 package cn.bjjoy.bms.setting.persist.mapper;
 
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -17,4 +19,6 @@ import cn.bjjoy.bms.setting.persist.model.Datacard;
 @Repository
 public interface DatacardDao extends BaseDao<Datacard> {
 
+	public void updateDatacardById(Map map);
+	
 }

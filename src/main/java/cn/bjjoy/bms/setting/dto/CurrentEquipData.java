@@ -35,6 +35,11 @@ public class CurrentEquipData {
 	private String signalquality ;
 	private String communicationStatus ;
 	
+	/**  */
+	private String longitude;
+	/**  */
+	private String latitude;
+	
 	private String add_time ;
 	private String update_time ;
 
@@ -140,6 +145,22 @@ public class CurrentEquipData {
 
 	public void setUpdate_time(String update_time) {
 		this.update_time = update_time;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
 	}
 	
 }

@@ -42,9 +42,7 @@
 	                                <select id="typeSelect1" name="typeSelect1" class="form-control" style="width:160px;float:left;height:auto;" onChange="typeSelect1Change(this)">
                                     	<option value="-1" >请选择父节点---</option>
                                         <#list subTypeList1 as type>
-                                            <option value="${type.id}" >
-                                                ${type.name}
-                                            </option>
+                                            <option value="${type.id}" >${type.name}</option>
                                         </#list>
                                     </select>
                                     <select name="typeSelect2" id="typeSelect2" class="form-control"  style="width:160px;float:left;height:auto;" onChange="typeSelect2Change(this)">
