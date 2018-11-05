@@ -397,7 +397,7 @@
 				and <![CDATA[ ( diffhour >= 24 or diffhour is null ) ]]>
 			</if>
 		</if>
-	 	order by  out2.add_time desc
+	 	order by eqtp.id asc
 	 	<include refid="sql_map_page" />
 	</select>
 	

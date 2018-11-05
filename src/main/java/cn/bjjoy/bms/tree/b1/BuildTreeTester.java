@@ -36,7 +36,7 @@ public class BuildTreeTester {
         for (Test test : tests) {
             Tree<Test> tree = new Tree<Test>();
             tree.setId(test.getId());
-            tree.setParentId(test.getPid());
+            tree.setParentId(test.getParentId());
             tree.setText(test.getText());
             
             trees.add(tree);
@@ -50,7 +50,7 @@ public class BuildTreeTester {
 class Test {
 
     private String id;
-    private String pid;
+    private String parentId;
     private String text;
 
     public String getId() {
@@ -61,15 +61,15 @@ class Test {
         this.id = id;
     }
 
-    public String getPid() {
-        return pid;
-    }
+    public String getParentId() {
+		return parentId;
+	}
 
-    public void setPid(String pid) {
-        this.pid = pid;
-    }
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
 
-    public String getText() {
+	public String getText() {
         return text;
     }
 
@@ -77,10 +77,10 @@ class Test {
         this.text = text;
     }
 
-    public Test(String id, String pid, String text) {
+    public Test(String id, String parentId, String text) {
         super();
         this.id = id;
-        this.pid = pid;
+        this.parentId = parentId;
         this.text = text;
     }
 
@@ -90,7 +90,7 @@ class Test {
 
     @Override
     public String toString() {
-        return "Test [id=" + id + ", pid=" + pid + ", text=" + text + "]";
+        return "Test [id=" + id + ", parentId =" + parentId + ", text=" + text + "]";
     }
 
 }

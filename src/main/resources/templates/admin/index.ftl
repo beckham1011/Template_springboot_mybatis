@@ -7,13 +7,12 @@
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-		<!-- basic styles -->
-
 		<link href="${ctx}/css/bootstrap.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="${ctx}/css/font-awesome.min.css" />
         <link rel="stylesheet" href="${ctx}/bjjoy/css/font-awesome.min.css" />
 		<!-- page specific plugin styles -->
-
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<!-- ace styles -->
 		<link rel="stylesheet" href="${ctx}/css/ace.min.css" />
 		<link rel="stylesheet" href="${ctx}/css/ace-rtl.min.css" />
@@ -37,6 +36,7 @@
 
 	<body>
         <#include "${ctx}/head.ftl" />
+        <#include "${ctx}/head_nav.ftl" />
 		<div class="main-container" id="main-container">
 			<script type="text/javascript">
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}

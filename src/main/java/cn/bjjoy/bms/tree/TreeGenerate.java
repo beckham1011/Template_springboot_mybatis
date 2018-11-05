@@ -67,12 +67,13 @@ public class TreeGenerate{
 		TreeGenerate tb = new TreeGenerate();
 		List<Node> roots = tb.buildListToTree(nodes);
 		
-		JSONArray array=new JSONArray();
+		JSONArray array = new JSONArray();
 		JSONObject o = null ;
 		for(Node  node :roots){
 			o = new JSONObject();
 			o.put("id", node.getId());
-			o.put("name", node.getName());
+			o.put("text", node.getName());
+			o.put("href", "index?parentId=" + node.getId() + "&rows=10&page=1") ;
 			List<Node> child = node.getChildren();
 			array.add(o);
 		
@@ -100,7 +101,6 @@ public class TreeGenerate{
 		allNodes.add(new Node (10,100,"节点10"));
 		
 		tb.generateTree(allNodes) ;
-		
 	}
 	
 	private void fillChildren(JSONObject o,List<Node>childs){
@@ -109,13 +109,16 @@ public class TreeGenerate{
 			JSONObject oo = new JSONObject();
 			List<Node> child = node.getChildren();
 			oo.put("id", node.getId());
-			oo.put("name", node.getName());
+			oo.put("text", node.getName());
+			oo.put("href", "index?parentId=" + node.getId() + "&rows=10&page=1") ;
 			array.add(oo);
 			if(child!=null&&child.size()>0){
 				fillChildren(oo,child);
 			}
 		}
-		o.put("child",array);
+		int size = array.size() == 0 ? 0 : array.size();
+		o.put("tags", "['" + size + "']");
+		o.put("nodes",array);
 	}
 
 	

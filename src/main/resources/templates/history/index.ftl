@@ -44,12 +44,11 @@
 			<script type="text/javascript">
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 			</script>
-
+			<#include "${ctx}/head_nav.ftl" />
 			<div class="main-container-inner">
 				<a class="menu-toggler" id="menu-toggler" href="#">
 					<span class="menu-text"></span>
 				</a>
-                <#include "${ctx}/menu.ftl"/>
 				<div class="main-content">
 					<div class="breadcrumbs" id="breadcrumbs">
 						<script type="text/javascript">
@@ -58,7 +57,6 @@
 						<ul class="breadcrumb">
 							<li>
 								<i class="icon-home home-icon"></i>
-								<a href="#">控制台</a>
 							</li>
 							<li><a href="#">历史数据</a></li>
 							<li class="active">历史查询</li>
@@ -226,6 +224,7 @@
                 var params = {"loginName":$("#loginName").val()};
                 $('#userListTable').bootstrapTable("refresh");
             }
+            
             function add(){
                 layer.open({
                     type: 2,

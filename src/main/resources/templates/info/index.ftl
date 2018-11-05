@@ -55,7 +55,6 @@
 						<ul class="breadcrumb">
 							<li>
 								<i class="icon-home home-icon"></i>
-								<a href="#">控制台</a>
 							</li>
 							<li><a href="#">实时监测</a></li>
 							<li class="active">实时数据</li>

@@ -41,7 +41,7 @@
 			<script type="text/javascript">
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 			</script>
-
+			<#include "${ctx}/head_nav.ftl" />
 			<div class="main-container-inner">
 				<a class="menu-toggler" id="menu-toggler" href="#">
 					<span class="menu-text"></span>
@@ -55,7 +55,6 @@
 						<ul class="breadcrumb">
 							<li>
 								<i class="icon-home home-icon"></i>
-								<a href="#">控制台</a>
 							</li>
 							<li><a href="#">实时监测</a></li>
 							<li class="active">实时数据</li>
@@ -289,7 +288,8 @@
                     "parentId1" :  $("#typeSelect1").val().replace(/\$|\,/g, ''),
                     "parentId2" :  $("#typeSelect2").val().replace(/\$|\,/g, ''),
                     "parentId3" :  $("#typeSelect3").val().replace(/\$|\,/g, ''),
-                    "stationName": $("#stationName").val().trim()
+                    "stationName": $("#stationName").val().trim(),
+                    "parentId"   : ${parentId}
                 }
                 if( !($("#online").is(':checked') == $("#offline").is(':checked'))){
                 	params.waterStatus = $("#online").is(':checked') ? 1 : ( $("#offline").is(':checked') ? 0 : 1)
@@ -307,14 +307,30 @@
             }
             
             function refreshEquiptypeData(id){
-				$.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    url: '${ctx}/socket?param='  + id,
-                    success: function(msg){
-					    $('#userListTable').bootstrapTable("refresh");
-                    }
-                });
+            	layer.confirm('发送成功，需要5秒钟返回数据。', {icon: 1, title:'提示'}, function(index){
+					$.ajax({
+	                    type: "GET",
+	                    dataType: "json",
+	                    url: '${ctx}/socket?param='  + id,
+	                    success: function(msg){
+						    $('#userListTable').bootstrapTable("refresh");
+	                    }
+	                });
+	            });
+            }
+                        
+            function refreshAllStation(){
+                layer.confirm('确定刷新所有泵站数据吗?\n获取数据需要五分钟', {icon: 3, title:'危险操作'}, function(index){
+	                $.ajax({
+	                    type: "GET",
+	                    dataType: "json",
+	                    url: '${ctx}/socket8082?param=all' ,
+	                    success: function(msg){
+	                    	layer.close(index);
+						    $('#userListTable').bootstrapTable("refresh");
+	                    }
+	                });
+	            });
             }
             
             function typeSelect1Change(obj){
@@ -358,20 +374,7 @@
                     }
                 });
             }
-            
-            function refreshAllStation(){
-                layer.confirm('确定刷新所有泵站数据吗?', {icon: 3, title:'危险操作'}, function(index){
-	                $.ajax({
-	                    type: "GET",
-	                    dataType: "json",
-	                    url: '${ctx}/socket8082?param=all' ,
-	                    success: function(msg){
-	                    	layer.close(index);
-						    $('#userListTable').bootstrapTable("refresh");
-	                    }
-	                });
-	            });
-            }
+
             
             function typeSelect3Change(){
             	var parentId = $('#typeSelect3').val().replace(/\$|\,/g, '');

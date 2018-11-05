@@ -58,7 +58,6 @@
                 <ul class="breadcrumb">
                     <li>
                         <i class="icon-home home-icon"></i>
-                        <a href="#">控制台</a>
                     </li>
                     <li><a href="#">系统管理</a></li>
                     <li class="active">角色管理</li>
