@@ -26,11 +26,13 @@ public interface EquipdataDao extends BaseDao<Equipdata> {
 	
 	public List<Map<String, Object>> getDataNoPage(Map map) ;
 	
-	public long  getDataNoPageCount() ;
+	public long  getDataNoPageCount(Map map) ;
 
 	public List<Map<String,Object>> commonAnalysis(Map map) ;
 
 	public List<Map<String, Object>> queryOnlineAndOffLineNums(Map map);
+
+	public void updateErrorData(Map<String, Object> equip);
 	
 	
 }

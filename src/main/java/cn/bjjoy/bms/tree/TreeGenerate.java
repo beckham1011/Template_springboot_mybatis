@@ -69,17 +69,25 @@ public class TreeGenerate{
 		
 		JSONArray array = new JSONArray();
 		JSONObject o = null ;
+		List<Integer> tags = null ;
 		for(Node  node :roots){
 			o = new JSONObject();
 			o.put("id", node.getId());
 			o.put("text", node.getName());
 			o.put("href", "index?parentId=" + node.getId() + "&rows=10&page=1") ;
+
+			tags = new ArrayList<>();
 			List<Node> child = node.getChildren();
-			array.add(o);
-		
-			if(child!=null&&child.size()>0){
+			int tag = 0 ;
+			for(Node childNode : child){
+				tag += childNode.getChildren().size() ;
+			}
+			if(child != null && child.size() > 0){
+				tags.add(tag) ;
+				o.put("tags", tags);
 				tb.fillChildren(o,child);
 			}
+			array.add(o);
 		}
 		return array  ;
 	}
@@ -104,20 +112,22 @@ public class TreeGenerate{
 	}
 	
 	private void fillChildren(JSONObject o,List<Node>childs){
+		List<Integer> tags = null;
 		JSONArray array=new JSONArray();
 		for(Node node : childs){
 			JSONObject oo = new JSONObject();
+			tags = new ArrayList<>();
 			List<Node> child = node.getChildren();
 			oo.put("id", node.getId());
 			oo.put("text", node.getName());
 			oo.put("href", "index?parentId=" + node.getId() + "&rows=10&page=1") ;
-			array.add(oo);
-			if(child!=null&&child.size()>0){
+			if(child != null && child.size() > 0){
+				tags.add(child.size()) ;
+				oo.put("tags", tags);
 				fillChildren(oo,child);
 			}
+			array.add(oo);
 		}
-		int size = array.size() == 0 ? 0 : array.size();
-		o.put("tags", "['" + size + "']");
 		o.put("nodes",array);
 	}
 

@@ -45,7 +45,7 @@ public class NIOSServer8084 {
     private EquiptypeService typeService  = SpringSocketUtil.getBean(EquiptypeServiceImpl.class) ;
 
 	//解码buffer  
-    private Charset cs = Charset.forName("utf-8");
+    private Charset cs = Charset.forName("UTF-8");
     
     /*接受数据缓冲区*/
     private static ByteBuffer sBuffer = ByteBuffer.allocate(1024);
@@ -235,8 +235,8 @@ public class NIOSServer8084 {
     	logger.info("values: " + values[0] + " , " + values[1] + " , " + values[2] + " , " + values[3]);
     	if(getAddressCode(ip) != null){
     		t.setAddressCode(getAddressCode(ip));
-    		t.setAreCumulative(new BigDecimal(values[1]));
-    		t.setNetCumulative(new BigDecimal(values[2]));
+    		t.setNetCumulative(new BigDecimal(values[1]));
+    		t.setAreCumulative(new BigDecimal(values[2]));
     		t.setFlowRate(new BigDecimal(values[3]));
     		t.setAddTime(DateUtils.getCurrentDate());
     		logger.info("Save equip data: " + t.toString());

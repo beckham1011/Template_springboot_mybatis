@@ -7,6 +7,7 @@ public class ByteUtil {
 		short i = (short) (((b[1] & 0xff) << 8) | b[0] & 0xff);
 		return i;
 	}
+	
 	//将字节数组转换为16进制字符串
 	public static String binaryToHexString(byte[] bytes) {
 		String hexStr = "0123456789ABCDEF";
@@ -20,6 +21,25 @@ public class ByteUtil {
 		return result;
 	}
 
+	
+    public static String toHexString1(byte[] b){
+        StringBuffer buffer = new StringBuffer();
+        for (int i = 0; i < b.length; ++i){
+            buffer.append(toHexString1(b[i])).append(" ");
+        }
+        return buffer.toString();
+    }
+    
+    public static String toHexString1(byte b){
+        String s = Integer.toHexString(b & 0xFF);
+        if (s.length() == 1){
+            return "0" + s;
+        }else{
+            return s;
+        }
+    }
+	
+	
 	
 	public static byte[] hexStringToByte(String hex) {
 		int len = (hex.length() / 2);

@@ -41,9 +41,6 @@ public class SocketScheduledTask {
 			DataOutputStream refreshData8082Socket = new DataOutputStream(SingletonSocket.getInstance().getSocket8082().getOutputStream());
 			refreshData8082Socket.write(Constants.All.getBytes()) ;
 			
-			DataOutputStream refreshData8084Socket = new DataOutputStream(SingletonSocket.getInstance().getSocket8084().getOutputStream());
-			refreshData8084Socket.write(Constants.All.getBytes()) ;			
-			
 		} catch (IOException e) {
 			logger.info("Scheduled Task Execute .fail....." + new Date());
 			logger.error(e.getMessage() , e) ;

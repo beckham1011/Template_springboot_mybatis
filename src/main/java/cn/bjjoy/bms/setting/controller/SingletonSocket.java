@@ -22,7 +22,7 @@ public class SingletonSocket {
 	private SingletonSocket(){
 		try {
 			socket8082 = new Socket(Constants.SOCKET_SERVER_IP , Constants.SOCKET_8082_PORT) ;
-			socket8084 = new Socket(Constants.SOCKET_SERVER_IP , Constants.SOCKET_8084_PORT) ;
+			logger.info("");
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("单例socket实例化失败：", e);
@@ -31,10 +31,6 @@ public class SingletonSocket {
 	
 	public Socket getSocket8082() {
 		return instance.socket8082;
-	}
-	
-	public Socket getSocket8084() {
-		return instance.socket8084;
 	}
 	
 	public static SingletonSocket getInstance(){

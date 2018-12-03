@@ -22,16 +22,16 @@ public class BmsApplication {
 		
 		SpringApplication.run(BmsApplication.class, args);
 		
-		new Thread(new Runnable() {
-			public void run() {
-				try {
-					new NIOSServer8082(Constants.SOCKET_8082_PORT).listen() ;					
-					new NIOSServer8084(Constants.SOCKET_8084_PORT).listen() ;
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}).start();
+//		new Thread(new Runnable() {
+//			public void run() {
+//				try {
+//					new NIOSServer8082(Constants.SOCKET_8082_PORT).listen() ;
+//					new NIOSServer8084(Constants.SOCKET_8084_PORT).listen() ;
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}).start();
 		
 		//初始化给前端页面调用的client
 		SingletonSocket.getInstance() ;

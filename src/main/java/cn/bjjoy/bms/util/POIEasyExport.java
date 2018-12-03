@@ -43,8 +43,7 @@ public class POIEasyExport {
         try {
             response.setCharacterEncoding("UTF-8");
             response.setHeader("content-Type", "application/vnd.ms-excel");
-            response.setHeader("Content-Disposition",
-                    "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
             workbook.write(response.getOutputStream());
         } catch (IOException e) {
         }

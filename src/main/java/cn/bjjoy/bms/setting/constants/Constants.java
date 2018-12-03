@@ -1,5 +1,7 @@
 package cn.bjjoy.bms.setting.constants;
 
+import java.io.File;
+
 public class Constants {
 
 	public static final String CHARSET_UTF8 = "UTF-8";
@@ -62,5 +64,7 @@ public class Constants {
 
 	public static String MAIL_RECEIVER_ADMIN = "892285199@qq.com" ;
 	public static String MAIL_RECEIVER_SUB_ADMIN = "512839244@qq.com" ;
+	
+	public final static String FILE_PATH = "C:" + File.separator + "vbdata" + File.separator + "socket8082data.txt";
 	
 }

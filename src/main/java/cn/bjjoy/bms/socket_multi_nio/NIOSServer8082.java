@@ -53,7 +53,7 @@ public class NIOSServer8082 {
     private EquiptypeService typeService  = SpringSocketUtil.getBean(EquiptypeServiceImpl.class) ;
 
 	//解码buffer  
-    private Charset cs = Charset.forName("utf-8");
+    private Charset cs = Charset.forName("utf8");
     
     /*接受数据缓冲区*/
     private static ByteBuffer sBuffer = ByteBuffer.allocate(1024);
@@ -172,7 +172,7 @@ public class NIOSServer8082 {
         	if (count > 0) {
 
                 rBuffer.flip();
-                receiveText = String.valueOf(cs.decode(rBuffer).array());
+                receiveText = new String( rBuffer.array(),0,count);
                 try {
 					if(Constants.All_MSG.equalsIgnoreCase(receiveText)){
 						logger.info("ISIP-------------client IP:" + s.getInetAddress().getHostAddress() + ", receiveText : " + receiveText);
@@ -188,6 +188,8 @@ public class NIOSServer8082 {
 							logger.info("receiveTextCode:" + receiveTextCode);
 							getAddressCode(client , receiveTextCode) ;
 						}else{
+							receiveTextCode = ByteUtil.binaryToHexString(receiveText.getBytes());
+							logger.info("Raw Data from equip receiveTextCode:" + receiveTextCode );
 							saveData(receiveTextCode ,ip ) ;
 						}
 					}
@@ -285,8 +287,8 @@ public class NIOSServer8082 {
     	
     	if(getAddressCode(ip) != null){
     		t.setAddressCode(getAddressCode(ip));
-    		t.setAreCumulative(new BigDecimal(values[1]));
-    		t.setNetCumulative(new BigDecimal(values[2]));
+    		t.setNetCumulative(new BigDecimal(values[1]));
+    		t.setAreCumulative(new BigDecimal(values[2]));
     		t.setFlowRate(new BigDecimal(values[3]).compareTo(new BigDecimal(10 ^ 7)) > 0 ? new BigDecimal(0.0) : new BigDecimal(values[3]));
     		t.setAddTime(DateUtils.getCurrentDate());
     		try {

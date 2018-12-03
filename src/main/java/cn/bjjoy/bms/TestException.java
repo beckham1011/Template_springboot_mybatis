@@ -51,14 +51,18 @@ public class TestException {
 
 	
 	public static void main(String[] args) {
-		Alarm alarm = new Alarm() ;
-		alarm.setId(1);
-		alarm.setAlarm("alarm001");
-		String jsonString = JSONObject.toJSONString(alarm);
-		System.out.println(jsonString);
-		//json转实体
-		Alarm alarm2  = (Alarm) json2Object(jsonString, Alarm.class);
-		System.out.println("Alarm2:"+alarm2.getId() + " , " + alarm.getAlarm());
+		
+		long d = Long.parseLong("00 07 3F 3F".replace(" ", ""), 16);
+	     System.out.println(d);
+		
+//		Alarm alarm = new Alarm() ;
+//		alarm.setId(1);
+//		alarm.setAlarm("alarm001");
+//		String jsonString = JSONObject.toJSONString(alarm);
+//		System.out.println(jsonString);
+//		//json转实体
+//		Alarm alarm2  = (Alarm) json2Object(jsonString, Alarm.class);
+//		System.out.println("Alarm2:"+alarm2.getId() + " , " + alarm.getAlarm());
 //		
 //		JSONObject itemJSONObj = JSONObject.parseObject(JSON.toJSONString(alarm));
 //		System.out.println(itemJSONObj);
@@ -75,25 +79,25 @@ public class TestException {
 //		System.out.println(jsonObj.get("id"));
 		
 		
-		Map<String ,Object> map = object2Map( alarm ) ;
-		Alarm alarm3 = (Alarm) map2Obj(map, Alarm.class);
-		System.out.println("Alarm3:" + alarm3.getId() + " , " + alarm3.getAlarm());
-		
-		List<Alarm> lists=new ArrayList<>();
-		lists.add(alarm);
-		lists.add(alarm2);
-		
-		JSONArray jsonArray = JSONArray.parseArray(JSONObject.toJSONString(lists)); 
-		System.out.println("toJSONString:"+jsonArray.toJSONString());
-		System.out.println("toString:"+jsonArray.toString());
-		
-
-//		List<Alarm> channelItemList  = JSONObject.parseArray(jsonArray , Alarm.class);  /** itemJson: JsonArray  ChannelItem ： 对象bean类**/
-		System.out.println("--------JSON string to List Bean--------------");
-		List<Alarm> alarms = JSON.parseArray(jsonArray.toJSONString(), Alarm.class);
-		for(Alarm a : alarms){
-			System.out.println(object2JSON(a).toJSONString());
-		}
+//		Map<String ,Object> map = object2Map( alarm ) ;
+//		Alarm alarm3 = (Alarm) map2Obj(map, Alarm.class);
+//		System.out.println("Alarm3:" + alarm3.getId() + " , " + alarm3.getAlarm());
+//		
+//		List<Alarm> lists=new ArrayList<>();
+//		lists.add(alarm);
+//		lists.add(alarm2);
+//		
+//		JSONArray jsonArray = JSONArray.parseArray(JSONObject.toJSONString(lists)); 
+//		System.out.println("toJSONString:"+jsonArray.toJSONString());
+//		System.out.println("toString:"+jsonArray.toString());
+//		
+//
+////		List<Alarm> channelItemList  = JSONObject.parseArray(jsonArray , Alarm.class);  /** itemJson: JsonArray  ChannelItem ： 对象bean类**/
+//		System.out.println("--------JSON string to List Bean--------------");
+//		List<Alarm> alarms = JSON.parseArray(jsonArray.toJSONString(), Alarm.class);
+//		for(Alarm a : alarms){
+//			System.out.println(object2JSON(a).toJSONString());
+//		}
 	}
 	
 	//Object转JSON
