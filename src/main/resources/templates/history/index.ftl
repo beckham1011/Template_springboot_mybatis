@@ -7,35 +7,16 @@
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-		<!-- basic styles -->
-
 		<link href="${ctx}/css/bootstrap.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="${ctx}/css/font-awesome.min.css" />
         <link rel="stylesheet" href="${ctx}/bjjoy/css/font-awesome.min.css" />
 		<!-- page specific plugin styles -->
 
-		<!-- ace styles -->
-
 		<link rel="stylesheet" href="${ctx}/css/ace.min.css" />
 		<link rel="stylesheet" href="${ctx}/css/ace-rtl.min.css" />
 		<link rel="stylesheet" href="${ctx}/css/ace-skins.min.css" />
 
-		<!--[if lte IE 8]>
-		  <link rel="stylesheet" href="${ctx}/css/ace-ie.min.css" />
-		<![endif]-->
-
-		<!-- inline styles related to this page -->
-
-		<!-- ace settings handler -->
-
 		<script src="${ctx}/js/ace-extra.min.js"></script>
-
-		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-
-		<!--[if lt IE 9]>
-		<script src="${ctx}/js/html5shiv.js"></script>
-		<script src="${ctx}/js/respond.min.js"></script>
-		<![endif]-->
 	</head>
 
 	<body>
@@ -49,6 +30,7 @@
 				<a class="menu-toggler" id="menu-toggler" href="#">
 					<span class="menu-text"></span>
 				</a>
+				<#include "${ctx}/menu.ftl"/>
 				<div class="main-content">
 					<div class="breadcrumbs" id="breadcrumbs">
 						<script type="text/javascript">
@@ -57,6 +39,7 @@
 						<ul class="breadcrumb">
 							<li>
 								<i class="icon-home home-icon"></i>
+								<a href="/equipdata/index">首页</a>
 							</li>
 							<li><a href="#">历史数据</a></li>
 							<li class="active">历史查询</li>
@@ -72,21 +55,7 @@
 								<div class="row ">
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">历史查询</h3>
-	                                	<select id="typeSelect1" name="typeSelect1" class="form-control" style="width:180px;  float:left;" onChange="typeSelect1Change(this)">
-                                        	<option value="-1" >请选择---</option>
-	                                        <#list subTypeList1 as type>
-	                                            <option value="${type.id}" >
-	                                                ${type.name}
-	                                            </option>
-	                                        </#list>
-	                                    </select>
-	                                    <select name="typeSelect2" id="typeSelect2" class="form-control"  style="width:180px; float:left;" onChange="typeSelect2Change(this)">
-                                    		<option value="-2" >请选择---</option>
-	                                    </select>
-	                                    <select name="typeSelect3" id="typeSelect3" class="form-control"  style="width:180px;  float:left;" onChange="typeSelect3Change()">>
-                                        	<option value="-3" >请选择---</option>
-	                                    </select>
-	                                    <div  style="float:right">
+	                                    <div  style="float:left;">
                                         	<input id="stationName" placeholder="请输入泵站名称" name="stationName" type="text"/>
 	                                        <button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
                                     	</div>
@@ -94,7 +63,7 @@
 								</div>
                                 <div class="space-6"></div>
                                 <div class="table-responsive">
-                                    <table id="userListTable"></table>
+                                    <table id="equipListHistoryTable"></table>
                                 </div>
 
 							</div><!-- /.col -->
@@ -102,17 +71,7 @@
 					</div><!-- /.page-content -->
 				</div><!-- /.main-content -->
 
-				<div class="ace-settings-container" id="ace-settings-container">
-					<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
-						<i class="icon-cog bigger-150"></i>
-					</div>
-
-				</div><!-- /#ace-settings-container -->
 			</div><!-- /.main-container-inner -->
-
-			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-				<i class="icon-double-angle-up icon-only bigger-110"></i>
-			</a>
 		</div><!-- /.main-container -->
 
 		<#include "${ctx}/common.ftl"/>
@@ -121,8 +80,11 @@
 
 		<script type="text/javascript">
             $(document).ready(function () {
+            	
+            	localStorage.setItem("parentId", ${parentId});
+            
                 //初始化表格,动态从服务器加载数据
-                $("#userListTable").bootstrapTable({
+                $("#equipListHistoryTable").bootstrapTable({
                     //使用get请求到服务器获取数据
                     method: "GET",
                     //必须设置，不然request.getParameter获取不到请求参数
@@ -211,122 +173,26 @@
                 var params={
                     "page":		   params.pageNumber,
                     "rows":		   params.pageSize,
-                    "loginName":   $("#loginName").val(),
-                    "parentId1" :  $("#typeSelect1").val().replace(/\$|\,/g, ''),
-                    "parentId2" :  $("#typeSelect2").val().replace(/\$|\,/g, ''),
-                    "parentId3" :  $("#typeSelect3").val().replace(/\$|\,/g, ''),
-                    "stationName": $("#stationName").val().trim()
+                    "stationName": $("#stationName").val().trim(),
+                    "parentId"   : localStorage.getItem("parentId")
                 }
                 return params;
             }
             
             function search() {
-                var params = {"loginName":$("#loginName").val()};
-                $('#userListTable').bootstrapTable("refresh");
-            }
-            
-            function add(){
-                layer.open({
-                    type: 2,
-                    title: '用户添加',
-                    shadeClose: true,
-                    shade: false,
-                    area: ['800px', '600px'],
-                    content: '${ctx}/user/add',
-                    end: function(index){
-                        $('#userListTable').bootstrapTable("refresh");
-                    }
-                });
-            }
-            function grant(id){
-                layer.open({
-                    type: 2,
-                    title: '关联角色',
-                    shadeClose: true,
-                    shade: false,
-                    area: ['800px', '600px'],
-                    content: '${ctx}/user/grant/'  + id,
-                    end: function(index){
-                        $('#userListTable').bootstrapTable("refresh");
-                    }
-                });
-            }
-            function edit(id){
-                layer.open({
-                    type: 2,
-                    title: '编辑用户',
-                    shadeClose: true,
-                    shade: false,
-                    area: ['800px', '600px'],
-                    content: '${ctx}/user/edit/'  + id,
-                    end: function(index){
-                        $('#userListTable').bootstrapTable("refresh");
-                    }
-                });
-            }
-            function del(id){
-                layer.confirm('确定删除吗?', {icon: 3, title:'提示'}, function(index){
-                    $.ajax({
-                        type: "POST",
-                        dataType: "json",
-                        url: "${ctx}/user/delete/" + id,
-                        success: function(msg){
-                            layer.msg(msg.msg, {time: 1500},function(){
-                                $('#userListTable').bootstrapTable("refresh");
-                                layer.close(index);
-                            });
-                        }
-                    });
-                });
-            }
-            function typeSelect1Change(obj){
-            	var parentId = $('#typeSelect1').val().replace(/\$|\,/g, '');
-                $('#userListTable').bootstrapTable("refresh");
-                
-                $.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    url: "${ctx}/equiptype/subTypelist/?parentId=" + parentId,
-                    success: function(msg){
-                        var typeSelect2Html = [];
-                        typeSelect2Html.push('<option value=-2>All--</option>');
-		                for(var i = 0; i < msg.data.subTypeList.length; i ++){
-			                typeSelect2Html.push('<option value="' + msg.data.subTypeList[i].id  + '">' + msg.data.subTypeList[i].name + '</option>');
-		                }
-						$('#typeSelect2').html(typeSelect2Html);
-                    }
-                });
-            }
-            
-            function typeSelect2Change(obj){
-            	var parentId = $('#typeSelect2').val().replace(/\$|\,/g, '');
-            	$('#userListTable').bootstrapTable("refresh");
-                
-                $.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    url: "${ctx}/equiptype/subTypelist/?parentId=" + parentId,
-                    success: function(msg){
-                        var typeSelect3Html = [];
-                        typeSelect3Html.push('<option value=-3>All--</option>');
-		                for(var i = 0; i < msg.data.subTypeList.length; i ++){
-			                typeSelect3Html.push('<option value="' + msg.data.subTypeList[i].id  + '">' + msg.data.subTypeList[i].name + '</option>');
-		                }
-						$('#typeSelect3').html(typeSelect3Html);
-                    }
-                });
-            }
-            
-            function typeSelect3Change(){
-            	var parentId = $('#typeSelect3').val().replace(/\$|\,/g, '');
-            	var params = {"parentId":parentId};
-            	$('#userListTable').bootstrapTable("refresh");
+                $('#equipListHistoryTable').bootstrapTable("refresh");
             }
             
             function exportHistory(){
             	window.location.href = "${ctx}/history/export" ;
             }      
             
+            function clickNode(event, data){
+	        	localStorage.setItem("parentId",data['id']);
+	        	$('#equipListHistoryTable').bootstrapTable("refresh");
+	        }
+            
+            function itemOnclick (){}
             
 		</script>
 </body>

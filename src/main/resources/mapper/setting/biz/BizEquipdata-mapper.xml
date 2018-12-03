@@ -333,7 +333,7 @@
 
 	<sql id="sql_map_page">
 		<if test="page != null and rows != null" >
-		limit ${rows } offset ${page }
+		limit ${rows } offset ${ page }
 		</if>
 	</sql>
 	
@@ -344,19 +344,20 @@
 			select  eqda.addresscode ,  timestampdiff(hour, eqda.add_time  , now()) diffhour ,  eqda.add_time ,eqda.waterstatus , eqda.flowrate , eqda.netcumulative ,     eqda.signalquality ,eqda.communicationStatus 
 			from equipdata eqda inner JOIN  ( select max(id) mxid , addresscode from equipdata   group by addressCode  ) out1
 			where eqda.id = out1.mxid and eqda.addresscode = out1.addresscode ) out2 on eqtp.addresscode = out2.addresscode
-		where 1 = 1   
-		<if test="ids != null">
+		where 1 = 1 
+		<if test="systemId != null and systemId != ''">
+			AND system_id = #{systemId} 
+		</if>
+		<if test="ids != null and ids.size > 0 "  >
 			AND  eqtp.id IN 
 			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
 				#{item}
 			</foreach>
-		</if>
-		<if test="systemId != null and systemId != ''">
-			AND system_id = #{systemId} 
-		</if>
+		</if>		
 		<if test="stationName != null and stationName != ''">
 			<![CDATA[ and (instr(name ,#{stationName}) or instr(eqtp.addressCode,#{stationName})) ]]>
 		</if>
+		  and eqtp.type_layer = 4 
 		<if test="waterStatus != null and waterStatus != ''">
 			<if test=" waterStatus == 1">
 				and <![CDATA[ diffhour < 24  ]]>
@@ -376,19 +377,20 @@
 			select  eqda.addresscode , timestampdiff(hour, eqda.add_time  , now()) diffhour , eqda.add_time ,eqda.waterstatus , eqda.flowrate , eqda.netcumulative ,     eqda.signalquality ,eqda.communicationStatus 
 			from equipdata eqda inner JOIN  ( select max(id) mxid , addresscode from equipdata   group by addressCode  ) out1
 			where eqda.id = out1.mxid and eqda.addresscode = out1.addresscode ) out2 on eqtp.addresscode = out2.addresscode
-		where 1 = 1   
-		<if test="ids != null">
+		where 1 = 1 
+		<if test="systemId != null and systemId != ''">
+			AND system_id = #{systemId} 
+		</if>
+		<if test="ids != null and ids.size > 0 "  >
 			AND  eqtp.id IN 
 			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
 				#{item}
 			</foreach>
 		</if>
-		<if test="systemId != null and systemId != ''">
-			AND system_id = #{systemId} 
-		</if>
 		<if test="stationName != null and stationName != ''">
 			<![CDATA[ and (instr(name ,#{stationName}) or instr(eqtp.addressCode,#{stationName})) ]]>
 		</if>
+		and eqtp.type_layer = 4 
 		<if test="waterStatus != null and waterStatus != ''">
 			<if test=" waterStatus == 1">
 				and <![CDATA[ diffhour < 24  ]]>
@@ -408,11 +410,14 @@
 		from equiptype eqtp , equipdata eqda 
 		where 1=1 and eqda.add_time is not null
 		and eqda.addresscode = eqtp.addresscode 
-		<if test="ids != null">
+		<if test="ids != null and ids.size > 0 " >
 			AND  eqtp.id IN 
 			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
 				#{item}
 			</foreach>
+		</if>
+		<if test="stationName != null and stationName != ''">
+			<![CDATA[ and (instr(name ,#{stationName}) or instr(eqtp.addressCode,#{stationName})) ]]>
 		</if>
 	</select>
 	
@@ -423,21 +428,27 @@
  		eqda.waterstatus ,
  		eqda.flowrate , 
  		eqda.netcumulative , 
+ 		eqda.areCumulative , 
  		eqda.signalquality , 
  		eqda.communicationStatus , 
 		eqtp.name  , 
 		eqtp.bengxing  , 
 		eqtp.koujing  , 
 		eqtp.gonglv  , 
-		eqtp.id  
+		eqtp.id eqtpid,
+		eqda.id
 		from equipdata eqda , equiptype eqtp  
 		where 1=1 and eqda.add_time is not null and eqda.addresscode = eqtp.addresscode
-		<if test="ids != null">
+		<if test="ids != null and ids.size > 0 ">
 			AND  eqtp.id IN 
 			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
 				#{item}
 			</foreach>
 		</if>
+
+		<if test="stationName != null and stationName != ''">
+			<![CDATA[ and (instr(name ,#{stationName}) or instr(eqtp.addressCode,#{stationName})) ]]>
+		</if>		
 	 	order by  eqda.add_time desc
 	 	<include refid="sql_map_page" />
 	</select>
@@ -460,7 +471,7 @@
 					select  eqda.addresscode ,  eqda.add_time 
 					from equipdata eqda inner JOIN  ( select max(id) mxid , addresscode from equipdata   group by addressCode  ) out1
 					where eqda.id = out1.mxid and eqda.addresscode = out1.addresscode ) out2 on eqtp.addresscode = out2.addresscode
-				where 1 = 1  
+				where 1 = 1  and eqtp.type_layer = 4 
 				<if test="ids != null">
 					AND  eqtp.id IN 
 					<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
@@ -470,9 +481,14 @@
 				<if test="systemId != null and systemId != ''">
 					AND system_id = #{systemId} 
 				</if>
+				
 		) as rawstatus
 		group by rawstatus.diffhour 
 	</select>
+	
+	<update id="updateErrorData" parameterType="map">
+		update equipdata set NetCumulative = ${AreCumulative} , set AreCumulative = ${NetCumulative} where id = ${id}
+	</update>
 	
 	
 </mapper>

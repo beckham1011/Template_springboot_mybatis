@@ -35,7 +35,6 @@
 	<insert id="save" parameterMap="pm_equipdata" useGeneratedKeys="true" keyProperty="id" >
 		insert into equipdata
 		<trim prefix="(" suffix=")" suffixOverrides="," >	
-			<if test="id != null">id,</if>
 			<if test="addressCode != null">addressCode,</if>
 			<if test="EquipTypeId != null">EquipTypeId,</if>
 			<if test="waterStatus != null">waterStatus,</if>
@@ -49,7 +48,6 @@
 			<if test="alarm != null">alarm</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides="," >
-			<if test="id != null">#{id},</if>
 			<if test="addressCode != null">#{addressCode},</if>
 			<if test="EquipTypeId != null">#{EquipTypeId},</if>
 			<if test="waterStatus != null">#{waterStatus},</if>

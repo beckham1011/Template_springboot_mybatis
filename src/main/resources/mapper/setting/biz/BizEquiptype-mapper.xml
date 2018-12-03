@@ -523,7 +523,7 @@
 		<include refid="sql_map_order" />
 	</select>
 	
-	<select id="querySubTypes" resultType="map" parameterType="map">
+		<select id="queryDirectSubTypes" resultType="map" parameterType="map">
 		SELECT 
 			equiptype.id AS id,
 			equiptype.parent_id AS parentId,
@@ -553,6 +553,68 @@
 		</if>
 	</select>
 	
+	
+	<select id="querySubTypes" resultType="map" parameterType="map">
+		SELECT 
+			equiptype.id AS id,
+			equiptype.parent_id AS parentId,
+			equiptype.name AS name,
+			equiptype.add_per AS addPer,
+			equiptype.add_time AS addTime,
+			equiptype.type_layer AS typeLayer,
+			equiptype.addressCode AS addressCode,
+			equiptype.system_id AS systemId,
+			equiptype.longitude AS longitude,
+			equiptype.latitude AS latitude,
+			equiptype.IP AS IP,
+			equiptype.Zguanli_per AS ZguanliPer,
+			equiptype.Zguanli_phone AS ZguanliPhone,
+			equiptype.Cguanli_per AS CguanliPer,
+			equiptype.Cguanli_phone AS CguanliPhone,
+			equiptype.Jguanli_per AS JguanliPer,
+			equiptype.Jguanli_phone AS JguanliPhone,
+			equiptype.bengxing AS bengxing,
+			equiptype.koujing AS koujing,
+			equiptype.gonglv AS gonglv,
+			equiptype.xinhao AS xinhao
+		FROM equiptype
+		where 1 = 1
+		<if test="ids != null and ids.size > 0 " >
+			AND  equiptype.id IN 
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
+				#{item}
+			</foreach>
+		</if>
+		<if test="systemId != null and systemId != ''">
+			AND equiptype.system_id = #{systemId} 
+		</if>
+		<if test="stationName != null and stationName != ''">
+			<![CDATA[ and (instr(equiptype.name ,#{stationName}) or instr(equiptype.addressCode,#{stationName})) ]]>
+		</if>
+	 	order by equiptype.id asc
+	 	<include refid="sql_map_page" />
+	</select>
+	
+	<select id="getSubTypeCount" resultType="int" parameterType="map">
+		SELECT 
+			count(1)
+		FROM equiptype
+		where 1 = 1
+		<if test="ids != null and ids.size > 0 " >
+			AND  equiptype.id IN 
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
+				#{item}
+			</foreach>
+		</if>
+		<if test="systemId != null and systemId != ''">
+			AND equiptype.system_id = #{systemId} 
+		</if>		
+		<if test="stationName != null and stationName != ''">
+			<![CDATA[ and (instr(equiptype.name ,#{stationName}) or instr(equiptype.addressCode,#{stationName})) ]]>
+		</if>
+	</select>
+	
+	
 	<select id="getSubTypes" resultType="map" parameterType="map">
 		SELECT 
 			equiptype.id AS id,
@@ -578,9 +640,82 @@
 			equiptype.xinhao AS xinhao
 	 	FROM equiptype WHERE FIND_IN_SET(id, getTypeChild(#{parentId}))
 		<if test="systemId != null and systemId != ''">
+			AND equiptype.system_id = #{systemId} 
+		</if>
+	</select>
+	
+	
+		<select id="getTypesByIds" resultType="map" parameterType="map">
+		SELECT 
+			equiptype.id AS id,
+			equiptype.parent_id AS parentId,
+			equiptype.name AS name,
+			equiptype.add_per AS addPer,
+			equiptype.add_time AS addTime,
+			equiptype.type_layer AS typeLayer,
+			equiptype.addressCode AS addressCode,
+			equiptype.system_id AS systemId,
+			equiptype.longitude AS longitude,
+			equiptype.latitude AS latitude,
+			equiptype.IP AS IP,
+			equiptype.Zguanli_per AS ZguanliPer,
+			equiptype.Zguanli_phone AS ZguanliPhone,
+			equiptype.Cguanli_per AS CguanliPer,
+			equiptype.Cguanli_phone AS CguanliPhone,
+			equiptype.Jguanli_per AS JguanliPer,
+			equiptype.Jguanli_phone AS JguanliPhone,
+			equiptype.bengxing AS bengxing,
+			equiptype.koujing AS koujing,
+			equiptype.gonglv AS gonglv,
+			equiptype.xinhao AS xinhao
+	 	FROM equiptype 
+	 	WHERE 1 = 1 
+		<if test="ids != null">
+			AND equiptype.id IN 
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
+				#{item}
+			</foreach>
+		</if>
+		<if test="systemId != null and systemId != ''">
+			AND equiptype.system_id = #{systemId} 
+		</if>
+	</select>
+	
+	
+	<select id="getSubTypeIds" resultType="int" parameterType="map">
+		select id from equiptype where id = #{parentId}
+		<if test="stationName != null and stationName != ''">
+			<![CDATA[ and (instr(name ,#{stationName}) or instr(addressCode,#{stationName})) ]]>
+		</if>
+		<if test="systemId != null and systemId != ''">
+			AND system_id = #{systemId} 
+		</if>
+		UNION all 
+		select id from equiptype where parent_id = #{parentId}
+		<if test="stationName != null and stationName != ''">
+			<![CDATA[ and (instr(name ,#{stationName}) or instr( addressCode,#{stationName})) ]]>
+		</if>
+		<if test="systemId != null and systemId != ''">
+			AND system_id = #{systemId} 
+		</if>
+		UNION all 
+		select id from equiptype where parent_id in(select id from equiptype where parent_id = #{parentId})
+		<if test="stationName != null and stationName != ''">
+			<![CDATA[ and (instr(name ,#{stationName}) or instr( addressCode,#{stationName})) ]]>
+		</if>
+		<if test="systemId != null and systemId != ''">
+			AND system_id = #{systemId} 
+		</if>
+		UNION all 
+		select id from equiptype where parent_id in(select id from equiptype where parent_id in(select id from equiptype where parent_id = #{parentId}))
+		<if test="stationName != null and stationName != ''">
+			<![CDATA[ and (instr(name ,#{stationName}) or instr( addressCode,#{stationName})) ]]>
+		</if>
+		<if test="systemId != null and systemId != ''">
 			AND system_id = #{systemId} 
 		</if>
 	</select>
+	
 	
 	<update id="updateByAddressCode" parameterType="map">
 		update equiptype set ip = #{ip} , update_time = now()  where addressCode = #{addressCode}

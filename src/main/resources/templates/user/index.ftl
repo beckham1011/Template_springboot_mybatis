@@ -44,13 +44,12 @@
 			<script type="text/javascript">
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 			</script>
-
+			<#include "${ctx}/head_nav.ftl" />
 			<div class="main-container-inner">
 				<a class="menu-toggler" id="menu-toggler" href="#">
 					<span class="menu-text"></span>
 				</a>
-                <#include "${ctx}/menu.ftl"/>
-				<div class="main-content">
+				<div class="main-content" style="margin-left: 0px!important;">
 					<div class="breadcrumbs" id="breadcrumbs">
 						<script type="text/javascript">
 							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
@@ -58,6 +57,7 @@
 						<ul class="breadcrumb">
 							<li>
 								<i class="icon-home home-icon"></i>
+								<a href="/equipdata/index">首页</a>
 							</li>
 							<li><a href="#">用户中心</a></li>
 							<li class="active">用户管理</li>

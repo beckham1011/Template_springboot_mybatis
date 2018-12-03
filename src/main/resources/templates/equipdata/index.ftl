@@ -7,8 +7,6 @@
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-		<!-- basic styles -->
-
 		<link href="${ctx}/css/bootstrap.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="${ctx}/css/font-awesome.min.css" />
         <link rel="stylesheet" href="${ctx}/bjjoy/css/font-awesome.min.css" />
@@ -18,21 +16,9 @@
 		<link rel="stylesheet" href="${ctx}/css/ace.min.css" />
 		<link rel="stylesheet" href="${ctx}/css/ace-rtl.min.css" />
 		<link rel="stylesheet" href="${ctx}/css/ace-skins.min.css" />
-		<!--[if lte IE 8]>
-		  <link rel="stylesheet" href="${ctx}/css/ace-ie.min.css" />
-		<![endif]-->
-
-		<!-- inline styles related to this page -->
-
-		<!-- ace settings handler -->
 
 		<script src="${ctx}/js/ace-extra.min.js"></script>
-		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 
-		<!--[if lt IE 9]>
-		<script src="${ctx}/js/html5shiv.js"></script>
-		<script src="${ctx}/js/respond.min.js"></script>
-		<![endif]-->
 	</head>
 
 	<body>
@@ -55,13 +41,14 @@
 						<ul class="breadcrumb">
 							<li>
 								<i class="icon-home home-icon"></i>
+								<a href="/equipdata/index">首页</a>
 							</li>
 							<li><a href="#">实时监测</a></li>
 							<li class="active">实时数据</li>
 						</ul><!-- .breadcrumb -->
 
 					</div>
-
+					
 					<div class="page-content" >
 						<div class="row">
 							<div class="col-xs-12">
@@ -71,87 +58,28 @@
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">实时数据</h3>
                                         <div class="form-group">
-		                                	<select id="typeSelect1" name="typeSelect1" class="form-control" style="width:180px;  float:left;" onChange="typeSelect1Change(this)">
-	                                        	<option value="-1" >请选择镇泵站---</option>
-		                                        <#list subTypeList1 as type>
-		                                            <option value="${type.id}" >
-		                                                ${type.name}
-		                                            </option>
-		                                        </#list>
-		                                    </select>
-		                                    <select name="typeSelect2" id="typeSelect2" class="form-control"  style="width:180px; float:left;" onChange="typeSelect2Change(this)">
-	                                    		<option value="-2" >请选择村泵站---</option>
-		                                    </select>
-		                                    <select name="typeSelect3" id="typeSelect3" class="form-control"  style="width:180px;  float:left;" onChange="typeSelect3Change()">>
-	                                        	<option value="-3" >请选择站点---</option>
-		                                    </select>&nbsp;&nbsp;
-											<label>
+											
+		                                    <div style="float:left">
+		                                    	<button class="btn btn-xs btn-danger" onclick="refreshAllStation();"><i class=""></i>&nbsp;即时刷新泵站</button>
+	                                        	<input id="stationName" placeholder="请输入泵站名称" name="stationName" type="text"/>
+	                                        	<aclass="glyphicon glyphicon-remove btn form-control-feedback"style="pointer-events:auto"></a>
+		                                        <button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
+                                        	</div>
+                                        	&nbsp;
+                                        	<label>
 												<input type="checkbox" id="online" name="online" onclick="getOnlineOfflineData()"/>在线
 											</label>
 											<label>
 												<input type="checkbox" id="offline" name="offline" onclick="getOnlineOfflineData()"/>离线
 											</label>
-		                                    <div style="float:right">
-	                                        	<input id="stationName" placeholder="请输入泵站名称" name="stationName" type="text"/>
-		                                        <button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
-		                                        <button class="btn btn-xs btn-danger" onclick="refreshAllStation();"><i class=""></i>&nbsp;即时刷新泵站</button>
-                                        	</div>
                                         </div>
                                     </div>
 								</div>
                                 <div class="space-6"></div>
                                 <div class="table-responsive">
-                                    <table id="userListTable"></table>
+                                    <table id="equipdataListTable"></table>
                                 </div>
 
-								<div id="modal-table" class="modal fade" tabindex="-1">
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header no-padding">
-												<div class="table-header">
-													<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-														<span class="white">&times;</span>
-													</button>
-													Results for "Latest Registered Domains
-												</div>
-											</div>
-
-
-											<div class="modal-footer no-margin-top">
-												<button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">
-													<i class="icon-remove"></i>
-													Close
-												</button>
-
-												<ul class="pagination pull-right no-margin">
-													<li class="prev disabled">
-														<a href="#">
-															<i class="icon-double-angle-left"></i>
-														</a>
-													</li>
-
-													<li class="active">
-														<a href="#">1</a>
-													</li>
-
-													<li>
-														<a href="#">2</a>
-													</li>
-
-													<li>
-														<a href="#">3</a>
-													</li>
-
-													<li class="next">
-														<a href="#">
-															<i class="icon-double-angle-right"></i>
-														</a>
-													</li>
-												</ul>
-											</div>
-										</div><!-- /.modal-content -->
-									</div><!-- /.modal-dialog -->
-								</div><!-- PAGE CONTENT ENDS -->
 							</div><!-- /.col -->
 						</div><!-- /.row -->
 					</div><!-- /.page-content -->
@@ -160,19 +88,17 @@
 
 			</div><!-- /.main-container-inner -->
 
-			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-				<i class="icon-double-angle-up icon-only bigger-110"></i>
-			</a>
 		</div><!-- /.main-container -->
 
 		<#include "${ctx}/common.ftl"/>
 
-		<!-- inline scripts related to this page -->
-
 		<script type="text/javascript">
             $(document).ready(function () {
+            
+            	localStorage.setItem("parentId", ${parentId});
+            
                 //初始化表格,动态从服务器加载数据
-                $("#userListTable").bootstrapTable({
+                $("#equipdataListTable").bootstrapTable({
                     //使用get请求到服务器获取数据
                     method: "GET",
                     //必须设置，不然request.getParameter获取不到请求参数
@@ -191,6 +117,7 @@
                     pageList: [5, 10, 15, 20, 25],
                     //是否启用查询
                     search: false,
+                    datalocale: "zh-cn",
                     //是否启用详细信息视图
                     detailView:false,
                     detailFormatter:detailFormatter,
@@ -201,10 +128,11 @@
                     queryParams: getQueryParams,
                     queryParamsType: "",
                     //json数据解析
+                    striped: true,
                     responseHandler: function(res) {
                         return {
                             "rows": res.data.equipList,
-                            "total": res.data.count
+                            "total": res.data.count,
                         };
                     },
                     //数据列
@@ -217,7 +145,7 @@
                         field: "name"                   
                     },{
                         title: "泵型",
-                        field: "bengxing"                        
+                        field: "bengxing"
                     },{
                         title: "口径",
                         field: "koujing"
@@ -268,7 +196,7 @@
                         title: "操作",
                         field: "empty",
                         formatter: function (value, row, index) {
-                            var operateHtml = '<button class="btn btn-primary btn-xs" type="button" onclick="refreshEquiptypeData(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;刷新</button>';
+                            var operateHtml = '<button class="btn btn-primary btn-xs" type="button" onclick="refreshEquiptypeData(\''+row.addresscode+'\')"><i class="fa fa-edit"></i>&nbsp;刷新</button>';
                             return operateHtml;
                         }
                     }]
@@ -285,11 +213,8 @@
                 var params={
                     "page":		   params.pageNumber,
                     "rows":		   params.pageSize,
-                    "parentId1" :  $("#typeSelect1").val().replace(/\$|\,/g, ''),
-                    "parentId2" :  $("#typeSelect2").val().replace(/\$|\,/g, ''),
-                    "parentId3" :  $("#typeSelect3").val().replace(/\$|\,/g, ''),
                     "stationName": $("#stationName").val().trim(),
-                    "parentId"   : ${parentId}
+                    "parentId"   : localStorage.getItem("parentId")
                 }
                 if( !($("#online").is(':checked') == $("#offline").is(':checked'))){
                 	params.waterStatus = $("#online").is(':checked') ? 1 : ( $("#offline").is(':checked') ? 0 : 1)
@@ -298,12 +223,11 @@
             }
             
             function search() {
-                var params = {"loginName":$("#loginName").val()};
-                $('#userListTable').bootstrapTable("refresh");
+                $('#equipdataListTable').bootstrapTable("refresh");
             }
             
             function getOnlineOfflineData(){
-                $('#userListTable').bootstrapTable("refresh");
+                $('#equipdataListTable').bootstrapTable("refresh");
             }
             
             function refreshEquiptypeData(id){
@@ -313,74 +237,42 @@
 	                    dataType: "json",
 	                    url: '${ctx}/socket?param='  + id,
 	                    success: function(msg){
-						    $('#userListTable').bootstrapTable("refresh");
+		                    layer.close(index);
+						    $('#equipdataListTable').bootstrapTable("refresh");
 	                    }
 	                });
 	            });
             }
                         
             function refreshAllStation(){
-                layer.confirm('确定刷新所有泵站数据吗?\n获取数据需要五分钟', {icon: 3, title:'危险操作'}, function(index){
+                layer.confirm('确定刷新所有泵站数据吗?\n获取数据需要五秒钟', {icon: 3, title:'危险操作'}, function(index){
 	                $.ajax({
 	                    type: "GET",
 	                    dataType: "json",
 	                    url: '${ctx}/socket8082?param=all' ,
 	                    success: function(msg){
 	                    	layer.close(index);
-						    $('#userListTable').bootstrapTable("refresh");
+						    $('#equipdataListTable').bootstrapTable("refresh");
 	                    }
 	                });
 	            });
             }
             
-            function typeSelect1Change(obj){
-            	var parentId = $('#typeSelect1').val().replace(/\$|\,/g, '');
-                $('#userListTable').bootstrapTable("refresh");
-				$('#stationName').val('');
-				
-                $.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    url: "${ctx}/equiptype/subTypelist/?parentId=" + parentId,
-                    success: function(msg){
-                        var typeSelect2Html = [];
-                        typeSelect2Html.push('<option value=-2>All--</option>');
-                        var typeSelect3Html = [];
-                        typeSelect3Html.push('<option value=-3>All--</option>');
-		                for(var i = 0; i < msg.data.subTypeList.length; i ++){
-			                typeSelect2Html.push('<option value="' + msg.data.subTypeList[i].id  + '">' + msg.data.subTypeList[i].name + '</option>');
-		                }
-						$('#typeSelect2').html(typeSelect2Html);
-						$('#typeSelect3').html(typeSelect3Html);
-                    }
-                });
-            }
+			function itemOnclick2(target){
+				//找到当前节点id
+				var nodeid = $(target).attr('data-nodeid');
+				var params = getQueryParams ;
+				console.log(params.parentId);
+				$('#equipdataListTable').bootstrapTable("refresh");
+			}
             
-            function typeSelect2Change(obj){
-            	var parentId = $('#typeSelect2').val().replace(/\$|\,/g, '');
-            	$('#userListTable').bootstrapTable("refresh");
-                
-                $.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    url: "${ctx}/equiptype/subTypelist/?parentId=" + parentId,
-                    success: function(msg){
-                        var typeSelect3Html = [];
-                        typeSelect3Html.push('<option value=-3>All--</option>');
-		                for(var i = 0; i < msg.data.subTypeList.length; i ++){
-			                typeSelect3Html.push('<option value="' + msg.data.subTypeList[i].id  + '">' + msg.data.subTypeList[i].name + '</option>');
-		                }
-						$('#typeSelect3').html(typeSelect3Html);
-                    }
-                });
-            }
-
+            function clickNode(event, data){
+	        	console.log(  ) ;
+	        	localStorage.setItem("parentId",data['id']);
+	        	$('#equipdataListTable').bootstrapTable("refresh");
+	        }
             
-            function typeSelect3Change(){
-            	var parentId = $('#typeSelect3').val().replace(/\$|\,/g, '');
-            	var params = {"parentId":parentId};
-            	$('#userListTable').bootstrapTable("refresh");
-            }
+            function itemOnclick (){}
             
 		</script>
 </body>

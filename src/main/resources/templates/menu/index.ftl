@@ -20,22 +20,8 @@
 		<link rel="stylesheet" href="${ctx}/css/ace-rtl.min.css" />
 		<link rel="stylesheet" href="${ctx}/css/ace-skins.min.css" />
 
-		<!--[if lte IE 8]>
-		  <link rel="stylesheet" href="${ctx}/css/ace-ie.min.css" />
-		<![endif]-->
-
-		<!-- inline styles related to this page -->
-
-		<!-- ace settings handler -->
-
 		<script src="${ctx}/js/ace-extra.min.js"></script>
 
-		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-
-		<!--[if lt IE 9]>
-		<script src="${ctx}/js/html5shiv.js"></script>
-		<script src="${ctx}/js/respond.min.js"></script>
-		<![endif]-->
 	</head>
 
 	<body>
@@ -44,7 +30,7 @@
 			<script type="text/javascript">
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 			</script>
-
+			<#include "${ctx}/head_nav.ftl" />
 			<div class="main-container-inner">
 				<a class="menu-toggler" id="menu-toggler" href="#">
 					<span class="menu-text"></span>
@@ -58,6 +44,7 @@
 						<ul class="breadcrumb">
 							<li>
 								<i class="icon-home home-icon"></i>
+								<a href="/equipdata/index">首页</a>
 							</li>
 							<li><a href="#">系统管理</a></li>
 							<li class="active">资源管理</li>

@@ -33,40 +33,7 @@
                                     <input id="name" name="name" class="form-control" type="text" value="${equiptype.name}" />
                                 </div>
                             </div>
-	                        <div class="form-group">
-	                            <label class="col-sm-3 control-label">父节点：<label style="color:red">*</label></label>
-	                            <div class="col-sm-8">
-	                                <select name="typeSelect0" id="typeSelect0" class="form-control"  style="width:160px;float:left;height:auto;">
-	                            		<option value="1" >智慧抄表云平台</option>
-	                                </select>
-
-	                                <#if equiptype.typeLayer != null>
-		                                <select id="typeSelect1" name="typeSelect1" class="form-control" style="width:160px;float:left;height:auto;" >
-		                                	<#if parentParentTypes != null>
-		                            			<option value="${parentParentTypes.id}" >${parentParentTypes.name}</option>
-		                            		</#if>
-		                                </select>
-		                                <select name="typeSelect2" id="typeSelect2" class="form-control"  style="width:160px;float:left;height:auto;" >
-		                            		<#if parentTypes != null>
-		                            			<option value="${parentTypes.id}" >${parentTypes.name}</option>
-		                            		</#if>
-		                                </select>
-	                                </#if>
-	                                <#if equiptype.typeLayer == null>
-		                                <select id="typeSelect1" name="typeSelect1" class="form-control" style="width:160px;float:left;height:auto;" onChange="typeSelect1Change(this)">
-	                                    	<option value="-1" >请选择父节点---</option>
-	                                        <#list subTypeList1 as type>
-	                                            <option value="${type.id}" >
-	                                                ${type.name}
-	                                            </option>
-	                                        </#list>
-	                                    </select>
-	                                    <select name="typeSelect2" id="typeSelect2" class="form-control"  style="width:160px;float:left;height:auto;" onChange="typeSelect2Change(this)">
-	                                		<option value="-2" >请选择父节点---</option>
-	                                    </select>
-	                                </#if>
-	                            </div>
-	                        </div>
+                            
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">设备地址码：<label style="color:red">*</label></label>
                                 <div class="col-sm-8">
@@ -78,30 +45,61 @@
 	                            <div class="col-sm-8">
 	                                <select name="systemId" id="systemId" class="form-control"  style="width:260px;height: 34px; float:left;" >
 	                                	<#list systemList as stm>
-	                                		<#if equiptype.systemId == 0 >
-		                                		<option value="${stm.id}" selected> ${stm.system} </option>
-	                                		</#if>
-	                                		<#if equiptype.systemId != 0 && stm.id == equiptype.systemId>
-		                                		<option value="${stm.id}" selected> ${stm.system} </option>
-	                                		</#if>
+	                                		<option value="${stm.id?c}" selected> ${stm.system} </option>
 	                                	</#list>
                                     </select>
 	                            </div>
-	                        </div>                            
+	                        </div>
+
+	                        <div class="form-group">
+	                            <label class="col-sm-3 control-label">父节点：<label style="color:red">*</label></label>
+	                            <div class="col-sm-8">
+	                                <select name="parentId1" id="parentId1" class="form-control"  style="width:160px;float:left;height:auto;">
+	                            		<option value="1" >智慧抄表云平台</option>
+	                                </select>
+
+	                                <#if equiptype.typeLayer != null>
+		                                <select id="parentId2" name="parentId2" class="form-control" style="width:160px;float:left;height:auto;" >
+		                                	<#if parentParentTypes != null>
+		                            			<option value="${parentParentTypes.id?c}" >${parentParentTypes.name}</option>
+		                            		</#if>
+		                                </select>
+		                                <select name="parentId3" id="parentId3" class="form-control"  style="width:160px;float:left;height:auto;" >
+		                            		<#if parentTypes != null>
+		                            			<option value="${parentTypes.id?c}" >${parentTypes.name}</option>
+		                            		</#if>
+		                                </select>
+	                                </#if>
+	                                <#if equiptype.typeLayer == null>
+		                                <select id="parentId2" name="parentId2" class="form-control" style="width:160px;float:left;height:auto;" onChange="typeSelect1Change(this)">
+	                                    	<option value="-1" >请选择父节点---</option>
+	                                        <#list subTypeList1 as type>
+	                                            <option value="${type.id?c}" >
+	                                                ${type.name}
+	                                            </option>
+	                                        </#list>
+	                                    </select>
+	                                    <select name="parentId3" id="parentId3" class="form-control"  style="width:160px;float:left;height:auto;" onChange="typeSelect2Change(this)">
+	                                		<option value="-2" >请选择父节点---</option>
+	                                    </select>
+	                                </#if>
+	                            </div>
+	                        </div>
+
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">泵型：<label style="color:red">*</label></label>
+                                <label class="col-sm-3 control-label">泵型：</label>
                                 <div class="col-sm-8">
                                     <input id="bengxing" name="bengxing" class="form-control" type="text" value="${equiptype.bengxing}">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">口径：<label style="color:red">*</label></label>
+                                <label class="col-sm-3 control-label">口径：</label>
                                 <div class="col-sm-8">
                                     <input id="koujing" name="koujing" class="form-control" type="text" value="${equiptype.koujing}">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">功率：<label style="color:red">*</label></label>
+                                <label class="col-sm-3 control-label">功率：</label>
                                 <div class="col-sm-8">
                                     <input id="gonglv" name="gonglv" class="form-control" type="text" value="${equiptype.gonglv}">
                                 </div>
@@ -126,7 +124,7 @@
                             </div>
                             
 	                        <div class="form-group">
-	                            <label class="col-sm-3 control-label">镇水利站管理人员：<label style="color:red">*</label></label>
+	                            <label class="col-sm-3 control-label">镇水利站管理人员：</label>
 	                            <div class="col-sm-8">
 	                                <input id="zguanliPer" name="zguanliPer" class="form-control" value="${equiptype.zguanliPer}" />
 	                            </div>
@@ -140,7 +138,7 @@
                                                         
                             
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">村管理人员:<label style="color:red">*</label></label>
+                                <label class="col-sm-3 control-label">村管理人员:</label>
                                 <div class="col-sm-8">
                                     <input id="cguanliPer" name="cguanliPer" class="form-control" value="${equiptype.cguanliPer}" />
                                 </div>
@@ -154,7 +152,7 @@
                             
                             
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">具体管理人员：<label style="color:red">*</label></label>
+                                <label class="col-sm-3 control-label">具体管理人员：</label>
                                 <div class="col-sm-8">
                                     <input id="jguanliPer" name="jguanliPer" class="form-control" value="${equiptype.jguanliPer}" />
                                 </div>
@@ -194,26 +192,8 @@
     	      },
     	      	name: {
     	        required: true,
-    	        minlength: 4,
+    	        minlength: 2,
     	    	maxlength: 50
-    	      },
-    	      	bengxing: {
-    	        required: true
-    	      },
-    	      	koujing: {
-    	        required: true
-    	      },
-    	      	gonglv: {
-    	        required: true
-    	      },
-    	      	zguanliPer: {
-    	        required: true
-    	      },
-    	      	cguanliPer: {
-    	        required: true
-    	      },
-    	      	jguanliPer: {
-    	        required: true
     	      }
     	    },
     	    messages: {},
@@ -236,8 +216,7 @@
     
     
     function typeSelect1Change(obj){
-    	var parentId = $('#typeSelect1').val().replace(/\$|\,/g, '');
-        $('#userListTable').bootstrapTable("refresh");
+    	var parentId = $('#parentId2').val().replace(/\$|\,/g, '');
         
         $.ajax({
             type: "GET",
@@ -249,31 +228,12 @@
                 for(var i = 0; i < msg.data.subTypeList.length; i ++){
 	                typeSelect2Html.push('<option value="' + msg.data.subTypeList[i].id  + '">' + msg.data.subTypeList[i].name + '</option>');
                 }
-				$('#typeSelect2').html(typeSelect2Html);
+				$('#parentId3').html(typeSelect2Html);
+				$('#userListTable').bootstrapTable("refresh");
             }
         });
     }
-    
-    function typeSelect2Change(obj){
-    	var parentId = $('#typeSelect2').val().replace(/\$|\,/g, '');
-    	$('#userListTable').bootstrapTable("refresh");
-        
-        $.ajax({
-            type: "GET",
-            dataType: "json",
-            url: "${ctx}/equiptype/subTypelist/?parentId=" + parentId,
-            success: function(msg){
-                var typeSelect3Html = [];
-                typeSelect3Html.push('<option value=-3>All--</option>');
-                for(var i = 0; i < msg.data.subTypeList.length; i ++){
-	                typeSelect3Html.push('<option value="' + msg.data.subTypeList[i].id  + '">' + msg.data.subTypeList[i].name + '</option>');
-                }
-				$('#typeSelect3').html(typeSelect3Html);
-            }
-        });
-    }
-    
-    
+ 
     
 </script>
 

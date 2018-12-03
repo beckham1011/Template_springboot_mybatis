@@ -1,19 +1,17 @@
 <script src="${ctx}/js/bootstrap-treeview.js"></script>
-<link href="/css/bootstrap.min.css" rel="stylesheet">
+<link href="${ctx}/css/bootstrap.min.css" rel="stylesheet">
 
 <div class="sidebar" id="sidebar">
 	<style  type="text/css">
-		li {
-		    overflow: hidden;
-		    text-overflow: ellipsis;
-		    white-space: nowrap;
+		.node-treeview1 {
+			overflow: hidden; text-overflow:ellipsis; white-space: nowrap;
+		}
+		.node-treeview1 a{
+			width:40px;
 		}
 	</style>
 	<div id="treeview1" class=""></div>
-    <script type="text/javascript">
-        try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
-    </script>
-	<script>
+	<script type="text/javascript">
 	$(function() {
 		var treeData ;
         $.ajax({
@@ -23,21 +21,19 @@
             success: function(result){
                 
                 treeData = result.data.typeTree;
-                var dataStr = JSON.stringify(treeData) ;
                 
                 $('#treeview1').treeview({
-		          	showTags: false,
+		          	showTags: true,
 		          	levels: 1,
-		          	enableLinks: true,
-		          	data: JSON.parse(dataStr)
+		          	data: treeData,
+		          	onNodeSelected: function(event, data){
+		          		clickNode(event, data);
+		          	}
 		        });
             }
         });
-     
+        
     })
 	</script>
 
-    <script type="text/javascript">
-        try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
-    </script>
 </div>

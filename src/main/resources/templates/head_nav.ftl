@@ -1,3 +1,4 @@
+<link href="/css/bootstrap.min.css" rel="stylesheet">
 <nav class="navbar navbar-default" role="navigation">
 	<div class="container-fluid">
 		<div>
@@ -19,7 +20,7 @@
 					<ul class="dropdown-menu">
 						<li><a href="${ctx}/history/index">历史查询</a></li>
 						<li class="divider"></li>
-						<li><a href="${ctx}/history/">告警查询</a></li>
+						<li><a href="${ctx}/alarm/index">告警查询</a></li>
 					</ul>			
 				
 				</li>
@@ -29,9 +30,9 @@
 						<b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="${ctx}">通用报表</a></li>
+						<li><a href="${ctx}/analysis/index.ftl">通用报表</a></li>
 						<li class="divider"></li>
-						<li><a href="${ctx}">曲线分析</a></li>
+						<li><a href="${ctx}/menu/index.ftl">曲线分析</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -40,11 +41,11 @@
 						<b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="${ctx}">数据卡维护</a></li>
+						<li><a href="${ctx}/datacard/index.ftl">数据卡维护</a></li>
 						<li class="divider"></li>
-						<li><a href="${ctx}">申报记录</a></li>
+						<li><a href="${ctx}/declarationrecord/index.ftl">申报记录</a></li>
 						<li class="divider"></li>
-						<li><a href="${ctx}">维修记录</a></li>
+						<li><a href="${ctx}/maintainrecord/index.ftl">维修记录</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -53,13 +54,13 @@
 						<b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="${ctx}">泵站管理</a></li>
+						<li><a href="${ctx}/equiptype/index.ftl">泵站管理</a></li>
 						<li class="divider"></li>
-						<li><a href="${ctx}">泵站-管理员对应关系</a></li>
+						<li><a href="${ctx}/user/index.ftl">用户管理</a></li>
 						<li class="divider"></li>
-						<li><a href="${ctx}">用户管理</a></li>
+						<li><a href="${ctx}/role/index.ftl">角色管理</a></li>
 						<li class="divider"></li>
-						<li><a href="${ctx}">角色管理</a></li>
+						<li><a href="${ctx}/role/index.ftl">系统管理</a></li>						
 					</ul>
 				</li>
 			</ul>
