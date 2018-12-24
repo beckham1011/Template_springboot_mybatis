@@ -3,6 +3,7 @@ package cn.bjjoy.bms.setting.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import cn.bjjoy.bms.setting.entity.Menu;
@@ -51,5 +52,10 @@ public interface MenuMapper {
      * @param roleId
      */
     List<Menu> getListByRoleId(Integer roleId);
+
+    /**
+     * 获取菜单和按钮（type=1,2）
+     */
+	List<Integer> getMenuList12(@Param("menuIdList") List<String> menuIdList);
 
 }

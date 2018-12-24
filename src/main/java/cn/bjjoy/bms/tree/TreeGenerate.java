@@ -20,7 +20,7 @@ public class TreeGenerate{
 		return roots;
 	}
 	
-	public List<Node> findRoots(List<Node>allNodes){
+	public List<Node> findRoots(List<Node> allNodes){
 		List<Node>results=new ArrayList<Node>();
 		for(Node node : allNodes){
 			boolean isRoot=true;

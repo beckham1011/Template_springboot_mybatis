@@ -138,7 +138,7 @@
                     //数据列
                     columns: [{
                         title: "序号",
-                        field: "id",
+                        field: "seq",
                         sortable: true
                     },{
                         title: "泵站名称",
@@ -197,6 +197,7 @@
                         field: "empty",
                         formatter: function (value, row, index) {
                             var operateHtml = '<button class="btn btn-primary btn-xs" type="button" onclick="refreshEquiptypeData(\''+row.addresscode+'\')"><i class="fa fa-edit"></i>&nbsp;刷新</button>';
+                        	operateHtml += '&nbsp;<@shiro.hasPermission name="system:data:edit"><button class="btn btn-info btn-xs" type="button" onclick="editData(\''+row.dataId+'\',\''+row.addresscode+'\')"><i class="fa fa-edit"></i>&nbsp;编辑</button></@shiro.hasPermission>';
                             return operateHtml;
                         }
                     }]
@@ -257,6 +258,24 @@
 	                });
 	            });
             }
+            
+            function editData(dataid , addressCode){
+            	console.log('add data ' + dataid) ;
+                layer.open({
+                    type: 2,
+                    title: '编辑数据',
+                    shadeClose: true,
+                    shade: false,
+                    area: ['900px', '400px'],
+                    content: '${ctx}/equipdata/edit/' + addressCode + '/' + dataid,
+                    end: function(index){
+                        layer.close(index);
+                        $('#equipdataListTable').bootstrapTable("refresh");
+                    }
+                });
+            	
+            }
+            
             
 			function itemOnclick2(target){
 				//找到当前节点id

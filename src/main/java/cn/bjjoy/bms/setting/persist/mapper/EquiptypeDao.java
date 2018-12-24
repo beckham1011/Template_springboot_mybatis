@@ -42,5 +42,7 @@ public interface EquiptypeDao extends BaseDao<Equiptype> {
 	public int getSubTypeCount(Map map);
 
 	public List<Map<String, Object>> queryDirectSubTypes(Map map);
+
+	
 	
 }

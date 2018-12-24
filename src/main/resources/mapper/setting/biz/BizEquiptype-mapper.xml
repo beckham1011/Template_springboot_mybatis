@@ -585,8 +585,8 @@
 				#{item}
 			</foreach>
 		</if>
-		<if test="systemId != null and systemId != ''">
-			AND equiptype.system_id = #{systemId} 
+		<if test="systemId != null ">
+			AND equiptype.system_id = ${systemId} 
 		</if>
 		<if test="stationName != null and stationName != ''">
 			<![CDATA[ and (instr(equiptype.name ,#{stationName}) or instr(equiptype.addressCode,#{stationName})) ]]>

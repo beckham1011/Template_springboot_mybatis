@@ -15,7 +15,7 @@ public class UserUtils {
 		userSystemIdMap = new HashMap<>() ;
 		userSystemIdMap.put("admin", 0) ;
 		userSystemIdMap.put("superadmin", 0) ;
-		userSystemIdMap.put("刘洋", 1) ;
+		userSystemIdMap.put("liuyang", 1) ;
 		userSystemIdMap.put("hs1188", 1) ;
 		userSystemIdMap.put("DFSLJ01", 1) ;
 		userSystemIdMap.put("DFSL", 4) ;

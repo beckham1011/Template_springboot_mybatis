@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title>添加资源</title>
+    <title>添加菜单/按钮</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 
@@ -29,7 +29,7 @@
                         <form class="form-horizontal m-t" id="menuForm">
                             <input type="hidden" id="id" name="id" value="${menu.id}">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">上级资源：</label>
+                                <label class="col-sm-3 control-label">上级菜单/按钮：</label>
                                 <div class="col-sm-8">
                                     <select name="parentId" class="form-control">
                                         <#list list as item>
@@ -53,7 +53,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">资源url：</label>
+                                <label class="col-sm-3 control-label">菜单/按钮url：</label>
                                 <div class="col-sm-8">
                                     <input id="href" name="href" class="form-control" type="text" value="${menu.href}">
                                 </div>

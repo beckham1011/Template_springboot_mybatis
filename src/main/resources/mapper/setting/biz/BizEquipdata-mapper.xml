@@ -370,11 +370,11 @@
 	
 	<select id="getNewestData" resultType="map" parameterType="map">
 		select eqtp.name , eqtp.bengxing , eqtp.koujing ,eqtp.gonglv  , eqtp.id , eqtp.update_time, eqtp.longitude , eqtp.latitude ,
-		out2.addresscode , out2.add_time ,out2.waterstatus , out2.flowrate , out2.netcumulative ,
-		out2.signalquality ,out2.communicationStatus , out2.signalquality , out2.communicationStatus , diffhour
+		eqtp.addresscode , out2.add_time ,out2.waterstatus , out2.flowrate , out2.netcumulative ,
+		out2.signalquality ,out2.communicationStatus , out2.signalquality , out2.communicationStatus ,out2.dataId , diffhour
 		from equiptype eqtp 
 		LEFT JOIN (
-			select  eqda.addresscode , timestampdiff(hour, eqda.add_time  , now()) diffhour , eqda.add_time ,eqda.waterstatus , eqda.flowrate , eqda.netcumulative ,     eqda.signalquality ,eqda.communicationStatus 
+			select  eqda.id dataId, eqda.addresscode , timestampdiff(hour, eqda.add_time  , now()) diffhour , eqda.add_time ,eqda.waterstatus , eqda.flowrate , eqda.netcumulative ,     eqda.signalquality ,eqda.communicationStatus 
 			from equipdata eqda inner JOIN  ( select max(id) mxid , addresscode from equipdata   group by addressCode  ) out1
 			where eqda.id = out1.mxid and eqda.addresscode = out1.addresscode ) out2 on eqtp.addresscode = out2.addresscode
 		where 1 = 1 
@@ -445,10 +445,12 @@
 				#{item}
 			</foreach>
 		</if>
-
 		<if test="stationName != null and stationName != ''">
 			<![CDATA[ and (instr(name ,#{stationName}) or instr(eqtp.addressCode,#{stationName})) ]]>
-		</if>		
+		</if>
+		<if test="dateStart != null and dateStart != '' and dateEnd != null and dateEnd != ''">
+			<![CDATA[ and eqda.add_time BETWEEN #{dateStart} and #{dateEnd} ]]>
+		</if>
 	 	order by  eqda.add_time desc
 	 	<include refid="sql_map_page" />
 	</select>
@@ -460,7 +462,14 @@
 			max(netcumulative) mxcumlate, min(netcumulative) mncumlate, avg(netcumulative) avgcumlate 
 		from equipdata eqa 
 		group by addresscode ) mx1 , equiptype eqt
-		where mx1.addresscode = eqt.addresscode  
+		where 1 = 1 
+		and mx1.addresscode = eqt.addresscode and eqt.type_layer = 4
+		<if test="systemId != null ">
+			AND eqt.system_id = ${systemId} 
+		</if>
+		<if test="stationName != null and stationName != ''">
+			<![CDATA[ and (instr(eqt.name ,#{stationName}) or instr(eqt.addressCode,#{stationName})) ]]>
+		</if>		
 	</select>
 	
 	<select id="queryOnlineAndOffLineNums"  resultType="map" parameterType="map">
@@ -489,6 +498,27 @@
 	<update id="updateErrorData" parameterType="map">
 		update equipdata set NetCumulative = ${AreCumulative} , set AreCumulative = ${NetCumulative} where id = ${id}
 	</update>
+	
+	<select id="getStationCurrentDataByDataId" parameterType="map" resultType="map" >
+		select eqtp.name , eqtp.bengxing , eqtp.koujing ,eqtp.gonglv  , eqtp.id , eqtp.update_time, eqtp.longitude , eqtp.latitude ,
+		eqtp.addresscode , out2.add_time ,out2.waterstatus , out2.flowrate , out2.netcumulative ,
+		out2.signalquality ,out2.communicationStatus , out2.signalquality , out2.communicationStatus ,out2.id dataId 
+		from equiptype eqtp , equipdata out2
+		where eqtp.addresscode = out2.addresscode
+		and out2.id = #{id}
+	</select>
+	
+	<update id="updateRealData">
+		update equipdata set netcumulative = ${netcumulative} , flowrate = ${flowrate} where id = ${id}
+	</update>
+	
+	<select id="getNewestDataByAddress" parameterType="map" resultType="map">
+		select eqtp.name ,eqtp.addresscode ,out2.flowrate , out2.netcumulative , out2.id dataId 
+		from  equiptype eqtp ,equipdata out2 
+		where eqtp.addresscode = out2.addresscode
+		and eqtp.addresscode = #{addresscode}
+		order by out2.id limit 1
+	</select>
 	
 	
 </mapper>

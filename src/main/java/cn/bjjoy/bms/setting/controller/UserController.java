@@ -35,10 +35,10 @@ import cn.bjjoy.bms.util.EncryptUtils;
  * @author bjjoy
  * @date 2017/8/28
  */
+@CrossOrigin
 @Controller
 @SuppressWarnings("rawtypes")
 @RequestMapping("/user")
-@CrossOrigin
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);

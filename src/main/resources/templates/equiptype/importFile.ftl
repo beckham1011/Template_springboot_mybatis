@@ -25,11 +25,11 @@
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
-                        <form class="form-horizontal m-t" id="userForm" enctype="multipart/form-data">
+                        <form class="form-horizontal m-t" id="userForm" action="${ctx}/equiptype/importFileSubmit" enctype="multipart/form-data" method="post">
                             <div class="form-group">
-                            	<label class="col-sm-2 control-label">请Excel选择文件:</label>
+                            	<label class="col-sm-2 control-label">请选择Excel文件:</label>
                                 <div class="col-sm-8">
-                                    <input id="name" name="equiptypesFile" style=" height: 39px!important; " class="form-control" type="file" />
+                                    <input id="name" name="file" style=" height: 39px!important; " class="form-control" type="file" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -50,23 +50,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
 	  	//外部js调用
-
-	    $("#userForm").validate({
-    	    submitHandler:function(form){
-    	    	$.ajax({
-   	    		   type: "POST",
-   	    		   dataType: "json",
-   	    		   url: "${ctx}/equiptype/importFileSubmit",
-   	    		   data: $(form).serialize(),
-   	    		   success: function(msg){
-	   	    			layer.msg(msg.msg, {time: 2000},function(){
-	   						var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-	   						parent.layer.close(index);
-	   					});
-   	    		   }
-   	    		});
-            }
-    	});
 
     });
     

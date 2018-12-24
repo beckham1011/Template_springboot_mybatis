@@ -45,7 +45,12 @@
 	                            <div class="col-sm-8">
 	                                <select name="systemId" id="systemId" class="form-control"  style="width:260px;height: 34px; float:left;" >
 	                                	<#list systemList as stm>
+	                                		<#if equiptype.systemId == stm.id>
 	                                		<option value="${stm.id?c}" selected> ${stm.system} </option>
+	                                		</#if>
+	                                		<#if equiptype.systemId != stm.id>
+	                                		<option value="${stm.id?c}" > ${stm.system} </option>
+	                                		</#if>
 	                                	</#list>
                                     </select>
 	                            </div>
@@ -54,24 +59,30 @@
 	                        <div class="form-group">
 	                            <label class="col-sm-3 control-label">父节点：<label style="color:red">*</label></label>
 	                            <div class="col-sm-8">
-	                                <select name="parentId1" id="parentId1" class="form-control"  style="width:160px;float:left;height:auto;">
+	                                <select name="typeSelect0" id="typeSelect0" class="form-control"  style="width:160px;float:left;height:auto;">
 	                            		<option value="1" >智慧抄表云平台</option>
 	                                </select>
 
 	                                <#if equiptype.typeLayer != null>
-		                                <select id="parentId2" name="parentId2" class="form-control" style="width:160px;float:left;height:auto;" >
+		                                <select id="typeSelect1" name="typeSelect1" class="form-control" style="width:160px;float:left;height:auto;" >
+		                                	<#list subTypeList as subType>
+		                                	</#list>
 		                                	<#if parentParentTypes != null>
 		                            			<option value="${parentParentTypes.id?c}" >${parentParentTypes.name}</option>
+		                            		<#else>
+		                            			<option value="-1" ></option>		                            			
 		                            		</#if>
 		                                </select>
-		                                <select name="parentId3" id="parentId3" class="form-control"  style="width:160px;float:left;height:auto;" >
+		                                <select name="typeSelect2" id="typeSelect2" class="form-control"  style="width:160px;float:left;height:auto;" >
 		                            		<#if parentTypes != null>
 		                            			<option value="${parentTypes.id?c}" >${parentTypes.name}</option>
+		                            		<#else>
+		                            			<option value="-2" ></option>
 		                            		</#if>
 		                                </select>
 	                                </#if>
 	                                <#if equiptype.typeLayer == null>
-		                                <select id="parentId2" name="parentId2" class="form-control" style="width:160px;float:left;height:auto;" onChange="typeSelect1Change(this)">
+		                                <select id="typeSelect1" name="typeSelect1" class="form-control" style="width:160px;float:left;height:auto;" onChange="typeSelect1Change(this)">
 	                                    	<option value="-1" >请选择父节点---</option>
 	                                        <#list subTypeList1 as type>
 	                                            <option value="${type.id?c}" >
@@ -79,7 +90,7 @@
 	                                            </option>
 	                                        </#list>
 	                                    </select>
-	                                    <select name="parentId3" id="parentId3" class="form-control"  style="width:160px;float:left;height:auto;" onChange="typeSelect2Change(this)">
+	                                    <select name="typeSelect2" id="typeSelect2" class="form-control"  style="width:160px;float:left;height:auto;" onChange="typeSelect2Change(this)">
 	                                		<option value="-2" >请选择父节点---</option>
 	                                    </select>
 	                                </#if>

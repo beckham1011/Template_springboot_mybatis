@@ -57,8 +57,10 @@
                                         <h3 class="header smaller lighter blue">泵站管理</h3>
                                     	<input id="stationName" placeholder="请输入泵站名称" name="stationName" type="text"/>
                                         <button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
-                                        <button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加泵站</button>
-										<button class="btn btn-xs btn-success " type="button" onclick="importFile();"><i class="fa fa-plus"></i>&nbsp;批量导入泵站</button>
+                                        <@shiro.hasPermission name="system:equip:add">
+	                                        <button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加泵站</button>
+											<button class="btn btn-xs btn-success " type="button" onclick="importFile();"><i class="fa fa-plus"></i>&nbsp;批量导入泵站</button>
+										</@shiro.hasPermission>
                                     </div>
                                     
 								</div>
@@ -227,8 +229,7 @@
                             operateHtml += '<button class="btn btn-danger btn-xs" type="button" onclick="deleteEquiptype(\''+row.id+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button>';
                             return operateHtml;
                         }
-                    }],[
-						{
+                    }],[{
 							title: "泵型",
 							field: "bengxing"
 						},{

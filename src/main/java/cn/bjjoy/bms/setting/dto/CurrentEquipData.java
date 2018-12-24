@@ -20,7 +20,9 @@ public class CurrentEquipData {
  * 
  * 
  */
-	private int id; 
+	private int id;
+	private int dataId;
+	private int seq; 
 	private String name ;
 	private String addresscode ;
 	
@@ -49,6 +51,22 @@ public class CurrentEquipData {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getDataId() {
+		return dataId;
+	}
+
+	public void setDataId(int dataId) {
+		this.dataId = dataId;
+	}
+
+	public int getSeq() {
+		return seq;
+	}
+
+	public void setSeq(int seq) {
+		this.seq = seq;
 	}
 
 	public String getName() {

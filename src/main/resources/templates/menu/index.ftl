@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>资源管理</title>
+		<title>菜单/按钮管理</title>
 		<meta name="keywords" content="" />
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -46,18 +46,9 @@
 								<i class="icon-home home-icon"></i>
 								<a href="/equipdata/index">首页</a>
 							</li>
-							<li><a href="#">系统管理</a></li>
-							<li class="active">资源管理</li>
+							<li><a href="#">用户中心</a></li>
+							<li class="active">菜单/按钮权限管理</li>
 						</ul><!-- .breadcrumb -->
-
-						<div class="nav-search" id="nav-search">
-							<form class="form-search">
-								<span class="input-icon">
-									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-									<i class="icon-search nav-search-icon"></i>
-								</span>
-							</form>
-						</div><!-- #nav-search -->
 					</div>
 
 					<div class="page-content">
@@ -66,14 +57,14 @@
 								<!-- PAGE CONTENT BEGINS -->
 								<div class="row ">
                                     <div class="col-xs-12">
-                                        <h3 class="header smaller lighter blue">资源列表</h3>
+                                        <h3 class="header smaller lighter blue">菜单/按钮权限管理</h3>
                                         <div class="form-group">
-                                            资源名：<input id="name" name="name" type="text"/>
+                                           	 菜单/按钮 名：<input id="name" name="name" type="text"/>
+	                                        <button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
+	                                        <@shiro.hasPermission name="system:menu:add">
+	                                            <button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>
+	                                        </@shiro.hasPermission>
                                         </div>
-                                        <button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
-                                        <@shiro.hasPermission name="system:menu:add">
-                                            <button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>
-                                        </@shiro.hasPermission>
                                     </div>
 								</div>
                                 <div class="space-6"></div>
@@ -86,58 +77,7 @@
 					</div><!-- /.page-content -->
 				</div><!-- /.main-content -->
 
-				<div class="ace-settings-container" id="ace-settings-container">
-					<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
-						<i class="icon-cog bigger-150"></i>
-					</div>
-
-					<div class="ace-settings-box" id="ace-settings-box">
-						<div>
-							<div class="pull-left">
-								<select id="skin-colorpicker" class="hide">
-									<option data-skin="default" value="#438EB9">#438EB9</option>
-									<option data-skin="skin-1" value="#222A2D">#222A2D</option>
-									<option data-skin="skin-2" value="#C6487E">#C6487E</option>
-									<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
-								</select>
-							</div>
-							<span>&nbsp; Choose Skin</span>
-						</div>
-
-						<div>
-							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
-							<label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
-						</div>
-
-						<div>
-							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
-							<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
-						</div>
-
-						<div>
-							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
-							<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
-						</div>
-
-						<div>
-							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
-							<label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
-						</div>
-
-						<div>
-							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container" />
-							<label class="lbl" for="ace-settings-add-container">
-								Inside
-								<b>.container</b>
-							</label>
-						</div>
-					</div>
-				</div><!-- /#ace-settings-container -->
 			</div><!-- /.main-container-inner -->
-
-			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-				<i class="icon-double-angle-up icon-only bigger-110"></i>
-			</a>
 		</div><!-- /.main-container -->
 
 		<#include "${ctx}/common.ftl"/>
@@ -188,13 +128,13 @@
                         field: "id",
                         sortable: true
                     },{
-                        title: "资源名",
+                        title: "菜单/按钮名",
                         field: "name"
                     },{
-                        title: "资源标识",
+                        title: "菜单/按钮标识",
                         field: "permission"
                     },{
-                        title: "资源url",
+                        title: "菜单/按钮url",
                         field: "href"
                     },{
                         title: "排序",
@@ -243,7 +183,7 @@
             function add(){
                 layer.open({
                     type: 2,
-                    title: '用户资源',
+                    title: '用户菜单/按钮',
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],
@@ -256,7 +196,7 @@
             function edit(id){
                 layer.open({
                     type: 2,
-                    title: '编辑资源',
+                    title: '编辑菜单/按钮',
                     shadeClose: true,
                     shade: false,
                     area: ['800px', '600px'],

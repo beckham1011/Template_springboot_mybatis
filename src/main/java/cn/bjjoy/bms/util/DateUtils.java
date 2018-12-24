@@ -472,6 +472,17 @@ public class DateUtils {
         return calendar.get(Calendar.YEAR);
     }
 
+
+    /**
+     * @Title getCurrentDay
+     * @Description 获取当天
+     */
+    public static int getCurrentDay() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.DATE);
+    }
+    
+    
     /**
      * @Title getCurrentMonth
      * @Description 获取当前月

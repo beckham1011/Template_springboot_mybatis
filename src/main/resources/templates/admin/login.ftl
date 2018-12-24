@@ -14,10 +14,18 @@
 		<link rel="stylesheet" href="/css/ace.min.css" />
 		<link rel="stylesheet" href="/css/ace-rtl.min.css" />
 		<!-- inline styles related to this page -->
+		<style  type=""text/css">
+			body {
+				background: url(images/smart-log.png) bottom center no-repeat #efeff4 ;
+				background-size: 100% 100%;
+				width: 100%;
+				height: 100%;
+			}
+		</style>
 
 	</head>
 
-	<body class="login-layout">
+	<body class="login-layout" style="backgroud-image:url('/images/smart-log.png');">
 		<div class="main-container">
 			<div class="main-content">
 				<div class="row">

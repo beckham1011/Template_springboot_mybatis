@@ -6,7 +6,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
     <title>添加用户</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
@@ -27,7 +26,6 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
                         <form class="form-horizontal m-t" id="userForm">
-                        	<input type="hidden" id="id" name="id" value="">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">用户名：</label>
                                 <div class="col-sm-8">
@@ -44,6 +42,12 @@
                                 <label class="col-sm-3 control-label">昵称：</label>
                                 <div class="col-sm-8">
                                     <input id="name" name="name" class="form-control" type="text" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">管辖泵站：</label>
+                                <div class="col-sm-8">
+                                    <input id="" name="name" class="form-control" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group">

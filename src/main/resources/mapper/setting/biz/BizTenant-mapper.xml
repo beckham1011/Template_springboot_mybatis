@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjjoy.bms.setting.persist.mapper.TenantDao">
+
+	<parameterMap id="pm_system" type="cn.bjjoy.bms.setting.persist.model.System">
+		<parameter property="id" javaType="int" jdbcType="INTEGER" />
+		<parameter property="system" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="province" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="city" javaType="String" jdbcType="VARCHAR" />
+		<parameter property="county" javaType="String" jdbcType="VARCHAR" />
+	</parameterMap>
+	
+	<resultMap id="rm_system" type="cn.bjjoy.bms.setting.persist.model.System">
+		<result property="id" column="id" javaType="int" jdbcType="INTEGER" />
+		<result property="system" column="system" javaType="String" jdbcType="VARCHAR" />
+		<result property="province" column="province" javaType="String" jdbcType="VARCHAR" />
+		<result property="city" column="city" javaType="String" jdbcType="VARCHAR" />
+		<result property="county" column="county" javaType="String" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<select id="getTenantList" resultType="map">
+		select id, system from system 
+		where 1= 1 
+		<if test=" id != null and id != 0">
+			and id = ${id}
+		</if>
+		<if test=" system != null ">
+			and system = ${system}
+		</if>
+		<include refid="sql_page" />
+	</select>
+	
+	<select id="getTenantsCount" resultType="int">
+		select count(1) ct from system 
+	</select>
+
+	<insert id="insertTenant">
+		insert into system (system ) values(#{system})
+	</insert>
+
+	<update id="updateTenant">
+	</update>
+	
+	<delete id="deleteTenant"></delete>
+	
+	
+	<sql id="sql_page">
+		<if test="page != null and rows != null" >
+		limit ${rows} offset ${page}
+		</if>
+	</sql>
+	
+	
+</mapper>

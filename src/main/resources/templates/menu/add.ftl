@@ -6,8 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
-    <title>添加泵站</title>
+    <title>添加菜单/按钮</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 
@@ -29,7 +28,7 @@
                         <form class="form-horizontal m-t" id="menuForm">
                             <input type="hidden" id="id" name="id" value="">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">上级资源：</label>
+                                <label class="col-sm-3 control-label">上级菜单/按钮：</label>
                                 <div class="col-sm-8">
                                     <select name="parentId" class="form-control">
                                         <#list list as menu>

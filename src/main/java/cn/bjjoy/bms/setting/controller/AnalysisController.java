@@ -21,6 +21,7 @@ import cn.bjjoy.bms.setting.dto.EquiptypeDto;
 import cn.bjjoy.bms.setting.service.EquipdataService;
 import cn.bjjoy.bms.setting.service.EquiptypeService;
 import cn.bjjoy.bms.util.DataUtils;
+import cn.bjjoy.bms.util.UserUtils;
 
 @CrossOrigin
 @Controller
@@ -36,11 +37,23 @@ public class AnalysisController {
 	
     @RequestMapping(value = "/index" )
     public String index( ModelMap modelMap) {
-    	Map<String ,String> map = new HashMap<>();
+    	Map<String ,Object> map = new HashMap<>();
     	map.put("typeLayer", "1") ;
     	map.put("parentId", "1") ;
     	map.put("order", "parentId") ;
     	map.put("sort", "asc");
+		int systemId = map.containsKey("systemId") 
+				? Integer.valueOf(String.valueOf(map.get("systemId"))) 
+				: UserUtils.getSystemId();
+		if(systemId != 0){
+			map.put("systemId", 1) ;
+		}
+		int parentId = equiptypeService.getParentId(map) ;
+		if(parentId != 1){
+			List<Integer> ids = equiptypeService.getSubTypeIds2(parentId,  (String)map.get("stationName")) ;
+			map.put("ids", ids);
+		}
+		
 		List<Map<String, Object>> types = equiptypeService.getSubType(map) ;
 		LinkedList<EquiptypeDto> subTypeList = DataUtils.getDataArray(types, EquiptypeDto.class);
 		modelMap.addAttribute("subTypeList" + (map.get("typeLayer") == null ? "1" : map.get("typeLayer")),subTypeList) ;
@@ -53,6 +66,12 @@ public class AnalysisController {
 	@RequestMapping(value="list")
 	@ResponseBody
 	public ResponseResult analysis(@RequestParam Map<String, Object> map) throws ControllerException {
+		int systemId = map.containsKey("systemId") 
+				? Integer.valueOf(String.valueOf(map.get("systemId"))) 
+				: UserUtils.getSystemId();
+		if(systemId != 0){
+			map.put("systemId", 1) ;
+		}
 		List<AnalysisDto> analysises = equipdataService.analysisesDto(map);
         Map<String, Object> responseResult = new HashMap<>();
         responseResult.put("analysises",analysises);

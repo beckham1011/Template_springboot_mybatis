@@ -46,6 +46,8 @@ public class MenuController {
     	if (menu.getParentId() != null && menu.getParentId() == 0){
     		menu.setParentId(null);
 		}
+    	menu.setCreateDate(new Date());
+    	menu.setUpdateDate(new Date());
         menuService.insert(menu);
         return ResponseResult.ok(menu.getId());
     }

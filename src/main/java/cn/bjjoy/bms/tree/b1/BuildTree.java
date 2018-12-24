@@ -34,7 +34,6 @@ public class BuildTree {
             String pid = children.getParentId();
             if (pid == null || "".equals(pid)) {
                 topNodes.add(children);
-
                 continue;
             }
 
@@ -44,7 +43,6 @@ public class BuildTree {
                     parent.getChildList().add(children);
                     children.setParent(true);
                     parent.setChildren(true);
-                    
                     continue;
                 }
             }

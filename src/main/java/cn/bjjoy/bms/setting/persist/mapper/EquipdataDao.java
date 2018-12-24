@@ -33,6 +33,12 @@ public interface EquipdataDao extends BaseDao<Equipdata> {
 	public List<Map<String, Object>> queryOnlineAndOffLineNums(Map map);
 
 	public void updateErrorData(Map<String, Object> equip);
+
+	public Map<String, Object> getStationCurrentDataByDataId(String id);
+
+	public void updateRealData(Map<String, Object> map);
+
+	public Map<String, Object> getNewestDataByAddress(String addressCode);
 	
 	
 }

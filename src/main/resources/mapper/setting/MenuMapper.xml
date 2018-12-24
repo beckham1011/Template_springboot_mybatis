@@ -209,4 +209,21 @@
       where id = menu_id
       and role_id = #{roleId}
   </select>
+  
+  <select id="getMenuList12"  resultType="int" parameterType="java.util.List">
+     select
+     id
+     from menu
+     <where>
+         del_flag = 0
+         and type in (1,2)
+         and id in
+         <foreach collection="menuIdList" item="menuId" index="index" open="(" separator="," close=")" >
+	       #{menuId}
+	     </foreach>
+         order by sort asc
+     </where>
+  </select>
+  
+  
 </mapper>

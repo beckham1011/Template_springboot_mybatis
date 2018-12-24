@@ -41,6 +41,7 @@ public class AdminController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(@RequestParam("username") String username, @RequestParam("password") String password, ModelMap model) {
 		try {
+			
 			Subject subject = SecurityUtils.getSubject();
 			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 			subject.login(token);
@@ -69,7 +70,11 @@ public class AdminController {
     	map.put("parentId", "1") ;
     	map.put("order", "parentId") ;
     	map.put("sort", "asc");
-    	int systemId = UserUtils.getSystemId();
+
+    	int systemId = map.containsKey("systemId") 
+				? Integer.valueOf(String.valueOf(map.get("systemId"))) 
+				: UserUtils.getSystemId();
+				
 		map.put("systemId", String.valueOf(systemId)) ;
 		List<Map<String, Object>> types = equiptypeService.getSubType(map) ;
 		LinkedList<EquiptypeDto> subTypeList = DataUtils.getDataArray(types, EquiptypeDto.class);

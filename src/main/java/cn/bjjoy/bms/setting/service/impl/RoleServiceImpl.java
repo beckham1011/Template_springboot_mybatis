@@ -137,7 +137,9 @@ public class RoleServiceImpl implements RoleService {
         int count = 0;
         count += roleMenuMapper.deleteByRoleId(roleDto.getId());
         List<RoleMenu> roleMenuList = this.getRoleMenuList(roleDto.getId(), roleDto.getMenuIds());
-        count += roleMenuMapper.insertBatch(roleMenuList);
+        if(roleMenuList != null){
+        	count += roleMenuMapper.insertBatch(roleMenuList);
+        }
         return count;
     }
 
@@ -163,6 +165,7 @@ public class RoleServiceImpl implements RoleService {
         if(StringUtils.isNotEmpty(menuIds)){
             List<RoleMenu> roleMenuList = new ArrayList<>();
             List<String> menuIdList = Arrays.asList(menuIds.split("\\$\\$"));
+            
             for (String menuId : menuIdList){
                 //0是根目录，数据没有
                 if (Integer.valueOf(menuId) > 0) {

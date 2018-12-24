@@ -8,34 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- basic styles -->
-
     <link href="${ctx}/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="${ctx}/css/font-awesome.min.css" />
     <link rel="stylesheet" href="${ctx}/bjjoy/css/font-awesome.min.css" />
     <!-- page specific plugin styles -->
 
-    <!-- ace styles -->
-
     <link rel="stylesheet" href="${ctx}/css/ace.min.css" />
     <link rel="stylesheet" href="${ctx}/css/ace-rtl.min.css" />
     <link rel="stylesheet" href="${ctx}/css/ace-skins.min.css" />
 
-    <!--[if lte IE 8]>
-    <link rel="stylesheet" href="${ctx}/css/ace-ie.min.css" />
-    <![endif]-->
-
-    <!-- inline styles related to this page -->
-
-    <!-- ace settings handler -->
-
     <script src="${ctx}/js/ace-extra.min.js"></script>
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-
-    <!--[if lt IE 9]>
-    <script src="${ctx}/js/html5shiv.js"></script>
-    <script src="${ctx}/js/respond.min.js"></script>
-    <![endif]-->
 </head>
 
 <body>
@@ -73,12 +56,12 @@
                             <div class="col-xs-12">
                                 <h3 class="header smaller lighter blue">角色列表</h3>
                                 <div class="form-group">
-                                    角色名：<input id="name" name="name" type="text"/>
+						                                  角色名：<input id="name" name="name" type="text"/>
+	                                <button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
+	                                <@shiro.hasPermission name="system:role:add">
+	                                    <button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>
+	                                </@shiro.hasPermission>
                                 </div>
-                                <button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
-                                <@shiro.hasPermission name="system:role:add">
-                                    <button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>
-                                </@shiro.hasPermission>
                             </div>
                         </div>
                         <div class="space-6"></div>
@@ -158,7 +141,7 @@
                 formatter: function (value, row, index) {
                     var operateHtml = '<@shiro.hasPermission name="system:role:edit"><button class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;</@shiro.hasPermission>';
                     operateHtml = operateHtml + '<@shiro.hasPermission name="system:role:delete"><button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.id+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;</@shiro.hasPermission>';
-                    operateHtml = operateHtml + '<@shiro.hasPermission name="system:role:grant"><button class="btn btn-info btn-xs" type="button" onclick="grant(\''+row.id+'\')"><i class="fa fa-arrows"></i>&nbsp;分配资源</button></@shiro.hasPermission>';
+                    operateHtml = operateHtml + '<@shiro.hasPermission name="system:role:grant"><button class="btn btn-info btn-xs" type="button" onclick="grant(\''+row.id+'\')"><i class="fa fa-arrows"></i>&nbsp;分配菜单/按钮</button></@shiro.hasPermission>';
                     return operateHtml;
                 }
             }]
