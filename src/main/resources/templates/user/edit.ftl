@@ -41,6 +41,28 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">管辖泵站区域：</label>
+                            <div class="col-sm-8">
+                                <select name="typeSelect0" id="typeSelect0" class="form-control"  style="width:140px;float:left;height:auto;">
+                            		<option value="1" >高岗区</option>
+                                </select>	                            
+                                <select id="typeSelect1" name="typeSelect1" class="form-control" style="width:160px;float:left;height:auto;" >
+                                	<#if parentParentTypes != null>
+                            			<option value="${parentParentTypes.id?c}" >${parentParentTypes.name}</option>
+                            		<#else>
+                            			<option value="-1" ></option>		                            			
+                            		</#if>
+                                </select>
+                                <select name="typeSelect2" id="typeSelect2" class="form-control"  style="width:160px;float:left;height:auto;" >
+                            		<#if parentTypes != null>
+                            			<option value="${parentTypes.id?c}" >${parentTypes.name}</option>
+                            		<#else>
+                            			<option value="-2" ></option>
+                            		</#if>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">状态：</label>
                             <div class="col-sm-8">
                                 <select name="state" class="form-control">

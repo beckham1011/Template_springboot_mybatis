@@ -645,7 +645,7 @@
 	</select>
 	
 	
-		<select id="getTypesByIds" resultType="map" parameterType="map">
+	<select id="getTypesByIds" resultType="map" parameterType="map">
 		SELECT 
 			equiptype.id AS id,
 			equiptype.parent_id AS parentId,
@@ -658,12 +658,12 @@
 			equiptype.longitude AS longitude,
 			equiptype.latitude AS latitude,
 			equiptype.IP AS IP,
-			equiptype.Zguanli_per AS ZguanliPer,
-			equiptype.Zguanli_phone AS ZguanliPhone,
-			equiptype.Cguanli_per AS CguanliPer,
-			equiptype.Cguanli_phone AS CguanliPhone,
-			equiptype.Jguanli_per AS JguanliPer,
-			equiptype.Jguanli_phone AS JguanliPhone,
+			equiptype.Zguanli_per AS zguanliPer,
+			equiptype.Zguanli_phone AS zguanliPhone,
+			equiptype.Cguanli_per AS cguanliPer,
+			equiptype.Cguanli_phone AS cguanliPhone,
+			equiptype.Jguanli_per AS jguanliPer,
+			equiptype.Jguanli_phone AS jguanliPhone,
 			equiptype.bengxing AS bengxing,
 			equiptype.koujing AS koujing,
 			equiptype.gonglv AS gonglv,
@@ -675,6 +675,9 @@
 			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
 				#{item}
 			</foreach>
+		</if>
+		<if test="parentId != null and parentId != ''">
+			and parent_id = #{parentId}
 		</if>
 		<if test="systemId != null and systemId != ''">
 			AND equiptype.system_id = #{systemId} 
@@ -716,9 +719,55 @@
 		</if>
 	</select>
 	
+	<select id="exportTypeList" parameterType="map" resultType="map">
+		SELECT 
+			equiptype.id AS id,
+			equiptype.parent_id AS parentId,
+			equiptype.name AS name,
+			equiptype.add_per AS addPer,
+			equiptype.add_time AS addTime,
+			equiptype.type_layer AS typeLayer,
+			equiptype.addressCode AS addressCode,
+			equiptype.system_id AS systemId,
+			equiptype.longitude AS longitude,
+			equiptype.latitude AS latitude,
+			equiptype.Zguanli_per AS ZguanliPer,
+			equiptype.Zguanli_phone AS ZguanliPhone,
+			equiptype.Cguanli_per AS CguanliPer,
+			equiptype.Cguanli_phone AS CguanliPhone,
+			equiptype.Jguanli_per AS JguanliPer,
+			equiptype.Jguanli_phone AS JguanliPhone,
+			equiptype.bengxing AS bengxing,
+			equiptype.koujing AS koujing,
+			equiptype.gonglv AS gonglv,
+			equiptype.xinhao AS xinhao
+		FROM 
+			equiptype
+		WHERE 
+			equiptype.system_id = 1 
+			and equiptype.type_layer = 4
+	</select>
+	
 	
 	<update id="updateByAddressCode" parameterType="map">
 		update equiptype set ip = #{ip} , update_time = now()  where addressCode = #{addressCode}
+	</update>
+		
+	<update id="updateInfoByAddressCode" parameterType="map">
+		update equiptype 
+		set longitude = #{longitude} , 
+			latitude = #{latitude} ,
+			Zguanli_per = #{Zguanli_per} ,
+			Zguanli_phone = #{zguanliPhone} ,
+			Cguanli_per = #{cguanliPer} ,
+			Cguanli_phone = #{cguanliPhone} ,
+			Jguanli_per = #{jguanliPer} ,
+			Jguanli_phone = #{jguanliPhone} ,
+			bengxing = #{bengxing} ,
+			koujing = #{koujing} ,
+			gonglv = #{gonglv} ,
+			xinhao = #{xinhao}
+		where addressCode = #{addressCode}
 	</update>
 	
 	<select id="getAddressCodeByIp" parameterType="java.lang.String" resultType="java.lang.String">
@@ -732,5 +781,9 @@
 	<select id="getAddressCodeNull" resultType="java.lang.String">
 		SELECT addressCode from equiptype WHERE parent_id is null 
 	</select>
-	
+	<select id="getUserSystemIdByUserId" parameterType="map" resultType="int"> 
+		select 1 from equiptype where id = (SELECT parent_id from user where id = ${id})
+			UNION
+		select 1
+	</select>
 </mapper>

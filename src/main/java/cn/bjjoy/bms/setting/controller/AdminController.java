@@ -71,9 +71,7 @@ public class AdminController {
     	map.put("order", "parentId") ;
     	map.put("sort", "asc");
 
-    	int systemId = map.containsKey("systemId") 
-				? Integer.valueOf(String.valueOf(map.get("systemId"))) 
-				: UserUtils.getSystemId();
+    	int systemId = equiptypeService.getUserSystemId(UserUtils.getUer().getId()) ;
 				
 		map.put("systemId", String.valueOf(systemId)) ;
 		List<Map<String, Object>> types = equiptypeService.getSubType(map) ;

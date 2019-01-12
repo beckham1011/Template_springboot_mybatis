@@ -104,6 +104,10 @@ public class User implements Serializable {
      */
     private Integer delFlag;
 
+    /** 管辖范围的父节点id
+     */
+    private Integer parentId ;
+    
 	public Integer getId() {
 		return id;
 	}
@@ -246,6 +250,14 @@ public class User implements Serializable {
 
 	public void setDelFlag(Integer delFlag) {
 		this.delFlag = delFlag;
+	}
+
+	public Integer getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
 	}
 
 }

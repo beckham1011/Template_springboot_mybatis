@@ -2,6 +2,7 @@ package cn.bjjoy.bms.setting.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Description;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,16 +22,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.bjjoy.bms.base.Codes;
 import cn.bjjoy.bms.base.ResponseResult;
+import cn.bjjoy.bms.setting.dto.EquiptypeDto;
 import cn.bjjoy.bms.setting.dto.UserDto;
 import cn.bjjoy.bms.setting.dto.UserRoleDto;
 import cn.bjjoy.bms.setting.entity.Role;
 import cn.bjjoy.bms.setting.entity.User;
+import cn.bjjoy.bms.setting.persist.model.Equiptype;
+import cn.bjjoy.bms.setting.service.EquiptypeService;
 import cn.bjjoy.bms.setting.service.MenuService;
 import cn.bjjoy.bms.setting.service.RoleService;
 import cn.bjjoy.bms.setting.service.UserRoleService;
 import cn.bjjoy.bms.setting.service.UserService;
 import cn.bjjoy.bms.util.DataUtils;
 import cn.bjjoy.bms.util.EncryptUtils;
+import cn.bjjoy.bms.util.Response;
+import cn.bjjoy.bms.util.UserUtils;
 
 /**
  * @author bjjoy
@@ -47,6 +54,9 @@ public class UserController {
     private MenuService menuService;
 
     @Autowired
+    private EquiptypeService equiptypeService ;
+    
+    @Autowired
     private RoleService roleService;
 
     @Autowired
@@ -60,6 +70,16 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String add(ModelMap map) {
+		User user = UserUtils.getUer() ;
+		map.put("parentId", user.getParentId()) ;
+		int systemId = equiptypeService.getUserSystemId(UserUtils.getUer().getId()) ;
+		if(systemId != 0){
+			map.put("systemId", String.valueOf(systemId)) ;
+		}
+		map.put("currentOrg", equiptypeService.queryOne(String.valueOf(user.getParentId())));
+		List<Map<String, Object>> types = equiptypeService.queryDirectSubTypes(map);
+		LinkedList<EquiptypeDto> subTypeList = DataUtils.getDataArray(types, EquiptypeDto.class);
+		map.addAttribute("subTypeList" + (map.get("typeLayer") == null ? "1" : map.get("typeLayer")),subTypeList) ;
 		return "/user/add";
 	}
 
@@ -70,7 +90,9 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public ResponseResult insertOrUpdate(UserDto userDto){
-
+    	Integer[] typeAndLayer = equiptypeService.getTypeAndLayer(userDto) ;
+    	userDto.setParentId(typeAndLayer[0]);
+    	userDto.setUpdateDate(userDto.getCreateDate());
 		if(StringUtils.isNotBlank(userDto.getPassword())){
 			userDto.setPassword(EncryptUtils.encryptMD5(userDto.getPassword()));
 		}else {
@@ -128,6 +150,19 @@ public class UserController {
 	public String toEdit(@PathVariable Integer id, ModelMap map){
 		User user = userService.getUserDetail(id);
 		map.addAttribute("userDto", user);
+		Equiptype typeToEdit = equiptypeService.queryOne(String.valueOf(id));
+		map.put("userSystemId", equiptypeService.getUserSystemId(id)) ;
+		map.addAttribute("systemList" , equiptypeService.getSystems()) ;
+		if("4".equals(typeToEdit.getTypeLayer())){
+			map.addAttribute("parentParentTypes" , equiptypeService.queryOne(String.valueOf(equiptypeService.queryOne(String.valueOf(typeToEdit.getParentId())).getParentId()))) ;
+			map.addAttribute("parentTypes" , equiptypeService.queryOne(String.valueOf(typeToEdit.getParentId()))) ;
+		}else if("3".equals(typeToEdit.getTypeLayer())){
+			map.addAttribute("parentParentTypes" , equiptypeService.queryOne(String.valueOf(typeToEdit.getParentId()))) ;
+			map.addAttribute("parentTypes" , null) ;
+		}else if("2".equals(typeToEdit.getTypeLayer())){
+			map.addAttribute("parentParentTypes" , null) ;
+			map.addAttribute("parentTypes" , null) ;
+		}
 		return "/user/edit";
 	}
 
@@ -251,6 +286,25 @@ public class UserController {
         return "/user/grant";
     }
 
+    @Description("打开修改密码页面")
+    @RequestMapping(value = "changePwd" , method = RequestMethod.GET)
+    public String changePwd(@RequestParam Integer id, ModelMap map) {
+        User user = userService.getUserDetail(id);
+        map.put("password", user.getPassword()) ;
+        return "/user/changePwd";
+    }
+
+    @Description("修改密码保存")
+    @ResponseBody
+    @RequestMapping(value = "changePwd", method = RequestMethod.POST)
+    public Response changePwdSave(@RequestParam Map map ) {
+    	String flag = "" ;
+//    	userService.chagePwd(map.get("newPwd1")) ;
+        return  Response.success(flag) ;
+    }
+
+    
+    
 //    @RequestMapping(value = "/get", method = RequestMethod.GET)
 //    public ResponseResult get(User user){
 //

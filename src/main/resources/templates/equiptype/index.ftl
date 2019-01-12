@@ -334,48 +334,6 @@
                 });
             }
             
-            
-		    function typeSelect1Change(obj){
-		    	var parentId = $('#typeSelect1').val().replace(/\$|\,/g, '');
-		        
-		        $.ajax({
-		            type: "GET",
-		            dataType: "json",
-		            url: "${ctx}/equiptype/subTypelist/?parentId=" + parentId,
-		            success: function(msg){
-		                var typeSelect2Html = [];
-		                typeSelect2Html.push('<option value=-2>All--</option>');
-		                var typeSelect3Html = [];
-		                typeSelect3Html.push('<option value=-3>All--</option>');
-		                for(var i = 0; i < msg.data.subTypeList.length; i ++){
-			                typeSelect2Html.push('<option value="' + msg.data.subTypeList[i].id  + '">' + msg.data.subTypeList[i].name + '</option>');
-		                }
-						$('#typeSelect2').html(typeSelect2Html);
-						$('#typeSelect3').html(typeSelect3Html);
-						$('#equiptypelist').bootstrapTable("refresh");
-		            }
-		        });
-		    }
-		    
-		    function typeSelect2Change(obj){
-		    	var parentId = $('#typeSelect2').val().replace(/\$|\,/g, '');
-		        
-		        $.ajax({
-		            type: "GET",
-		            dataType: "json",
-		            url: "${ctx}/equiptype/subTypelist/?parentId=" + parentId,
-		            success: function(msg){
-		                var typeSelect3Html = [];
-		                typeSelect3Html.push('<option value=-3>All--</option>');
-		                for(var i = 0; i < msg.data.subTypeList.length; i ++){
-			                typeSelect3Html.push('<option value="' + msg.data.subTypeList[i].id  + '">' + msg.data.subTypeList[i].name + '</option>');
-		                }
-						$('#typeSelect3').html(typeSelect3Html);
-						$('#equiptypelist').bootstrapTable("refresh");
-		            }
-		        });
-		    }
-		    
             function itemOnclick (){}
             
             function clickNode(event, data){
@@ -385,5 +343,6 @@
 	        }
             
 		</script>
+		<script src="${ctx}/js/md5.js"></script>
 </body>
 </html>

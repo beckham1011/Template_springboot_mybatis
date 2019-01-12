@@ -60,13 +60,11 @@
 	                            <label class="col-sm-3 control-label">父节点：<label style="color:red">*</label></label>
 	                            <div class="col-sm-8">
 	                                <select name="typeSelect0" id="typeSelect0" class="form-control"  style="width:160px;float:left;height:auto;">
-	                            		<option value="1" >智慧抄表云平台</option>
+	                            		<option value="1" >高港区</option>
 	                                </select>
 
 	                                <#if equiptype.typeLayer != null>
 		                                <select id="typeSelect1" name="typeSelect1" class="form-control" style="width:160px;float:left;height:auto;" >
-		                                	<#list subTypeList as subType>
-		                                	</#list>
 		                                	<#if parentParentTypes != null>
 		                            			<option value="${parentParentTypes.id?c}" >${parentParentTypes.name}</option>
 		                            		<#else>

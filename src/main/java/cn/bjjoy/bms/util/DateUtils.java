@@ -4,6 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import com.google.common.collect.Lists;
 
 public class DateUtils {
 
@@ -16,12 +19,17 @@ public class DateUtils {
     
     public static final String YYYYMMDD = "yyyy-MM-dd";
     
+    public static final String HHMMSS = " HH:mm:ss";
+    public static final String HHMMSS000000 = " 00:00:00";
+    
     /** 斜线分割年月日 */
     public static final String SLANT_LINE_YYYYMMDDHHMM = "yyyy/MM/dd HH:mm";
 
     public static final String YYYYMMDD_ZH = "yyyy年MM月dd日";
 
     static String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
+    
+    public static final Long DAY_MINO_SECONDS = 24 * 3600 * 1000L;
     
     /**
      * 年月日 时分秒
@@ -48,6 +56,15 @@ public class DateUtils {
         return formatDate(dt, format);
     }
 
+    /**
+     * 获取当前日期时间
+     * 
+     * @param format
+     * @return
+     */
+    public static String formatSpecialDate(Date d , String format) {
+        return formatDate(d, format);
+    }
     /**
      * 获取当前日期时间
      * 
@@ -200,6 +217,29 @@ public class DateUtils {
         return true;
     }
 
+    public static String getDayStartTime(Date d){
+    	return formatDate(d , YYYYMMDD) + HHMMSS000000;
+    }
+    
+    /**
+     * 
+     */
+    public static List<String> getDaysList(Date startDate , Date endDate){
+    	List<String> days = Lists.newArrayList();
+    	Long startSeconds = startDate.getTime();
+    	SimpleDateFormat formatter = new SimpleDateFormat(YYYYMMDD);
+    	days.add(formatter.format(startDate)) ;
+    	Date d = null ;
+    	while((startSeconds + DAY_MINO_SECONDS) < endDate.getTime()){
+    		startSeconds += DAY_MINO_SECONDS ;
+    		d = new Date(startSeconds);
+    		days.add(formatter.format(d)) ;
+    	}
+    	return days ;
+    }
+    
+    
+    
     /**
      * 取得指定日期以后若干天的日期。如果要得到以前的日期，参数用负数。
      * 
@@ -577,6 +617,20 @@ public class DateUtils {
         return 0;
     }
 
+    /**
+     * @Title getPrevDay
+     * @Description 上周一
+     * @date 2018年2月28日 下午1:32:52
+     * @auther guoyongfeng
+     */
+    public static Date getPrevDay(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(getThisMonday(date));
+        cal.add(Calendar.DATE, -2);
+        return cal.getTime();
+    }
+
+    
     /**
      * @Title getPrevMonday
      * @Description 上周一

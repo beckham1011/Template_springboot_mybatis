@@ -55,17 +55,28 @@
 								<div class="row ">
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">历史查询</h3>
-	                                    <div  style="float:left;">
-                                        	<input id="stationName" placeholder="请输入泵站名称" name="stationName" type="text"/>
-	                                        <button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
-                                    	</div>
+										<div class="row ">
+		                                    <div class="col-xs-12">
+					                            <div class="form-group">
+					                                <label class="col-sm-1 control-label">起止时间：</label>
+					                                <div class="col-sm-2">
+					                                    <input id="createDate" name="createDate" type="date" class="laydate-icon form-control" value="2018-12-05">
+					                                </div>
+					                                <div class="col-sm-2">
+					                                    <input id="enddate" name="enddate" type="date" class="laydate-icon form-control" value="2019-01-05">			                                
+					                                </div>
+				                                    <div  style="float:right">
+			                                        	<input id="stationName" placeholder="请输入泵站名称" name="stationName" type="text"/>
+				                                        <button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
+			                                    	</div>
+			                                    </div>
+		                                    </div>
+										</div>
                                     </div>
 								</div>
-                                <div class="space-6"></div>
-                                <div class="table-responsive">
-                                    <table id="equipListHistoryTable"></table>
-                                </div>
-
+                            	<div class="space-6"></div>
+                            	<div class="table-responsive">
+                                <table id="equipListHistoryTable"></table>
 							</div><!-- /.col -->
 						</div><!-- /.row -->
 					</div><!-- /.page-content -->
@@ -82,7 +93,8 @@
             $(document).ready(function () {
             	
             	localStorage.setItem("parentId", ${parentId});
-            
+            	$("#createDate").val('2018-11-05');
+            	$("#enddate").val('2019-01-05');
                 //初始化表格,动态从服务器加载数据
                 $("#equipListHistoryTable").bootstrapTable({
                     //使用get请求到服务器获取数据
@@ -110,7 +122,7 @@
                     sidePagination: "server",
                     //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
                     //设置为limit可以获取limit, offset, search, sort, order
-                    queryParams:getQueryParams,
+                    queryParams : getQueryParams,
                     queryParamsType: "",
                     //json数据解析
                     responseHandler: function(res) {
@@ -173,6 +185,8 @@
                 var params={
                     "page":		   params.pageNumber,
                     "rows":		   params.pageSize,
+                    "startDate":   $("#createDate").val(),
+                    "endDate":     $("#enddate").val(),                    
                     "stationName": $("#stationName").val().trim(),
                     "parentId"   : localStorage.getItem("parentId")
                 }
@@ -185,7 +199,7 @@
             
             function exportHistory(){
             	window.location.href = "${ctx}/history/export" ;
-            }      
+            }
             
             function clickNode(event, data){
 	        	localStorage.setItem("parentId",data['id']);

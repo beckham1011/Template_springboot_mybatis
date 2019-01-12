@@ -8,7 +8,7 @@
 						实时监测
 						<b class="caret"></b>
 						</a>
-							<ul class="dropdown-menu">
+						<ul class="dropdown-menu">
 							<li><a href="${ctx}/equipdata/index">实时数据</a></li>
 							<li class="divider"></li>
 							<li><a href="${ctx}/equipdata/map">电子地图</a></li>
@@ -22,9 +22,12 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li><a href="${ctx}/history/index">历史查询</a></li>
+							
+							<!-- 
 							<li class="divider"></li>
 							<li><a href="${ctx}/alarm/index">告警查询</a></li>
-						</ul>			
+							-->
+						</ul>
 					</li>				
 				</@shiro.hasPermission>
 				<@shiro.hasPermission name="count:manage">
@@ -34,9 +37,13 @@
 							<b class="caret"></b>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="${ctx}/analysis/index.ftl">通用报表</a></li>
+							<li><a href="${ctx}/analysis/index">通用报表</a></li>
 							<li class="divider"></li>
-							<li><a href="${ctx}/menu/index.ftl">曲线分析</a></li>
+							<li><a href="${ctx}/analysis/index2">通用报表2</a></li>
+							<!-- 
+							<li class="divider"></li>
+							<li><a href="${ctx}/menu/index">曲线分析</a></li>
+							 -->
 						</ul>
 					</li>
 				</@shiro.hasPermission>
@@ -52,6 +59,10 @@
 							<li><a href="${ctx}/declarationrecord/index.ftl">申报记录</a></li>
 							<li class="divider"></li>
 							<li><a href="${ctx}/maintainrecord/index.ftl">维修记录</a></li>
+							<@shiro.hasPermission name="system:equip:manage">
+								<li class="divider"></li>
+								<li><a href="${ctx}/equiptype/index.ftl">泵站管理</a></li>
+							</@shiro.hasPermission>
 						</ul>
 					</li>
 				</@shiro.hasPermission>
@@ -64,10 +75,6 @@
 						<ul class="dropdown-menu">
 							<@shiro.hasPermission name="system:platform:manage">
 								<li><a href="${ctx}/system/index.ftl">平台管理</a></li>
-								<li class="divider"></li>
-							</@shiro.hasPermission>
-							<@shiro.hasPermission name="system:equip:manage">
-								<li><a href="${ctx}/equiptype/index.ftl">泵站管理</a></li>
 								<li class="divider"></li>
 							</@shiro.hasPermission>
 							<@shiro.hasPermission name="system:menu:menu">
@@ -84,6 +91,7 @@
 						</ul>
 					</li>
 				</@shiro.hasPermission>
+
 			</ul>
 		</div>
 	</div>

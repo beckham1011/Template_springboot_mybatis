@@ -1,7 +1,6 @@
 package cn.bjjoy.bms.setting.controller;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,10 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.bjjoy.bms.base.ResponseResult;
 import cn.bjjoy.bms.exception.ControllerException;
 import cn.bjjoy.bms.setting.dto.AnalysisDto;
-import cn.bjjoy.bms.setting.dto.EquiptypeDto;
+import cn.bjjoy.bms.setting.entity.User;
 import cn.bjjoy.bms.setting.service.EquipdataService;
 import cn.bjjoy.bms.setting.service.EquiptypeService;
-import cn.bjjoy.bms.util.DataUtils;
 import cn.bjjoy.bms.util.UserUtils;
 
 @CrossOrigin
@@ -34,44 +32,30 @@ public class AnalysisController {
 	@Autowired
 	private EquiptypeService equiptypeService;
 	
-	
     @RequestMapping(value = "/index" )
-    public String index( ModelMap modelMap) {
-    	Map<String ,Object> map = new HashMap<>();
-    	map.put("typeLayer", "1") ;
-    	map.put("parentId", "1") ;
-    	map.put("order", "parentId") ;
-    	map.put("sort", "asc");
-		int systemId = map.containsKey("systemId") 
-				? Integer.valueOf(String.valueOf(map.get("systemId"))) 
-				: UserUtils.getSystemId();
-		if(systemId != 0){
-			map.put("systemId", 1) ;
-		}
-		int parentId = equiptypeService.getParentId(map) ;
-		if(parentId != 1){
-			List<Integer> ids = equiptypeService.getSubTypeIds2(parentId,  (String)map.get("stationName")) ;
-			map.put("ids", ids);
-		}
-		
-		List<Map<String, Object>> types = equiptypeService.getSubType(map) ;
-		LinkedList<EquiptypeDto> subTypeList = DataUtils.getDataArray(types, EquiptypeDto.class);
-		modelMap.addAttribute("subTypeList" + (map.get("typeLayer") == null ? "1" : map.get("typeLayer")),subTypeList) ;
-		
+    public String index( @RequestParam Map paramMap ,ModelMap modelMap) {
+		modelMap.addAttribute("parentId", paramMap.containsKey("parentId") ? paramMap.get("parentId") : "1") ;
         return "/analysis/index";
     }
+    
+    
+    @RequestMapping(value = "/index2" )
+    public String index2( @RequestParam Map paramMap ,ModelMap modelMap) {
+		modelMap.addAttribute("parentId", paramMap.containsKey("parentId") ? paramMap.get("parentId") : "1") ;
+        return "/analysis/index2";
+    }
 	
-
 	@Description("-查询列表")
 	@RequestMapping(value="list")
 	@ResponseBody
 	public ResponseResult analysis(@RequestParam Map<String, Object> map) throws ControllerException {
-		int systemId = map.containsKey("systemId") 
-				? Integer.valueOf(String.valueOf(map.get("systemId"))) 
-				: UserUtils.getSystemId();
+		User user = UserUtils.getUer() ;
+		int systemId = equiptypeService.getUserSystemId(user.getId()) ;
 		if(systemId != 0){
 			map.put("systemId", 1) ;
 		}
+		List<Integer> ids = equiptypeService.getSubTypeIds2(user.getParentId() ,  (String)map.get("stationName")) ;
+		map.put("ids", ids);
 		List<AnalysisDto> analysises = equipdataService.analysisesDto(map);
         Map<String, Object> responseResult = new HashMap<>();
         responseResult.put("analysises",analysises);

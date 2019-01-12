@@ -416,6 +416,9 @@
 				#{item}
 			</foreach>
 		</if>
+		<if test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+			and eqda.add_time between #{startDate} and #{endDate}
+		</if>		
 		<if test="stationName != null and stationName != ''">
 			<![CDATA[ and (instr(name ,#{stationName}) or instr(eqtp.addressCode,#{stationName})) ]]>
 		</if>
@@ -445,6 +448,9 @@
 				#{item}
 			</foreach>
 		</if>
+		<if test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+			and eqda.add_time between #{startDate} and #{endDate}
+		</if>
 		<if test="stationName != null and stationName != ''">
 			<![CDATA[ and (instr(name ,#{stationName}) or instr(eqtp.addressCode,#{stationName})) ]]>
 		</if>
@@ -461,6 +467,16 @@
 		select addresscode , max(flowrate) mxflwrate, min(flowrate) mnflwrate, avg(flowrate) avgflwrate, 
 			max(netcumulative) mxcumlate, min(netcumulative) mncumlate, avg(netcumulative) avgcumlate 
 		from equipdata eqa 
+		where 1 = 1 
+			<if test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+				and eqa.add_time between #{startDate} and #{endDate}
+			</if>
+			<if test="ids != null and ids.size > 0 " >
+				AND  eqtp.id IN 
+				<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
+					#{item}
+				</foreach>
+			</if>
 		group by addresscode ) mx1 , equiptype eqt
 		where 1 = 1 
 		and mx1.addresscode = eqt.addresscode and eqt.type_layer = 4
@@ -469,7 +485,8 @@
 		</if>
 		<if test="stationName != null and stationName != ''">
 			<![CDATA[ and (instr(eqt.name ,#{stationName}) or instr(eqt.addressCode,#{stationName})) ]]>
-		</if>		
+		</if>
+
 	</select>
 	
 	<select id="queryOnlineAndOffLineNums"  resultType="map" parameterType="map">
@@ -520,5 +537,8 @@
 		order by out2.id limit 1
 	</select>
 	
+	<insert id="insertDataHistory"  parameterType="map">
+		INSERT INTO equipdata_history(addressCode , AreCumulative_his , add_time) VALUES (? , ?, ?)
+	</insert>
 	
 </mapper>

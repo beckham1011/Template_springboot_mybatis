@@ -32,7 +32,7 @@ public class BmsApplication {
 //				}
 //			}
 //		}).start();
-		
+//		
 		//初始化给前端页面调用的client
 		SingletonSocket.getInstance() ;
 	}

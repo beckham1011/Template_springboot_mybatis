@@ -20,11 +20,12 @@
     <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
     <result column="remarks" jdbcType="VARCHAR" property="remarks" />
     <result column="del_flag" jdbcType="TINYINT" property="delFlag" />
+    <result column="parent_id" jdbcType="TINYINT" property="parentId" />
   </resultMap>
   <sql id="Base_Column_List">
     id, login_name, `password`, state, `no`,
     `name`, email, phone, mobile, photo, login_ip, login_date, create_by,
-    create_date, update_by, update_date, remarks, del_flag
+    create_date, update_by, update_date, remarks, del_flag, parent_id
   </sql>
 
   <sql id="Exclude_Delete_Flag">
@@ -109,6 +110,9 @@
       <if test="delFlag != null">
         del_flag,
       </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>      
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="loginName != null">
@@ -161,6 +165,9 @@
       </if>
       <if test="delFlag != null">
         #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=CHAR},
       </if>
     </trim>
   </insert>

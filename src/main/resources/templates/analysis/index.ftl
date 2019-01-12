@@ -33,9 +33,7 @@
 			</script>
 			<#include "${ctx}/head_nav.ftl" />
 			<div class="main-container-inner">
-				<a class="menu-toggler" id="menu-toggler" href="#">
-					<span class="menu-text"></span>
-				</a>
+
                 <#include "${ctx}/menu.ftl"/>
 				<div class="main-content">
 					<div class="breadcrumbs" id="breadcrumbs">
@@ -62,11 +60,11 @@
                                         <h3 class="header smaller lighter blue">通用报表</h3>
 			                            <div class="form-group">
 			                                <label class="col-sm-1 control-label">起止时间：</label>
-			                                <div class="col-sm-1">
-			                                    <input id="createDate" name="createDate"  class="laydate-icon form-control" value="">
+			                                <div class="col-sm-2">
+			                                    <input id="createDate" name="createDate" type="date" class="laydate-icon form-control" value="2018-12-05">
 			                                </div>
-			                                <div class="col-sm-1">
-			                                    <input id="enddate" name="enddate"  class="laydate-icon form-control" value="">
+			                                <div class="col-sm-2">
+			                                    <input id="enddate" name="enddate" type="date" class="laydate-icon form-control" value="2019-01-05">			                                
 			                                </div>
 			                            </div>                                    
 	                                    <div class="form-group">
@@ -78,8 +76,7 @@
                                     </div>
 								</div>
                                 
-                                    <table id="userListTable"></table>
-                                </div>
+                                <table id="userListTable"></table>
 							</div><!-- /.col -->
 						</div><!-- /.row -->
 					</div><!-- /.page-content -->
@@ -94,6 +91,11 @@
 
 		<script type="text/javascript">
             $(document).ready(function () {
+            	
+            	localStorage.setItem("parentId", ${parentId});
+            	$("#createDate").val('2018-11-05');
+            	$("#enddate").val('2019-01-05');
+                
                 //初始化表格,动态从服务器加载数据
                 $("#userListTable").bootstrapTable({
                     //使用get请求到服务器获取数据
@@ -170,6 +172,8 @@
                 var params={
                     "page":		   params.pageNumber,
                     "rows":		   params.pageSize,
+                    "startDate":   $("#createDate").val(),
+                    "endDate":     $("#enddate").val(),    
                     "stationName": $("#stationName").val().trim()
                 }
                 return params;
@@ -178,7 +182,6 @@
                 var params = { "stationName": $("#stationName").val().trim() };
                 $('#userListTable').bootstrapTable("refresh");
             }
-          
             
 		</script>
 </body>

@@ -72,7 +72,7 @@
 									<!-- PAGE CONTENT BEGINS -->
 									
 									<div class="row ">
-	                                        <h3 class="header smaller lighter blue">泵站地图</h3>
+                                        <h3 class="header smaller lighter blue">泵站地图</h3>
 									</div>
 	                                <div class="table-responsive">
 										  <!--百度地图容器-->

@@ -1,49 +1,39 @@
 package cn.bjjoy.bms.util;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import cn.bjjoy.bms.setting.entity.User;
+import cn.bjjoy.bms.setting.service.EquiptypeService;
 
+@Component
 public class UserUtils {
 	
-	private static Map<String , Integer> userSystemIdMap ;
-	static{
-		userSystemIdMap = new HashMap<>() ;
-		userSystemIdMap.put("admin", 0) ;
-		userSystemIdMap.put("superadmin", 0) ;
-		userSystemIdMap.put("liuyang", 1) ;
-		userSystemIdMap.put("hs1188", 1) ;
-		userSystemIdMap.put("DFSLJ01", 1) ;
-		userSystemIdMap.put("DFSL", 4) ;
-		userSystemIdMap.put("史糖", 0) ;
-	}
+	@Autowired
+	private EquiptypeService equiptypeService;
 	
 	public static User getTokerUser(){
 		Subject subject = SecurityUtils.getSubject();
 		return (User)subject.getPrincipal();
 	}
 	
-	public static int getSystemId(){
-		User user = getTokerUser() ;
-		return userSystemIdMap.get(user.getLoginName()) ;
-	}
-
-	public static int getSystemId(String loginName){
-		return userSystemIdMap.get(loginName) ;
-	}
-
-	
-	public static int getTopTypeId(){
-		User user = getTokerUser() ;
-		return userSystemIdMap.get(user.getLoginName()) ;
+	public static User getUer(){
+		return getTokerUser() ;
 	}
 	
 	public static String getUername(){
 		User user = getTokerUser() ;
 		return user.getName();
 	}
+	
+	public static Integer getUserId(){
+		User user = getTokerUser() ;
+		return user.getId();
+	}
+	
 }

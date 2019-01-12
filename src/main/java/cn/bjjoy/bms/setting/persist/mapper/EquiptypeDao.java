@@ -32,6 +32,7 @@ public interface EquiptypeDao extends BaseDao<Equiptype> {
 	public LinkedList<Integer> getSubTypeIds(Map map) ;
 	
 	public void updateByAddressCode(Map map);
+	public void updateInfoByAddressCode(Map map);
 
 	public String getAddressCodeByIp(String ip);
 	
@@ -43,6 +44,9 @@ public interface EquiptypeDao extends BaseDao<Equiptype> {
 
 	public List<Map<String, Object>> queryDirectSubTypes(Map map);
 
-	
+	public List<Map<String, Object>> exportTypeList(Map map) ;
+
+	public int getUserSystemIdByUserId(Map map);
+
 	
 }

@@ -117,6 +117,43 @@ public class UserDto {
      */
     private List<UserRoleDto> roleList;
 
+    private String typeSelect0 ;
+    private String typeSelect1 ;
+    private String typeSelect2 ;
+    private int parentId ;
+    
+	public int getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(int parentId) {
+		this.parentId = parentId;
+	}
+
+	public String getTypeSelect0() {
+		return typeSelect0;
+	}
+
+	public void setTypeSelect0(String typeSelect0) {
+		this.typeSelect0 = typeSelect0;
+	}
+
+	public String getTypeSelect1() {
+		return typeSelect1;
+	}
+
+	public void setTypeSelect1(String typeSelect1) {
+		this.typeSelect1 = typeSelect1;
+	}
+
+	public String getTypeSelect2() {
+		return typeSelect2;
+	}
+
+	public void setTypeSelect2(String typeSelect2) {
+		this.typeSelect2 = typeSelect2;
+	}
+
 	public Integer getId() {
 		return id;
 	}

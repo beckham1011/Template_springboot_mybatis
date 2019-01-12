@@ -101,29 +101,29 @@ public class SpringSocketUtil implements ApplicationContextAware {
 		return values ;
 	 }
 	
-	 @Test
-	 public void test(){
-		String source = "01 04 2C 00 00 00 00 00 00 00 00 00 00 00 00 45 57 50 00 00 00 25 A7 00 00 00 00 00 00 00 00 00 00 00 00 00 05 00 01 00 00 00 00 00 01 00 01 25 A1" ;
-		
-		String[] vals = parse8082SocketData(source) ;
-		System.out.println(Arrays.toString(vals));
-		
-//		for (int i = 0; i < source.length(); i++) {
-//			 String vl = SpringSocketUtil.subStringByIndex(source , i , Constants.LENGTH_MORE) ;
-//			 System.out.println(i + ", vl :"+ vl + ", " + SpringSocketUtil.convertToHexLong(vl)) ;
-//		}
-		
-//		System.out.println("4E" & "");
-		
-		
-//		String s1 = "00 00 A1 7B" ;
-//		String l = SpringSocketUtil.convertToHexLong(s1) ;
-//		System.out.println(l);
-//		s1 = "00 00 01 1E" ;
-//		l = SpringSocketUtil.convertToHexLong(s1) ;
-////		String[] result = parse8082SocketData(source);
-//		System.out.println(l);
-	 }
+//	 @Test
+//	 public void test(){
+//		String source = "01 04 2C 00 00 00 00 00 00 00 00 00 00 00 00 45 57 50 00 00 00 25 A7 00 00 00 00 00 00 00 00 00 00 00 00 00 05 00 01 00 00 00 00 00 01 00 01 25 A1" ;
+//		
+//		String[] vals = parse8082SocketData(source) ;
+//		System.out.println(Arrays.toString(vals));
+//		
+////		for (int i = 0; i < source.length(); i++) {
+////			 String vl = SpringSocketUtil.subStringByIndex(source , i , Constants.LENGTH_MORE) ;
+////			 System.out.println(i + ", vl :"+ vl + ", " + SpringSocketUtil.convertToHexLong(vl)) ;
+////		}
+//		
+////		System.out.println("4E" & "");
+//		
+//		
+////		String s1 = "00 00 A1 7B" ;
+////		String l = SpringSocketUtil.convertToHexLong(s1) ;
+////		System.out.println(l);
+////		s1 = "00 00 01 1E" ;
+////		l = SpringSocketUtil.convertToHexLong(s1) ;
+//////		String[] result = parse8082SocketData(source);
+////		System.out.println(l);
+//	 }
 	 
 	 
 	 public static List<String> readFileByLines(String fileName) {  

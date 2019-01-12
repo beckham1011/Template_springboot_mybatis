@@ -55,7 +55,7 @@
 	                            <label class="col-sm-3 control-label">父节点：</label>
 	                            <div class="col-sm-8">
 	                                <select name="typeSelect0" id="typeSelect0" class="form-control"  style="width:160px;float:left;height:auto;">
-	                            		<option value="1" >智慧抄表云平台</option>
+	                            		<option value="1" >高岗区</option>
 	                                </select>	                            
 	                                <select id="typeSelect1" name="typeSelect1" class="form-control" style="width:160px;float:left;height:auto;" onChange="typeSelect1Change(this)">
 	                                	<option value="-1" >请选择---</option>
@@ -63,7 +63,7 @@
 	                                        <option value="${type.id}" >${type.name}</option>
 	                                    </#list>
 	                                </select>
-	                                <select name="typeSelect2" id="typeSelect2" class="form-control"  style="width:160px;float:left;height:auto;" onChange="typeSelect2Change(this)">
+	                                <select name="typeSelect2" id="typeSelect2" class="form-control"  style="width:160px;float:left;height:auto;" >
 	                            		<option value="-2" >请选择---</option>
 	                                </select>
 	                            </div>
@@ -204,8 +204,6 @@
     
     function typeSelect1Change(obj){
     	var parentId = $('#typeSelect1').val().replace(/\$|\,/g, '');
-        $('#userListTable').bootstrapTable("refresh");
-        
         $.ajax({
             type: "GET",
             dataType: "json",
@@ -220,26 +218,6 @@
             }
         });
     }
-    
-    function typeSelect2Change(obj){
-    	var parentId = $('#typeSelect2').val().replace(/\$|\,/g, '');
-    	$('#userListTable').bootstrapTable("refresh");
-        
-        $.ajax({
-            type: "GET",
-            dataType: "json",
-            url: "${ctx}/equiptype/subTypelist/?parentId=" + parentId,
-            success: function(msg){
-                var typeSelect3Html = [];
-                typeSelect3Html.push('<option value=-3>All--</option>');
-                for(var i = 0; i < msg.data.subTypeList.length; i ++){
-	                typeSelect3Html.push('<option value="' + msg.data.subTypeList[i].id  + '">' + msg.data.subTypeList[i].name + '</option>');
-                }
-				$('#typeSelect3').html(typeSelect3Html);
-            }
-        });
-    }
-    
     
     
 </script>

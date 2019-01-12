@@ -39,6 +39,7 @@ public interface EquipdataDao extends BaseDao<Equipdata> {
 	public void updateRealData(Map<String, Object> map);
 
 	public Map<String, Object> getNewestDataByAddress(String addressCode);
-	
+
+	public void insertDataHistory(Map map) ;
 	
 }

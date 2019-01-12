@@ -44,12 +44,25 @@
                                     <input id="name" name="name" class="form-control" type="text" value="">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">管辖泵站：</label>
-                                <div class="col-sm-8">
-                                    <input id="" name="name" class="form-control" type="text" value="">
-                                </div>
-                            </div>
+	                        <div class="form-group">
+	                            <label class="col-sm-3 control-label">管辖泵站区域：</label>
+	                            <div class="col-sm-8">
+	                                <select name="typeSelect0" id="typeSelect0" class="form-control"  style="width:160px;float:left;height:auto;">
+	                            		<option value="${currentOrg.id}" >${currentOrg.name}</option>
+	                                </select>
+	                                <select id="typeSelect1" name="typeSelect1" class="form-control" style="width:140px;float:left;height:auto;" onChange="typeSelect1Change(this)">
+	                                	<option value="-1" >请选择---</option>
+	                                    <#list subTypeList1 as type>
+	                                        <option value="${type.id}" >${type.name}</option>
+	                                    </#list>
+	                                </select>
+	                                <#if currentOrg.typeLayer lt 2>
+		                                <select name="typeSelect2" id="typeSelect2" class="form-control"  style="width:140px;float:left;height:auto;" >
+		                            		<option value="-2" >请选择---</option>
+		                                </select>
+	                                </#if>
+	                            </div>
+	                        </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">状态：</label>
                                 <div class="col-sm-8">
@@ -160,7 +173,27 @@
    	    		});
             }
     	});
+    	
     });
+    
+    function typeSelect1Change(obj){
+		var parentId = $('#typeSelect1').val().replace(/\$|\,/g, '');
+	    $.ajax({
+	        type: "GET",
+	        dataType: "json",
+	        url: "${ctx}/equiptype/subTypelist/?parentId=" + parentId,
+	        success: function(msg){
+	            var typeSelect2Html = [];
+	            typeSelect2Html.push('<option value=-2>All--</option>');
+	            for(var i = 0; i < msg.data.subTypeList.length; i ++){
+	                typeSelect2Html.push('<option value="' + msg.data.subTypeList[i].id  + '">' + msg.data.subTypeList[i].name + '</option>');
+	            }
+				$('#typeSelect2').html(typeSelect2Html);
+	        }
+	    });
+    }
+    
+    
     </script>
 
 </body>
