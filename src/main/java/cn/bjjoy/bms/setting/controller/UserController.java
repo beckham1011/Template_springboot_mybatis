@@ -76,6 +76,7 @@ public class UserController {
 		if(systemId != 0){
 			map.put("systemId", String.valueOf(systemId)) ;
 		}
+		
 		map.put("currentOrg", equiptypeService.queryOne(String.valueOf(user.getParentId())));
 		List<Map<String, Object>> types = equiptypeService.queryDirectSubTypes(map);
 		LinkedList<EquiptypeDto> subTypeList = DataUtils.getDataArray(types, EquiptypeDto.class);
@@ -90,8 +91,8 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public ResponseResult insertOrUpdate(UserDto userDto){
-    	Integer[] typeAndLayer = equiptypeService.getTypeAndLayer(userDto) ;
-    	userDto.setParentId(typeAndLayer[0]);
+    	Integer typeAndLayer = equiptypeService.getTypeAndLayer(userDto) ;
+    	userDto.setParentId(typeAndLayer);
     	userDto.setUpdateDate(userDto.getCreateDate());
 		if(StringUtils.isNotBlank(userDto.getPassword())){
 			userDto.setPassword(EncryptUtils.encryptMD5(userDto.getPassword()));
@@ -210,6 +211,9 @@ public class UserController {
 			if (StringUtils.isNotBlank(userDtoParam.getLoginName())){
 			    param.put("loginName", userDtoParam.getLoginName());
 			}
+			User user = UserUtils.getUer() ;
+			List<Integer> ids = equiptypeService.getSubTypeIds2(user.getParentId() , null) ;
+			param.put("ids", ids);
 			List<Map> userMapList = this.userService.getList(param);
 			//没有用户数据直接返回
 			if(userMapList == null || userMapList.size() == 0){

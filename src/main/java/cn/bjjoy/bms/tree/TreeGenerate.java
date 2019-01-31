@@ -78,10 +78,7 @@ public class TreeGenerate{
 
 			tags = new ArrayList<>();
 			List<Node> child = node.getChildren();
-			int tag = 0 ;
-			for(Node childNode : child){
-				tag += childNode.getChildren().size() ;
-			}
+			int tag = node.getTag();
 			if(child != null && child.size() > 0){
 				tags.add(tag) ;
 				o.put("tags", tags);
@@ -111,18 +108,20 @@ public class TreeGenerate{
 		tb.generateTree(allNodes) ;
 	}
 	
-	private void fillChildren(JSONObject o,List<Node>childs){
+	private void fillChildren(JSONObject o,List<Node> childs){
 		List<Integer> tags = null;
-		JSONArray array=new JSONArray();
+		JSONArray array = new JSONArray();
+		JSONObject oo = null ;
 		for(Node node : childs){
-			JSONObject oo = new JSONObject();
+			oo = new JSONObject();
+			
 			tags = new ArrayList<>();
 			List<Node> child = node.getChildren();
 			oo.put("id", node.getId());
 			oo.put("text", node.getName());
 			oo.put("href", "index?parentId=" + node.getId() + "&rows=10&page=1") ;
 			if(child != null && child.size() > 0){
-				tags.add(child.size()) ;
+				tags.add(node.getTag()) ;
 				oo.put("tags", tags);
 				fillChildren(oo,child);
 			}

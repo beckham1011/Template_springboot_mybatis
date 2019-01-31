@@ -18,6 +18,7 @@ import cn.bjjoy.bms.setting.persist.model.Equipdata;
  */
 @Mapper
 @Repository
+@SuppressWarnings("rawtypes")
 public interface EquipdataDao extends BaseDao<Equipdata> {
 
 	public List<Map<String, Object>> getNewestData(Map map) ;
@@ -41,5 +42,9 @@ public interface EquipdataDao extends BaseDao<Equipdata> {
 	public Map<String, Object> getNewestDataByAddress(String addressCode);
 
 	public void insertDataHistory(Map map) ;
+	
+	public List<Map<String, Object>> getHistoryEveryday(Map map);
+
+	public List<Map<String, Object>> getSpecialDayData(Map map);
 	
 }

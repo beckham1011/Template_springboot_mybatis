@@ -26,7 +26,8 @@ public class Node {
 	private String type;
 	private boolean isLeaf;
 	private String description;
-
+	private int tag;
+	
 	public int getId() {
 		return id;
 	}
@@ -113,6 +114,12 @@ public class Node {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public int getTag() {
+		return tag;
+	}
+	public void setTag(int tag) {
+		this.tag = tag;
 	}
 
 	@Override

@@ -644,6 +644,32 @@
 		</if>
 	</select>
 	
+	<select id="getTypeById" resultType="map" parameterType="string">
+		SELECT 
+			equiptype.id AS id,
+			equiptype.parent_id AS parentId,
+			equiptype.name AS name,
+			equiptype.add_per AS addPer,
+			equiptype.add_time AS addTime,
+			equiptype.type_layer AS typeLayer,
+			equiptype.addressCode AS addressCode,
+			equiptype.system_id AS systemId,
+			equiptype.longitude AS longitude,
+			equiptype.latitude AS latitude,
+			equiptype.IP AS IP,
+			equiptype.Zguanli_per AS ZguanliPer,
+			equiptype.Zguanli_phone AS ZguanliPhone,
+			equiptype.Cguanli_per AS CguanliPer,
+			equiptype.Cguanli_phone AS CguanliPhone,
+			equiptype.Jguanli_per AS JguanliPer,
+			equiptype.Jguanli_phone AS JguanliPhone,
+			equiptype.bengxing AS bengxing,
+			equiptype.koujing AS koujing,
+			equiptype.gonglv AS gonglv,
+			equiptype.xinhao AS xinhao
+	 	FROM equiptype WHERE id = #{id}
+	</select>
+	
 	
 	<select id="getTypesByIds" resultType="map" parameterType="map">
 		SELECT 
@@ -667,7 +693,8 @@
 			equiptype.bengxing AS bengxing,
 			equiptype.koujing AS koujing,
 			equiptype.gonglv AS gonglv,
-			equiptype.xinhao AS xinhao
+			equiptype.xinhao AS xinhao,
+			equiptype.tag AS tag
 	 	FROM equiptype 
 	 	WHERE 1 = 1 
 		<if test="ids != null">
@@ -683,7 +710,6 @@
 			AND equiptype.system_id = #{systemId} 
 		</if>
 	</select>
-	
 	
 	<select id="getSubTypeIds" resultType="int" parameterType="map">
 		select id from equiptype where id = #{parentId}
@@ -717,6 +743,15 @@
 		<if test="systemId != null and systemId != ''">
 			AND system_id = #{systemId} 
 		</if>
+		UNION all 
+		select id from equiptype where parent_id in(select id from equiptype 
+		where parent_id in(select id from equiptype where parent_id  in(select id from equiptype where parent_id = #{parentId}))) 
+		<if test="stationName != null and stationName != ''">
+			<![CDATA[ and (instr(name ,#{stationName}) or instr( addressCode,#{stationName})) ]]>
+		</if>
+		<if test="systemId != null and systemId != ''">
+			AND system_id = #{systemId} 
+		</if>
 	</select>
 	
 	<select id="exportTypeList" parameterType="map" resultType="map">
@@ -743,11 +778,23 @@
 			equiptype.xinhao AS xinhao
 		FROM 
 			equiptype
-		WHERE 
-			equiptype.system_id = 1 
+		WHERE 1 = 1
+
 			and equiptype.type_layer = 4
 	</select>
 	
+		
+	<select id="allEquipAddressCodeList" resultType="string" parameterType="map">
+		SELECT 
+			equiptype.addressCode AS addressCode
+		FROM 
+			equiptype
+		WHERE 1 = 1
+			<if test="systemId != null and systemId != ''">
+				and equiptype.system_id = #{systemId} 
+			</if>
+			and equiptype.type_layer = 4
+	</select>
 	
 	<update id="updateByAddressCode" parameterType="map">
 		update equiptype set ip = #{ip} , update_time = now()  where addressCode = #{addressCode}

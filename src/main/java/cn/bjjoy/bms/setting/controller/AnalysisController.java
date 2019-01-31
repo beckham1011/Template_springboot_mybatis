@@ -1,5 +1,7 @@
 package cn.bjjoy.bms.setting.controller;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +21,7 @@ import cn.bjjoy.bms.setting.dto.AnalysisDto;
 import cn.bjjoy.bms.setting.entity.User;
 import cn.bjjoy.bms.setting.service.EquipdataService;
 import cn.bjjoy.bms.setting.service.EquiptypeService;
+import cn.bjjoy.bms.util.DateUtils;
 import cn.bjjoy.bms.util.UserUtils;
 
 @CrossOrigin
@@ -42,6 +45,10 @@ public class AnalysisController {
     @RequestMapping(value = "/index2" )
     public String index2( @RequestParam Map paramMap ,ModelMap modelMap) {
 		modelMap.addAttribute("parentId", paramMap.containsKey("parentId") ? paramMap.get("parentId") : "1") ;
+		String dayMonthAgo = DateUtils.formatDate(DateUtils.addDays(new Date(), -31), DateUtils.YYYYMMDDHHMMSS) ;
+		String today = DateUtils.formatDate(DateUtils.addDays(new Date(), -1), DateUtils.YYYYMMDDHHMMSS) ;
+		modelMap.addAttribute("dayMonthAgo" , dayMonthAgo);
+		modelMap.addAttribute("today" , today);
         return "/analysis/index2";
     }
 	
@@ -64,5 +71,51 @@ public class AnalysisController {
         return ResponseResult.ok(responseResult);
 	}
     
+	
+	@RequestMapping(value="chart")
+	@ResponseBody
+	public ResponseResult getAnalysisChartData(@RequestParam Map<String, Object> map){
+		
+		List<String> days = DateUtils.getDaysList(DateUtils.toDate(String.valueOf(map.get("startDate"))), DateUtils.toDate(String.valueOf(map.get("endDate")))) ;
+		
+		List<Map<String, Object>> subtypeList = equiptypeService.queryDirectSubTypes(map) ;
+		
+		List<Map<String , Object>> datas = equipdataService.getHistoryDataEveryday(map);
+
+//		Map<String , Object> dataDayAddress = equipdataService.getDayDataDayAddressData(datas);
+		Map<String , Object> dataAddressDay = equipdataService.getDayDataDayAddressData(datas);
+		
+		int subTypeNum = subtypeList != null ? subtypeList.size() : 0;
+		
+		/** 构建二维数组结构
+			2019-01-01, 2019-01-02, 2019-01-03, 2019-01-04, 2019-01-05, ....
+			10	    10		10	    10		10
+			20	    20		20	    20		20
+			.
+			.
+		 */
+		Object[] result = new Object[subTypeNum + 1] ;
+		List<String> typeNameList = new ArrayList<>();
+		result[0] = days;
+		for (int typeIndex = 0; typeIndex < subTypeNum; typeIndex ++) {
+			List<Double> daysData = new ArrayList<>(days.size()) ;
+			String addressCode = (String) subtypeList.get(typeIndex).get("addressCode") ;
+			String typeName = (String) subtypeList.get(typeIndex).get("name") ;
+			typeNameList.add(typeName) ;
+			Double dayData = 0.0;
+			for(String day : days){
+				String key = addressCode + "_" + day ;
+				dayData = (Double) (dataAddressDay.containsKey(key) ? dataAddressDay.get(key) : 0.0);
+				daysData.add(dayData) ;
+			}
+			result[typeIndex + 1 ] = daysData ;
+		}
+		
+		Map<String, Object> responseResult = new HashMap<>();
+        responseResult.put("analysisChart",result);
+        responseResult.put("typeList", typeNameList) ;
+        return ResponseResult.ok(responseResult);
+	}
+	
     
 }

@@ -48,5 +48,8 @@ public interface EquiptypeDao extends BaseDao<Equiptype> {
 
 	public int getUserSystemIdByUserId(Map map);
 
+	public Map<Integer, String> getTypeById(String id);
+
+	public List<String> allEquipAddressCodeList(Map map) ;
 	
 }

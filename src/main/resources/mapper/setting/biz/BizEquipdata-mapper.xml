@@ -333,7 +333,7 @@
 
 	<sql id="sql_map_page">
 		<if test="page != null and rows != null" >
-		limit ${rows } offset ${ page }
+		limit ${ rows } offset ${ page }
 		</if>
 	</sql>
 	
@@ -378,7 +378,7 @@
 			from equipdata eqda inner JOIN  ( select max(id) mxid , addresscode from equipdata   group by addressCode  ) out1
 			where eqda.id = out1.mxid and eqda.addresscode = out1.addresscode ) out2 on eqtp.addresscode = out2.addresscode
 		where 1 = 1 
-		<if test="systemId != null and systemId != ''">
+		<if test="systemId != null and systemId != '' and systemId != 0 ">
 			AND system_id = #{systemId} 
 		</if>
 		<if test="ids != null and ids.size > 0 "  >
@@ -538,7 +538,41 @@
 	</select>
 	
 	<insert id="insertDataHistory"  parameterType="map">
-		INSERT INTO equipdata_history(addressCode , AreCumulative_his , add_time) VALUES (? , ?, ?)
+		INSERT INTO equipdata_history(equiptype_id, addressCode , AreCumulative_his , add_time) 
+		VALUES ( #{equiptypeId} , #{addressCode }, ${areCumulativeHis}, #{addTime} ) 
 	</insert>
+	
+	<select id="getHistoryEveryday" parameterType="map" resultType="map">
+		
+		SELECT datahis.equiptype_id equiptypeId , etype.`name` name , datahis.addresscode addressCode ,
+		datahis.add_time addTime , sum(AreCumulative_his) areCumulativeHis , etype.bengxing , etype.koujing ,etype.gonglv 
+		from equipdata_history datahis, equiptype etype
+		where 1 = 1 and datahis.equiptype_id = etype.id
+		<if test="ids != null">
+			AND datahis.equiptype_id IN 
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
+				#{item}
+			</foreach>
+		</if>
+		and datahis.add_time BETWEEN #{ startDate } and #{ endDate }
+		GROUP BY datahis.equiptype_id , datahis.add_time
+		order by datahis.add_time desc 
+		<include refid="sql_map_page" />
+	</select>
+	
+	
+	<select id="getSpecialDayData" resultType="map" parameterType="java.lang.String">
+		SELECT 
+			equipdata.id AS id,
+			equipdata.addressCode AS addressCode,
+			equipdata.flowRate AS flowRate,
+			equipdata.NetCumulative AS NetCumulative,
+			equipdata.AreCumulative AS areCumulative,
+			equipdata.add_time as addTime
+		FROM 
+			equipdata
+		WHERE 
+			equipdata.add_time between #{startDate} and #{endDate}
+	</select>
 	
 </mapper>

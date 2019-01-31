@@ -38,6 +38,12 @@ public class DataUtils {
         return (LinkedList<T>) linkedList;
     }
 
+    public static <T> T convertData(Object data , Class<T> clazz){
+    	String jsonString = JSONObject.toJSONString(data);
+    	T t = (T) JSONObject.parseObject(jsonString, clazz) ;
+    	return t ;
+    }
+    
     /**
      * 转化为T
      * @param data

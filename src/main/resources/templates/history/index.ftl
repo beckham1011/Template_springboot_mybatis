@@ -134,7 +134,7 @@
                     //数据列
                     columns: [{
                         title: "序号",
-                        field: "id",
+                        field: "equiptypeId",
                         sortable: true
                     },{
                         title: "泵站名称",
@@ -148,29 +148,12 @@
                     },{
                         title: "功率",
                         field: "gonglv"
-
                     },{
-                        title: "用水状态",
-                        field: "waterstatus"
-
-                    },{
-                        title: "瞬时流量（M3/h）",
-                        field: "flowrate"
-
-                    },{
-                        title: "正累积（M3）",
-                        field: "netcumulative"
-
-                    },{
-                        title: "信号质量",
-                        field: "signalquality"
-                        
-                    },{
-                        title: "通讯状态",
-                        field: "communicationStatus"                              
+                        title: "当天正累积（M3）",
+                        field: "areCumulativeHis"
                     },{
                         title: "更新时间",
-                        field: "add_time"                  
+                        field: "addTime"                  
                     }]
                 });
             });

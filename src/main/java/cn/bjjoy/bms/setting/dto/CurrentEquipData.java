@@ -16,8 +16,6 @@ public class CurrentEquipData {
 	inner join ( select max(id) mxid from equipdata   group by addressCode ) out2 on eqda.id = out2.mxid 
 	LEFT JOIN equiptype eqtp on eqda.addresscode = eqtp.addresscode 
  	order by eqda.id 
- 
- * 
  * 
  */
 	private int id;

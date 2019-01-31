@@ -32,7 +32,7 @@ public class SocketScheduledTask {
 	EquiptypeService typeService ;
 	
 	//每天凌晨12点定时刷新任务
-	@Scheduled(cron = "20 00 00 * * ?")
+	@Scheduled(cron = "00 00 00 * * ?")
 	public void refreshAllData(){
 		
 		logger.info("Scheduled Task Execute....." + new Date());

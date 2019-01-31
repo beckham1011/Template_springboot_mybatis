@@ -24,5 +24,13 @@ public class DateUtilTest {
 			logger.info(ds);
 		}
 	}
+
+	@Test
+	public void testDays(){
+		List<String> days = DateUtils.getDaysList(DateUtils.addDays(new Date(), -120) , new Date()); 
+		for(String day : days)
+			System.out.println(day);
+	}
 	
 }
+

@@ -67,7 +67,7 @@ public class AdminController {
 	public String index( ModelMap modelMap){
     	Map<String ,String> map = new HashMap<>();
     	map.put("typeLayer", "1") ;
-    	map.put("parentId", "1") ;
+    	map.put("parentId", String.valueOf(UserUtils.getUer().getParentId())) ;
     	map.put("order", "parentId") ;
     	map.put("sort", "asc");
 

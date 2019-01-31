@@ -50,12 +50,14 @@
 	                                <select name="typeSelect0" id="typeSelect0" class="form-control"  style="width:160px;float:left;height:auto;">
 	                            		<option value="${currentOrg.id}" >${currentOrg.name}</option>
 	                                </select>
-	                                <select id="typeSelect1" name="typeSelect1" class="form-control" style="width:140px;float:left;height:auto;" onChange="typeSelect1Change(this)">
-	                                	<option value="-1" >请选择---</option>
-	                                    <#list subTypeList1 as type>
-	                                        <option value="${type.id}" >${type.name}</option>
-	                                    </#list>
-	                                </select>
+	                                <#if currentOrg.typeLayer lt 3>
+		                                <select id="typeSelect1" name="typeSelect1" class="form-control" style="width:140px;float:left;height:auto;" onChange="typeSelect1Change(this)">
+		                                	<option value="-1" >请选镇级泵站</option>
+		                                    <#list subTypeList1 as type>
+		                                        <option value="${type.id}" >${type.name}</option>
+		                                    </#list>
+		                                </select>
+		                            </#if>
 	                                <#if currentOrg.typeLayer lt 2>
 		                                <select name="typeSelect2" id="typeSelect2" class="form-control"  style="width:140px;float:left;height:auto;" >
 		                            		<option value="-2" >请选择---</option>
@@ -184,7 +186,7 @@
 	        url: "${ctx}/equiptype/subTypelist/?parentId=" + parentId,
 	        success: function(msg){
 	            var typeSelect2Html = [];
-	            typeSelect2Html.push('<option value=-2>All--</option>');
+	            typeSelect2Html.push('<option value=-2>请选村级泵站</option>');
 	            for(var i = 0; i < msg.data.subTypeList.length; i ++){
 	                typeSelect2Html.push('<option value="' + msg.data.subTypeList[i].id  + '">' + msg.data.subTypeList[i].name + '</option>');
 	            }

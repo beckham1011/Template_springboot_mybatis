@@ -24,7 +24,7 @@
                 
                 $('#treeview1').treeview({
 		          	showTags: true,
-		          	levels: 1,
+		          	levels: 2,
 		          	data: treeData,
 		          	onNodeSelected: function(event, data){
 		          		clickNode(event, data);

@@ -43,6 +43,12 @@
       <if test="state != null">
         and state = #{state, jdbcType=TINYINT}
       </if>
+  	  <if test="ids != null">
+		AND parent_id IN
+		<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	  </if>
     </where>
   </sql>
 
