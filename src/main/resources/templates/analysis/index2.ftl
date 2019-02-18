@@ -91,136 +91,7 @@
 								</div>
                                 <div class="space-6"></div>
                                 <div style="width:1350px;height:420px;border:#ccc solid 1px;" id="container">
-	                                <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
-							       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
-							       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
-							       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
-							       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
-							       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
-							       <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
-							       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
-							       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
-							       <script type="text/javascript">
-									var dom = document.getElementById("container");
-									var myChart = echarts.init(dom);
-									var app = {};
-									option = null;
-									app.title = '堆叠柱状图';
-									
-									option = {
-									    tooltip : {
-									        trigger: 'axis',
-									        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-									            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-									        }
-									    },
-									    legend: {
-									        data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎','百度','谷歌','必应','其他']
-									    },
-									    grid: {
-									        left: '3%',
-									        right: '4%',
-									        bottom: '3%',
-									        containLabel: true
-									    },
-									    xAxis : [
-									        {
-									            type : 'category',
-									            data : ['周一','周二','周三','周四','周五','周六','周一','周二','周三','周四','周五','周六','周一','周二','周三','周四','周五','周六','周一','周二','周三','周四','周五','周六','周日']
-									        }
-									    ],
-									    yAxis : [
-									        {
-									            type : 'value'
-									        }
-									    ],
-									    series : [
-									        
-									        {
-									            name:'邮件营销',
-									            type:'bar',
-									            barWidth : 15,
-									            stack: '广告',
-									            data:[120, 132, 101, 134, 90, 230,120, 132, 101, 134, 90, 230,120, 132, 101, 134, 90, 230,120, 132, 101, 134, 90, 230, 210]
-									        },
-									        {
-									            name:'联盟广告',
-									            type:'bar',
-									            stack: '广告',
-									            data:[220, 182, 191, 234, 290, 330, 220, 182, 191, 234, 290, 330, 220, 182, 191, 234, 290, 330, 220, 182, 191, 234, 290, 330, 310]
-									        },
-									        {
-									            name:'视频广告',
-									            type:'bar',
-									            stack: '广告',
-									            data:[150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330, 410]
-									        },
-									        {
-									            name:'视频广告1',
-									            type:'bar',
-									            stack: '广告',
-									            data:[150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330, 410]
-									        },
-									        {
-									            name:'视频广告2',
-									            type:'bar',
-									            stack: '广告',
-									            data:[150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330, 410]
-									        },
-									        {
-									            name:'视频广告3',
-									            type:'bar',
-									            stack: '广告',
-									            data:[150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330, 410]
-									        },
-									        {
-									            name:'视频广告4',
-									            type:'bar',
-									            stack: '广告',
-									            data:[150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330, 410]
-									        },
-									        {
-									            name:'视频广告5',
-									            type:'bar',
-									            stack: '广告',
-									            data:[150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330, 410]
-									        },
-									        {
-									            name:'视频广告6',
-									            type:'bar',
-									            stack: '广告',
-									            data:[150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330, 410]
-									        },
-									        {
-									            name:'视频广告7',
-									            type:'bar',
-									            stack: '广告',
-									            data:[150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330,150, 232, 201, 154, 190, 330, 410]
-									        },
-					                        {
-					                            name:'合计',
-					                            type:'bar',
-					                            stack:'xxx',
-					                            label: {
-					                                normal: {
-					                                    show: true,
-					                                    position: 'top',
-					                                    textStyle: {
-					                                        color: '#000'
-					                                    },
-					                                    formatter:''
-					                                }
-					                            },
-					                            data:  [0,0]    //思路一：给series集合末尾多加一栏用于展示合计，但是值都是0；缺点：必须根据xAxis的data生成一组为空的数据，且tooltip不能加trigger: 'axis',这个条件，不然会展示合计：0
-					                        }
-									    ]
-									};
-									if (option && typeof option === "object") {
-								        // 使用刚指定的配置项和数据显示图表。
-									    myChart.setOption(option, true);
-									}
-                                	</script>
-                                	
+	                               
                                 </div>
 							</div><!-- /.col -->
 						</div><!-- /.row -->
@@ -231,33 +102,132 @@
 		</div><!-- /.main-container -->
 
 <script>
-
-Date.prototype.Format = function(fmt)   
-{ //author: meizz   
-  var o = {   
-    "M+" : this.getMonth()+1,                 //月份   
-    "d+" : this.getDate(),                    //日   
-    "h+" : this.getHours(),                   //小时   
-    "m+" : this.getMinutes(),                 //分   
-    "s+" : this.getSeconds(),                 //秒   
-    "q+" : Math.floor((this.getMonth()+3)/3), //季度   
-    "S"  : this.getMilliseconds()             //毫秒   
-  };   
-  if(/(y+)/.test(fmt))   
-    fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));   
-  for(var k in o)   
-    if(new RegExp("("+ k +")").test(fmt))   
-  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
-  return fmt;
-}
-
-$(document).ready(function () {
-	localStorage.setItem("parentId", ${parentId});
-	$("#createDate").val(new Date(new Date().getTime() - (31 * 24 * 3600 * 1000)).Format("yyyy-MM-dd"));
-	$("#enddate").val(new Date(new Date().getTime() - (24 * 3600 * 1000)).Format("yyyy-MM-dd"));
-});
+	
+	Date.prototype.Format = function(fmt)   
+	{ //author: meizz   
+	  var o = {   
+	    "M+" : this.getMonth()+1,                 //月份   
+	    "d+" : this.getDate(),                    //日   
+	    "h+" : this.getHours(),                   //小时   
+	    "m+" : this.getMinutes(),                 //分   
+	    "s+" : this.getSeconds(),                 //秒   
+	    "q+" : Math.floor((this.getMonth()+3)/3), //季度   
+	    "S"  : this.getMilliseconds()             //毫秒   
+	  };   
+	  if(/(y+)/.test(fmt))   
+	    fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));   
+	  for(var k in o)   
+	    if(new RegExp("("+ k +")").test(fmt))   
+	  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+	  return fmt;
+	}
+	
+	$(document).ready(function () {
+		localStorage.setItem("parentId", ${parentId});
+		
+		localStorage.setItem("createDate", new Date(new Date().getTime() - (31 * 24 * 3600 * 1000)).Format("yyyy-MM-dd"));
+		localStorage.setItem("enddate", new Date(new Date().getTime() - (24 * 3600 * 1000)).Format("yyyy-MM-dd"));
+		
+		$("#createDate").val(new Date(new Date().getTime() - (31 * 24 * 3600 * 1000)).Format("yyyy-MM-dd"));
+		$("#enddate").val(new Date(new Date().getTime() - (24 * 3600 * 1000)).Format("yyyy-MM-dd"));
+	});
+	
 </script>
-
-
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+   <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+   <script type="text/javascript">
+		
+		//页面初始化
+		loadChart(${parentId});
+			
+        function clickNode(event, data){
+        	localStorage.setItem("parentId",data['id']);
+        	loadChart(data['id']);
+        }
+        
+        function itemOnclick (){}
+        
+        function loadChart(parentId){
+        	$.ajax({
+			    type: "GET",
+			    dataType: "json",
+			    url: '${ctx}/analysis/chart?parentId=' + parentId + '&startDate=' + $("#createDate").val() 
+			    			+'&endDate=' + $("#enddate").val() ,
+			    success: function(data){
+			    	var typeListLength = data.data.typeList.length;
+			    	console.log(data.data)
+			    	var serialData = new Array(typeListLength);
+			    	for(var index = 0 ; index < typeListLength ; index ++){
+			    		console.log()
+					}
+					generateOption(data);
+			    }
+			});
+        }
+		
+		function generateOption(data){
+			var dom = document.getElementById("container");
+			var myChart = echarts.init(dom);
+			var app = {};
+			option = null;
+			app.title = '堆叠柱状图';
+			
+			var typeList = data.data.typeList ;
+			var typeData = data.data.analysisChart ;
+			var daysList  = typeData[0] ;
+			var serialData = new Array(typeList.length) ;
+			
+			for(var index = 0 ; index < typeList.length ; index ++){
+				var option = {} ;
+				option.name = typeList[index];
+				option.type = 'bar';
+				option.stack = 'day';
+				option.data = typeData[index + 1];
+				serialData[index] = option ;
+			}
+			
+			option = {
+			    tooltip : {
+			        trigger: 'axis',
+			        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+			            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+			        }
+			    },
+			    legend: {
+			        data: typeList
+			    },
+			    grid: {
+			        left: '3%',
+			        right: '4%',
+			        bottom: '3%',
+			        containLabel: true
+			    },
+			    xAxis : [
+			        {
+			            type : 'category',
+			            data : daysList
+			        }
+			    ],
+			    yAxis : [
+			        {
+			            type : 'value'
+			        }
+			    ],
+			    series :serialData
+			};
+			if (option && typeof option === "object") {
+		        // 使用刚指定的配置项和数据显示图表。
+			    myChart.setOption(option, true);
+			}
+		}
+		
+	</script>
 </body>
 </html>

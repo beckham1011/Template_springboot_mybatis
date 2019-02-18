@@ -23,18 +23,16 @@ public class AnalysisDayCumulative {
 	public void everyDayCumulative(){
 		String startDate = DateUtils.getDayStartTime(DateUtils.getPrevDay(DateUtils.getDate()));
 		String endDate =DateUtils.getDayStartTime(DateUtils.getDate());
-		
-		
 	}
 
-	@Test
-	public void syso() {
-		DateUtils.getDayStartTime(DateUtils.getPrevDay(DateUtils.getDate()));
-		DateUtils.getDayStartTime(DateUtils.getDate());
-		
-		
-		
-	}
+//	@Test
+//	public void syso() {
+//		DateUtils.getDayStartTime(DateUtils.getPrevDay(DateUtils.getDate()));
+//		DateUtils.getDayStartTime(DateUtils.getDate());
+//		
+//		
+//		
+//	}
 	
 	
 }
