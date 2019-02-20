@@ -75,6 +75,12 @@ public class AnalysisController {
 	@RequestMapping(value="chart")
 	@ResponseBody
 	public ResponseResult getAnalysisChartData(@RequestParam Map<String, Object> map){
+
+		User user = UserUtils.getUer() ;
+		int systemId = equiptypeService.getUserSystemId(user.getId()) ;
+		if(systemId != 0){
+			map.put("systemId", 1) ;
+		}
 		
 		List<String> days = DateUtils.getDaysList(DateUtils.toDate(String.valueOf(map.get("startDate"))), DateUtils.toDate(String.valueOf(map.get("endDate")))) ;
 		

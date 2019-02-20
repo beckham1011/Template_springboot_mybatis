@@ -555,7 +555,7 @@
 			</foreach>
 		</if>
 		and datahis.add_time BETWEEN #{ startDate } and #{ endDate }
-		GROUP BY datahis.equiptype_id , datahis.add_time
+		GROUP BY 	datahis.equiptype_id,datahis.addresscode, datahis.add_time
 		order by datahis.add_time desc 
 		<include refid="sql_map_page" />
 	</select>
