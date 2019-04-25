@@ -73,7 +73,7 @@ public class SocketClient2 extends Thread{
     //函数入口
     public static void main(String[] args) {
         //需要服务器的正确的IP地址和端口号
-    	SocketClient2 clientTest = new SocketClient2("101.132.126.72", 8082);
+    	SocketClient2 clientTest = new SocketClient2("101.132.126.72", 8084);
 
         clientTest.start();
     }

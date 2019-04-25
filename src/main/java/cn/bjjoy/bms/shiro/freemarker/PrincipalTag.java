@@ -1,7 +1,6 @@
 package cn.bjjoy.bms.shiro.freemarker;
 
 import freemarker.core.Environment;
-import freemarker.log.Logger;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModelException;
@@ -11,6 +10,9 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.util.Map;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * <p>Tag used to print out the String value of a user's default principal,
@@ -28,8 +30,10 @@ import java.util.Map;
  *
  * @since 0.2
  */
+@SuppressWarnings("rawtypes")
 public class PrincipalTag extends SecureTag {
-    static final Logger log = Logger.getLogger("PrincipalTag");
+    
+	private static final Logger log = LogManager.getLogger();
 
     /**
      * The type of principal to be retrieved, or null if the default principal should be used.
@@ -45,8 +49,7 @@ public class PrincipalTag extends SecureTag {
         return getParam(params, "property");
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
+	@Override
     public void render(Environment env, Map params, TemplateDirectiveBody body) throws IOException, TemplateException {
         String result = null;
 

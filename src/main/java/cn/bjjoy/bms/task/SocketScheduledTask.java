@@ -1,13 +1,17 @@
 package cn.bjjoy.bms.task;
 
 import java.io.DataOutputStream;
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -20,10 +24,11 @@ import cn.bjjoy.bms.setting.service.EquiptypeService;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 
+
 @Component
 public class SocketScheduledTask {
 
-	Logger logger = LoggerFactory.getLogger(SocketScheduledTask.class) ;
+	private static final Logger logger = LogManager.getLogger();
 	
 	@Autowired
 	SendMail sendMail ;
@@ -51,19 +56,20 @@ public class SocketScheduledTask {
 	//每周一早上九点提醒刷新泵站信息
 	@Scheduled(cron = "00 00 13 * * ?")
 	public void modifyStationMsg(){
-		SendMail sendMail = new SendMail() ;
-		//新添加的泵站需要数据维护，发送邮件通知
-		//		receivers.add("xuzj850329@126.com") ;
+		// 新添加的泵站需要数据维护，发送邮件通知
+		// receivers.add("xuzj850329@126.com") ;
 		String smg = null;
 		try {
 			List<String> addressCodes = Lists.newArrayList(typeService.getAddressCodeNull());
-			String content = "以下地址编码信息不全，需要维护" ;
-			String addresses = Joiner.on(",\n").join(addressCodes);
-			List<String> receivers = Lists.newArrayList();
-			receivers.add(Constants.MAIL_RECEIVER_SUB_ADMIN) ;
-			smg = "下列地址信息不全\n" + addresses + ",共 "+addressCodes.size()+"个 ，需要维护" + System.currentTimeMillis();
-			sendMail.sendEmail(content , smg, receivers, null);
-			logger.info("邮件发送成功：" + smg);
+			if(!Objects.nonNull(addressCodes)){
+				String content = "以下地址编码信息不全，需要维护" ;
+				String addresses = Joiner.on(",\n").join(addressCodes);
+				List<String> receivers = Lists.newArrayList();
+				receivers.add(Constants.MAIL_RECEIVER_SUB_ADMIN) ;
+				smg = "下列地址信息不全\n" + addresses + ",共 "+addressCodes.size()+"个 ，需要维护" + System.currentTimeMillis();
+				sendMail.sendEmail(content , smg, receivers, null);
+				logger.info("邮件发送成功：" + smg);
+			}
 		} catch (Exception e) {
 			logger.error("邮件发送失败：", e);
 		}
@@ -71,16 +77,21 @@ public class SocketScheduledTask {
 
 	@Scheduled(cron="00 00 01 * * ?")
 	public void delLog(){
-		File logRoot = new File("C:\\logger");
-		if( logRoot.isDirectory()){
-			for(File f : logRoot.listFiles()){
-				int day = (int) ((System.currentTimeMillis() - f.lastModified())/(1000 * 3600 * 24)) ;
-				if(day >= 5){
-					f.deleteOnExit();
+		String logURL = "C:\\logger";
+		try {
+			Files.list(Paths.get(logURL)).forEach( p -> {
+				try {
+					long day = LocalDate.now().toEpochDay() - Files.getLastModifiedTime(p).to(TimeUnit.DAYS) ;
+					if(day >= 5L ){
+						Files.delete(p);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-			}
+			});
+		} catch (IOException e) {
+			logger.debug("");
 		}
 	}
-	
 	
 }

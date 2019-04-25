@@ -178,6 +178,10 @@
                 }
                 return params;
             }
+            
+            function itemOnclick (){}
+            
+            
             function search() {
                 var params = { "stationName": $("#stationName").val().trim() };
                 $('#userListTable').bootstrapTable("refresh");

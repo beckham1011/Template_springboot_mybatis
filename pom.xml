@@ -168,7 +168,7 @@
 		    <artifactId>spring-batch-core</artifactId>
 		    <version>4.1.1.RELEASE</version>
 		</dependency>
-				
+
 	</dependencies>
 
 	<build>

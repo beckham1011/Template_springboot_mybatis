@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -81,33 +80,33 @@ public class SaveHistoryDataEveryDay {
 		return false ;
 	}
 	
-	
-	@Test
-	public void test(){
-//		String yesterday = DateUtils.formatDate(DateUtils.getPrevDay(new Date()) , DateUtils.YYYYMMDDHHMMSS) ; ;
-//		System.out.println(yesterday);
-		
-		Map<String, String> m1 = new HashMap<>() ;
-		m1.put("1", "1");
-		m1.put("2", "2");
-		m1.put("3", "3");
-		m1.put("4", "4");
-		m1.put("5", "5");
-		m1.put("6", "6");
-		
-		Map<String, String> m2 = new HashMap<>() ;
-		m2.put("2", "2");
-		m2.put("4", "4");
-		m2.put("7", "7");
-
-		Set<String> set = Sets.difference(m1.keySet(), m2.keySet()) ;
-		
-		System.out.println(set.contains("5"));
-		
-		for(String s : set){
-			System.out.println(s);
-		}
-	}
+//	
+//	@Test
+//	public void test(){
+////		String yesterday = DateUtils.formatDate(DateUtils.getPrevDay(new Date()) , DateUtils.YYYYMMDDHHMMSS) ; ;
+////		System.out.println(yesterday);
+//		
+//		Map<String, String> m1 = new HashMap<>() ;
+//		m1.put("1", "1");
+//		m1.put("2", "2");
+//		m1.put("3", "3");
+//		m1.put("4", "4");
+//		m1.put("5", "5");
+//		m1.put("6", "6");
+//		
+//		Map<String, String> m2 = new HashMap<>() ;
+//		m2.put("2", "2");
+//		m2.put("4", "4");
+//		m2.put("7", "7");
+//
+//		Set<String> set = Sets.difference(m1.keySet(), m2.keySet()) ;
+//		
+//		System.out.println(set.contains("5"));
+//		
+//		for(String s : set){
+//			System.out.println(s);
+//		}
+//	}
 	
 }
 

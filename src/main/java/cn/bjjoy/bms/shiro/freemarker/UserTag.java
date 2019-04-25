@@ -1,12 +1,14 @@
 package cn.bjjoy.bms.shiro.freemarker;
 
 import freemarker.core.Environment;
-import freemarker.log.Logger;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateException;
 
 import java.io.IOException;
 import java.util.Map;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Freemarker tag that renders the tag body if the current user known to the system, either from a successful login attempt
@@ -22,9 +24,12 @@ import java.util.Map;
  *
  * <p>Equivalent to {@link org.apache.shiro.web.tags.UserTag}</p>
  */
-public class UserTag extends SecureTag {
-    static final Logger log = Logger.getLogger("UserTag");
 
+@SuppressWarnings("rawtypes")
+public class UserTag extends SecureTag {
+
+	private static final Logger log = LogManager.getLogger();
+    
     @Override
     public void render(Environment env, Map params, TemplateDirectiveBody body) throws IOException, TemplateException {
         if (getSubject() != null && getSubject().getPrincipal() != null) {

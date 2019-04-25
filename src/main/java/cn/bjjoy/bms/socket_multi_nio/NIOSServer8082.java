@@ -12,13 +12,13 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import cn.bjjoy.bms.mail.SendMail;
 import cn.bjjoy.bms.setting.constants.Constants;
@@ -34,15 +34,16 @@ import cn.bjjoy.bms.setting.service.impl.EquiptypeServiceImpl;
 //import cn.bjjoy.bms.setting.service.impl.EquipdataServiceImpl;
 import cn.bjjoy.bms.socket.ByteUtil;
 import cn.bjjoy.bms.util.DateUtils;
+import cn.bjjoy.bms.util.EncryptUtils;
 import cn.bjjoy.bms.util.IPUtil;
 import cn.bjjoy.bms.util.SpringSocketUtil;
 
 import com.google.common.collect.Lists;
 
 // https://blog.csdn.net/tang9140/article/details/39052877?locationNum=10&fps=1
-public class NIOSServer8082 {
+public class NIOSServer8082<HeapByteBuffer> extends AbstractSocketServer{
 	
-	Logger logger = LoggerFactory.getLogger(NIOSServer8082.class) ;
+	private static final Logger logger = LogManager.getLogger();
 	
 	Map<String , String> ipAddressCodeMap = new HashMap<>();
 	Map<String , String> addressCodeIpMap = new HashMap<>();
@@ -52,17 +53,17 @@ public class NIOSServer8082 {
     private EquipdataService dataService  = SpringSocketUtil.getBean(EquipdataServiceImpl.class) ;
     private EquiptypeService typeService  = SpringSocketUtil.getBean(EquiptypeServiceImpl.class) ;
 
-	//解码buffer  
+	//解码buffer
     private Charset cs = Charset.forName("utf8");
     
     /*接受数据缓冲区*/
-    private static ByteBuffer sBuffer = ByteBuffer.allocate(1024);
-    
-    /*发送数据缓冲区*/
     private static ByteBuffer rBuffer = ByteBuffer.allocate(1024);
     
+    /*发送数据缓冲区*/
+    private static ByteBuffer sBuffer = ByteBuffer.allocate(1024);
+    
     /*映射客户端channel */
-    private Map<String, SocketChannel> clientsMap = new LinkedHashMap<>(200);
+    private Map<String, SocketChannel> clientsMap = new ConcurrentHashMap<>(200);
     
     private static Selector selector;
     
@@ -76,7 +77,7 @@ public class NIOSServer8082 {
         }
     }
     
-    private void init() throws IOException {
+    void init() throws IOException {
         /**启动服务器端，配置为非阻塞，绑定端口，注册accept事件 
          * ACCEPT事件：当服务端收到客户端连接请求时，触发该事件 */
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
@@ -159,7 +160,7 @@ public class NIOSServer8082 {
             client = (SocketChannel)selectionKey.channel();
             s = client.socket();
             String ip = s.getInetAddress().toString().substring(1) ;
-            
+            ByteBuffer rBuffer = ByteBuffer.allocate(1024);
         	rBuffer.clear();
             try {
 				count = client.read(rBuffer);
@@ -172,7 +173,9 @@ public class NIOSServer8082 {
         	if (count > 0) {
 
                 rBuffer.flip();
-                receiveText = new String( rBuffer.array(),0,count);
+                
+                logger.info("byte of rBuffer: " + rBuffer + " , rBuffer byte array :" + rBuffer.array());
+                receiveText = new String( rBuffer.array() , 0 , count);
                 try {
 					if(Constants.All_MSG.equalsIgnoreCase(receiveText)){
 						logger.info("ISIP-------------client IP:" + s.getInetAddress().getHostAddress() + ", receiveText : " + receiveText);
@@ -229,6 +232,11 @@ public class NIOSServer8082 {
 		params.put("ip", ip);
 		if(typeService.queryList(params).size() > 0){
 			logger.info("Equip type update : IP " + ip + "  , addresscode :" + addCode);
+			if("hsg999".equals(addCode)){
+				logger.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+				logger.info("Get Test Equiptype address code : {}" , addCode);
+				logger.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+			}
 			try {
 				typeService.updateByAddressCode(params);
 			} catch (Exception e) {
@@ -311,11 +319,7 @@ public class NIOSServer8082 {
                 try {
 					SocketChannel temp = entry.getValue();
 					if (!client.equals(temp)) {
-					    sBuffer.clear();
-					    sBuffer.put(ByteUtil.hexStringToByte(info));
-					    sBuffer.flip();
-					    //输出到通道  
-					    temp.write(sBuffer);
+						refreshSpecialStation(temp , info);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();

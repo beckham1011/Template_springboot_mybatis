@@ -1,0 +1,333 @@
+html {
+	width:100%
+}
+body {
+	-webkit-user-select:initial;
+	background-color:#f2f2f2;
+	width:100%
+}
+h1 {
+	font-size:40px;
+	color:#000;
+	padding-top:20px;
+	text-align:center
+}
+.index-wrap h1 {
+	font-size:30px;
+	color: white;
+	padding-top:0;
+	height:34px;
+	-webkit-background-size:100% auto;
+	background-size:100% auto;
+	margin-bottom:10px
+}
+.index-wrap h2 {
+	font-size:12px;
+	color:#bbb;
+	line-height:1.2
+}
+.index-wrap {
+	width:100%;
+	overflow-x:hidden
+}
+.index-wrap .header {
+	background-color: #428bca;
+	height: 61px;
+	display:-webkit-box;
+	-webkit-box-orient:vertical;
+	-webkit-box-align:center;
+	-webkit-box-pack:center
+}
+.index-wrap .footer {
+	height:55px;
+	display:-webkit-box;
+	-webkit-box-align:center;
+	-webkit-box-pack:center;
+	background-color:#F7F7F7
+}
+.logo {
+	width:53px;
+	height:15px;
+	background:url(/images/isux.png) no-repeat;
+	-webkit-background-size:100% auto;
+	background-size:100% auto
+}
+.index-wrap table {
+	width:100%;
+	overflow:hidden
+}
+.demo-block td {
+	width:33.33%;
+	position:relative;
+	background-color: #F6F7F7;
+}
+.demo-block td>div {
+	padding:29% 0 29% 0
+}
+.demo-block td>div:active {
+	background:#e4e4e4
+}
+.demo-block .tit {
+	text-align:center;
+	color:#000;
+	font-size:16px;
+	line-height:1.6
+}
+.demo-block .sub-tit {
+	text-align:center;
+	color:#777;
+	font-size:14px;
+	line-height:1.2
+}
+.demo-block .icon {
+	width:66px;
+	height:56px;
+	margin:0 auto
+}
+.icon-actionsheet {
+	background:url(/images/analysis.png) no-repeat;
+	-webkit-background-size:100% auto;
+	background-size:100% auto
+}
+.icon-article {
+	background:url(/images/article.png) no-repeat;
+	-webkit-background-size:100% auto;
+	background-size:100% auto
+}
+.icon-button {
+	background:url(/images/realtime.png) no-repeat;
+	-webkit-background-size:100% auto;
+	background-size:100% auto
+}
+.icon-cell {
+	background:url(/images/map.png) no-repeat;
+	-webkit-background-size:100% auto;
+	background-size:100% auto
+}
+.icon-dialog {
+	background:url(/images/history.png) no-repeat;
+	-webkit-background-size:100% auto;
+	background-size:100% auto
+}
+.icon-icons {
+	background:url(/images/analysis.png) no-repeat;
+	-webkit-background-size:100% auto;
+	background-size:100% auto
+}
+.icon-msg {
+	background:url(/images/setting.png) no-repeat;
+	-webkit-background-size:100% auto;
+	background-size:100% auto
+}
+.icon-panel {
+	background:url(/images/panel.png) no-repeat;
+	-webkit-background-size:100% auto;
+	background-size:100% auto
+}
+.icon-progress {
+	background:url(/images/progress.png) no-repeat;
+	-webkit-background-size:100% auto;
+	background-size:100% auto
+}
+.icon-searchbar {
+	background:url(/images/searchbar.png) no-repeat;
+	-webkit-background-size:100% auto;
+	background-size:100% auto
+}
+.icon-tab {
+	background:url(/images/tab.png) no-repeat;
+	-webkit-background-size:100% auto;
+	background-size:100% auto
+}
+.icon-toast {
+	background:url(/images/toast.png) no-repeat;
+	-webkit-background-size:100% auto;
+	background-size:100% auto
+}
+.icon-more {
+	background:url(/images/more.png) no-repeat;
+	-webkit-background-size:100% auto;
+	background-size:100% auto
+}
+.icon-grid {
+	background:url(/images/toadd.png) no-repeat;
+	-webkit-background-size:100% auto;
+	background-size:100% auto
+}
+.icon-form {
+	background:url(/images/setting.png) no-repeat;
+	-webkit-background-size:100% auto;
+	background-size:100% auto
+}
+h1 {
+	width:100%;
+	text-align:center;
+	font-size:40px
+}
+.ui-header h1 {
+	padding-top:0
+}
+.ui-btn+.ui-btn {
+	margin-left:10px
+}
+.demo-desc {
+	padding:10px;
+	font-size:16px;
+	color:#7CAE23
+}
+.demo-block {
+	position:relative
+}
+.demo-block .ui-header,.demo-block .ui-footer {
+	position:absolute
+}
+.ui-tab-content {
+	padding:10px
+}
+.demo-block>.ui-list,.demo-block>.ui-form {
+	margin-bottom:20px
+}
+.content h3 {
+	padding:0 15px;
+	line-height:44px;
+	font-size:15px
+}
+.border-list {
+	background-color:#fff
+}
+.border-list li {
+	width:100px;
+	margin:10px auto;
+	-webkit-box-pack:center;
+	text-align:center
+}
+.ui-btn-group-bottom {
+	bottom:56px
+}
+.ui-table {
+	line-height:40px;
+	text-align:center;
+	background-color:#fff
+}
+.ui-scroller {
+	width:auto;
+	height:300px;
+	margin:20px;
+	padding:10px;
+	overflow:hidden
+}
+.ui-scroller li {
+	margin-bottom:10px
+}
+.ui-notice {
+	top:0;
+	z-index:-1;
+	height:400px
+}
+.icon-lists li {
+	float:left;
+	height:100px;
+	width:103px;
+	text-align:center
+}
+.icon-lists li i {
+	font-size:32px;
+	line-height:44px
+}
+.icon-lists .ui-icon,.icon-lists [class^="ui-icon-"] {
+	margin:10px 0;
+	color:#000
+}
+.code,.fontclass {
+	font-size:12px
+}
+.ui-col {
+	padding:5px;
+	background:#777;
+	text-align:center;
+	-webkit-box-sizing:border-box;
+	box-sizing:border-box;
+	border:1px solid #ddd
+}
+.ui-flex {
+	border:1px solid #ddd;
+	min-height:80px;
+	margin-bottom:10px
+}
+.ui-flex-ver {
+	border:1px solid #ddd;
+	min-height:80px;
+	margin-bottom:10px
+}
+.ui-row-flex-ver {
+	border:1px solid #ddd;
+	min-height:100px
+}
+.test-img {
+	width:50px;
+	height:50px;
+	background:#777
+}
+.color-black {
+	background-color:#000
+}
+.color-black .demo-desc {
+	color:#fff
+}
+
+
+.stationName{
+	width: 108px;
+}
+
+.msghead{
+	font-size: 12px;
+	height:59px; 
+	width: 100%; 
+	background: white linear-gradient(to top, rgba(0,255,0,0), #0f7ce5);
+}
+
+.headLeft{
+	float: left;
+	width: 12%;
+	margin-top: 21px;
+	font-size: 12px;
+	text-align: left;
+	color: black;
+}
+.headLeft a{
+	color: black;
+}
+.headLeft a:link{text-decoration:none; color: black;}  /* 指正常的未被访问过的链接*/
+.headLeft a:visited{text-decoration:none; color: black;}/*指已经访问过的链接*/
+.headLeft a:hover{text-decoration:none; color: black;}/*指鼠标在链接*/}
+.headLeft a:active{text-decoration:none; color: black;}/* 指正在点的链接*/ 
+
+.msgHeadCount{
+	font-size: 10px;
+}
+
+
+.headCenter{
+	float: left;
+	font-size: 18px;
+	margin-top: 10px;
+	width: 76%;
+	text-align: center;
+}
+
+.headRight{
+	float: left;
+	width: 12%;
+	margin-top: 21px;
+	font-size: 12px;
+	text-align: right;
+	color: black;
+}
+.headRight a{
+	color: black;
+}
+.headRight a:link{text-decoration:none; color: black;}  	/* 指正常的未被访问过的链接*/
+.headRight a:visited{text-decoration:none; color: black;}	/*指已经访问过的链接*/
+.headRight a:hover{text-decoration:none; color: black;}		/*指鼠标在链接*/
+.headRight a:active{text-decoration:none; color: black;}	/* 指正在点的链接*/ 

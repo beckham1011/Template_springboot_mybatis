@@ -529,7 +529,7 @@
 			equiptype.parent_id AS parentId,
 			equiptype.name AS name,
 			equiptype.add_per AS addPer,
-			equiptype.add_time AS addTime,
+			DATE_FORMAT(equiptype.add_time,'%Y-%m-%d %h:%i') AS addTime,
 			equiptype.type_layer AS typeLayer,
 			equiptype.addressCode AS addressCode,
 			equiptype.system_id AS systemId,

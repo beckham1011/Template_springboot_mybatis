@@ -2,6 +2,7 @@ package cn.bjjoy.bms.shiro.freemarker;
 
 import freemarker.core.Environment;
 import freemarker.template.*;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
@@ -11,6 +12,8 @@ import java.util.Map;
 /**
  * <p>Equivalent to {@link org.apache.shiro.web.tags.SecureTag}</p>
  */
+
+@SuppressWarnings("rawtypes")
 public abstract class SecureTag implements TemplateDirectiveModel {
     public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body) throws TemplateException, IOException {
         verifyParameters(params);

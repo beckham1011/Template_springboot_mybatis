@@ -16,7 +16,7 @@ public class Client2 {
     public static void main(String[] args) {
         try {
             //1.创建客户端Socket，指定服务器地址和端口号
-            Socket socket = new Socket("127.0.0.1", 8888);
+            Socket socket = new Socket("101.132.126.72", 8084);
             //2.获取输出流，用来向服务器发送信息
             OutputStream os = socket.getOutputStream();//字节输出流
             //转换为打印流

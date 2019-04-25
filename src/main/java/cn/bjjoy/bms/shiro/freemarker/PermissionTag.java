@@ -11,6 +11,8 @@ import java.util.Map;
 /**
  * <p>Equivalent to {@link org.apache.shiro.web.tags.PermissionTag}</p>
  */
+
+@SuppressWarnings("rawtypes")
 public abstract class PermissionTag extends SecureTag {
     String getName(Map params) {
         return getParam(params, "name");

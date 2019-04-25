@@ -121,7 +121,7 @@ public class EncryptUtils {
      * @param array
      * @return
      */
-    private static String toHex(byte[] array) {
+    public static String toHex(byte[] array) {
         BigInteger bi = new BigInteger(1, array);
         String hex = bi.toString(16);
         int paddingLength = (array.length * 2) - hex.length();

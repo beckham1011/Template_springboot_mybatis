@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageInfo;
 
@@ -14,6 +15,8 @@ import cn.bjjoy.bms.setting.persist.model.System;
 import cn.bjjoy.bms.setting.service.TenantService;
 
 @Service
+@Transactional
+@SuppressWarnings({"rawtypes","unchecked"})
 public class TenantServiceImpl implements TenantService {
 
 	@Autowired
@@ -37,6 +40,22 @@ public class TenantServiceImpl implements TenantService {
 	@Override
 	public PageInfo<System> getPage(Integer pageNumber, Integer pageSize) {
 		return null;
+	}
+
+	@Override
+	public void deleteSystem(Map map) {
+		tenantDao.deleteTenant(String.valueOf(map.get("id")));
+	}
+
+	@Override
+	public int updateSystem(Map map) {
+		return tenantDao.updateTenant(map);
+	}
+
+
+	@Override
+	public void add(Map map) {
+		tenantDao.addTenant(map);
 	}
 	
 }

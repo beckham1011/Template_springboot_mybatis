@@ -19,32 +19,22 @@
 	</resultMap>
 
 
-	<select id="getTenantList" resultType="map">
-		select id, system from system 
-		where 1= 1 
+	<select id="getTenantList" resultType="map" parameterType="map">
+		select syss.id, syss.system from edm.system syss
+		where 1 = 1 
 		<if test=" id != null and id != 0">
-			and id = ${id}
+			and id = #{id}
 		</if>
-		<if test=" system != null ">
-			and system = ${system}
-		</if>
+		<if test="systemName != null and systemName != ''">
+			<![CDATA[ and (instr(syss.system ,#{systemName}) or instr( syss.system,#{systemName})) ]]>
+		</if>		
 		<include refid="sql_page" />
 	</select>
 	
 	<select id="getTenantsCount" resultType="int">
-		select count(1) ct from system 
+		select count(1) ct from edm.system 
 	</select>
 
-	<insert id="insertTenant">
-		insert into system (system ) values(#{system})
-	</insert>
-
-	<update id="updateTenant">
-	</update>
-	
-	<delete id="deleteTenant"></delete>
-	
-	
 	<sql id="sql_page">
 		<if test="page != null and rows != null" >
 		limit ${rows} offset ${page}

@@ -7,12 +7,15 @@ import cn.bjjoy.bms.setting.service.MenuService;
 import cn.bjjoy.bms.setting.service.RoleService;
 import cn.bjjoy.bms.setting.service.UserService;
 import cn.bjjoy.bms.util.EncryptUtils;
+
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.AllowAllCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -48,7 +51,6 @@ public class MyRealm extends AuthorizingRealm {
 			PrincipalCollection principals) {
 		User user = (User) principals.getPrimaryPrincipal();
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-		User dbUser = userService.findUserByName(user.getLoginName());
 		List<Role> roleList = roleService.getListByUserId(user.getId());
 		Set<String> shiroPermissions = new HashSet<>();
 		Set<String> roleSet = new HashSet<String>();
@@ -56,7 +58,6 @@ public class MyRealm extends AuthorizingRealm {
 			List<Menu> menus = menuService.getListByRoleId(role.getId());
 			for (Menu menu : menus) {
 				shiroPermissions.add(menu.getPermission());
-
 			}
 			roleSet.add(role.getEnname());
 		}
@@ -79,14 +80,20 @@ public class MyRealm extends AuthorizingRealm {
 			throw new UnknownAccountException("账号或密码不正确");
 		}
 		// 密码错误
-		if (!EncryptUtils.encryptMD5(password).equals(user.getPassword())) {
+		if (!password.equals(user.getPassword())) {
 			throw new IncorrectCredentialsException("账号或密码不正确");
 		}
 		// 账号锁定
 		if (user.getState() == 0) {
 			throw new LockedAccountException("账号已被锁定,请联系管理员");
 		}
-
+		
+//		Subject currentUser = SecurityUtils.getSubject();
+//
+//		CustomToken tokenNoPassword = new CustomToken(user.getLoginName());
+//		
+//		currentUser.login(tokenNoPassword);
+		
 		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
 
 		return info;

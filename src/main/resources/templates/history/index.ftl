@@ -27,9 +27,7 @@
 			</script>
 			<#include "${ctx}/head_nav.ftl" />
 			<div class="main-container-inner">
-				<a class="menu-toggler" id="menu-toggler" href="#">
-					<span class="menu-text"></span>
-				</a>
+				<a class="menu-toggler" id="menu-toggler" href="#">泵站选择</a>
 				<#include "${ctx}/menu.ftl"/>
 				<div class="main-content">
 					<div class="breadcrumbs" id="breadcrumbs">

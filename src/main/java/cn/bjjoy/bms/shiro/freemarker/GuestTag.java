@@ -1,12 +1,14 @@
 package cn.bjjoy.bms.shiro.freemarker;
 
 import freemarker.core.Environment;
-import freemarker.log.Logger;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateException;
 
 import java.io.IOException;
 import java.util.Map;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 /**
@@ -20,8 +22,11 @@ import java.util.Map;
  *
  * @since 0.9
  */
+
+@SuppressWarnings("rawtypes")
 public class GuestTag extends SecureTag {
-    private static final Logger log = Logger.getLogger("AuthenticatedTag");
+	
+	private static final Logger log = LogManager.getLogger();
 
     @Override
     public void render(Environment env, Map params, TemplateDirectiveBody body) throws IOException, TemplateException {

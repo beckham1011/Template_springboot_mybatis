@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Description;
 import org.springframework.stereotype.Controller;
@@ -48,7 +48,7 @@ import cn.bjjoy.bms.util.UserUtils;
 @RequestMapping("/user")
 public class UserController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	private static final Logger logger = LogManager.getLogger();
 
     @Autowired
     private MenuService menuService;
@@ -151,7 +151,7 @@ public class UserController {
 	public String toEdit(@PathVariable Integer id, ModelMap map){
 		User user = userService.getUserDetail(id);
 		map.addAttribute("userDto", user);
-		Equiptype typeToEdit = equiptypeService.queryOne(String.valueOf(id));
+		Equiptype typeToEdit = equiptypeService.queryOne(String.valueOf(user.getParentId()));
 		map.put("userSystemId", equiptypeService.getUserSystemId(id)) ;
 		map.addAttribute("systemList" , equiptypeService.getSystems()) ;
 		if("4".equals(typeToEdit.getTypeLayer())){
@@ -301,10 +301,18 @@ public class UserController {
     @Description("修改密码保存")
     @ResponseBody
     @RequestMapping(value = "changePwd", method = RequestMethod.POST)
-    public Response changePwdSave(@RequestParam Map map ) {
-    	String flag = "" ;
-//    	userService.chagePwd(map.get("newPwd1")) ;
-        return  Response.success(flag) ;
+    public ResponseResult changePwdSave(@RequestParam Map map ) {
+    	User user = UserUtils.getUer() ;
+    	String newPwdAfterEncrypt = EncryptUtils.encryptMD5((String)map.get("newPwd1"));
+    	user.setPassword(newPwdAfterEncrypt);
+    	try {
+			userService.update(user);
+			logger.info("Change user password success");
+		} catch (Exception e) {
+			logger.error("Update user password error: {}" + e.getStackTrace());
+			return ResponseResult.error();
+		}
+        return ResponseResult.ok("");
     }
 
     

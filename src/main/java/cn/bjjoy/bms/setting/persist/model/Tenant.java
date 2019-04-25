@@ -3,7 +3,7 @@ package cn.bjjoy.bms.setting.persist.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Tenant implements Serializable{
+public class Tenant extends cn.bjjoy.bms.setting.persist.model.System implements Serializable{
 
 	/**
 	 */

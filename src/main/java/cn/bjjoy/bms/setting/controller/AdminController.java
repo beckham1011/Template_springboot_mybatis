@@ -5,12 +5,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,52 +20,63 @@ import org.springframework.web.bind.annotation.*;
 
 import cn.bjjoy.bms.setting.dto.EquiptypeDto;
 import cn.bjjoy.bms.setting.service.EquiptypeService;
+import cn.bjjoy.bms.setting.service.UserService;
 import cn.bjjoy.bms.util.DataUtils;
+import cn.bjjoy.bms.util.DeviceUtil;
+import cn.bjjoy.bms.util.EncryptUtils;
+import cn.bjjoy.bms.util.RedirectUtil;
 import cn.bjjoy.bms.util.UserUtils;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
-	Logger logger = LoggerFactory.getLogger( AdminController.class) ;
+	private static final Logger logger = LogManager.getLogger();
 	
 	@Autowired
 	private EquiptypeService equiptypeService;
 	
-	@RequestMapping(value = "/login" , method = RequestMethod.GET)
-	public String login() {
+	@Autowired
+	UserService userService;
+	
+	@GetMapping(value = "/login")
+	public String login(HttpServletRequest request) {
 		return "admin/login";
 	}
 
 	/**
 	 * 用户登录验证
 	 */
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@RequestParam("username") String username, @RequestParam("password") String password, ModelMap model) {
+	@PostMapping(value = "/login")
+	public String login(@RequestParam("username") String username, @RequestParam("password") String password, 
+				ModelMap model , HttpServletRequest request) {
 		try {
-			
 			Subject subject = SecurityUtils.getSubject();
+			if(DeviceUtil.isApp(request)){
+				password = userService.findUserByName(username).getPassword();
+			}else{
+				password = EncryptUtils.encryptMD5(password);
+			}
+			
 			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 			subject.login(token);
-			
 			subject.getPrincipal();
-			
-			return redirect("/equipdata/index");
+			//跳转页面
+			return RedirectUtil.redirect(getNextPage(request));
 		} catch (AuthenticationException e) {
-			logger.info("Login error message..................");
-			e.printStackTrace();
+			logger.info("Login error message.................." + e);
 		}
 		return "admin/login";
 	}
 
-	@RequestMapping(value = "/logout" , method = RequestMethod.GET)
-	public String logout() {
+	@GetMapping(value = "/logout")
+	public String logout( HttpServletRequest request) {
 		Subject subject = SecurityUtils.getSubject();
 		subject.logout();
-		return redirect("admin/login");
+		return RedirectUtil.redirect("/login");
 	}
 
-	@RequestMapping(value ={"","/index"}, method = RequestMethod.GET)
+	@GetMapping(value ={"","/index"})
 	public String index( ModelMap modelMap){
     	Map<String ,String> map = new HashMap<>();
     	map.put("typeLayer", "1") ;
@@ -86,7 +99,14 @@ public class AdminController {
 	 * @param path
 	 * @return
 	 */
-	private String redirect(String path) {
-		return "redirect:" + path;
+	public String getNextPage(HttpServletRequest request){
+		String URL = "login";
+		if(!DeviceUtil.isApp(request)){
+			URL = "/equipdata/index";
+		}else{
+			URL = "/appmainpage";
+		}
+		return URL;
 	}
+
 }

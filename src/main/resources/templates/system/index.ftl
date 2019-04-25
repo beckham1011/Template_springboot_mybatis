@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>厚水智能-平台管理</title>
+		<title>厚水智能-租户管理</title>
 		<meta name="keywords" content="" />
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -40,8 +40,8 @@
 								<i class="icon-home home-icon"></i>
 								<a href="/equipdata/index">首页</a>
 							</li>
-							<li><a href="#">平台管理</a></li>
-							<li class="active">平台列表</li>
+							<li><a href="#">租户管理</a></li>
+							<li class="active">租户列表</li>
 						</ul><!-- .breadcrumb -->
 
 					</div>
@@ -53,16 +53,17 @@
 
 								<div class="row ">
                                     <div class="col-xs-12">
-                                        <h3 class="header smaller lighter blue">平台列表</h3>
+                                        <h3 class="header smaller lighter blue">租户列表</h3>
 	                                    <div  style="float:left;">
-                                        	<input id="stationName" placeholder="请输入平台名称" name="stationName" type="text"/>
+                                        	<input id="systemName" placeholder="请输入租户名称" name="systemName" type="text"/>
 	                                        <button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
+	                                        <button class="btn btn-xs btn-success " type="button" onclick="addSystem();"><i class="fa fa-plus"></i>&nbsp;添加租户</button>
                                     	</div>
                                     </div>
 								</div>
                                 <div class="space-6"></div>
                                 <div class="table-responsive">
-                                    <table id="equipListHistoryTable"></table>
+                                    <table id="systemListTable"></table>
                                 </div>
 
 							</div><!-- /.col -->
@@ -83,7 +84,7 @@
             	localStorage.setItem("parentId", 1);
             
                 //初始化表格,动态从服务器加载数据
-                $("#equipListHistoryTable").bootstrapTable({
+                $("#systemListTable").bootstrapTable({
                     //使用get请求到服务器获取数据
                     method: "GET",
                     //必须设置，不然request.getParameter获取不到请求参数
@@ -124,8 +125,18 @@
                         field: "id",
                         sortable: true
                     },{
-                        title: "平台名称",
+                        title: "租户名称",
                         field: "system"                   
+                    },{
+                        title: "操作",
+                        field: "empty",
+                        align : 'center',
+						valign : 'middle',
+                        formatter: function (value, row, index) {
+                            var operateHtml = '<button class="btn btn-primary btn-xs" type="button" onclick="editSystem(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;编辑</button> &nbsp;';
+                            operateHtml += '<button class="btn btn-danger btn-xs" type="button" onclick="delSystem(\''+row.id+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button>';
+                            return operateHtml;
+                        }
                     }]
                 });
             });
@@ -140,14 +151,14 @@
                 var params={
                     "page":		   params.pageNumber,
                     "rows":		   params.pageSize,
-                    "stationName": $("#stationName").val().trim(),
+                    "systemName": $("#systemName").val().trim(),
                     "parentId"   : localStorage.getItem("parentId")
                 }
                 return params;
             }
             
             function search() {
-                $('#equipListHistoryTable').bootstrapTable("refresh");
+                $('#systemListTable').bootstrapTable("refresh");
             }
             
             function exportHistory(){
@@ -156,10 +167,57 @@
             
             function clickNode(event, data){
 	        	localStorage.setItem("parentId",data['id']);
-	        	$('#equipListHistoryTable').bootstrapTable("refresh");
+	        	$('#systemListTable').bootstrapTable("refresh");
 	        }
             
             function itemOnclick (){}
+            
+            function addSystem(){
+                layer.open({
+                    type: 2,
+                    title: '新增租户',
+                    shadeClose: true,
+                    shade: false,
+                    area: ['800px', '300px'],
+                    content: '${ctx}/system/add',
+                    end: function(index){
+                        $('#systemListTable').bootstrapTable("refresh");
+                        layer.close(index);
+                    }
+                });
+            }
+                        
+            function editSystem(id){
+                layer.open({
+                    type: 2,
+                    title: '编辑租户',
+                    shadeClose: true,
+                    shade: false,
+                    area: ['800px', '300px'],
+                    content: '${ctx}/system/edit?id='  + id,
+                    end: function(index){
+                        $('#systemListTable').bootstrapTable("refresh");
+                        layer.close(index);
+                    }
+                });
+            }
+            
+            function delSystem(id){
+                layer.confirm('确定删除吗?', {icon: 3, title:'提示'}, function(index){
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        url: "${ctx}/system/delete?id=" + id,
+                        success: function(msg){
+                            layer.msg(msg.msg, {time: 1500},function(){
+                                $('#systemListTable').bootstrapTable("refresh");
+                                layer.close(index);
+                            });
+                        }
+                    });
+                });
+            }
+            
             
 		</script>
 </body>

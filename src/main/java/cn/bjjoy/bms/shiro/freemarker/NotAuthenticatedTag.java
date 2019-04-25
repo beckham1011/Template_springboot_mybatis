@@ -1,12 +1,14 @@
 package cn.bjjoy.bms.shiro.freemarker;
 
-import freemarker.core.Environment;
-import freemarker.log.Logger;
-import freemarker.template.TemplateDirectiveBody;
-import freemarker.template.TemplateException;
-
 import java.io.IOException;
 import java.util.Map;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import freemarker.core.Environment;
+import freemarker.template.TemplateDirectiveBody;
+import freemarker.template.TemplateException;
 
 
 /**
@@ -17,10 +19,13 @@ import java.util.Map;
  *
  * <p>Equivalent to {@link org.apache.shiro.web.tags.NotAuthenticatedTag}</p>
  */
-public class NotAuthenticatedTag extends SecureTag {
-    static final Logger log = Logger.getLogger("NotAuthenticatedTag");
 
-    @Override
+@SuppressWarnings("rawtypes")
+public class NotAuthenticatedTag extends SecureTag {
+	
+	private static final Logger log = LogManager.getLogger();
+    
+	@Override
     public void render(Environment env, Map params, TemplateDirectiveBody body) throws IOException, TemplateException {
         if (getSubject() == null || !getSubject().isAuthenticated()) {
             log.debug("Subject does not exist or is not authenticated.  Tag body will be evaluated.");

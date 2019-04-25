@@ -18,6 +18,7 @@
 		<link rel="stylesheet" href="${ctx}/css/ace.min.css" />
 		<link rel="stylesheet" href="${ctx}/css/ace-rtl.min.css" />
 		<link rel="stylesheet" href="${ctx}/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="${ctx}/css/equiptype.css" />
 
 		<script src="${ctx}/js/ace-extra.min.js"></script>
 	</head>
@@ -34,7 +35,7 @@
 					<span class="menu-text"></span>
 				</a>
 				<#include "${ctx}/menu.ftl"/>
-				<div class="main-content" >
+				<div class="main-content maincontentwidth" >
 					<div class="breadcrumbs" id="breadcrumbs">
 						<script type="text/javascript">
 							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}

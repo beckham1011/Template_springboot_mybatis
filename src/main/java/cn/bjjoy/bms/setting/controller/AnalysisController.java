@@ -88,6 +88,13 @@ public class AnalysisController {
 		
 		List<Map<String , Object>> datas = equipdataService.getHistoryDataEveryday(map);
 
+		//select  quarter( add_time ) from equipdata_history 季度
+		
+		//2018_4季度
+		//select CONCAT(DATE_FORMAT(add_time , '%Y') ,'_' , quarter( add_time ),'季度') , add_time from equipdata_history
+		//where id in ( 44881, 44882 , 44883, 44884 , 44885, 44886 , 44887)
+
+		
 //		Map<String , Object> dataDayAddress = equipdataService.getDayDataDayAddressData(datas);
 		Map<String , Object> dataAddressDay = equipdataService.getDayDataDayAddressData(datas);
 		

@@ -16,6 +16,7 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter4;
 
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
+	
 	@Autowired
 	private CommonInterceptor commonInterceptor;
 
@@ -68,7 +69,9 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(commonInterceptor).addPathPatterns("/**");
+		registry.addInterceptor(commonInterceptor)
+			.addPathPatterns("/**")
+			.addPathPatterns("app/**");
 		super.addInterceptors(registry);
 	}
 

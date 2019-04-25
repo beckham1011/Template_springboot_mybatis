@@ -32,6 +32,7 @@
 				<a class="menu-toggler" id="menu-toggler" href="#">
 					<span class="menu-text"></span>
 				</a>
+				
 				<div class="main-content" style="margin-left: 0px!important;">
 					<div class="breadcrumbs" id="breadcrumbs">
 						<script type="text/javascript">

@@ -50,7 +50,7 @@
                             
                             <div class="form-group">
                                 <div class="col-sm-8 col-sm-offset-3">
-                                    <button class="btn btn-primary" onclick='userPasswordFormSubmit()' type="submit">提交</button>
+                                    <button class="btn btn-primary" onclick="userPasswordFormSubmit()" type="submit">提交</button>
                                 </div>
                             </div>
                         </form>
@@ -89,7 +89,7 @@
 			alert("新密码不能和老密码一样!");
 			return ;
 		}
-		return ;
+		
 	}
 </script>
 </body>
