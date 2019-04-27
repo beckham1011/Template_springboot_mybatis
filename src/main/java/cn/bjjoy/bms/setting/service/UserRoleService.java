@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by guoxiaoming on 2017/9/22.
  */
+@SuppressWarnings("rawtypes")
 public interface UserRoleService {
 
     /**
@@ -19,7 +19,7 @@ public interface UserRoleService {
     /**
      * 更新用户角色关系
      */
-    int update(Map param);
+	int update(Map param);
 
     /**
      * 删除用户角色关系

@@ -47,8 +47,7 @@
 						<div class="row">
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
-								
-								<div class="row ">
+								<div class="row">
                                     <div class="col-xs-12">
                                         <!-- <button class="btn btn-xs btn-danger" onclick="refreshAllStation();"><i class=""></i>&nbsp;加载所有泵站数据</button> -->
                                         <div class="form-group">
@@ -62,7 +61,6 @@
                                     </div>
 								</div>
                                 <div class="space-6"></div>
-
                                 <div class="table-responsive">
                                     <table id="equipdataListTable"></table>
                                 </div>
@@ -133,7 +131,10 @@
                     },{
                     	title: "更新时间",
                         field: "add_time",
-                        width: 138
+                        width: 138,
+			            formatter: function (value, row, index) {
+			                return value.substring(0,16)
+			            }
                     }]
                 });
             });
@@ -143,7 +144,7 @@
                 html.push('<p><b>类型:</b> ' + row.bengxing + '</p>');
                 html.push('<p><b>口径:</b> ' + row.koujing + '</p>');
                 html.push('<p><b>功率:</b> ' + row.gonglv + '</p>');
-                html.push('<p><b>操作:</b><button class="btn btn-primary btn-xs" type="button" onclick="refreshEquiptypeData(\''+row.addresscode+'\')"><i class="fa fa-edit"></i>&nbsp;刷新</button></p>');
+                html.push('<p><b>操作:</b><button class="btn btn-primary btn-xs" type="button" onclick="refreshEquiptypeData(\''+row.addresscode+'\')"><i class="fa fa-edit"></i>&nbsp;刷新</button>&nbsp;&nbsp;<button class="btn btn-primary btn-xs" type="button" onclick="equiptypeDetail(\''+row.addresscode+'\')"><i class="fa fa-edit"></i>&nbsp;详情</button></p>');
                 return html.join('');
             }
 
@@ -161,13 +162,13 @@
                 return params;
             }
             
-            function search() {
+            function refreshTable(){
                 $('#equipdataListTable').bootstrapTable("refresh");
             }
-            
-            function getOnlineOfflineData(){
-                $('#equipdataListTable').bootstrapTable("refresh");
-            }
+
+			function equiptypeDetail(id){
+				window.location.href="${ctx}/equiptype/detail/" + id;
+			}
             
             function refreshEquiptypeData(id){
             	layer.confirm('发送成功，需要5秒钟返回数据。', {icon: 1, title:'提示'}, function(index){
@@ -177,7 +178,7 @@
 	                    url: '${ctx}/socket?param='  + id,
 	                    success: function(msg){
 		                    layer.close(index);
-						    $('#equipdataListTable').bootstrapTable("refresh");
+		                    refreshTable();
 	                    }
 	                });
 	            });
@@ -191,7 +192,7 @@
 	                    url: '${ctx}/socket8082?param=all' ,
 	                    success: function(msg){
 	                    	layer.close(index);
-						    $('#equipdataListTable').bootstrapTable("refresh");
+	                    	refreshTable();
 	                    }
 	                });
 	            });
@@ -208,50 +209,23 @@
                     content: '${ctx}/equipdata/edit/' + addressCode + '/' + dataid,
                     end: function(index){
                         layer.close(index);
-                        $('#equipdataListTable').bootstrapTable("refresh");
+                        refreshTable();
                     }
                 });
             }
             
             function clickNode(event, data){
-	        	console.log("clickNode: node click") ;
 	        	localStorage.setItem("parentId",data['id']);
-	        	$('#equipdataListTable').bootstrapTable("refresh");
+	        	refreshTable();
 	        }
             
             function itemOnclick (){
-            	console.log("itemOnclick") ;
             }
             
             function logout(){
             	localStorage.removeItem("username");
             	window.location.href="/logout";
             }
-            
-			function treeOnClick() {
-				var treeData ;
-		        $.ajax({
-		            type: "GET",
-		            dataType: "json",
-		            url: "${ctx}/equiptype/tree2",
-		            success: function(result){
-		                
-		                treeData = result.data.typeTree;
-		                
-		                console.log("tree on click");
-		                
-		                $('#treeview1').treeview({
-				          	showTags: true,
-				          	levels: 2,
-				          	data: treeData,
-				          	onNodeSelected: function(event, data){
-				          		console.log("onNodeSelected");
-				          		clickNode(event, data);
-				          	}
-				        });
-		            }
-		        });
-		    }
 		</script>
 </body>
 </html>

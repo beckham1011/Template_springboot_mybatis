@@ -5,37 +5,38 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Description;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.bjjoy.bms.base.ResponseResult;
 import cn.bjjoy.bms.exception.ControllerException;
 import cn.bjjoy.bms.setting.exception.ServiceException;
-import cn.bjjoy.bms.setting.service.TenantService;
 import cn.bjjoy.bms.util.Response;
 
+@SuppressWarnings({"rawtypes","unchecked"})
 @CrossOrigin
 @Controller
 @RequestMapping("system")
-public class SystemController {
+public class SystemController extends AbstractHosznController{
 
-	@Autowired
-	TenantService tenantService;
-	
+	private static final Logger logger = LogManager.getLogger();
+
 	/**
 	 * 角色管理初始化页面
 	 * @return
 	 */
-	@RequestMapping(value = "/index" , method = RequestMethod.GET)
+	@GetMapping("index")
 	public String index() {
 		return "/system/index";
 	}
@@ -45,7 +46,7 @@ public class SystemController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/getList", method = RequestMethod.GET)
+    @GetMapping("getList")
     public ResponseResult getList(@RequestParam Map map ,  ModelMap modelMap){
         Integer rows = Integer.valueOf((String) map.get("rows")) ;
 		Integer page = Integer.valueOf((String) map.get("page")) ;
@@ -58,7 +59,7 @@ public class SystemController {
 		Map<String, Object> responseResult = new HashMap<>();
 		responseResult.put("tenants",tenants);
 		responseResult.put("count",count);
-		
+		logger.info("get system list success");
         return ResponseResult.ok(responseResult);
     }
 
@@ -66,7 +67,7 @@ public class SystemController {
      * 到创建角色页面
      * @return
      */
-    @RequestMapping(value = "/add" )
+    @RequestMapping("add" )
     public String toAdd() {
         return "/system/add";
     }
@@ -112,7 +113,7 @@ public class SystemController {
      * 到创建角色页面
      * @return
      */
-    @RequestMapping(value = "/edit" )
+    @GetMapping("edit")
     public String toEdit(@RequestParam Map map ,  ModelMap modelMap) {
     	List<Map<String, Object>> tenart = null;
     	if(!Objects.isNull(map.get("id"))){
@@ -129,7 +130,7 @@ public class SystemController {
      * 删除 添加的系统
      * @return
      */
-    @RequestMapping(value = "/delete" )
+    @DeleteMapping("delete" )
     @ResponseBody
     public ResponseResult toDel(@RequestParam Map map ,  ModelMap modelMap) {
     	tenantService.deleteSystem(map);

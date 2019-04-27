@@ -370,7 +370,7 @@
 	
 	<select id="getNewestData" resultType="map" parameterType="map">
 		select eqtp.name , eqtp.bengxing , eqtp.koujing ,eqtp.gonglv  , eqtp.id , eqtp.update_time, eqtp.longitude , eqtp.latitude ,
-		eqtp.addresscode , DATE_FORMAT(out2.add_time ,'%Y-%m-%d %h:%i') add_time ,out2.waterstatus , out2.flowrate , out2.netcumulative ,
+		eqtp.addresscode , DATE_FORMAT(out2.add_time ,'%Y-%m-%d %T:%i') add_time ,out2.waterstatus , out2.flowrate , out2.netcumulative ,
 		out2.signalquality ,out2.communicationStatus , out2.signalquality , out2.communicationStatus ,out2.dataId , diffhour
 		from equiptype eqtp 
 		LEFT JOIN (

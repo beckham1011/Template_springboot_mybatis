@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Description;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,22 +19,15 @@ import cn.bjjoy.bms.base.ResponseResult;
 import cn.bjjoy.bms.exception.ControllerException;
 import cn.bjjoy.bms.setting.dto.AnalysisDto;
 import cn.bjjoy.bms.setting.entity.User;
-import cn.bjjoy.bms.setting.service.EquipdataService;
-import cn.bjjoy.bms.setting.service.EquiptypeService;
 import cn.bjjoy.bms.util.DateUtils;
 import cn.bjjoy.bms.util.UserUtils;
 
+@SuppressWarnings({"rawtypes"})
 @CrossOrigin
 @Controller
 @RequestMapping(value="analysis")
-public class AnalysisController {
+public class AnalysisController  extends AbstractHosznController{
 
-	@Autowired
-	private EquipdataService equipdataService;
-	
-	@Autowired
-	private EquiptypeService equiptypeService;
-	
     @RequestMapping(value = "/index" )
     public String index( @RequestParam Map paramMap ,ModelMap modelMap) {
 		modelMap.addAttribute("parentId", paramMap.containsKey("parentId") ? paramMap.get("parentId") : "1") ;
@@ -42,7 +35,7 @@ public class AnalysisController {
     }
     
     
-    @RequestMapping(value = "/index2" )
+    @GetMapping(value = "/index2" )
     public String index2( @RequestParam Map paramMap ,ModelMap modelMap) {
 		modelMap.addAttribute("parentId", paramMap.containsKey("parentId") ? paramMap.get("parentId") : "1") ;
 		String dayMonthAgo = DateUtils.formatDate(DateUtils.addDays(new Date(), -31), DateUtils.YYYYMMDDHHMMSS) ;
@@ -53,7 +46,7 @@ public class AnalysisController {
     }
 	
 	@Description("-查询列表")
-	@RequestMapping(value="list")
+	@GetMapping(value="list")
 	@ResponseBody
 	public ResponseResult analysis(@RequestParam Map<String, Object> map) throws ControllerException {
 		User user = UserUtils.getUer() ;

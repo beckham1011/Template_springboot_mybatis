@@ -1,6 +1,7 @@
 package cn.bjjoy.bms.setting.dao;
 
 import cn.bjjoy.bms.setting.entity.Role;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -9,6 +10,7 @@ import java.util.Map;
 
 @Mapper
 @Repository
+@SuppressWarnings("rawtypes")
 public interface RoleMapper {
     int deleteById(Integer id);
 
@@ -25,5 +27,5 @@ public interface RoleMapper {
      */
     List<Role> getListByUserId(Integer userId);
 
-    int getCount(Map param);
+	int getCount(Map param);
 }

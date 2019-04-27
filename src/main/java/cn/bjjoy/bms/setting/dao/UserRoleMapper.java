@@ -2,6 +2,7 @@ package cn.bjjoy.bms.setting.dao;
 
 import cn.bjjoy.bms.setting.dto.UserRoleDto;
 import cn.bjjoy.bms.setting.entity.UserRole;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -12,13 +13,14 @@ import java.util.Map;
 /**
  * Created by bjjoy on 2017/9/22.
  */
+@SuppressWarnings("rawtypes")
 @Mapper
 @Repository
 public interface UserRoleMapper {
 
     int insert(UserRole userRole);
 
-    int update(Map param);
+	int update(Map param);
 
     int deleteByUserId(Integer userId);
 

@@ -307,6 +307,9 @@ h1 {
 	font-size: 10px;
 }
 
+.mapbody{
+	line-height: 19px !important;
+}
 
 .headCenter{
 	float: left;
@@ -331,3 +334,42 @@ h1 {
 .headRight a:visited{text-decoration:none; color: black;}	/*指已经访问过的链接*/
 .headRight a:hover{text-decoration:none; color: black;}		/*指鼠标在链接*/
 .headRight a:active{text-decoration:none; color: black;}	/* 指正在点的链接*/ 
+
+.mappage-content{
+    padding: 0!important;
+    background: #fff;
+}
+
+.mappage-content{
+    padding: 0!important;
+    background: #fff;
+}
+
+
+.page-content{
+	padding: 0!important;
+}
+
+.mapmain-container{
+	
+}
+
+
+.pull-left{
+	margin-left: 5em!important;
+}
+
+.pull-right{
+	margin-right: 5em!important;	
+}
+
+.pagination{
+	    margin: 0!important;
+}
+
+#dituContent{
+	width:100%;
+	height:580px;
+	border:#ccc solid 1px;
+}
+

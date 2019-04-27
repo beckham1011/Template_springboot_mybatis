@@ -17,6 +17,11 @@
     <link href="${ctx}/bjjoy/css/animate.css" rel="stylesheet">
     <link href="${ctx}/bjjoy/css/style.css" rel="stylesheet">
 
+	<script src="${ctx}/js/jquery-2.0.3.min.js"></script>
+	<script src="${ctx}/js/ace-extra.min.js"></script>
+
+	<link rel="stylesheet" href="${ctx}/css/mainpage.css">
+
 </head>
 
 <body class="gray-bg">
@@ -35,7 +40,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">密码：</label>
                                 <div class="col-sm-8">
-                                    <input id="password" name="password" class="form-control" type="text" value="" />
+                                    <input id="password" name="password" class="form-control" type="password" value="" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -45,24 +50,10 @@
                                 </div>
                             </div>
 	                        <div class="form-group">
-	                            <label class="col-sm-3 control-label">管辖泵站区域：</label>
+	                            <label class="col-sm-3 control-label">所属组织：</label>
 	                            <div class="col-sm-8">
-	                                <select name="typeSelect0" id="typeSelect0" class="form-control"  style="width:160px;float:left;height:auto;">
-	                            		<option value="${currentOrg.id}" >${currentOrg.name}</option>
-	                                </select>
-	                                <#if currentOrg.typeLayer lt 3>
-		                                <select id="typeSelect1" name="typeSelect1" class="form-control" style="width:140px;float:left;height:auto;" onChange="typeSelect1Change(this)">
-		                                	<option value="-1" >请选镇级泵站</option>
-		                                    <#list subTypeList1 as type>
-		                                        <option value="${type.id}" >${type.name}</option>
-		                                    </#list>
-		                                </select>
-		                            </#if>
-	                                <#if currentOrg.typeLayer lt 2>
-		                                <select name="typeSelect2" id="typeSelect2" class="form-control"  style="width:140px;float:left;height:auto;" >
-		                            		<option value="-2" >请选择---</option>
-		                                </select>
-	                                </#if>
+	                            	<input id="parentId" name="parentId" class="form-control" type="text" value="" style="display:none;">
+									<#include "${ctx}/selecttree.ftl"/>
 	                            </div>
 	                        </div>
                             <div class="form-group">
@@ -72,14 +63,6 @@
                                 		<option value="0">否</option>
                                 		<option value="1" selected="selected">是</option>
                                 	</select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">创建日期：</label>
-                                <div class="col-sm-8">
-                                    <input id="createDate" name="createDate" readonly="readonly"
-                                           class="laydate-icon form-control"
-                                           value="">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -103,6 +86,7 @@
                             <div class="form-group">
                                 <div class="col-sm-8 col-sm-offset-3">
                                     <button class="btn btn-primary" type="submit">提交</button>
+                                    <button class="btn btn-secondary" onclick="userCancel()">取消</button>
                                 </div>
                             </div>
                         </form>
@@ -116,14 +100,6 @@
     <#include "${ctx}/common.ftl">
     <script type="text/javascript">
     $(document).ready(function () {
-	  	//外部js调用
-	    laydate({
-	        elem: '#createDate', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
-	        event: 'focus', //响应事件。如果没有传入event，则按照默认的click
-            format: 'YYYY-MM-DD hh:mm:ss',
-            istime: true
-	    });
-
 	    $("#userForm").validate({
     	    rules: {
     	    	loginName: {
@@ -139,10 +115,6 @@
     	      	state: {
     	        required: true
     	      },
-    	      	createDate: {
-    	      	date:true,
-    	        required: true
-    	      },
     	      	phone: {
     	        required: true
     	      },
@@ -155,12 +127,12 @@
     	        maxlength: 40
     	      },
                 remarks: {
-    	        required: false,
     	        maxlength: 40
     	      }
     	    },
     	    messages: {},
     	    submitHandler:function(form){
+    	    	console.log("submit");
     	    	$.ajax({
    	    		   type: "POST",
    	    		   dataType: "json",
@@ -177,6 +149,10 @@
     	});
     	
     });
+    
+    function userCancel(){
+    	layer.close(index);
+    }
     
     function typeSelect1Change(obj){
 		var parentId = $('#typeSelect1').val().replace(/\$|\,/g, '');
@@ -195,7 +171,15 @@
 	    });
     }
     
+    function clickNode(event, data){
+		$("#parentId").val(data['id'])
+		console.log("clickNode=========" + data['id'])
+    	$('#equipListHistoryTable').bootstrapTable("refresh");
+    }
     
+    function itemOnclick (){
+    	console.log("itemOnclick=========")
+    }
     </script>
 
 </body>

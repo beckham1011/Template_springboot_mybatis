@@ -1,14 +1,15 @@
 package cn.bjjoy.bms.setting.service;
 
-import cn.bjjoy.bms.setting.dto.UserDto;
-import cn.bjjoy.bms.setting.entity.User;
-
 import java.util.List;
 import java.util.Map;
+
+import cn.bjjoy.bms.setting.dto.UserDto;
+import cn.bjjoy.bms.setting.entity.User;
 
 /**
  * Created by bjjoy on 2017/11/02.
  */
+@SuppressWarnings("rawtypes")
 public interface UserService {
 
     /**
@@ -24,7 +25,7 @@ public interface UserService {
     /**
      * 获取用户列表
      */
-    List<Map> getList(Map param);
+	List<Map> getList(Map param);
 
     /**
      * 获取用户数量

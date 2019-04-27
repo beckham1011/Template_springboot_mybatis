@@ -39,13 +39,13 @@
                         </td>
                     </tr>
                     <tr class="">
-                        <td class="" data-href="/history/index">
+                        <td class="" data-href="app/history/index">
                             <div>
                                 <div class="icon-dialog icon"></div>
                                 <div class="tit">记录查询</div>
                             </div>
                         </td>
-                        <td class="" data-href="/analysis/index2">
+                        <td class="" data-href="app/analysis/index">
                             <div>
                                 <div class="icon-actionsheet icon"></div>
                                 <div class="tit">汇总统计</div>
@@ -53,7 +53,7 @@
                         </td>
                     </tr>
                     <tr class="">
-                        <td class="" data-href="/datacard/index">
+                        <td class="" data-href="app/user/index">
                             <div>
                                 <div class="icon-form icon"></div>
                                 <div class="tit">系统设置</div>

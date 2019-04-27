@@ -1,12 +1,14 @@
 package cn.bjjoy.bms.setting.dao;
 
 import cn.bjjoy.bms.setting.entity.User;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("rawtypes")
 @Mapper
 @Repository
 public interface UserMapper {
@@ -18,7 +20,7 @@ public interface UserMapper {
 
     int updateById(User user);
 
-    List<User> getList(Map param);
+	List<User> getList(Map param);
 
     Integer getCount(Map param);
 

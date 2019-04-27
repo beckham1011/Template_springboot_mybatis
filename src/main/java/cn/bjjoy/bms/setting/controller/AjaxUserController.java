@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,17 +14,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.bjjoy.bms.base.ResponseResult;
 import cn.bjjoy.bms.setting.dto.UserDto;
-import cn.bjjoy.bms.setting.service.UserService;
 import cn.bjjoy.bms.util.DataUtils;
 
+@SuppressWarnings({"rawtypes"})
 @Controller
 @CrossOrigin
 @RequestMapping("ajaxuser")
-public class AjaxUserController {
+public class AjaxUserController extends AbstractHosznController{
 
-    @Autowired
-    private UserService userService;
-	
     @GetMapping(value="getUserList")
     @ResponseBody
 	public ResponseResult test(@RequestParam Map<String, Object> map){

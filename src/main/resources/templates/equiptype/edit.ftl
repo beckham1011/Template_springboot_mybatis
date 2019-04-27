@@ -17,6 +17,11 @@
     <link href="${ctx}/bjjoy/css/animate.css" rel="stylesheet">
     <link href="${ctx}/bjjoy/css/style.css" rel="stylesheet">
 
+	<script src="${ctx}/js/jquery-2.0.3.min.js"></script>
+	<script src="${ctx}/js/ace-extra.min.js"></script>
+
+	<link rel="stylesheet" href="${ctx}/css/mainpage.css">
+
 </head>
 
 <body class="gray-bg">
@@ -57,41 +62,10 @@
 	                        </div>
 
 	                        <div class="form-group">
-	                            <label class="col-sm-3 control-label">父节点：<label style="color:red">*</label></label>
+	                            <label class="col-sm-3 control-label">所属组织：</label>
 	                            <div class="col-sm-8">
-	                                <select name="typeSelect0" id="typeSelect0" class="form-control"  style="width:160px;float:left;height:auto;">
-	                            		<option value="1" >高港区</option>
-	                                </select>
-
-	                                <#if equiptype.typeLayer != null>
-		                                <select id="typeSelect1" name="typeSelect1" class="form-control" style="width:160px;float:left;height:auto;" >
-		                                	<#if parentParentTypes != null>
-		                            			<option value="${parentParentTypes.id?c}" >${parentParentTypes.name}</option>
-		                            		<#else>
-		                            			<option value="-1" ></option>		                            			
-		                            		</#if>
-		                                </select>
-		                                <select name="typeSelect2" id="typeSelect2" class="form-control"  style="width:160px;float:left;height:auto;" >
-		                            		<#if parentTypes != null>
-		                            			<option value="${parentTypes.id?c}" >${parentTypes.name}</option>
-		                            		<#else>
-		                            			<option value="-2" ></option>
-		                            		</#if>
-		                                </select>
-	                                </#if>
-	                                <#if equiptype.typeLayer == null>
-		                                <select id="typeSelect1" name="typeSelect1" class="form-control" style="width:160px;float:left;height:auto;" onChange="typeSelect1Change(this)">
-	                                    	<option value="-1" >请选择父节点---</option>
-	                                        <#list subTypeList1 as type>
-	                                            <option value="${type.id?c}" >
-	                                                ${type.name}
-	                                            </option>
-	                                        </#list>
-	                                    </select>
-	                                    <select name="typeSelect2" id="typeSelect2" class="form-control"  style="width:160px;float:left;height:auto;" onChange="typeSelect2Change(this)">
-	                                		<option value="-2" >请选择父节点---</option>
-	                                    </select>
-	                                </#if>
+	                            	<input id="parentId" name="parentId" class="form-control" type="text" value="" style="display:none;">
+									<#include "${ctx}/selecttree.ftl"/>
 	                            </div>
 	                        </div>
 
@@ -223,6 +197,9 @@
     	});
     });
     
+    function clickNode(event, data){
+		$("#parentId").val(data['id'])
+    }
     
     function typeSelect1Change(obj){
     	var parentId = $('#parentId2').val().replace(/\$|\,/g, '');

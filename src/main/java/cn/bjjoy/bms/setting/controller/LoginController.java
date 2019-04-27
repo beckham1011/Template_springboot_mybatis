@@ -13,7 +13,7 @@ import cn.bjjoy.bms.util.DeviceUtil;
 import cn.bjjoy.bms.util.RedirectUtil;
 
 @Controller
-public class LoginController {
+public class LoginController extends AbstractHosznController{
 	
 	private static final Logger log = LogManager.getLogger();
 	

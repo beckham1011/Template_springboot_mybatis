@@ -5,9 +5,10 @@ import lombok.Setter;
 
 @Setter
 @Getter
+@SuppressWarnings("unused")
 public class UserRole {
 
-    private Integer userId;
+	private Integer userId;
 
     private Integer roleId;
 
@@ -15,4 +16,5 @@ public class UserRole {
         this.userId = userId;
         this.roleId = roleId;
     }
+    
 }

@@ -1,36 +1,46 @@
 package cn.bjjoy.bms.setting.controller;
 
-import cn.bjjoy.bms.base.Codes;
-import cn.bjjoy.bms.setting.service.MenuService;
-import cn.bjjoy.bms.setting.vo.ZtreeView;
-import cn.bjjoy.bms.util.DataUtils;
-import cn.bjjoy.bms.base.ResponseResult;
-import cn.bjjoy.bms.setting.entity.Menu;
-import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.*;
+import cn.bjjoy.bms.base.Codes;
+import cn.bjjoy.bms.base.ResponseResult;
+import cn.bjjoy.bms.setting.entity.Menu;
+import cn.bjjoy.bms.setting.vo.ZtreeView;
+import cn.bjjoy.bms.util.DataUtils;
+
+import com.github.pagehelper.PageInfo;
 
 /**
  *
  * @author bjjoy
- * @date 2017/11/05
+ * @date 2018/11/05
  */
+@SuppressWarnings({"unchecked"})
 @Controller
 @CrossOrigin
-@RequestMapping("/menu")
-public class MenuController {
-
-    @Autowired
-    private MenuService menuService;
+@RequestMapping("menu")
+public class MenuController extends AbstractHosznController{
 
 	/**
 	 * 到新建菜单页
 	 */
-	@RequestMapping(value = "/add" )
+	@GetMapping(value = "add" )
 	public String toAdd(ModelMap map) {
 		map.addAttribute("list", this.getMenuList());
 		return "/menu/add";
@@ -41,7 +51,7 @@ public class MenuController {
      * @param menu
      */
     @ResponseBody
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @PostMapping(value = "create")
     public ResponseResult createMenu(Menu menu){
     	if (menu.getParentId() != null && menu.getParentId() == 0){
     		menu.setParentId(null);
@@ -55,7 +65,7 @@ public class MenuController {
 	/**
 	 * 到资源列表页
 	 */
-	@RequestMapping(value = "/index" )
+	@GetMapping(value = "index" )
 	public String toIndex() {
 		return "/menu/index";
 	}
@@ -64,7 +74,7 @@ public class MenuController {
      * 菜单列表
      */
     @ResponseBody
-    @RequestMapping(value = "/getList", method = RequestMethod.GET)
+    @GetMapping("getList")
     public ResponseResult getList(Menu menu,
 								  @RequestParam(defaultValue = "1") Integer pageNumber,
 								  @RequestParam(defaultValue = "10") Integer pageSize){
@@ -76,7 +86,7 @@ public class MenuController {
      * 菜单tree列表
      */
     @ResponseBody
-    @RequestMapping(value = "/tree/{roleId}", method = RequestMethod.GET)
+    @GetMapping("tree/{roleId}")
     public List<ZtreeView> getList(@PathVariable Integer roleId){
         List<ZtreeView> resultTreeNodes = new ArrayList<>();
         resultTreeNodes.add(new ZtreeView(0, null, "系统菜单", true));
@@ -108,7 +118,7 @@ public class MenuController {
     /**
      * 菜单详情
      */
-    @RequestMapping(value = "/getMenu", method = RequestMethod.GET)
+    @GetMapping(value = "getMenu")
     public ResponseResult getMenu(@RequestParam Integer id, String traceID){
         Menu menu = menuService.getMenu(id);
         Map<String , Object> resultMap = DataUtils.getData(menu, Map.class);
@@ -122,7 +132,7 @@ public class MenuController {
 	/**
 	 * 到新建菜单页
 	 */
-	@RequestMapping(value = "/edit/{menuId}" )
+    @GetMapping("edit/{menuId}" )
 	public String toEdit(@PathVariable Integer menuId, ModelMap map) {
 		Menu menu = this.menuService.getMenu(menuId);
 		map.addAttribute("list", this.getMenuList());
@@ -134,7 +144,7 @@ public class MenuController {
      * 菜单详情
      */
     @ResponseBody
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @PostMapping("update")
     public ResponseResult update(Menu menu){
     	if (menu.getParentId() != null && menu.getParentId() == 0){
     		menu.setParentId(null);
@@ -147,7 +157,7 @@ public class MenuController {
      * 菜单删除
      */
     @ResponseBody
-    @RequestMapping(value = "/delete/{menuId}", method = RequestMethod.POST)
+    @DeleteMapping("delete/{menuId}")
     public ResponseResult delete(@PathVariable Integer menuId){
     	int count = this.menuService.getRoleMenuCountByMenuId(menuId);
     	if (count > 0){

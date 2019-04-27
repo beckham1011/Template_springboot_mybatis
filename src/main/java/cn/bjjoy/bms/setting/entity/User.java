@@ -15,6 +15,11 @@ import java.util.Date;
 @ToString
 public class User implements Serializable {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6649079086351242026L;
+
+	/**
      * 编号
      */
     private Integer id;

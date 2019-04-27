@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.github.pagehelper.PageInfo;
 
+@SuppressWarnings("rawtypes")
 public interface TenantService {
 
 	public List<Map<String,Object>> getTenants(Map map);

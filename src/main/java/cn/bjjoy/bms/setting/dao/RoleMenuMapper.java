@@ -1,6 +1,7 @@
 package cn.bjjoy.bms.setting.dao;
 
 import cn.bjjoy.bms.setting.entity.RoleMenu;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -11,6 +12,7 @@ import java.util.Map;
 /**
  * Created by eric on 2017/10/30.
  */
+@SuppressWarnings("rawtypes")
 @Repository
 @Mapper
 public interface RoleMenuMapper {
@@ -30,7 +32,7 @@ public interface RoleMenuMapper {
     /**
      * 获取角色菜单列表
      */
-    List<RoleMenu> getList(Map param);
+	List<RoleMenu> getList(Map param);
 
     int getRoleMenuCountByMenuId(Integer menuId);
 }

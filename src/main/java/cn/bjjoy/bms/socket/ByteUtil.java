@@ -23,7 +23,6 @@ public class ByteUtil {
 		String hex = "";
 		AtomicInteger idx = new AtomicInteger(0);
 		for (byte b : bytes) {
-			logger.info("byte b : "  + b + " , index : " + idx);
 			hex = String.valueOf(hexStr.charAt((b & 0xF0) >> 4));
 			hex += String.valueOf(hexStr.charAt(b & 0x0F));
 			result += hex + " ";

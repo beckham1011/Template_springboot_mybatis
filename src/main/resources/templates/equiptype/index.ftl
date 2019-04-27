@@ -52,7 +52,6 @@
 						<div class="row">
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
-								
 								<div class="row ">
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">泵站管理</h3>
@@ -274,7 +273,7 @@
                     shadeClose: true,
                     shade: false,
                     area: ['900px', '600px'],
-                    content: '${ctx}/eqiuptype/add',
+                    content: '${ctx}/equiptype/add',
                     end: function(index){
                         layer.close(index);
                         $('#equiptypelist').bootstrapTable("refresh");
@@ -289,7 +288,7 @@
                     shadeClose: true,
                     shade: false,
                     area: ['900px', '260px'],
-                    content: '${ctx}/eqiuptype/importFile'
+                    content: '${ctx}/equiptype/importFile'
                 });
             }
             
@@ -300,7 +299,7 @@
                     shadeClose: true,
                     shade: false,
                     area: ['900px', '600px'],
-                    content: '${ctx}/eqiuptype/edit?id=' + id,
+                    content: '${ctx}/equiptype/edit?id=' + id,
                     end: function(index){
                     	layer.close(index);
                         $('#equiptypelist').bootstrapTable("refresh");

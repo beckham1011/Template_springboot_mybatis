@@ -26,6 +26,7 @@ import com.github.pagehelper.PageInfo;
  * @author bjjoy
  * @date 2017/11/05
  */
+@SuppressWarnings({"unchecked"})
 @Controller
 @CrossOrigin
 @RequestMapping("/role")
@@ -52,8 +53,6 @@ public class RoleController {
     public ResponseResult getList(@RequestParam(defaultValue = "1") Integer pageNumber,
                                   @RequestParam(defaultValue = "10") Integer pageSize){
         PageInfo<Role> page = roleService.getPage(pageNumber, pageSize);
-        
-        Map<String , Object> map = new HashMap<>() ;
         
         return ResponseResult.ok(page);
     }

@@ -17,7 +17,6 @@ public class SingletonSocket {
 	private volatile static SingletonSocket instance = null ;
 	
 	private Socket socket8082 = null ;
-	private Socket socket8084 = null ;
 	
 	private SingletonSocket(){
 		try {

@@ -7,25 +7,24 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.bjjoy.bms.setting.poi.Equiptype;
-import cn.bjjoy.bms.setting.service.EquiptypeService;
 import cn.bjjoy.bms.util.DataUtils;
 import cn.bjjoy.bms.util.UserChangeVo;
 
 @RestController
-public class ExportController {
+public class ExportController extends AbstractHosznController{
 
-	@Autowired
-	private EquiptypeService equiptypeService;
-	
-	@RequestMapping("/exportEquiptype")
+	private static final Logger logger = LogManager.getLogger();
+		
+	@GetMapping("/exportEquiptype")
     public void exportUserInfo(HttpServletResponse response,UserChangeVo userChangeVo) throws Exception {
 		Map<String , Object> map = new HashMap<>();
 		List<Map<String, Object>> types = equiptypeService.exportTypeList(map);
@@ -40,6 +39,8 @@ public class ExportController {
 		response.setHeader("Content-disposition", "attachment; filename="+ fileName + ".xls");// 03版本后缀xls，之后的xlsx
 		OutputStream out = response.getOutputStream();
         workbook.write(out);//输出结果集
+        
+        logger.info("export user info success");
 	}
 	
 	

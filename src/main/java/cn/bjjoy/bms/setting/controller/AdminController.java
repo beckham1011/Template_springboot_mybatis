@@ -13,14 +13,14 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.bjjoy.bms.setting.dto.EquiptypeDto;
-import cn.bjjoy.bms.setting.service.EquiptypeService;
-import cn.bjjoy.bms.setting.service.UserService;
 import cn.bjjoy.bms.util.DataUtils;
 import cn.bjjoy.bms.util.DeviceUtil;
 import cn.bjjoy.bms.util.EncryptUtils;
@@ -29,15 +29,10 @@ import cn.bjjoy.bms.util.UserUtils;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminController {
+public class AdminController extends AbstractHosznController {
 
 	private static final Logger logger = LogManager.getLogger();
 	
-	@Autowired
-	private EquiptypeService equiptypeService;
-	
-	@Autowired
-	UserService userService;
 	
 	@GetMapping(value = "/login")
 	public String login(HttpServletRequest request) {

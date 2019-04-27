@@ -1,12 +1,16 @@
 package cn.bjjoy.bms.exception;
 
 /**
- * @author bjjoy
+ * @author 
  * @date 2017/11/15
  **/
 public class OperationException extends Exception {
 
-    private int code;
+    /**
+	 */
+	private static final long serialVersionUID = 8356585231950842139L;
+
+	private int code;
 
     private String msg;
 

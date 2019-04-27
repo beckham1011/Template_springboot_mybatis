@@ -2,6 +2,7 @@ package cn.bjjoy.bms.setting.service;
 
 import cn.bjjoy.bms.setting.dto.RoleDto;
 import cn.bjjoy.bms.setting.entity.Role;
+
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Map;
 /**
  * Created by bjjoy on 2017/11/02.
  */
+@SuppressWarnings("rawtypes")
 public interface RoleService {
 
     /**
@@ -37,7 +39,7 @@ public interface RoleService {
     /**
      * 获取角色列表数量
      */
-    int getCount(Map param);
+	int getCount(Map param);
 
     /**
      * 角色创建

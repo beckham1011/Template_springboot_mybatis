@@ -5,6 +5,7 @@
 		<title>厚水智能-实时监测</title>
 		<meta name="keywords" content="" />
 		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />		
 		<!-- basic styles -->
 
 		<link href="${ctx}/css/bootstrap.min.css" rel="stylesheet" />
@@ -34,20 +35,27 @@
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	</head>
 
-	<body >
-
+	<body class="mapbody" >
+			<div class="navbar navbar-default" id="navbar">
+				<div class="msghead">
+					<div class="headLeft"><i class="fa fa-backward" aria-hidden="true"></i>&nbsp;<a href="/appmainpage">主页</a></div>
+					<div class="headCenter">
+						<span>实时数据地图</span>
+						<p class="msgHeadCount">设备总数:558，在线:172，离线:386，在线率:30.77%</p>
+					</div>
+					<div class="headRight"><a href="#" onclick="logout()">退出</a>&nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i></div>
+				</div>
+			</div>
 			<div class="main-container" id="main-container">
 				<div class="main-container-inner">
-					<div class="main-content" style="margin-left: 0px!important;">
-	
-						<div class="page-content" >
+					<div class="mappage-content">
+						<div class="mappage-content" >
 							<div class="row">
 								<div class="col-xs-12">
 									<!-- PAGE CONTENT BEGINS -->
-
 	                                <div class="table-responsive">
 										  <!--百度地图容器-->
-										  <div style="width:550px;height:620px;border:#ccc solid 1px;" id="dituContent"></div>
+										  <div style="width:100%;height:580px;border:#ccc solid 1px;" id="dituContent"></div>
 	                                </div>
 								</div><!-- /.col -->
 							</div><!-- /.row -->
@@ -58,34 +66,17 @@
 	
 			</div><!-- /.main-container -->
 	
-	<div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-						&times;
-					</button>
-					<h4 class="modal-title" id="myModalLabel">
-						模态框（Modal）标题
-					</h4>
-				</div>
-				<div class="modal-body">
-					在这里添加一些文本
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-				</div>
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal -->
-	</div>
-	
 <#include "${ctx}/common.ftl"/>
-
-//<table><tr><td>泵型</td><td>'"+stationList[i].bengxing+"'</td></tr><tr><td>口径</td><td>'"+stationList[i].koujing+"'</td></tr><tr><td>功率</td><td>'"+stationList[i].gonglv+"'</td></tr><tr><td>瞬时流量（M3/h）</td><td>'"+stationList[i].flowrate+"'</td></tr><tr><td>正累积（M3）</td><td>'"+stationList[i].netcumulative+"'</td></tr><tr><td>信号质量</td><td>'"+stationList[i].signalquality+"'</td></tr><tr><td>更新时间</td><td>'"+stationList[i].add_time+"'</td></tr></table>
 
 </body>
 
 <script type="text/javascript">
+		
+    function logout(){
+    	localStorage.removeItem("username");
+    	window.location.href="/logout";
+    }
+
 	//创建和初始化地图函数：
 	function initMap(){
 		createMap();//创建地图
@@ -136,9 +127,9 @@
 		for(var i=0;i < stationList.length ; i++){
 			var label ;
 			if(stationList[i].waterstatus == '0'){
-				label = new BMap.Label("<div style='padding:2px;' rel='popover' data-content='table1231263516235165236152' data-original-title='"+stationList[i].name+"' id='station_" + stationList[i].id + "'><img src='${ctx}/images/big_red.png' style='height: 15px;'/>"+stationList[i].name+"</div>",{point:new BMap.Point(stationList[i].longitude,stationList[i].latitude),offset:new BMap.Size(3,-6)});
+				label = new BMap.Label("<div style='padding:2px;' rel='popover' data-content='' data-original-title='"+stationList[i].name+"' id='station_" + stationList[i].id + "'><img src='${ctx}/images/big_red.png' style='height: 15px;'/>"+stationList[i].name+"</div>",{point:new BMap.Point(stationList[i].longitude,stationList[i].latitude),offset:new BMap.Size(3,-6)});
 			}else{
-				label = new BMap.Label("<div style='padding:2px;' rel='popover' data-content='table1231263516235165236152' data-original-title='"+stationList[i].name+"' id='station_" + stationList[i].id + "'><img src='${ctx}/images/big_online.gif' style='height: 15px;'/>"+stationList[i].name+"</div>",{point:new BMap.Point(stationList[i].longitude,stationList[i].latitude),offset:new BMap.Size(3,-6)});
+				label = new BMap.Label("<div style='padding:2px;' rel='popover' data-content='' data-original-title='"+stationList[i].name+"' id='station_" + stationList[i].id + "'><img src='${ctx}/images/big_online.gif' style='height: 15px;'/>"+stationList[i].name+"</div>",{point:new BMap.Point(stationList[i].longitude,stationList[i].latitude),offset:new BMap.Size(3,-6)});
 			}
 			map.addOverlay(label);
 			label.setStyle({borderColor:"#999"});

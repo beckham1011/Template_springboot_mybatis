@@ -46,7 +46,6 @@
 			</script>
 			<#include "${ctx}/head_nav.ftl" />
 			<div class="main-container-inner">
-				<a class="menu-toggler" id="menu-toggler" href="#">泵站选择</a>
 				<div class="main-content" style="margin-left: 0px!important;">
 					<div class="breadcrumbs" id="breadcrumbs">
 						<script type="text/javascript">
@@ -60,15 +59,6 @@
 							<li><a href="#">用户中心</a></li>
 							<li class="active">用户管理</li>
 						</ul><!-- .breadcrumb -->
-
-						<div class="nav-search" id="nav-search">
-							<form class="form-search">
-								<span class="input-icon">
-									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-									<i class="icon-search nav-search-icon"></i>
-								</span>
-							</form>
-						</div><!-- #nav-search -->
 					</div>
 
 					<div class="page-content">
@@ -90,144 +80,18 @@
                                     <table id="userListTable"></table>
                                 </div>
 
-								<div id="modal-table" class="modal fade" tabindex="-1">
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header no-padding">
-												<div class="table-header">
-													<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-														<span class="white">&times;</span>
-													</button>
-													Results for "Latest Registered Domains
-												</div>
-											</div>
-
-											<div class="modal-body no-padding">
-												<table class="table table-striped table-bordered table-hover no-margin-bottom no-border-top">
-													<thead>
-														<tr>
-															<th>Domain</th>
-															<th>Price</th>
-															<th>Clicks</th>
-
-															<th>
-																<i class="icon-time bigger-110"></i>
-																Update
-															</th>
-														</tr>
-													</thead>
-
-													<tbody>
-														<tr>
-															<td>
-																<a href="#">ace.com</a>
-															</td>
-															<td>$45</td>
-															<td>3,330</td>
-															<td>Feb 12</td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
-
-											<div class="modal-footer no-margin-top">
-												<button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">
-													<i class="icon-remove"></i>
-													Close
-												</button>
-
-												<ul class="pagination pull-right no-margin">
-													<li class="prev disabled">
-														<a href="#">
-															<i class="icon-double-angle-left"></i>
-														</a>
-													</li>
-
-													<li class="active">
-														<a href="#">1</a>
-													</li>
-
-													<li>
-														<a href="#">2</a>
-													</li>
-
-													<li>
-														<a href="#">3</a>
-													</li>
-
-													<li class="next">
-														<a href="#">
-															<i class="icon-double-angle-right"></i>
-														</a>
-													</li>
-												</ul>
-											</div>
-										</div><!-- /.modal-content -->
-									</div><!-- /.modal-dialog -->
-								</div><!-- PAGE CONTENT ENDS -->
 							</div><!-- /.col -->
 						</div><!-- /.row -->
 					</div><!-- /.page-content -->
 				</div><!-- /.main-content -->
 
-				<div class="ace-settings-container" id="ace-settings-container">
-					<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
-						<i class="icon-cog bigger-150"></i>
-					</div>
-
-					<div class="ace-settings-box" id="ace-settings-box">
-						<div>
-							<div class="pull-left">
-								<select id="skin-colorpicker" class="hide">
-									<option data-skin="default" value="#438EB9">#438EB9</option>
-									<option data-skin="skin-1" value="#222A2D">#222A2D</option>
-									<option data-skin="skin-2" value="#C6487E">#C6487E</option>
-									<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
-								</select>
-							</div>
-							<span>&nbsp; Choose Skin</span>
-						</div>
-
-						<div>
-							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
-							<label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
-						</div>
-
-						<div>
-							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
-							<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
-						</div>
-
-						<div>
-							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
-							<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
-						</div>
-
-						<div>
-							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
-							<label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
-						</div>
-
-						<div>
-							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container" />
-							<label class="lbl" for="ace-settings-add-container">
-								Inside
-								<b>.container</b>
-							</label>
-						</div>
-					</div>
-				</div><!-- /#ace-settings-container -->
 			</div><!-- /.main-container-inner -->
 
-			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-				<i class="icon-double-angle-up icon-only bigger-110"></i>
-			</a>
 		</div><!-- /.main-container -->
 
 		<#include "${ctx}/common.ftl"/>
 
 		<!-- inline scripts related to this page -->
-
 		<script type="text/javascript">
             $(document).ready(function () {
                 //初始化表格,动态从服务器加载数据
@@ -320,10 +184,12 @@
                 }
                 return params;
             }
+            
             function search() {
                 var params = {"loginName":$("#loginName").val()};
                 $('#userListTable').bootstrapTable("refresh");
             }
+            
             function add(){
                 layer.open({
                     type: 2,

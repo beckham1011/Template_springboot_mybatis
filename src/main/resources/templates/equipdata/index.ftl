@@ -63,14 +63,14 @@
 		                                    	<button class="btn btn-xs btn-danger" onclick="refreshAllStation();"><i class=""></i>&nbsp;即时刷新泵站</button>
 	                                        	<input id="stationName" placeholder="请输入泵站名称" name="stationName" type="text"/>
 	                                        	<aclass="glyphicon glyphicon-remove btn form-control-feedback"style="pointer-events:auto"></a>
-		                                        <button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
+		                                        <button class="btn btn-xs btn-primary" onclick="refreshTable()"><i class="fa fa-search"></i>&nbsp;查询</button>
                                         	</div>
                                         	&nbsp;
                                         	<label>
-												<input type="checkbox" id="online" name="online" onclick="getOnlineOfflineData()"/>在线
+												<input type="checkbox" id="online" name="online" onclick="refreshTable()"/>在线
 											</label>
 											<label>
-												<input type="checkbox" id="offline" name="offline" onclick="getOnlineOfflineData()"/>离线
+												<input type="checkbox" id="offline" name="offline" onclick="refreshTable();"/>离线
 											</label>
                                         </div>
                                     </div>
@@ -223,14 +223,6 @@
                 return params;
             }
             
-            function search() {
-                $('#equipdataListTable').bootstrapTable("refresh");
-            }
-            
-            function getOnlineOfflineData(){
-                $('#equipdataListTable').bootstrapTable("refresh");
-            }
-            
             function refreshEquiptypeData(id){
             	layer.confirm('发送成功，需要5秒钟返回数据。', {icon: 1, title:'提示'}, function(index){
 					$.ajax({
@@ -239,7 +231,7 @@
 	                    url: '${ctx}/socket?param='  + id,
 	                    success: function(msg){
 		                    layer.close(index);
-						    $('#equipdataListTable').bootstrapTable("refresh");
+						    refreshTable();
 	                    }
 	                });
 	            });
@@ -253,7 +245,7 @@
 	                    url: '${ctx}/socket8082?param=all' ,
 	                    success: function(msg){
 	                    	layer.close(index);
-						    $('#equipdataListTable').bootstrapTable("refresh");
+						    refreshTable();
 	                    }
 	                });
 	            });
@@ -270,25 +262,19 @@
                     content: '${ctx}/equipdata/edit/' + addressCode + '/' + dataid,
                     end: function(index){
                         layer.close(index);
-                        $('#equipdataListTable').bootstrapTable("refresh");
+                        refreshTable();
                     }
                 });
             	
             }
             
-            
-			function itemOnclick2(target){
-				//找到当前节点id
-				var nodeid = $(target).attr('data-nodeid');
-				var params = getQueryParams ;
-				console.log(params.parentId);
-				$('#equipdataListTable').bootstrapTable("refresh");
-			}
+            function refreshTable(){
+                $('#equipdataListTable').bootstrapTable("refresh");
+            }
             
             function clickNode(event, data){
-	        	console.log(  ) ;
 	        	localStorage.setItem("parentId",data['id']);
-	        	$('#equipdataListTable').bootstrapTable("refresh");
+	        	refreshTable();
 	        }
             
             function itemOnclick (){}

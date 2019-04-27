@@ -19,8 +19,6 @@
             url: "${ctx}/equiptype/tree2",
             success: function(result){
                 
-                console.log("click tree")
-                
                 treeData = result.data.typeTree;
                 
                 $('#treeview1').treeview({

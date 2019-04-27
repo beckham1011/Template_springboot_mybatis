@@ -15,6 +15,7 @@ import cn.bjjoy.bms.setting.persist.model.Datacard;
  * 创建时间 ：2018-09-13 23:02:18
  * @version 1.0
  */
+@SuppressWarnings("rawtypes")
 @Mapper
 @Repository
 public interface DatacardDao extends BaseDao<Datacard> {

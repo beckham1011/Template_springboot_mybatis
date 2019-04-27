@@ -9,14 +9,14 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Description;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,14 +28,9 @@ import cn.bjjoy.bms.setting.dto.UserRoleDto;
 import cn.bjjoy.bms.setting.entity.Role;
 import cn.bjjoy.bms.setting.entity.User;
 import cn.bjjoy.bms.setting.persist.model.Equiptype;
-import cn.bjjoy.bms.setting.service.EquiptypeService;
-import cn.bjjoy.bms.setting.service.MenuService;
-import cn.bjjoy.bms.setting.service.RoleService;
-import cn.bjjoy.bms.setting.service.UserRoleService;
-import cn.bjjoy.bms.setting.service.UserService;
 import cn.bjjoy.bms.util.DataUtils;
+import cn.bjjoy.bms.util.DateUtils;
 import cn.bjjoy.bms.util.EncryptUtils;
-import cn.bjjoy.bms.util.Response;
 import cn.bjjoy.bms.util.UserUtils;
 
 /**
@@ -45,30 +40,15 @@ import cn.bjjoy.bms.util.UserUtils;
 @CrossOrigin
 @Controller
 @SuppressWarnings("rawtypes")
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("user")
+public class UserController extends AbstractHosznController {
 
 	private static final Logger logger = LogManager.getLogger();
-
-    @Autowired
-    private MenuService menuService;
-
-    @Autowired
-    private EquiptypeService equiptypeService ;
-    
-    @Autowired
-    private RoleService roleService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private UserRoleService userRoleService;
 
 	/**
 	 * 跳转添加用户页面
 	 */
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	@GetMapping("add")
 	public String add(ModelMap map) {
 		User user = UserUtils.getUer() ;
 		map.put("parentId", user.getParentId()) ;
@@ -89,11 +69,11 @@ public class UserController {
      * @param userDto
      */
     @ResponseBody
-    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    @PostMapping("insert")
     public ResponseResult insertOrUpdate(UserDto userDto){
-    	Integer typeAndLayer = equiptypeService.getTypeAndLayer(userDto) ;
-    	userDto.setParentId(typeAndLayer);
-    	userDto.setUpdateDate(userDto.getCreateDate());
+    	String currentTime = DateUtils.getCurrentDate();
+    	userDto.setCreateDate(currentTime);
+    	userDto.setUpdateDate(currentTime);
 		if(StringUtils.isNotBlank(userDto.getPassword())){
 			userDto.setPassword(EncryptUtils.encryptMD5(userDto.getPassword()));
 		}else {
@@ -113,7 +93,7 @@ public class UserController {
     /**
      * 获取用户详情
      */
-    @RequestMapping(value = "/getUser", method = RequestMethod.GET)
+    @GetMapping("getUser")
     public ResponseResult getUser(@RequestParam Integer id){
         UserDto userDto = null;
 		try {
@@ -147,7 +127,7 @@ public class UserController {
 	 * 跳转到修改用户页面
 	 * @param id
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	@GetMapping("edit/{id}")
 	public String toEdit(@PathVariable Integer id, ModelMap map){
 		User user = userService.getUserDetail(id);
 		map.addAttribute("userDto", user);
@@ -171,7 +151,7 @@ public class UserController {
      * 更新用户信息
      * @param userDto
      */
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @PostMapping("update")
 	@ResponseBody
     public ResponseResult update(UserDto userDto){
 
@@ -186,7 +166,7 @@ public class UserController {
      * 用户管理初始化页面
      * @return
      */
-    @RequestMapping(value = "/index" )
+    @GetMapping("index" )
     public String index() {
         return "/user/index";
     }
@@ -198,7 +178,7 @@ public class UserController {
 	
 	@SuppressWarnings("unchecked")
 	@ResponseBody
-    @RequestMapping(value = "/getList", method = RequestMethod.GET)
+    @GetMapping("getList")
     public ResponseResult getList(UserDto userDtoParam, @RequestParam(defaultValue = "1") Integer pageNumber, @RequestParam(defaultValue = "10") Integer pageSize){
 		Integer count = 0;
 		List<UserDto> userList = null;
@@ -260,7 +240,7 @@ public class UserController {
      * @param userId
      */
     @ResponseBody
-    @RequestMapping(value = "/delete/{userId}", method = RequestMethod.POST)
+    @PostMapping("delete/{userId}")
     public ResponseResult delete(@PathVariable Integer userId){
 
         if(userId == null){
@@ -273,7 +253,7 @@ public class UserController {
         return ResponseResult.ok(user.getId());
     }
 
-    @RequestMapping(value = "/grant/{id}", method = RequestMethod.GET)
+    @GetMapping("grant/{id}")
     public String grant(@PathVariable Integer id, ModelMap map) {
         User user = userService.getUserDetail(id);
         map.put("user", user);
@@ -291,7 +271,7 @@ public class UserController {
     }
 
     @Description("打开修改密码页面")
-    @RequestMapping(value = "changePwd" , method = RequestMethod.GET)
+    @GetMapping(value = "changePwd" )
     public String changePwd(@RequestParam Integer id, ModelMap map) {
         User user = userService.getUserDetail(id);
         map.put("password", user.getPassword()) ;
@@ -300,7 +280,7 @@ public class UserController {
 
     @Description("修改密码保存")
     @ResponseBody
-    @RequestMapping(value = "changePwd", method = RequestMethod.POST)
+    @PostMapping(value = "changePwd")
     public ResponseResult changePwdSave(@RequestParam Map map ) {
     	User user = UserUtils.getUer() ;
     	String newPwdAfterEncrypt = EncryptUtils.encryptMD5((String)map.get("newPwd1"));
@@ -317,7 +297,7 @@ public class UserController {
 
     
     
-//    @RequestMapping(value = "/get", method = RequestMethod.GET)
+//    @RequestMapping("get", method = RequestMethod.GET)
 //    public ResponseResult get(User user){
 //
 //        return ResponseResult.ok(userService.findUserByName("test2"));
