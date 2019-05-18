@@ -69,7 +69,7 @@
 								<div class="row ">
                                     <div class="col-xs-12">
                                     	<h3 class="header smaller lighter blue">用户管理</h3>
-                                    	<div class="form-group">用户名：<input id="loginName" name="loginName" type="text"/>
+                                    	<div class="form-group"><input id="loginName" placeholder="请输入用户名" name="loginName" type="text"/>
                                         	<button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
                                             <button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加</button>
                                         </div>

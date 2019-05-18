@@ -8,10 +8,11 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import net.sf.ehcache.util.concurrent.ConcurrentHashMap;
 
 public class TCPServer {
 
@@ -28,9 +29,8 @@ public class TCPServer {
 	
 	public TCPServer() {
 		try {
- 
 			serverSocket = new ServerSocket(6789);
-			storeInfo = new HashMap<String, PrintWriter>();
+			storeInfo = new ConcurrentHashMap<>();
 			exec = Executors.newCachedThreadPool();
  
 		} catch (Exception e) {

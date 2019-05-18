@@ -64,23 +64,6 @@ public class SpringSocketUtil implements ApplicationContextAware {
 	}
 
 
-	 public static String[] parse8084SocketData(String source){
-		 String[] values = new String[4];
-		  try {
-			String address = SpringSocketUtil.subStringByIndex(source , 1 , Constants.LENGTH_RAW) ;
-			String forwardCollection = SpringSocketUtil.subStringByIndex(source , 21 , Constants.LENGTH_MORE) ;
-			String backwardCollection = SpringSocketUtil.subStringByIndex(source , 81 , Constants.LENGTH_MORE) ;
-			String flowRate = SpringSocketUtil.subStringByIndex(source , 9 , 11) ;
-			values[0] = SpringSocketUtil.convertToHexLong(address) ;
-			values[1] = SpringSocketUtil.convertToHexLong(forwardCollection) ;
-			values[2] = SpringSocketUtil.convertToHexLong(backwardCollection) ;
-			values[3] = SpringSocketUtil.convertToHexLong(flowRate) ;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return values ;
-	}
-	
 
 	 public static String[] parse8082SocketData(String source){
 		 String[] values = new String[4];

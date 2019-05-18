@@ -2,8 +2,8 @@ package cn.bjjoy.bms.setting.controller;
 
 import java.net.Socket;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import cn.bjjoy.bms.setting.constants.Constants;
 
@@ -12,7 +12,7 @@ import cn.bjjoy.bms.setting.constants.Constants;
  */
 public class SingletonSocket {
 
-	Logger logger = LoggerFactory.getLogger(SingletonSocket.class) ;
+	private static final Logger logger = LogManager.getLogger();
 	
 	private volatile static SingletonSocket instance = null ;
 	
