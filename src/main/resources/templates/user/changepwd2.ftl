@@ -30,31 +30,30 @@
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
-                        <form class="form-horizontal m-t" id="changeUserPassword">
-                        	<input type="hidden" id="id" name="id" value="">
+                        <form class="form-horizontal m-t" id="userForm">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">初始密码：<label style="color:red">*</label></label>
+                                <label class="col-sm-3 control-label">旧密码：<label style="color:red">*</label></label>
                                 <div class="col-sm-8">
-                                    <input id="oldPwd" name="oldPwd" class="form-control" type="password" value="" />
+                                    <input id="oldpwd" name="oldpwd" class="form-control" type="password" value="" />
                                 </div>
                             </div>
 	                        <div class="form-group">
 	                            <label class="col-sm-3 control-label">输入新密码：<label style="color:red">*</label></label>
 	                            <div class="col-sm-8">
-	                                <input id="newPwd1" name="newPwd1" class="form-control" type="password"" value="" />
+	                                <input id="newPwd1" name="newPwd1" class="form-control" type="password" value="" />
 	                            </div>
 	                        </div>
 	                        
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">再次输入新密码：<label style="color:red">*</label></label>
-                                <div class="col-sm-8">
-                                    <input id="newPwd2" name="newPwd2" type="password" class="form-control" value="">
-                                </div>
-                            </div>                                                        
+	                        <div class="form-group">
+	                            <label class="col-sm-3 control-label">再输入新密码：<label style="color:red">*</label></label>
+	                            <div class="col-sm-8">
+	                                <input id="newPwd2" name="newPwd2" class="form-control" type="password" value="" />
+	                            </div>
+	                        </div>
                             
                             <div class="form-group">
                                 <div class="col-sm-8 col-sm-offset-3">
-                                    <button class="btn btn-primary" onclick="userPasswordFormSubmit()" type="submit">提交</button>
+                                    <button class="btn btn-primary" type="submit">提交</button>
                                 </div>
                             </div>
                         </form>
@@ -67,43 +66,48 @@
     <!-- 全局js -->
 <#include "${ctx}/common.ftl">
 <script type="text/javascript">
-    <script type="text/javascript">
     $(document).ready(function () {
-	    $("#changeUserPassword").validate({
+	  	//外部js调用
+
+	    $("#userForm").validate({
     	    rules: {
-    	    	oldPwd: {
+    	    	oldpwd: {
     	        required: true,
-    	       	rangelength:[6,15]
+    	        minlength: 4,
+    	    	maxlength: 10
     	      },
     	      	newPwd1: {
     	        required: true,
-    	        rangelength:[6,15]
+    	        minlength: 6,
+    	    	maxlength: 20
     	      },
     	      	newPwd2: {
-    	        equalTo:"#newPwd1"
+    	      	required: true,
+    	        minlength: 6,
+    	    	maxlength: 20
     	      }
     	    },
-    	    messages: {
-    	    },
+    	    messages: {},
     	    submitHandler:function(form){
-    	    	console.log("submit");
     	    	$.ajax({
    	    		   type: "POST",
    	    		   dataType: "json",
    	    		   url: "${ctx}/user/changePwd",
    	    		   data: $(form).serialize(),
    	    		   success: function(msg){
-	   	    			layer.msg(msg.msg, {time: 2000},function(){
-	   						var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-	   						parent.layer.close(index);
-	   					});
+   	    		   		if(200 == msg.code){
+   	    		   			window.location.href="index";
+   	    		   		}else{
+   	    		   			alert("更改密码失败");
+   	    		   		}
    	    		   }
    	    		});
             }
     	});
-    	
     });
+    
 </script>
+
 </body>
 
 </html>

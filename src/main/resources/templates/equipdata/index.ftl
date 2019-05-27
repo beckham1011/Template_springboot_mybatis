@@ -106,7 +106,7 @@
                     //获取数据的Servlet地址
                     url: "${ctx}/equipdata/newest",
                     //表格显示条纹
-                    striped: true,
+                    striped: false,
                     //启动分页
                     pagination: true,
                     //每页显示的记录数

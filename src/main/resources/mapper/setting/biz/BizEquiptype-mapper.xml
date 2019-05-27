@@ -490,10 +490,19 @@
 		</if>
 	</sql>
 	
-	
-		<select id="queryMapListNoPage" resultType="map" parameterType="map">
+	<select id="getEquipByAddressCode" resultType="cn.bjjoy.bms.setting.persist.model.Equiptype" parameterType="map">
 		<![CDATA[
 		SELECT 
+			<include refid="columnList" />
+		FROM equiptype
+		]]>
+		<where>
+			<include refid="sql_map_where" />
+		</where>		
+	</select>
+	
+	
+	<select id="columnList" >
 			equiptype.id AS id,
 			equiptype.parent_id AS parentId,
 			equiptype.name AS name,
@@ -515,6 +524,12 @@
 			equiptype.koujing AS koujing,
 			equiptype.gonglv AS gonglv,
 			equiptype.xinhao AS xinhao
+	</select>
+	
+	<select id="queryMapListNoPage" resultType="map" parameterType="map">
+		<![CDATA[
+		SELECT 
+			<include refid="columnList" />
 		FROM equiptype
 		]]>
 		<where>
@@ -711,6 +726,40 @@
 		</if>
 	</select>
 	
+	<select id="getSubOrgIds" resultType="int" parameterType="map">
+		select id from equiptype where id = #{parentId}
+		<if test="stationName != null and stationName != ''">
+			<![CDATA[ and (instr(name ,#{stationName}) or instr(addressCode,#{stationName})) ]]>
+		</if>
+		<if test="systemId != null and systemId != ''">
+			AND system_id = #{systemId} 
+		</if>
+		UNION all 
+		select id from equiptype where parent_id = #{parentId}
+		<if test="stationName != null and stationName != ''">
+			<![CDATA[ and (instr(name ,#{stationName}) or instr( addressCode,#{stationName})) ]]>
+		</if>
+		<if test="systemId != null and systemId != ''">
+			AND system_id = #{systemId} 
+		</if>
+		UNION all 
+		select id from equiptype where parent_id in(select id from equiptype where parent_id = #{parentId})
+		<if test="stationName != null and stationName != ''">
+			<![CDATA[ and (instr(name ,#{stationName}) or instr( addressCode,#{stationName})) ]]>
+		</if>
+		<if test="systemId != null and systemId != ''">
+			AND system_id = #{systemId} 
+		</if>
+		UNION all 
+		select id from equiptype where parent_id in(select id from equiptype where parent_id in(select id from equiptype where parent_id = #{parentId}))
+		<if test="stationName != null and stationName != ''">
+			<![CDATA[ and (instr(name ,#{stationName}) or instr( addressCode,#{stationName})) ]]>
+		</if>
+		<if test="systemId != null and systemId != ''">
+			AND system_id = #{systemId} 
+		</if>	
+	</select>
+	
 	<select id="getSubTypeIds" resultType="int" parameterType="map">
 		select id from equiptype where id = #{parentId}
 		<if test="stationName != null and stationName != ''">
@@ -742,7 +791,7 @@
 		</if>
 		<if test="systemId != null and systemId != ''">
 			AND system_id = #{systemId} 
-		</if>
+		</if>	
 		UNION all 
 		select id from equiptype where parent_id in(select id from equiptype 
 		where parent_id in(select id from equiptype where parent_id  in(select id from equiptype where parent_id = #{parentId}))) 

@@ -19,6 +19,7 @@ import cn.bjjoy.bms.setting.service.SystemService;
 import cn.bjjoy.bms.setting.service.TenantService;
 import cn.bjjoy.bms.setting.service.UserRoleService;
 import cn.bjjoy.bms.setting.service.UserService;
+import cn.bjjoy.bms.task.SaveHistoryDataEveryDay;
 
 public abstract class AbstractHosznController extends BaseController {
 
@@ -64,6 +65,9 @@ public abstract class AbstractHosznController extends BaseController {
     @Autowired
     public UserRoleService userRoleService;
 
+    @Autowired
+    SaveHistoryDataEveryDay saveService;
+    
 	static DateFormat df = new SimpleDateFormat("yyyy-MM-dd") ;
 	
 	

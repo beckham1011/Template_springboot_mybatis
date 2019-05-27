@@ -4,8 +4,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -14,11 +15,11 @@ import cn.bjjoy.bms.setting.service.EquipdataService;
 import cn.bjjoy.bms.setting.service.EquiptypeService;
 import cn.bjjoy.bms.util.DateUtils;
 
-import com.google.common.collect.Sets;
-
 @Component
 public class SaveHistoryDataEveryDay {
 
+	private static final Logger log = LogManager.getLogger();
+	
 	@Autowired
 	EquipdataService dataService ;
 
@@ -36,7 +37,7 @@ public class SaveHistoryDataEveryDay {
 	 *  5，3 distinct 4 ，值为 0
 	 *  
 	 */
-	@Scheduled(cron = "30 41 23 * * ?")
+	@Scheduled(cron = "30 41 12 * * ?")
 	@SuppressWarnings({ "rawtypes", "unchecked"})
 	public void importData(){
 		
@@ -46,29 +47,27 @@ public class SaveHistoryDataEveryDay {
 		String yesterdayBefore = DateUtils.formatDate( DateUtils.addDays(new Date(), -2) ,DateUtils.YYYYMMDD) + DateUtils.HHMMSS000000;
 		//昨天
 		String yesterday  = DateUtils.formatDate( DateUtils.addDays(new Date(), -1) ,DateUtils.YYYYMMDD) + DateUtils.HHMMSS000000;
-		map.put("startDate", yesterdayBefore);
-		map.put("endDate", yesterday);
-		Map<String , Double> yesterdayEquipDataMap = dataService.getSpecialDayData(map) ;
+		Map<String , Double> yesterdayEquipDataMap = dataService.getSpecialDayData2(yesterdayBefore , yesterday) ;
+		
 		//今天
 		String today = DateUtils.formatDate( new Date(),DateUtils.YYYYMMDD) + DateUtils.HHMMSS000000;
-		map.put("startDate", yesterday);
-		map.put("endDate", today);
-		Map<String , Double> todayEquipDataMap = dataService.getSpecialDayData(map) ;
+		Map<String , Double> todayEquipDataMap = dataService.getSpecialDayData2(yesterday,today) ;
 
 		List<String> equipCodeList = typeService.allEquipAddressCodeList(map);
 		
-		Set<String> todayValueAddressCodes = Sets.difference(todayEquipDataMap.keySet(),yesterdayEquipDataMap.keySet());
-		
-		double v = 0.0;
+		final double defaultValue = 0.0;
 		
 		for(String addressCode : equipCodeList){
 			map.put("addressCode", addressCode);
-			map.put("addTime", today);
-			if(!todayValueAddressCodes.contains(addressCode)){
-				map.put("areCumulativeHis", ((Double)todayEquipDataMap.get(addressCode) - (Double)yesterdayEquipDataMap.get(addressCode)));
+			map.put("addTime", yesterday.substring(0, 10));
+			if(todayEquipDataMap.containsKey(addressCode.trim()) && yesterdayEquipDataMap.containsKey(addressCode.trim())){
+				double netCollect = (Double)todayEquipDataMap.get(addressCode) - (Double)yesterdayEquipDataMap.get(addressCode);
+//				log.info("addressCode: " + addressCode + ", netCollect" + netCollect);
+				map.put("areCumulativeHis", netCollect);
 			}else{
-				map.put("areCumulativeHis", v);
+				map.put("areCumulativeHis", defaultValue);
 			}
+			
 			dataService.insertDataHistory(map) ;
 		}
 	}
@@ -107,6 +106,7 @@ public class SaveHistoryDataEveryDay {
 //			System.out.println(s);
 //		}
 //	}
+	
 	
 }
 

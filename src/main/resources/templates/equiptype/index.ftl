@@ -76,9 +76,6 @@
 
 			</div><!-- /.main-container-inner -->
 
-			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-				<i class="icon-double-angle-up icon-only bigger-110"></i>
-			</a>
 		</div><!-- /.main-container -->
 
 		<#include "${ctx}/common.ftl"/>
@@ -310,28 +307,35 @@
 
             function deleteEquiptype(id){
         		var subTypesHtml = '' ;
+        		var subEquipList = [];
                 $.ajax({
                     type: "get",
                     dataType: "json",
-                    url: '${ctx}/equiptype/getSubTypes?id=' + id,
+                    url: '${ctx}/equiptype/subTypelist?parentId=' + id,
                     success: function(msg){
+                    	subEquipList = msg.data.subTypeList;
+                    	
+                    	var alertMsg = '确定删除吗?';
+		            	if(subEquipList.length > 0)
+		            		alertMsg = "有"+subEquipList.length+ "个下级泵站也将删除，" + alertMsg;
+		                layer.confirm(alertMsg, {icon: 3, title:'提示'}, function(index){
+		                    $.ajax({
+		                        type: "get",
+		                        dataType: "json",
+		                        url: '${ctx}/equiptype/delete?id=' + id,
+		                        success: function(msg){
+		                            layer.msg(msg.msg, {time: 1500},function(){
+		                                $('#equiptypelist').bootstrapTable("refresh");
+		                                layer.close(index);
+		                            });
+		                        }
+		                    });
+		                });
+                    	
                    	}
                 });
             	
             	
-                layer.confirm('确定删除吗?', {icon: 3, title:'提示'}, function(index){
-                    $.ajax({
-                        type: "get",
-                        dataType: "json",
-                        url: '${ctx}/equiptype/delete?id=' + id,
-                        success: function(msg){
-                            layer.msg(msg.msg, {time: 1500},function(){
-                                $('#equiptypelist').bootstrapTable("refresh");
-                                layer.close(index);
-                            });
-                        }
-                    });
-                });
             }
             
             function itemOnclick (){}

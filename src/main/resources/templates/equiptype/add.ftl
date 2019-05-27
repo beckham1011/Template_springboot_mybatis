@@ -165,6 +165,16 @@
     	    rules: {
     	    	addressCode: {
     	        required: true,
+    	    	remote: {
+				    url: "checkAddressCode",    //后台处理程序
+				    type: "post",               //数据发送方式
+				    dataType: "json",           //接受数据格式   
+				    data: {                     //要传递的数据
+				        addressCode: function() {
+				            return $("#addressCode").val();
+				        }
+				    }
+				},
     	        minlength: 4,
     	    	maxlength: 10
     	      },
@@ -177,19 +187,27 @@
     	    	maxlength: 50
     	      }
     	    },
-    	    messages: {},
+    	    messages: {
+    	    	addressCode: {
+    	    		remote: "地址码重复，请确认后重新输入!"
+    	    	}
+    	    },
     	    submitHandler:function(form){
     	    	$.ajax({
-   	    		   type: "POST",
-   	    		   dataType: "json",
-   	    		   url: "${ctx}/equiptype/save",
-   	    		   data: $(form).serialize(),
-   	    		   success: function(msg){
-	   	    			layer.msg(msg.msg, {time: 2000},function(){
-	   						var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-	   						parent.layer.close(index);
-	   					});
-   	    		   }
+   	    		    type: "POST",
+   	    		    dataType: "json",
+   	    		    url: "${ctx}/equiptype/save",
+   	    		    data: $(form).serialize(),
+   	    		    success: function(msg){
+   	    		   		if(409 == msg.code){
+   	    		   			alert(msg.flag);
+   	    		   		}else{
+		   	    			layer.msg(msg.msg, {time: 2000},function(){
+		   						var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+		   						parent.layer.close(index);
+		   					});
+   	    		   		}
+   	    		   	}
    	    		});
             }
     	});

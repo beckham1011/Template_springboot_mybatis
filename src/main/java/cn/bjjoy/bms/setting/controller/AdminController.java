@@ -59,6 +59,7 @@ public class AdminController extends AbstractHosznController {
 			//跳转页面
 			return RedirectUtil.redirect(getNextPage(request));
 		} catch (AuthenticationException e) {
+			e.printStackTrace();
 			logger.info("Login error message.................." + e);
 		}
 		return "admin/login";

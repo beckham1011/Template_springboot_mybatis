@@ -63,10 +63,10 @@
 			                            <div class="form-group">
 			                                <label class="col-sm-1 control-label">起止时间：</label>
 			                                <div class="col-sm-2">
-			                                    <input id="createDate" name="createDate" type="date" class="laydate-icon form-control" value="2018-12-05">
+			                                    <input id="startDate" name="startDate" type="date" class="laydate-icon form-control">
 			                                </div>
 			                                <div class="col-sm-2">
-			                                    <input id="enddate" name="enddate" type="date" class="laydate-icon form-control" value="2019-01-05">			                                
+			                                    <input id="endDate" name="endDate" type="date" class="laydate-icon form-control" >
 			                                </div>
 			                               
 			                            </div>
@@ -120,16 +120,20 @@
 	    if(new RegExp("("+ k +")").test(fmt))   
 	  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
 	  return fmt;
+	  
 	}
 	
 	$(document).ready(function () {
 		localStorage.setItem("parentId", ${parentId});
+		localStorage.setItem("startDate", new Date(new Date().getTime() - (31 * 24 * 3600 * 1000)).Format("yyyy-MM-dd"));
+		localStorage.setItem("endDate", new Date(new Date().getTime() - (24 * 3600 * 1000)).Format("yyyy-MM-dd"));
 		
-		localStorage.setItem("createDate", new Date(new Date().getTime() - (31 * 24 * 3600 * 1000)).Format("yyyy-MM-dd"));
-		localStorage.setItem("enddate", new Date(new Date().getTime() - (24 * 3600 * 1000)).Format("yyyy-MM-dd"));
+		var startDate = new Date(new Date().getTime() - (31 * 24 * 3600 * 1000)).Format("yyyy-MM-dd");
+		var endDate = new Date(new Date().getTime() - (24 * 3600 * 1000)).Format("yyyy-MM-dd");
+		$("#startDate").val(startDate);
+		$("#endDate").val(endDate);
 		
-		$("#createDate").val(new Date(new Date().getTime() - (31 * 24 * 3600 * 1000)).Format("yyyy-MM-dd"));
-		$("#enddate").val(new Date(new Date().getTime() - (24 * 3600 * 1000)).Format("yyyy-MM-dd"));
+		loadChart(${parentId});
 	});
 	
 </script>
@@ -143,9 +147,10 @@
    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
    <script type="text/javascript">
 		
+		$(document).ready(function(){
+		});
+		
 		//页面初始化
-		loadChart(${parentId});
-			
         function clickNode(event, data){
         	localStorage.setItem("parentId",data['id']);
         	loadChart(data['id']);
@@ -153,12 +158,17 @@
         
         function itemOnclick (){}
         
+        function search(){
+        	loadChart(${parentId});
+        }
+        
         function loadChart(parentId){
+        
         	$.ajax({
 			    type: "GET",
 			    dataType: "json",
-			    url: '${ctx}/analysis/chart?parentId=' + parentId + '&startDate=' + $("#createDate").val() 
-			    			+'&endDate=' + $("#enddate").val() ,
+			    url: '${ctx}/analysis/chart?parentId=' + parentId + '&startDate=' + $("#startDate").val() 
+			    			+'&endDate=' + $("#endDate").val() ,
 			    success: function(data){
 			    	var typeListLength = data.data.typeList.length;
 			    	console.log(data.data)

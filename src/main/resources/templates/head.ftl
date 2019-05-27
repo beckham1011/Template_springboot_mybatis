@@ -30,7 +30,7 @@
         	$("#countmsg").html(htmlCoungMsg);
         	var dayHtml = msg.data.currentDay ;
         	$("#currentDay").html(dayHtml);
-        	var systemInfoHtml = "欢迎您：" + msg.data.username + "&nbsp;&nbsp;&nbsp;&nbsp;<a href='${ctx}/admin/logout' style='color:red;'>退出</a>&nbsp;&nbsp;<a href='#' onclick='changePwd()' style='color:red;'>修改密码</a>";
+        	var systemInfoHtml = "欢迎您：" + msg.data.username + "&nbsp;&nbsp;&nbsp;&nbsp;<a href='${ctx}/admin/logout' style='color:red;'>退出</a>&nbsp;&nbsp;<a href='${ctx}/user/changePwd' style='color:red;'>修改密码</a>";
         	$("#welcomeMsg").html(systemInfoHtml);
         	var systemInfo = msg.data.systemInfo;
         	$("#systemInfo").html(systemInfo);
@@ -50,18 +50,7 @@
 <script>
 
     function changePwd(){
-        layer.open({
-            type: 2,
-            title: '修改密码',
-            shadeClose: true,
-            shade: false,
-            area: ['900px', '350px'],
-            content: '${ctx}/user/changePwd?id=' + $("#userId").val(),
-            end: function(index){
-                layer.close(index);
-            }
-        });
-    }	
-
+        window.location.href = "http://${ctx}/user/changePwd";
+    }
 
 </script>

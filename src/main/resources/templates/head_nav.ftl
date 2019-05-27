@@ -37,9 +37,7 @@
 							<b class="caret"></b>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="${ctx}/analysis/index">通用报表</a></li>
-							<li class="divider"></li>
-							<li><a href="${ctx}/analysis/index2">通用报表2</a></li>
+							<li><a href="${ctx}/analysis/index2">通用报表</a></li>
 							<!-- 
 							<li class="divider"></li>
 							<li><a href="${ctx}/menu/index">曲线分析</a></li>

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import cn.bjjoy.bms.setting.dao.BaseDao;
@@ -25,11 +26,15 @@ public interface EquiptypeDao extends BaseDao<Equiptype> {
 
 	public List<Map<String,Object>> queryMapListNoPage( Map map) throws DaoException ;
 
+	public Equiptype getEquipByAddressCode(@Param("addressCode") String addressCode);
+	
 	public LinkedList<Map<String, Object>> querySubTypes(Map map);
 	
 	public LinkedList<Map<String, Object>> getTypesByIds(Map map) ;
-	
+
 	public LinkedList<Integer> getSubTypeIds(Map map) ;
+
+	public LinkedList<Integer> getSubOrgIds(Map map) ;
 	
 	public void updateByAddressCode(Map map);
 	public void updateInfoByAddressCode(Map map);

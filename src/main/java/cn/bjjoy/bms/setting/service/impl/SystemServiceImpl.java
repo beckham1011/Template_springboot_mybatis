@@ -20,10 +20,24 @@ public class SystemServiceImpl implements SystemService {
 		systemMap.put(4, "大丰区农业水价综合改革监测系统") ;
 	}
 	
+	static {
+		systemPortMap.put(1, 8082);
+		systemPortMap.put(4, 8084);
+	}
+	
 	@Override
 	public String getSystem(Integer systemId) {
 		return systemMap.get(systemId);
 	}
 
+	@Override
+	public Map<String, cn.bjjoy.bms.setting.persist.model.System> getSystemList() {
+		return null;
+	}
+
+	public Integer getPort(Integer systemId) {
+		return systemPortMap.get(systemId);
+	}
+	
 }
 

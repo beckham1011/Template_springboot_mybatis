@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import cn.bjjoy.bms.setting.dao.BaseDao;
@@ -46,5 +47,7 @@ public interface EquipdataDao extends BaseDao<Equipdata> {
 	public List<Map<String, Object>> getHistoryEveryday(Map map);
 
 	public List<Map<String, Object>> getSpecialDayData(Map map);
+
+	public List<Map<String, Object>> getSpecialDayData2(@Param("startDate") String startDate,@Param("endDate") String endDate);
 	
 }

@@ -31,6 +31,7 @@ import cn.bjjoy.bms.setting.persist.model.Equiptype;
 import cn.bjjoy.bms.util.DataUtils;
 import cn.bjjoy.bms.util.DateUtils;
 import cn.bjjoy.bms.util.EncryptUtils;
+import cn.bjjoy.bms.util.RedirectUtil;
 import cn.bjjoy.bms.util.UserUtils;
 
 /**
@@ -45,6 +46,11 @@ public class UserController extends AbstractHosznController {
 
 	private static final Logger logger = LogManager.getLogger();
 
+	@GetMapping("test")
+	public void test() {
+		saveService.importData();
+	}
+	
 	/**
 	 * 跳转添加用户页面
 	 */
@@ -272,15 +278,15 @@ public class UserController extends AbstractHosznController {
 
     @Description("打开修改密码页面")
     @GetMapping(value = "changePwd" )
-    public String changePwd(@RequestParam Integer id, ModelMap map) {
-        User user = userService.getUserDetail(id);
+    public String changePwd(ModelMap map) {
+        User user = UserUtils.getUer() ;
         map.put("password", user.getPassword()) ;
-        return "/user/changePwd";
+        return "/user/changePwd2";
     }
 
     @Description("修改密码保存")
-    @ResponseBody
     @PostMapping(value = "changePwd")
+    @ResponseBody
     public ResponseResult changePwdSave(@RequestParam Map map ) {
     	User user = UserUtils.getUer() ;
     	String newPwdAfterEncrypt = EncryptUtils.encryptMD5((String)map.get("newPwd1"));
@@ -290,9 +296,9 @@ public class UserController extends AbstractHosznController {
 			logger.info("Change user password success");
 		} catch (Exception e) {
 			logger.error("Update user password error: {}" + e.getStackTrace());
-			return ResponseResult.error();
+			ResponseResult.error();
 		}
-        return ResponseResult.ok("");
+    	return ResponseResult.ok("success");
     }
 
     
