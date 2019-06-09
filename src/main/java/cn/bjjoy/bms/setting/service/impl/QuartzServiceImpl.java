@@ -26,6 +26,10 @@ public class QuartzServiceImpl implements QuartzService {
 	@Qualifier("Scheduler")
 	private Scheduler scheduler;
 
+	public QuartzEntity generateQuartzEntity() {
+		return new QuartzEntity();
+	}
+	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void addSchedulerTask(QuartzEntity quartz) {
 		try {

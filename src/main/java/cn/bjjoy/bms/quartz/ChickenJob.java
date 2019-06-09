@@ -21,6 +21,8 @@ public class ChickenJob implements Job,Serializable {
 //    @Autowired
 //    private IJobService jobService;
 	
+	
+	
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		// 编写具体的业务逻辑

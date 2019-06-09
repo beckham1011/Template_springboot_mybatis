@@ -75,7 +75,7 @@ public class TreeGenerate{
 			o.put("id", node.getId());
 			o.put("text", node.getName());
 			o.put("href", "index?parentId=" + node.getId() + "&rows=10&page=1") ;
-
+			o.put("tags", node.getTag());
 			tags = new ArrayList<>();
 			List<Node> child = node.getChildren();
 			int tag = node.getTag();
@@ -120,11 +120,9 @@ public class TreeGenerate{
 			oo.put("id", node.getId());
 			oo.put("text", node.getName());
 			oo.put("href", "index?parentId=" + node.getId() + "&rows=10&page=1") ;
-			if(child != null && child.size() > 0){
 				tags.add(node.getTag()) ;
 				oo.put("tags", tags);
 				fillChildren(oo,child);
-			}
 			array.add(oo);
 		}
 		o.put("nodes",array);

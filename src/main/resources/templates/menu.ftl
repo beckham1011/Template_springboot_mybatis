@@ -17,7 +17,7 @@
         $.ajax({
             type: "GET",
             dataType: "json",
-            url: "${ctx}/equiptype/tree2",
+            url: "${ctx}/equiptype/tree",
             success: function(result){
                 
                 treeData = result.data.typeTree;

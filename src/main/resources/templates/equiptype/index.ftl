@@ -59,6 +59,7 @@
                                         <button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
                                         <@shiro.hasPermission name="system:equip:add">
 	                                        <button class="btn btn-xs btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;添加泵站</button>
+											<button class="btn btn-xs btn-success " type="button" onclick="importFile();"><i class="fa fa-plus"></i>&nbsp;下载模版</button>
 											<button class="btn btn-xs btn-success " type="button" onclick="importFile();"><i class="fa fa-plus"></i>&nbsp;批量导入泵站</button>
 										</@shiro.hasPermission>
                                     </div>
