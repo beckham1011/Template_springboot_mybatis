@@ -205,7 +205,7 @@
             function delSystem(id){
                 layer.confirm('确定删除吗?', {icon: 3, title:'提示'}, function(index){
                     $.ajax({
-                        type: "POST",
+                        type: "DELETE",
                         dataType: "json",
                         url: "${ctx}/system/delete?id=" + id,
                         success: function(msg){

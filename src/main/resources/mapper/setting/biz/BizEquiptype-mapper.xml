@@ -724,9 +724,7 @@
 		SELECT addressCode from equiptype WHERE parent_id is null 
 	</select>
 	<select id="getUserSystemIdByUserId" parameterType="map" resultType="int"> 
-		select 1 from equiptype where id = (SELECT parent_id from user where id = ${id})
-			UNION
-		select 1
+		select system_id from equiptype where id = (SELECT parent_id from user where id = ${id})
 	</select>
 	
 	<update id="updateCron" parameterType="map">

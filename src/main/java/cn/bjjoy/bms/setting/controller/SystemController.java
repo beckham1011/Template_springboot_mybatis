@@ -117,7 +117,7 @@ public class SystemController extends AbstractHosznController{
     public String toEdit(@RequestParam Map map ,  ModelMap modelMap) {
     	List<Map<String, Object>> tenart = null;
     	if(!Objects.isNull(map.get("id"))){
-    		tenart = tenantService.getTenantById(Integer.valueOf(map.get("id").toString()));
+    		tenart = tenantService.getTenantsById(Integer.valueOf(map.get("id").toString()));
     	}
     	modelMap.put("currentSystem", tenart.size() > 0 ? tenart.get(0) : null);
         return "/system/edit";

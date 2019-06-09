@@ -10,7 +10,7 @@ public interface TenantService {
 
 	public List<Map<String,Object>> getTenants(Map map);
 	
-	public List<Map<String,Object>> getTenantById(int id);
+	public List<Map<String,Object>> getTenantsById(int id);
 	
 	public int getCount(Map map) ;
 	

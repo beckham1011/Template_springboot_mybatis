@@ -26,9 +26,10 @@ public class TenantServiceImpl implements TenantService {
 		return tenantDao.getTenantList(map) ;
 	}
 
-	public List<Map<String,Object>> getTenantById(int id){
+	public List<Map<String,Object>> getTenantsById(int id){
 		Map map = new HashMap();
-		map.put("id", id) ;
+		if(id != 11)
+			map.put("id", id) ;
 		return tenantDao.getTenantList(map) ;
 	}
 
