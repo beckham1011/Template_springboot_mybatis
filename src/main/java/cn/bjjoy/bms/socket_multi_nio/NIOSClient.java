@@ -1,18 +1,21 @@
 package cn.bjjoy.bms.socket_multi_nio;
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.Set;
-
-import cn.bjjoy.bms.socket.ByteUtil;
  
-public class NIOSClient {
-    /*发送数据缓冲区*/
+public class NIOSClient2 {
+
+    public static void main(String[] args) throws IOException {
+        new NIOSClient2(8082);
+    }
+	
+	/*发送数据缓冲区*/
     private static ByteBuffer sBuffer = ByteBuffer.allocate(1024);
     
     /*接受数据缓冲区*/
@@ -31,8 +34,8 @@ public class NIOSClient {
     
     private static int count = 0;
     
-    public NIOSClient(int port) {
-        SERVER = new InetSocketAddress("101.132.126.72", port);
+    public NIOSClient2(int port) {
+        SERVER = new InetSocketAddress("localhost", port);
         init();
     }
     
@@ -62,11 +65,7 @@ public class NIOSClient {
             e.printStackTrace();
         }
     }
-    
-    public static void main(String[] args) throws IOException {
-        new NIOSClient(8084);
-    }
-    
+
     private void handle(SelectionKey selectionKey) throws IOException {
         if (selectionKey.isConnectable()) {
             /* 
@@ -76,7 +75,10 @@ public class NIOSClient {
             if (client.isConnectionPending()) {
                 client.finishConnect();
                 System.out.println("connect success !");
-
+                sBuffer.clear();
+                sBuffer.put((new Date() + " connected!").getBytes());
+                sBuffer.flip();
+                client.write(sBuffer);//发送信息至服务器  
                 /* 原文来自站长网
                  * 启动线程一直监听客户端输入，有信息输入则发往服务器端 
                  * 因为输入流是阻塞的，所以单独线程监听 
@@ -107,7 +109,8 @@ public class NIOSClient {
             }
             //注册读事件  
             client.register(selector, SelectionKey.OP_READ);
-        } else if (selectionKey.isReadable()) {
+        }
+        else if (selectionKey.isReadable()) {
             /* 
              * 读事件触发 
              * 有从服务器端发送过来的信息，读取输出到屏幕上后，继续注册读事件 
@@ -118,7 +121,7 @@ public class NIOSClient {
             count = client.read(rBuffer);
             if (count > 0) {
                 receiveText = new String(rBuffer.array(), 0, count);
-                System.out.println(ByteUtil.binaryToHexString(new byte[rBuffer.capacity()]));
+                System.out.println(receiveText);
                 client = (SocketChannel)selectionKey.channel();
                 client.register(selector, SelectionKey.OP_READ);
             }
