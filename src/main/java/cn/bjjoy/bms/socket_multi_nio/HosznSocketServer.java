@@ -9,7 +9,9 @@ public class HosznSocketServer extends AbstractSocketServer {
 		String[] values = new String[4];
 		switch (port) {
 			case 8082: values = SpringSocketUtil.parse8082SocketData(receiveText);
+			break;
 			case 8084: values = SpringSocketUtil.parse8084SocketData(receiveText);
+			break;
 		}
 		return values;
 	}

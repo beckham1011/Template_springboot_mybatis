@@ -125,22 +125,6 @@ public class ByteUtil {
 		return result;
 	}
 	
-	public static String bytesTohex(byte[] bytes) {
-        StringBuilder hex = new StringBuilder();
-        for (int i = 0; i < bytes.length; i++) {
-            byte b = bytes[i];
-            boolean flag = false;
-            if (b < 0) flag = true;
-            int absB = Math.abs(b);
-            if (flag) absB = absB | 0x80;
-            String tmp = Integer.toHexString(absB & 0xFF);
-            if (tmp.length() == 1) { //转化的十六进制不足两位，需要补0
-                hex.append("0");
-            }
-            hex.append(tmp.toLowerCase());
-        }
-        return hex.toString();
-    }
 	
 	private static final char[] HEX_CHAR = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 	public static String bytesToHexFun1(byte[] bytes) {

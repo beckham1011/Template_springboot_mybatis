@@ -1,18 +1,21 @@
 package cn.bjjoy.bms.socket_multi_nio;
+
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-import java.util.Date;
 import java.util.Scanner;
 import java.util.Set;
+
+import cn.bjjoy.bms.socket.ByteUtil;
  
-public class NIOSClient2 {
+public class NIOSClient {
 
     public static void main(String[] args) throws IOException {
-        new NIOSClient2(8082);
+        new NIOSClient(8082);
     }
 	
 	/*发送数据缓冲区*/
@@ -20,6 +23,10 @@ public class NIOSClient2 {
     
     /*接受数据缓冲区*/
     private static ByteBuffer rBuffer = ByteBuffer.allocate(1024);
+    
+    private static final String addressCode = "hsg666" ;
+    
+    private static final String DATA = "01 04 2C 80 00 00 00 80 00 00 00 00 00 00 00 45 34 C0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 05 00 01 00 00 00 00 00 01 00 00 D5 B1";
     
     /*服务器端地址*/
     private InetSocketAddress SERVER;
@@ -34,7 +41,7 @@ public class NIOSClient2 {
     
     private static int count = 0;
     
-    public NIOSClient2(int port) {
+    public NIOSClient(int port) {
         SERVER = new InetSocketAddress("localhost", port);
         init();
     }
@@ -76,7 +83,7 @@ public class NIOSClient2 {
                 client.finishConnect();
                 System.out.println("connect success !");
                 sBuffer.clear();
-                sBuffer.put((new Date() + " connected!").getBytes());
+                sBuffer.put(addressCode.getBytes());
                 sBuffer.flip();
                 client.write(sBuffer);//发送信息至服务器  
                 /* 原文来自站长网
@@ -87,22 +94,14 @@ public class NIOSClient2 {
                     @Override
                     public void run() {
                         while (true) {
-                            try {
-                                sBuffer.clear();
-                                Scanner cin = new Scanner(System.in);
-                                sendText = cin.nextLine();
-                                System.out.println(sendText);
-                                /* 
-                                 * 未注册WRITE事件，因为大部分时间channel都是可以写的 
-                                 */
-                                sBuffer.put(sendText.getBytes("utf-8"));
-                                sBuffer.flip();
-                                client.write(sBuffer);
-                            }
-                            catch (IOException e) {
-                                e.printStackTrace();
-                                break;
-                            }
+                            sBuffer.clear();
+                            Scanner cin = new Scanner(System.in);
+                            sendText = cin.nextLine();
+                            System.out.println(sendText);
+                            /* 
+                             * 未注册WRITE事件，因为大部分时间channel都是可以写的 
+                             */
+                            sendMsg(sendText);
                         }
                     };
                 }.start();
@@ -121,10 +120,66 @@ public class NIOSClient2 {
             count = client.read(rBuffer);
             if (count > 0) {
                 receiveText = new String(rBuffer.array(), 0, count);
+                String txt = bytesTohex(rBuffer.array());
+                test(rBuffer.array());
+                System.out.println("txt:" + txt);
                 System.out.println(receiveText);
+                if(txt.indexOf("01041010001674")> -1 ) {
+                	sendMsg(DATA);
+                }
                 client = (SocketChannel)selectionKey.channel();
                 client.register(selector, SelectionKey.OP_READ);
             }
         }
     }
+    
+    public static void sendMsg(String msg) {
+    	try {
+			sBuffer.put(msg.getBytes("utf-8"));
+			sBuffer.flip();
+			client.write(sBuffer);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    
+    public void test(byte[] dataBytes){
+		String receiveTextCode1  = ByteUtil.toHexString1(dataBytes);
+		String receiveTextCode2 = ByteUtil.binaryToHexString(dataBytes);
+		String receiveTextCode3 = ByteUtil.bytesToHex(dataBytes);
+		String receiveTextCode4 = ByteUtil.bytesToHex1(dataBytes);
+		String receiveTextCode5 = ByteUtil.byteArrayToHexStr(dataBytes);
+		String receiveTextCode7 = ByteUtil.bytesToHexFun1(dataBytes);
+		String receiveTextCode8 = ByteUtil.bytesToHexFun3(dataBytes);
+		
+		System.out.println("=================================receiveTextCode1:" + receiveTextCode1);
+		System.out.println("+++++++++++++++++++++++++++++++++receiveTextCode2:" + receiveTextCode2);
+		System.out.println("+++++++++++++++++++++++++++++++++receiveTextCode3:" + receiveTextCode3);
+		System.out.println("+++++++++++++++++++++++++++++++++receiveTextCode4:" + receiveTextCode4);
+		System.out.println("+++++++++++++++++++++++++++++++++receiveTextCode5:" + receiveTextCode5);
+		System.out.println("+++++++++++++++++++++++++++++++++receiveTextCode7:" + receiveTextCode7);
+		System.out.println("+++++++++++++++++++++++++++++++++receiveTextCode8:" + receiveTextCode8);
+		
+	}
+    
+	public static String bytesTohex(byte[] bytes) {
+        StringBuilder hex = new StringBuilder();
+        for (int i = 0; i < bytes.length; i++) {
+            byte b = bytes[i];
+            boolean flag = false;
+            if (b < 0) flag = true;
+            int absB = Math.abs(b);
+            if (flag) absB = absB | 0x80;
+            String tmp = Integer.toHexString(absB & 0xFF);
+            if (tmp.length() == 1) { //转化的十六进制不足两位，需要补0
+                hex.append("0");
+            }
+            hex.append(tmp.toLowerCase());
+        }
+        return hex.toString();
+    }
+	
 }

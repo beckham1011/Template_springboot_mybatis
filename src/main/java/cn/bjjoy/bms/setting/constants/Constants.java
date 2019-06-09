@@ -6,9 +6,7 @@ public class Constants {
 
 	public static final String CHARSET_UTF8 = "UTF-8";
 
-	public static final String All = "All" ;
-	
-	public static final String All_MSG = "All" ;
+	public static final String ALL = "all" ;
 	
 	public static final String MSG_8082 = "01041010001674C1" ;
 	public static final String MSG_8084 = "010300020004E5C9" ;
@@ -21,6 +19,8 @@ public class Constants {
 	public static final String Y = "Y";
 	public static final String N = "N";
 
+	
+	public static final String USER_DEFAULT_PSSSWROD = "123456";
 	public static final String USER_TOKEN = "authtoken";
 	
 	public final static int HTTP_200 = 200; // 操作成功

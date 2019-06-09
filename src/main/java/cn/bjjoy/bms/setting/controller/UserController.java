@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.bjjoy.bms.base.Codes;
 import cn.bjjoy.bms.base.ResponseResult;
+import cn.bjjoy.bms.setting.constants.Constants;
 import cn.bjjoy.bms.setting.dto.EquiptypeDto;
 import cn.bjjoy.bms.setting.dto.UserDto;
 import cn.bjjoy.bms.setting.dto.UserRoleDto;
@@ -31,7 +33,6 @@ import cn.bjjoy.bms.setting.persist.model.Equiptype;
 import cn.bjjoy.bms.util.DataUtils;
 import cn.bjjoy.bms.util.DateUtils;
 import cn.bjjoy.bms.util.EncryptUtils;
-import cn.bjjoy.bms.util.RedirectUtil;
 import cn.bjjoy.bms.util.UserUtils;
 
 /**
@@ -301,11 +302,23 @@ public class UserController extends AbstractHosznController {
     	return ResponseResult.ok("success");
     }
 
+
+    @Description("重置默认密码")
+    @PutMapping(value = "resetPassword/{userId}")
+    @ResponseBody
+    public ResponseResult resetPassword(@PathVariable int userId) {
+    	User u = userService.getUserDetail(userId);
+    	String newPwdAfterEncrypt = EncryptUtils.encryptMD5(Constants.USER_DEFAULT_PSSSWROD);
+    	u.setPassword(newPwdAfterEncrypt);
+    	try {
+			userService.update(u);
+			logger.info("Change user password success");
+		} catch (Exception e) {
+			logger.error("Update user password error: {}" + e.getStackTrace());
+			ResponseResult.error();
+		}
+    	return ResponseResult.ok("默认密码重置成功：123456");
+    }
     
     
-//    @RequestMapping("get", method = RequestMethod.GET)
-//    public ResponseResult get(User user){
-//
-//        return ResponseResult.ok(userService.findUserByName("test2"));
-//    }
 }

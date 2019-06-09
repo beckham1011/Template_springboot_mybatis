@@ -29,7 +29,6 @@ public class ByteUtilTest {
 		String receiveTextCode3 = ByteUtil.bytesToHex(dataBytes);
 		String receiveTextCode4 = ByteUtil.bytesToHex1(dataBytes);
 		String receiveTextCode5 = ByteUtil.byteArrayToHexStr(dataBytes);
-		String receiveTextCode6 = ByteUtil.bytesTohex(dataBytes);
 		String receiveTextCode7 = ByteUtil.bytesToHexFun1(dataBytes);
 		String receiveTextCode8 = ByteUtil.bytesToHexFun3(dataBytes);
 		
@@ -38,7 +37,6 @@ public class ByteUtilTest {
 		logger.info("+++++++++++++++++++++++++++++++++receiveTextCode3:" + receiveTextCode3);
 		logger.info("+++++++++++++++++++++++++++++++++receiveTextCode4:" + receiveTextCode4);
 		logger.info("+++++++++++++++++++++++++++++++++receiveTextCode5:" + receiveTextCode5);
-		logger.info("+++++++++++++++++++++++++++++++++receiveTextCode6:" + receiveTextCode6);
 		logger.info("+++++++++++++++++++++++++++++++++receiveTextCode7:" + receiveTextCode7);
 		logger.info("+++++++++++++++++++++++++++++++++receiveTextCode8:" + receiveTextCode8);
 		

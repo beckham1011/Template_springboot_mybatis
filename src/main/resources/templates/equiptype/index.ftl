@@ -222,7 +222,8 @@
 						colspan: 1,
 						rowspan: 2,
                         formatter: function (value, row, index) {
-                            var operateHtml = '<button class="btn btn-primary btn-xs" type="button" onclick="editEquiptype(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;编辑</button> &nbsp;';
+                            var operateHtml = '<button class="btn btn-primary btn-xs" type="button" onclick="editEquiptype(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;编辑</button>&nbsp;';
+							operateHtml += '<button class="btn btn-primary btn-xs" type="button" onclick="addCron(\''+row.id+'\')"><i class="fa fa-add"></i>&nbsp;添加刷新规则</button>&nbsp;';
                             operateHtml += '<button class="btn btn-danger btn-xs" type="button" onclick="deleteEquiptype(\''+row.id+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button>';
                             return operateHtml;
                         }
@@ -304,6 +305,21 @@
                 });
             }
 
+
+			function addCron(id){
+				layer.open({
+                    type: 2,
+                    title: '添加定时刷新规则',
+                    shadeClose: true,
+                    shade: false,
+                    area: ['900px', '600px'],
+                    content: '${ctx}/equiptype/addCron?id=' + id,
+                    end: function(index){
+                    	layer.close(index);
+                        $('#equiptypelist').bootstrapTable("refresh");
+                    }
+                });
+			}
 
             function deleteEquiptype(id){
         		var subTypesHtml = '' ;

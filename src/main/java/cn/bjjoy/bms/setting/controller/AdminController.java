@@ -34,7 +34,7 @@ public class AdminController extends AbstractHosznController {
 	private static final Logger logger = LogManager.getLogger();
 	
 	
-	@GetMapping(value = "/login")
+	@GetMapping(value = {"/login",""})
 	public String login(HttpServletRequest request) {
 		return "admin/login";
 	}
@@ -42,7 +42,7 @@ public class AdminController extends AbstractHosznController {
 	/**
 	 * 用户登录验证
 	 */
-	@PostMapping(value = "/login")
+	@PostMapping(value = {"/login"})
 	public String login(@RequestParam("username") String username, @RequestParam("password") String password, 
 				ModelMap model , HttpServletRequest request) {
 		try {

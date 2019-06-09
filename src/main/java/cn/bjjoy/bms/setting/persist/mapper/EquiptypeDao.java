@@ -57,4 +57,8 @@ public interface EquiptypeDao extends BaseDao<Equiptype> {
 
 	public List<String> allEquipAddressCodeList(Map map) ;
 	
+	public List<Equiptype> testResultMap();
+
+	public List<Map<String, Object>> getEquipsByParentId(@Param("parentId") int parentId);
+	
 }

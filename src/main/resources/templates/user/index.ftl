@@ -163,8 +163,9 @@
                         field: "empty",
                         formatter: function (value, row, index) {
                             var operateHtml = '<@shiro.hasPermission name="system:user:edit"><button class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;编辑用户</button> &nbsp;</@shiro.hasPermission>';
-                            operateHtml = operateHtml + '<button class="btn btn-info btn-xs" type="button" onclick="grant(\''+row.id+'\')"><i class="fa fa-arrows"></i>&nbsp;角色关联</button>';
-                        	//operateHtml = operateHtml + '<button class="btn btn-info btn-xs" type="button" onclick="grant(\''+row.id+'\')"><i class="fa fa-arrows"></i>&nbsp;删除用户</button>';
+                            operateHtml = operateHtml + '<button class="btn btn-info btn-xs" type="button" onclick="grant(\''+row.id+'\')"><i class="fa fa-arrows"></i>角色关联</button>&nbsp;';
+                        	//operateHtml = operateHtml + '<button class="btn btn-info btn-xs" type="button" onclick="grant(\''+row.id+'\')"><i class="fa fa-arrows"></i>&nbsp;删除用户</button>&nbsp;';
+                        	operateHtml = operateHtml + '<button class="btn btn-info btn-xs" type="button" onclick="resetDefaultPwd(\''+row.id+'\')"><i class="fa fa-arrows"></i>&nbsp;重置默认密码</button>';
                             return operateHtml;
                         }
                     }]
@@ -230,6 +231,22 @@
                     }
                 });
             }
+            
+            function resetDefaultPwd(id){
+            	$.ajax({
+                    type: "PUT",
+                    dataType: "json",
+                    url: "${ctx}/user/resetPassword/" + id,
+                    success: function(msg){
+                        layer.msg(msg.msg, {time: 1500},function(){
+                            $('#userListTable').bootstrapTable("refresh");
+                            layer.close(index);
+                        });
+                    }
+                });
+            }
+            
+            
             function del(id){
                 layer.confirm('确定删除吗?', {icon: 3, title:'提示'}, function(index){
                     $.ajax({

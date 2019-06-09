@@ -76,14 +76,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		super.addInterceptors(registry);
 	}
 
-//    @Bean
-//    public FilterRegistrationBean registFilter() {
-//        FilterRegistrationBean registration = new FilterRegistrationBean();
-//        registration.setFilter(new OpenEntityManagerInViewFilter());
-//        registration.addUrlPatterns("/*");
-//        registration.setOrder(1);
-//        return registration;
-//    }
 
 
 }

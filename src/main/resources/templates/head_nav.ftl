@@ -72,7 +72,7 @@
 						</a>
 						<ul class="dropdown-menu">
 							<@shiro.hasPermission name="system:platform:manage">
-								<li><a href="${ctx}/system/index.ftl">平台管理</a></li>
+								<li><a href="${ctx}/system/index.ftl">租户管理</a></li>
 								<li class="divider"></li>
 							</@shiro.hasPermission>
 							<@shiro.hasPermission name="system:menu:menu">

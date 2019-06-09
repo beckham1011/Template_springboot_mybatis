@@ -1,37 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
 <mapper namespace="cn.bjjoy.bms.setting.persist.mapper.EquiptypeDao">
 
-	<select id="queryOneMap" resultType="map" parameterType="java.lang.String">
-		SELECT 
-			equiptype.id AS id,
-			equiptype.parent_id AS parentId,
-			equiptype.name AS name,
-			equiptype.add_per AS addPer,
-			equiptype.add_time AS addTime,
-			equiptype.type_layer AS typeLayer,
-			equiptype.addressCode AS addressCode,
-			equiptype.system_id AS systemId,
-			equiptype.longitude AS longitude,
-			equiptype.latitude AS latitude,
-			equiptype.IP AS IP,
-			equiptype.Zguanli_per AS ZguanliPer,
-			equiptype.Zguanli_phone AS ZguanliPhone,
-			equiptype.Cguanli_per AS CguanliPer,
-			equiptype.Cguanli_phone AS CguanliPhone,
-			equiptype.Jguanli_per AS JguanliPer,
-			equiptype.Jguanli_phone AS JguanliPhone,
-			equiptype.bengxing AS bengxing,
-			equiptype.koujing AS koujing,
-			equiptype.gonglv AS gonglv,
-			equiptype.xinhao AS xinhao
-		FROM 
-			equiptype
-		WHERE 
-			equiptype.id = #{id}
-	</select>
-	
-	<select id="queryMapList" resultType="map" parameterType="map">
+	<sql id="selectEquipColumn">
 		<![CDATA[
 		SELECT 
 			equiptype.id AS id,
@@ -54,9 +26,27 @@
 			equiptype.bengxing AS bengxing,
 			equiptype.koujing AS koujing,
 			equiptype.gonglv AS gonglv,
+			equiptype.tag AS tag,
 			equiptype.xinhao AS xinhao
 		FROM equiptype
 		]]>
+	</sql>
+
+	<select id="queryOneMap" resultType="map" parameterType="java.lang.String">
+		<include refid="selectEquipColumn"/>
+		WHERE 
+			equiptype.id = #{id}
+	</select>
+	
+	
+	<select id="testResultMap" resultType = "map" >
+		<include refid="selectEquipColumn"/>
+		limit 10
+	</select>
+	
+	
+	<select id="queryMapList" resultType="map" parameterType="map">
+		<include refid="selectEquipColumn"/>
 		<where>
 			<include refid="sql_map_where" />
 		</where>
@@ -78,27 +68,27 @@
 		<if test="search != null and search != ''">
 			<![CDATA[
 			AND (
-					CAST(equiptype.id as CHAR) LIKE CONCAT('%',#{search},'%') OR
-					CAST(equiptype.parent_id as CHAR) LIKE CONCAT('%',#{search},'%') OR
-					equiptype.name LIKE CONCAT('%',#{search},'%') OR
-					equiptype.add_per LIKE CONCAT('%',#{search},'%') OR
-					equiptype.add_time LIKE CONCAT('%',#{search},'%') OR
-					equiptype.type_layer LIKE CONCAT('%',#{search},'%') OR
-					equiptype.addressCode LIKE CONCAT('%',#{search},'%') OR
-					CAST(equiptype.system_id as CHAR) LIKE CONCAT('%',#{search},'%') OR
-					equiptype.longitude LIKE CONCAT('%',#{search},'%') OR
-					equiptype.latitude LIKE CONCAT('%',#{search},'%') OR
-					equiptype.IP LIKE CONCAT('%',#{search},'%') OR
-					equiptype.Zguanli_per LIKE CONCAT('%',#{search},'%') OR
-					equiptype.Zguanli_phone LIKE CONCAT('%',#{search},'%') OR
-					equiptype.Cguanli_per LIKE CONCAT('%',#{search},'%') OR
-					equiptype.Cguanli_phone LIKE CONCAT('%',#{search},'%') OR
-					equiptype.Jguanli_per LIKE CONCAT('%',#{search},'%') OR
-					equiptype.Jguanli_phone LIKE CONCAT('%',#{search},'%') OR
-					equiptype.bengxing LIKE CONCAT('%',#{search},'%') OR
-					equiptype.koujing LIKE CONCAT('%',#{search},'%') OR
-					equiptype.gonglv LIKE CONCAT('%',#{search},'%') OR
-					equiptype.xinhao LIKE CONCAT('%',#{search},'%') 
+				CAST(equiptype.id as CHAR) LIKE CONCAT('%',#{search},'%') OR
+				CAST(equiptype.parent_id as CHAR) LIKE CONCAT('%',#{search},'%') OR
+				equiptype.name LIKE CONCAT('%',#{search},'%') OR
+				equiptype.add_per LIKE CONCAT('%',#{search},'%') OR
+				equiptype.add_time LIKE CONCAT('%',#{search},'%') OR
+				equiptype.type_layer LIKE CONCAT('%',#{search},'%') OR
+				equiptype.addressCode LIKE CONCAT('%',#{search},'%') OR
+				CAST(equiptype.system_id as CHAR) LIKE CONCAT('%',#{search},'%') OR
+				equiptype.longitude LIKE CONCAT('%',#{search},'%') OR
+				equiptype.latitude LIKE CONCAT('%',#{search},'%') OR
+				equiptype.IP LIKE CONCAT('%',#{search},'%') OR
+				equiptype.Zguanli_per LIKE CONCAT('%',#{search},'%') OR
+				equiptype.Zguanli_phone LIKE CONCAT('%',#{search},'%') OR
+				equiptype.Cguanli_per LIKE CONCAT('%',#{search},'%') OR
+				equiptype.Cguanli_phone LIKE CONCAT('%',#{search},'%') OR
+				equiptype.Jguanli_per LIKE CONCAT('%',#{search},'%') OR
+				equiptype.Jguanli_phone LIKE CONCAT('%',#{search},'%') OR
+				equiptype.bengxing LIKE CONCAT('%',#{search},'%') OR
+				equiptype.koujing LIKE CONCAT('%',#{search},'%') OR
+				equiptype.gonglv LIKE CONCAT('%',#{search},'%') OR
+				equiptype.xinhao LIKE CONCAT('%',#{search},'%') 
 			)
 			]]>
 		</if>
@@ -491,77 +481,44 @@
 	</sql>
 	
 	<select id="getEquipByAddressCode" resultType="cn.bjjoy.bms.setting.persist.model.Equiptype" parameterType="map">
-		<![CDATA[
-		SELECT 
-			<include refid="columnList" />
-		FROM equiptype
-		]]>
-		<where>
-			<include refid="sql_map_where" />
-		</where>		
+		<include refid="selectEquipColumn"/>
+		where 1 = 1 and 
+		equiptype.addressCode = #{addressCode}
+	</select>
+
+	<select id="getEquipsByParentId" resultType="map" parameterType="int">
+		<include refid="selectEquipColumn"/> 
+		where id = #{parentId}
+		and type_layer = 4
+		UNION all 
+		<include refid="selectEquipColumn"/> 
+		where parent_id = #{parentId}
+		and type_layer = 4
+		UNION all 
+		<include refid="selectEquipColumn"/> 
+		where parent_id in(select id from equiptype where parent_id = #{parentId})
+		and type_layer = 4
+		UNION all 
+		<include refid="selectEquipColumn"/> 
+		where parent_id in(select id from equiptype where parent_id in(select id from equiptype where parent_id = #{parentId}))
+		and type_layer = 4
+		UNION all 
+		<include refid="selectEquipColumn"/> 
+		where parent_id in(select id from equiptype where parent_id in(select id from equiptype where parent_id in(select id from equiptype where parent_id = #{parentId})))
+		and type_layer = 4
 	</select>
 	
-	
-	<select id="columnList" >
-			equiptype.id AS id,
-			equiptype.parent_id AS parentId,
-			equiptype.name AS name,
-			equiptype.add_per AS addPer,
-			equiptype.add_time AS addTime,
-			equiptype.type_layer AS typeLayer,
-			equiptype.addressCode AS addressCode,
-			equiptype.system_id AS systemId,
-			equiptype.longitude AS longitude,
-			equiptype.latitude AS latitude,
-			equiptype.IP AS IP,
-			equiptype.Zguanli_per AS ZguanliPer,
-			equiptype.Zguanli_phone AS ZguanliPhone,
-			equiptype.Cguanli_per AS CguanliPer,
-			equiptype.Cguanli_phone AS CguanliPhone,
-			equiptype.Jguanli_per AS JguanliPer,
-			equiptype.Jguanli_phone AS JguanliPhone,
-			equiptype.bengxing AS bengxing,
-			equiptype.koujing AS koujing,
-			equiptype.gonglv AS gonglv,
-			equiptype.xinhao AS xinhao
-	</select>
 	
 	<select id="queryMapListNoPage" resultType="map" parameterType="map">
-		<![CDATA[
-		SELECT 
-			<include refid="columnList" />
-		FROM equiptype
-		]]>
+		<include refid="selectEquipColumn"/>
 		<where>
 			<include refid="sql_map_where" />
 		</where>
 		<include refid="sql_map_order" />
 	</select>
 	
-		<select id="queryDirectSubTypes" resultType="map" parameterType="map">
-		SELECT 
-			equiptype.id AS id,
-			equiptype.parent_id AS parentId,
-			equiptype.name AS name,
-			equiptype.add_per AS addPer,
-			DATE_FORMAT(equiptype.add_time,'%Y-%m-%d %h:%i') AS addTime,
-			equiptype.type_layer AS typeLayer,
-			equiptype.addressCode AS addressCode,
-			equiptype.system_id AS systemId,
-			equiptype.longitude AS longitude,
-			equiptype.latitude AS latitude,
-			equiptype.IP AS IP,
-			equiptype.Zguanli_per AS ZguanliPer,
-			equiptype.Zguanli_phone AS ZguanliPhone,
-			equiptype.Cguanli_per AS CguanliPer,
-			equiptype.Cguanli_phone AS CguanliPhone,
-			equiptype.Jguanli_per AS JguanliPer,
-			equiptype.Jguanli_phone AS JguanliPhone,
-			equiptype.bengxing AS bengxing,
-			equiptype.koujing AS koujing,
-			equiptype.gonglv AS gonglv,
-			equiptype.xinhao AS xinhao
-		FROM equiptype
+	<select id="queryDirectSubTypes" resultType="map" parameterType="map">
+		<include refid="selectEquipColumn"/>
 		where parent_id = #{parentId}
 		<if test="systemId != null and systemId != ''">
 			AND system_id = #{systemId} 
@@ -570,29 +527,7 @@
 	
 	
 	<select id="querySubTypes" resultType="map" parameterType="map">
-		SELECT 
-			equiptype.id AS id,
-			equiptype.parent_id AS parentId,
-			equiptype.name AS name,
-			equiptype.add_per AS addPer,
-			equiptype.add_time AS addTime,
-			equiptype.type_layer AS typeLayer,
-			equiptype.addressCode AS addressCode,
-			equiptype.system_id AS systemId,
-			equiptype.longitude AS longitude,
-			equiptype.latitude AS latitude,
-			equiptype.IP AS IP,
-			equiptype.Zguanli_per AS ZguanliPer,
-			equiptype.Zguanli_phone AS ZguanliPhone,
-			equiptype.Cguanli_per AS CguanliPer,
-			equiptype.Cguanli_phone AS CguanliPhone,
-			equiptype.Jguanli_per AS JguanliPer,
-			equiptype.Jguanli_phone AS JguanliPhone,
-			equiptype.bengxing AS bengxing,
-			equiptype.koujing AS koujing,
-			equiptype.gonglv AS gonglv,
-			equiptype.xinhao AS xinhao
-		FROM equiptype
+		<include refid="selectEquipColumn"/>
 		where 1 = 1
 		<if test="ids != null and ids.size > 0 " >
 			AND  equiptype.id IN 
@@ -631,86 +566,20 @@
 	
 	
 	<select id="getSubTypes" resultType="map" parameterType="map">
-		SELECT 
-			equiptype.id AS id,
-			equiptype.parent_id AS parentId,
-			equiptype.name AS name,
-			equiptype.add_per AS addPer,
-			equiptype.add_time AS addTime,
-			equiptype.type_layer AS typeLayer,
-			equiptype.addressCode AS addressCode,
-			equiptype.system_id AS systemId,
-			equiptype.longitude AS longitude,
-			equiptype.latitude AS latitude,
-			equiptype.IP AS IP,
-			equiptype.Zguanli_per AS ZguanliPer,
-			equiptype.Zguanli_phone AS ZguanliPhone,
-			equiptype.Cguanli_per AS CguanliPer,
-			equiptype.Cguanli_phone AS CguanliPhone,
-			equiptype.Jguanli_per AS JguanliPer,
-			equiptype.Jguanli_phone AS JguanliPhone,
-			equiptype.bengxing AS bengxing,
-			equiptype.koujing AS koujing,
-			equiptype.gonglv AS gonglv,
-			equiptype.xinhao AS xinhao
-	 	FROM equiptype WHERE FIND_IN_SET(id, getTypeChild(#{parentId}))
+		<include refid="selectEquipColumn"/>
+		WHERE FIND_IN_SET(id, getTypeChild(#{parentId}))
 		<if test="systemId != null and systemId != ''">
 			AND equiptype.system_id = #{systemId} 
 		</if>
 	</select>
 	
 	<select id="getTypeById" resultType="map" parameterType="string">
-		SELECT 
-			equiptype.id AS id,
-			equiptype.parent_id AS parentId,
-			equiptype.name AS name,
-			equiptype.add_per AS addPer,
-			equiptype.add_time AS addTime,
-			equiptype.type_layer AS typeLayer,
-			equiptype.addressCode AS addressCode,
-			equiptype.system_id AS systemId,
-			equiptype.longitude AS longitude,
-			equiptype.latitude AS latitude,
-			equiptype.IP AS IP,
-			equiptype.Zguanli_per AS ZguanliPer,
-			equiptype.Zguanli_phone AS ZguanliPhone,
-			equiptype.Cguanli_per AS CguanliPer,
-			equiptype.Cguanli_phone AS CguanliPhone,
-			equiptype.Jguanli_per AS JguanliPer,
-			equiptype.Jguanli_phone AS JguanliPhone,
-			equiptype.bengxing AS bengxing,
-			equiptype.koujing AS koujing,
-			equiptype.gonglv AS gonglv,
-			equiptype.xinhao AS xinhao
-	 	FROM equiptype WHERE id = #{id}
+		<include refid="selectEquipColumn"/> WHERE id = #{id}
 	</select>
 	
 	
 	<select id="getTypesByIds" resultType="map" parameterType="map">
-		SELECT 
-			equiptype.id AS id,
-			equiptype.parent_id AS parentId,
-			equiptype.name AS name,
-			equiptype.add_per AS addPer,
-			equiptype.add_time AS addTime,
-			equiptype.type_layer AS typeLayer,
-			equiptype.addressCode AS addressCode,
-			equiptype.system_id AS systemId,
-			equiptype.longitude AS longitude,
-			equiptype.latitude AS latitude,
-			equiptype.IP AS IP,
-			equiptype.Zguanli_per AS zguanliPer,
-			equiptype.Zguanli_phone AS zguanliPhone,
-			equiptype.Cguanli_per AS cguanliPer,
-			equiptype.Cguanli_phone AS cguanliPhone,
-			equiptype.Jguanli_per AS jguanliPer,
-			equiptype.Jguanli_phone AS jguanliPhone,
-			equiptype.bengxing AS bengxing,
-			equiptype.koujing AS koujing,
-			equiptype.gonglv AS gonglv,
-			equiptype.xinhao AS xinhao,
-			equiptype.tag AS tag
-	 	FROM equiptype 
+		<include refid="selectEquipColumn"/>
 	 	WHERE 1 = 1 
 		<if test="ids != null">
 			AND equiptype.id IN 
@@ -804,32 +673,9 @@
 	</select>
 	
 	<select id="exportTypeList" parameterType="map" resultType="map">
-		SELECT 
-			equiptype.id AS id,
-			equiptype.parent_id AS parentId,
-			equiptype.name AS name,
-			equiptype.add_per AS addPer,
-			equiptype.add_time AS addTime,
-			equiptype.type_layer AS typeLayer,
-			equiptype.addressCode AS addressCode,
-			equiptype.system_id AS systemId,
-			equiptype.longitude AS longitude,
-			equiptype.latitude AS latitude,
-			equiptype.Zguanli_per AS ZguanliPer,
-			equiptype.Zguanli_phone AS ZguanliPhone,
-			equiptype.Cguanli_per AS CguanliPer,
-			equiptype.Cguanli_phone AS CguanliPhone,
-			equiptype.Jguanli_per AS JguanliPer,
-			equiptype.Jguanli_phone AS JguanliPhone,
-			equiptype.bengxing AS bengxing,
-			equiptype.koujing AS koujing,
-			equiptype.gonglv AS gonglv,
-			equiptype.xinhao AS xinhao
-		FROM 
-			equiptype
+		<include refid="selectEquipColumn"/>
 		WHERE 1 = 1
-
-			and equiptype.type_layer = 4
+		  and equiptype.type_layer = 4
 	</select>
 	
 		
@@ -882,4 +728,9 @@
 			UNION
 		select 1
 	</select>
+	
+	<update id="updateCron" parameterType="map">
+		update equiptype set cron = #{cron} where id = #{id}
+	</update>
+	
 </mapper>

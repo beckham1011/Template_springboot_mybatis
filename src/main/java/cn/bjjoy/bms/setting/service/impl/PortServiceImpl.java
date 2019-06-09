@@ -1,7 +1,7 @@
 package cn.bjjoy.bms.setting.service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ public class PortServiceImpl implements PortService {
 
 	/**
 	 */
-	Logger logger = LoggerFactory.getLogger(EquiptypeServiceImpl.class) ;
+	private static final Logger logger = LogManager.getLogger();
 
 	@Autowired
 	SystemService renantService;
@@ -26,6 +26,7 @@ public class PortServiceImpl implements PortService {
 	@Override
 	public int getPort(String addressCode) {
 		Equiptype equip = equipService.getEquipByAddressCode(addressCode);
+		logger.info(" get port .......");
 		return renantService.getPort(equip.getSystemId());
 	}
 	

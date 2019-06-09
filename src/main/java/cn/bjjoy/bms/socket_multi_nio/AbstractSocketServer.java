@@ -67,7 +67,6 @@ public abstract class AbstractSocketServer {
     public void listen(int port) throws IOException {
 		
     	selector = SocketServerFactory.getSelector(port);
-	   	System.out.println("Listen: " + (selector == null));
     	for(;;) {
             selector.select();//返回值为本次触发的事件数  
             Set<SelectionKey> selectionKeys = selector.selectedKeys();
@@ -86,17 +85,31 @@ public abstract class AbstractSocketServer {
 	
 	/** 
                 * 把当前客户端信息 推送到其他客户端 
+	       定时刷新收到信息为all
+	       前端页面按钮刷新发送信息为all_#{parentId}
      */
-    public void refreshAllStation(SocketChannel client ,String msg) throws IOException {
+    public void refreshAllStation(SocketChannel client ,String receiveText ,String msg) throws IOException {
     	logger.info("refreshAllStation ++++++++++++++++++++++++++" + clientsMap.size());
-        if (!clientsMap.isEmpty()) {
-            for (Map.Entry<String, SocketChannel> entry : clientsMap.entrySet()) {
-				SocketChannel clientSocket = entry.getValue();
-				if (!client.equals(clientSocket)) {
-					refreshStation(clientSocket , msg );
-				}
+    	if(Constants.ALL.equals(receiveText)) {
+    		if (!clientsMap.isEmpty()) {
+                for (Map.Entry<String, SocketChannel> entry : clientsMap.entrySet()) {
+    				SocketChannel clientSocket = entry.getValue();
+    				if (!client.equals(clientSocket)) {
+    					refreshStation(clientSocket , msg );
+    				}
+                }
             }
-        }
+    	}else {
+    		String[] freshMsg = receiveText.split("_");
+    		List<Equiptype> equips = equipService.getEquipsByParentId(Integer.valueOf(freshMsg[1]));
+    		equips.stream().forEach(equip ->{
+    			System.out.println(equip.getIP()+"," + equip.getAddressCode());
+    			if( Objects.nonNull(equip.getIP()) && clientsMap.containsKey(equip.getIP()) && addressCodeIpMap.containsKey(equip.getIP())) {
+    				System.out.println("Refresh:" + equip.getAddressCode());
+    				refreshStation(clientsMap.get(addressCodeIpMap.get(equip.getAddressCode())) , Constants.MSG_8082);
+    			}
+    		});
+    	}
     }
 
 
@@ -115,7 +128,7 @@ public abstract class AbstractSocketServer {
      */
     public void refreshStation(SocketChannel client , String msg) {
     	
-    	logger.info("client != null:" + (client != null));
+    	logger.info("refreshStation: client != null:" + (client != null));
     	
     	if(client != null){
     		sBuffer.clear();
@@ -247,12 +260,11 @@ public abstract class AbstractSocketServer {
                 byte[] dataBytes = rBuffer.array();
                 receiveText = new String( dataBytes , 0 , count);
 				logger.info("ISIP-------------client IP:" + socket.getInetAddress().getHostAddress() + ", receiveText : " + receiveText);                
-				if(receiveText.indexOf(Constants.All_MSG.toLowerCase())>-1){
+				if(receiveText.indexOf(Constants.ALL) > -1){
 					//发送给所有客户端，要数据
-					refreshAllStation(client, Constants.MSG_8082);
+					refreshAllStation(client, receiveText , Constants.MSG_8082);
 				} else if(IPUtil.isIPv4(receiveText)){
 					//给特定的站点发送发送即时数据请求
-					logger.info("receiveText:" + receiveText + "Refresh Special Station---------");
 					logger.info("refreshStation:" + clientsMap.get(receiveText) + "Refresh Special Station---------");
 					refreshStation(clientsMap.get(receiveText) , Constants.MSG_8082);
 				} else {

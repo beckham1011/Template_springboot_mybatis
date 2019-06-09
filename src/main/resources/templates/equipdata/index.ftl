@@ -242,7 +242,7 @@
 	                $.ajax({
 	                    type: "GET",
 	                    dataType: "json",
-	                    url: '${ctx}/socket8082?param=all' ,
+	                    url: '${ctx}/refreshAll' ,
 	                    success: function(msg){
 	                    	layer.close(index);
 						    refreshTable();

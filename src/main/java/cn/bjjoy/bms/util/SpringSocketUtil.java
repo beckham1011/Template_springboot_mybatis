@@ -58,7 +58,7 @@ public class SpringSocketUtil implements ApplicationContextAware {
 		return ch;
 	}
 
-	static int[] rule = {1,11,57,11,81,11,9,11};
+	static int[] rule = {0,2,57,11,81,11,9,11};
 	
 	public static String[] parse8082SocketData(String source){
 		 String[] values = new String[4];

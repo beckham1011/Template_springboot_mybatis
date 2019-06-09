@@ -47,15 +47,19 @@ public class TestSocket {
 		 String result = "";
 		 String hex = "";
 		 
-		 byte source = -63;
+		 byte[] source = "hsg666".getBytes();
+		 for(byte b : source) {
+			 hex = String.valueOf(hexStr.charAt((b & 0xF0) >> 4));
+			 hex += String.valueOf(hexStr.charAt(b & 0x0F));
+			 result += hex + " ";
+		 }
 		 
-		 hex = String.valueOf(hexStr.charAt((source & 0xF0) >> 4));
-		 hex += String.valueOf(hexStr.charAt(source & 0x0F));
-		 result += hex + " ";
-		 
-		 System.out.println(result);
+		 System.out.println(result.trim());
 	 }
 	 
-	 
+	 @Test
+	 public void getBytes() {
+		 System.out.println("hsg666".getBytes());
+	 }
 	 
 }

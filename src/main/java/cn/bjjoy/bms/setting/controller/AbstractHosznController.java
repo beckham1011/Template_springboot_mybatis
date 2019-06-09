@@ -14,6 +14,7 @@ import cn.bjjoy.bms.setting.service.EquiptypeService;
 import cn.bjjoy.bms.setting.service.MaintainrecordService;
 import cn.bjjoy.bms.setting.service.MaintenanceService;
 import cn.bjjoy.bms.setting.service.MenuService;
+import cn.bjjoy.bms.setting.service.QuartzService;
 import cn.bjjoy.bms.setting.service.RoleService;
 import cn.bjjoy.bms.setting.service.SystemService;
 import cn.bjjoy.bms.setting.service.TenantService;
@@ -66,7 +67,10 @@ public abstract class AbstractHosznController extends BaseController {
     public UserRoleService userRoleService;
 
     @Autowired
-    SaveHistoryDataEveryDay saveService;
+    public SaveHistoryDataEveryDay saveService;
+    
+    @Autowired
+    public QuartzService quartzService;
     
 	static DateFormat df = new SimpleDateFormat("yyyy-MM-dd") ;
 	

@@ -10,9 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import cn.bjjoy.bms.setting.constants.Constants;
-import cn.bjjoy.bms.setting.service.EquipdataService;
 import cn.bjjoy.bms.setting.service.SystemService;
-import cn.bjjoy.bms.setting.service.impl.EquipdataServiceImpl;
 import cn.bjjoy.bms.setting.service.impl.SystemServiceImpl;
 import cn.bjjoy.bms.util.SpringSocketUtil;
 
