@@ -485,6 +485,12 @@
 		where 1 = 1 and 
 		equiptype.addressCode = #{addressCode}
 	</select>
+	
+	<select id="getEquipByName" resultType="cn.bjjoy.bms.setting.persist.model.Equiptype" parameterType="map">
+		<include refid="selectEquipColumn"/>
+		where 1 = 1 and 
+		equiptype.name = #{name}
+	</select>
 
 	<select id="getEquipsByParentId" resultType="map" parameterType="int">
 		<include refid="selectEquipColumn"/> 

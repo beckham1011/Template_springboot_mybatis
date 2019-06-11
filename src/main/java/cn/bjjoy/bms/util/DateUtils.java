@@ -230,7 +230,7 @@ public class DateUtils {
     	SimpleDateFormat formatter = new SimpleDateFormat(YYYYMMDD);
     	days.add(formatter.format(startDate)) ;
     	Date d = null ;
-    	while((startSeconds + DAY_MINO_SECONDS) < endDate.getTime()){
+    	while((startSeconds + DAY_MINO_SECONDS) <= endDate.getTime()){
     		startSeconds += DAY_MINO_SECONDS ;
     		d = new Date(startSeconds);
     		days.add(formatter.format(d)) ;

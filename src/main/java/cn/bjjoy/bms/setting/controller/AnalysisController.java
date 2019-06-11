@@ -27,22 +27,15 @@ import cn.bjjoy.bms.util.UserUtils;
 @Controller
 @RequestMapping(value="analysis")
 public class AnalysisController  extends AbstractHosznController{
-
-    @RequestMapping(value = "/index" )
-    public String index( @RequestParam Map paramMap ,ModelMap modelMap) {
-		modelMap.addAttribute("parentId", paramMap.containsKey("parentId") ? paramMap.get("parentId") : "1") ;
-        return "/analysis/index";
-    }
     
-    
-    @GetMapping(value = "/index2" )
+    @GetMapping(value = "/index" )
     public String index2( @RequestParam Map paramMap ,ModelMap modelMap) {
 		modelMap.addAttribute("parentId", paramMap.containsKey("parentId") ? paramMap.get("parentId") : "1") ;
 		String dayMonthAgo = DateUtils.formatDate(DateUtils.addDays(new Date(), -31), DateUtils.YYYYMMDDHHMMSS) ;
 		String today = DateUtils.formatDate(DateUtils.addDays(new Date(), -1), DateUtils.YYYYMMDDHHMMSS) ;
 		modelMap.addAttribute("dayMonthAgo" , dayMonthAgo);
 		modelMap.addAttribute("today" , today);
-        return "/analysis/index2";
+        return "/analysis/index";
     }
 	
 	@Description("-查询列表")

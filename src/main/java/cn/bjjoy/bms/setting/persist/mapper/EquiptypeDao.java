@@ -28,6 +28,8 @@ public interface EquiptypeDao extends BaseDao<Equiptype> {
 
 	public Equiptype getEquipByAddressCode(@Param("addressCode") String addressCode);
 	
+	public Equiptype getEquipByName(@Param("name") String name);
+	
 	public LinkedList<Map<String, Object>> querySubTypes(Map map);
 	
 	public LinkedList<Map<String, Object>> getTypesByIds(Map map) ;

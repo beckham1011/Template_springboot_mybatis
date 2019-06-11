@@ -52,9 +52,10 @@
                                         <!-- <button class="btn btn-xs btn-danger" onclick="refreshAllStation();"><i class=""></i>&nbsp;加载所有泵站数据</button> -->
                                         <div class="form-group">
 		                                    <div style="float:left">
-		                                    	<div style="float:right; margin-left: 195px;">
+		                                    	<div style="float:right; margin-left: 145px;">
 		                                        	<input id="stationName" class="stationName" placeholder="请输入泵站名称" name="stationName" type="text"/>
 			                                        <button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
+			                                        <button class="btn btn-xs btn-warning" onclick="refreshAllStation();"><i class="fa fa-refresh"></i>&nbsp;刷新</button>
 		                                        </div>
                                         	</div>
                                         </div>
@@ -189,7 +190,7 @@
 	                $.ajax({
 	                    type: "GET",
 	                    dataType: "json",
-	                    url: '${ctx}/socket8082?param=all' ,
+	                    url: '${ctx}/refreshAll' ,
 	                    success: function(msg){
 	                    	layer.close(index);
 	                    	refreshTable();

@@ -18,10 +18,12 @@
 		<link rel="stylesheet" href="${ctx}/css/ace.min.css" />
 		<link rel="stylesheet" href="${ctx}/css/ace-rtl.min.css" />
 		<link rel="stylesheet" href="${ctx}/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="${ctx}/css/bootstrap-datetimepicker.min.css" />
 		<script src="${ctx}/js/ace-extra.min.js"></script>
 
 		<script src="${ctx}/js/jquery-2.0.3.min.js"></script>
 		<script src="${ctx}/js/bootstrap.min.js"></script>
+		<script src="${ctx}/js/bootstrap-datetimepicker.min.js"></script>
 
 	</head>
 
@@ -61,22 +63,30 @@
 			                            <div class="form-group">
 			                                <label class="col-sm-1 control-label">起止时间：</label>
 			                                <div class="col-sm-2">
-			                                    <input id="createDate" name="createDate" type="date" class="laydate-icon form-control" value="2018-12-05">
+			                                    <input id="startDate" name="startDate" type="date" class="laydate-icon form-control">
 			                                </div>
 			                                <div class="col-sm-2">
-			                                    <input id="enddate" name="enddate" type="date" class="laydate-icon form-control" value="2019-01-05">			                                
+			                                    <input id="endDate" name="endDate" type="date" class="laydate-icon form-control" >
 			                                </div>
-			                            </div>                                    
-	                                    <div class="form-group">
-		                                    <div  style="float:right">
-	                                        	<input id="stationName" placeholder="请输入泵站名称" name="stationName" type="text"/>
-		                                        <button class="btn btn-xs btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
-	                                    	</div>
-	                                    </div>
+			                               
+			                            </div>
+			                            <div class="form-group">
+			                                	<label class="col-sm-1 control-label">类型:</label>
+				                             	<div class="col-sm-2">
+			                                	<select id="type">
+			                                		<option value="day">天</option>
+			                                		<option value="month">月</option>
+			                                		<option value="quarter">季</option>
+			                                		<option value="year">年</option>
+			                                	</select>
+			                                </div>
+			                            </div>
                                     </div>
 								</div>
-                                
-                                <table id="userListTable"></table>
+                                <div class="space-6"></div>
+                                <div style="width:1350px;height:420px;border:#ccc solid 1px;" id="container">
+	                               
+                                </div>
 							</div><!-- /.col -->
 						</div><!-- /.row -->
 					</div><!-- /.page-content -->
@@ -85,108 +95,142 @@
 
 		</div><!-- /.main-container -->
 
-		<#include "${ctx}/common.ftl"/>
-
-		<!-- inline scripts related to this page -->
-
-		<script type="text/javascript">
-            $(document).ready(function () {
-            	
-            	localStorage.setItem("parentId", ${parentId});
-            	$("#createDate").val('2018-11-05');
-            	$("#enddate").val('2019-01-05');
-                
-                //初始化表格,动态从服务器加载数据
-                $("#userListTable").bootstrapTable({
-                    //使用get请求到服务器获取数据
-                    method: "GET",
-                    //必须设置，不然request.getParameter获取不到请求参数
-                    contentType: "application/x-www-form-urlencoded",
-                    //获取数据的Servlet地址
-                    url: "${ctx}/analysis/list",
-                    //表格显示条纹
-                    striped: true,
-                    //启动分页
-                    pagination: false,
-                    //每页显示的记录数
-                    pageSize: 20,
-                    //当前第几页
-                    pageNumber: 1,
-                    //记录数可选列表
-                    pageList: [5, 10, 15, 20, 25],
-                    //是否启用查询
-                    search: false,
-                    //是否启用详细信息视图
-                    detailView:false,
-                    detailFormatter:detailFormatter,
-                    //表示服务端请求
-                    sidePagination: "server",
-                    //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
-                    //设置为limit可以获取limit, offset, search, sort, order
-                    queryParams: getQueryParams,
-                    queryParamsType: "",
-                    //json数据解析
-                    responseHandler: function(res) {
-                        return {
-                            "rows": res.data.analysises,
-                            "total": res.data.count
-                        };
-                    },
-                    //数据列
-                    columns: [{
-                        title: "设备名称",
-                        field: "name"                   
-                    },{
-                        title: "瞬时流量（M3/h）-最小值",
-                        field: "mnflwrate"                        
-                    },{
-                        title: "瞬时流量（M3/h）-最大值",
-                        field: "mxflwrate"
-                    },{
-                        title: "瞬时流量（M3/h）-平均值",
-                        field: "avgflwrate"
-
-                    },{
-                        title: "正累积-最小值",
-                        field: "mncumlate"
-
-                    },{
-                        title: "正累积-最大值",
-                        field: "mxcumlate"
-
-                    },{
-                        title: "正累积-平均值",
-                        field: "avgcumlate"
-
-                    }]
-                });
-            });
-
-            function detailFormatter(index, row) {
-                var html = [];
-                html.push('<p><b>描述:</b> ' + row.description + '</p>');
-                return html.join('');
-            }
-
-            function getQueryParams(params){
-                var params={
-                    "page":		   params.pageNumber,
-                    "rows":		   params.pageSize,
-                    "startDate":   $("#createDate").val(),
-                    "endDate":     $("#enddate").val(),    
-                    "stationName": $("#stationName").val().trim()
-                }
-                return params;
-            }
-            
-            function itemOnclick (){}
-            
-            
-            function search() {
-                var params = { "stationName": $("#stationName").val().trim() };
-                $('#userListTable').bootstrapTable("refresh");
-            }
-            
-		</script>
+<script>
+	
+	Date.prototype.Format = function(fmt)   
+	{ //author: meizz   
+	  var o = {   
+	    "M+" : this.getMonth()+1,                 //月份   
+	    "d+" : this.getDate(),                    //日   
+	    "h+" : this.getHours(),                   //小时   
+	    "m+" : this.getMinutes(),                 //分   
+	    "s+" : this.getSeconds(),                 //秒   
+	    "q+" : Math.floor((this.getMonth()+3)/3), //季度   
+	    "S"  : this.getMilliseconds()             //毫秒   
+	  };   
+	  if(/(y+)/.test(fmt))   
+	    fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));   
+	  for(var k in o)   
+	    if(new RegExp("("+ k +")").test(fmt))   
+	  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+	  return fmt;
+	  
+	}
+	
+	$(document).ready(function () {
+		localStorage.setItem("parentId", ${parentId});
+		localStorage.setItem("startDate", new Date(new Date().getTime() - (31 * 24 * 3600 * 1000)).Format("yyyy-MM-dd"));
+		localStorage.setItem("endDate", new Date(new Date().getTime() - (24 * 3600 * 1000)).Format("yyyy-MM-dd"));
+		
+		var startDate = new Date(new Date().getTime() - (31 * 24 * 3600 * 1000)).Format("yyyy-MM-dd");
+		var endDate = new Date(new Date().getTime() - (24 * 3600 * 1000)).Format("yyyy-MM-dd");
+		$("#startDate").val(startDate);
+		$("#endDate").val(endDate);
+		
+		loadChart(${parentId});
+	});
+	
+</script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+   <script type="text/javascript">
+		
+		$(document).ready(function(){
+		});
+		
+		//页面初始化
+        function clickNode(event, data){
+        	localStorage.setItem("parentId",data['id']);
+        	loadChart(data['id']);
+        }
+        
+        function itemOnclick (){}
+        
+        function search(){
+        	loadChart(${parentId});
+        }
+        
+        function loadChart(parentId){
+            var type = jQuery("#type option:selected").val();
+        	$.ajax({
+			    type: "GET",
+			    dataType: "json",
+			    url: '${ctx}/analysis/chart?parentId=' + parentId + '&type=' + type + '&startDate=' + $("#startDate").val() 
+			    			+'&endDate=' + $("#endDate").val() ,
+			    success: function(data){
+			    	var typeListLength = data.data.typeList.length;
+			    	console.log(data.data)
+			    	var serialData = new Array(typeListLength);
+			    	for(var index = 0 ; index < typeListLength ; index ++){
+			    		console.log()
+					}
+					generateOption(data);
+			    }
+			});
+        }
+		
+		function generateOption(data){
+			var dom = document.getElementById("container");
+			var myChart = echarts.init(dom);
+			var app = {};
+			option = null;
+			app.title = '堆叠柱状图';
+			
+			var typeList = data.data.typeList ;
+			var typeData = data.data.analysisChart ;
+			var daysList  = typeData[0] ;
+			var serialData = new Array(typeList.length) ;
+			
+			for(var index = 0 ; index < typeList.length ; index ++){
+				var option = {} ;
+				option.name = typeList[index];
+				option.type = 'bar';
+				option.stack = 'day';
+				option.data = typeData[index + 1];
+				serialData[index] = option ;
+			}
+			
+			option = {
+			    tooltip : {
+			        trigger: 'axis',
+			        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+			            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+			        }
+			    },
+			    legend: {
+			        data: typeList
+			    },
+			    grid: {
+			        left: '3%',
+			        right: '4%',
+			        bottom: '3%',
+			        containLabel: true
+			    },
+			    xAxis : [
+			        {
+			            type : 'category',
+			            data : daysList
+			        }
+			    ],
+			    yAxis : [
+			        {
+			            type : 'value'
+			        }
+			    ],
+			    series :serialData
+			};
+			if (option && typeof option === "object") {
+		        // 使用刚指定的配置项和数据显示图表。
+			    myChart.setOption(option, true);
+			}
+		}
+		
+	</script>
 </body>
 </html>
