@@ -61,16 +61,6 @@
                                     <div class="col-xs-12">
                                         <h3 class="header smaller lighter blue">通用报表</h3>
 			                            <div class="form-group">
-			                                <label class="col-sm-1 control-label">起止时间：</label>
-			                                <div class="col-sm-2">
-			                                    <input id="startDate" name="startDate" type="date" class="laydate-icon form-control">
-			                                </div>
-			                                <div class="col-sm-2">
-			                                    <input id="endDate" name="endDate" type="date" class="laydate-icon form-control" >
-			                                </div>
-			                               
-			                            </div>
-			                            <div class="form-group">
 			                                	<label class="col-sm-1 control-label">类型:</label>
 				                             	<div class="col-sm-2">
 			                                	<select id="type">
@@ -81,10 +71,25 @@
 			                                	</select>
 			                                </div>
 			                            </div>
+			                            <div class="form-group">
+			                                <label class="col-sm-1 control-label">起止时间：</label>
+			                                <div class="col-sm-2">
+			                                    <input id="startDate" name="startDate" type="date" class="laydate-icon form-control">
+			                                </div>
+			                                <div class="col-sm-2">
+			                                    <input id="endDate" name="endDate" type="date" class="laydate-icon form-control" >
+			                                </div>
+		                                    <div class="form-group">
+			                                    <div  style="">
+			                                        <button class="btn btn-sm btn-primary" onclick="search();"><i class="fa fa-search"></i>&nbsp;查询</button>
+		                                    	</div>
+		                                    </div>			                               
+			                            </div>
+			                            
                                     </div>
 								</div>
                                 <div class="space-6"></div>
-                                <div style="width:1350px;height:420px;border:#ccc solid 1px;" id="container">
+                                <div style="width:1300px;height:420px;border:#ccc solid 1px;" id="container">
 	                               
                                 </div>
 							</div><!-- /.col -->
@@ -153,7 +158,7 @@
         function itemOnclick (){}
         
         function search(){
-        	loadChart(${parentId});
+        	loadChart(localStorage.getItem("parentId"));
         }
         
         function loadChart(parentId){

@@ -54,6 +54,8 @@ public interface EquiptypeDao extends BaseDao<Equiptype> {
 	public List<Map<String, Object>> exportTypeList(Map map) ;
 
 	public int getUserSystemIdByUserId(Map map);
+	
+	public Equiptype getEquipById(@Param("id") int id);
 
 	public Map<Integer, String> getTypeById(String id);
 

@@ -79,6 +79,20 @@ public class SaveHistoryDataEveryDay {
 		return false ;
 	}
 	
+	
+	public String getDatFormatByType(String type){
+		String fmt = null;
+		if("day".equals(type)) {
+			fmt = "%Y-%m-%d";
+		}else if("month".equals(type) || "quarter".equals(type)) {
+			fmt = "%Y-%m";
+		}else if("year".equals(type)) {
+			fmt = "%Y";
+		}
+		return fmt;
+	}
+	
+	
 //	
 //	@Test
 //	public void test(){

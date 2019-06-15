@@ -733,6 +733,11 @@
 		select system_id from equiptype where id = (SELECT parent_id from user where id = ${id})
 	</select>
 	
+	<select id="getEquipById" parameterType="int" resultType="int"> 
+		<include refid="selectEquipColumn"/>
+		where id = ${id}
+	</select>
+	
 	<update id="updateCron" parameterType="map">
 		update equiptype set cron = #{cron} where id = #{id}
 	</update>

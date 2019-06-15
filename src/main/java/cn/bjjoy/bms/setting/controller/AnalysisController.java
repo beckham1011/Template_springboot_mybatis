@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.context.annotation.Description;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import cn.bjjoy.bms.base.ResponseResult;
 import cn.bjjoy.bms.exception.ControllerException;
 import cn.bjjoy.bms.setting.dto.AnalysisDto;
 import cn.bjjoy.bms.setting.entity.User;
+import cn.bjjoy.bms.setting.persist.model.Equiptype;
 import cn.bjjoy.bms.util.DateUtils;
 import cn.bjjoy.bms.util.UserUtils;
 
@@ -62,15 +64,21 @@ public class AnalysisController  extends AbstractHosznController{
 	@ResponseBody
 	public ResponseResult getAnalysisChartData(@RequestParam Map<String, Object> map){
 
-		User user = UserUtils.getUer() ;
-		int systemId = equiptypeService.getUserSystemId(user.getId()) ;
-		if(systemId != 0){
-			map.put("systemId", 1) ;
+		Equiptype equip = equiptypeService.getEquipById(map.get("parentId").toString());
+		if(equip.getSystemId() != 0){
+			map.put("systemId", equip.getSystemId()) ;
 		}
+		map.put("typeLayer", equip.getTypeLayer());
+		String type = (String)map.get("type");
+		String timeFmt = saveService.getDatFormatByType(type);
+		
+		map.put("timeFmt", timeFmt);
 		
 		List<String> days = DateUtils.getDaysList(DateUtils.toDate(String.valueOf(map.get("startDate"))), DateUtils.toDate(String.valueOf(map.get("endDate")))) ;
+		Set<String> timeFormatList = DateUtils.getTimeTypeList(days , type);
 		
 		List<Map<String, Object>> subtypeList = equiptypeService.queryDirectSubTypes(map) ;
+		
 		
 		List<Map<String , Object>> datas = equipdataService.getHistoryDataEveryday(map);
 
@@ -82,7 +90,7 @@ public class AnalysisController  extends AbstractHosznController{
 
 		
 //		Map<String , Object> dataDayAddress = equipdataService.getDayDataDayAddressData(datas);
-		Map<String , Object> dataAddressDay = equipdataService.getDayDataDayAddressData(datas);
+		Map<String , Object> dataAddressDay = equipdataService.getDayDataDayAddressData(datas , type);
 		
 		int subTypeNum = subtypeList != null ? subtypeList.size() : 0;
 		
@@ -95,19 +103,19 @@ public class AnalysisController  extends AbstractHosznController{
 		 */
 		Object[] result = new Object[subTypeNum + 1] ;
 		List<String> typeNameList = new ArrayList<>();
-		result[0] = days;
+		result[0] = timeFormatList;
 		for (int typeIndex = 0; typeIndex < subTypeNum; typeIndex ++) {
-			List<Double> daysData = new ArrayList<>(days.size()) ;
-			String addressCode = (String) subtypeList.get(typeIndex).get("addressCode") ;
+			List<Double> daysData = new ArrayList<>(timeFormatList.size()) ;
+			Integer id = (Integer) subtypeList.get(typeIndex).get("id") ;
 			String typeName = (String) subtypeList.get(typeIndex).get("name") ;
 			typeNameList.add(typeName) ;
 			Double dayData = 0.0;
-			for(String day : days){
-				String key = addressCode + "_" + day ;
+			for(String timeType : timeFormatList){
+				String key = timeType+ "_" + id  ;
 				dayData = (Double) (dataAddressDay.containsKey(key) ? dataAddressDay.get(key) : 0.0);
 				daysData.add(dayData) ;
 			}
-			result[typeIndex + 1 ] = daysData ;
+			result[typeIndex + 1] = daysData ;
 		}
 		
 		Map<String, Object> responseResult = new HashMap<>();

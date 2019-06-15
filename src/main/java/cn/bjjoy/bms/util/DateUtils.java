@@ -5,8 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 public class DateUtils {
 
@@ -713,6 +715,32 @@ public class DateUtils {
 		}
     	return diffHours(getDate(), d) ;
     }
+
+	public static Set<String> getTimeTypeList(List<String> days, String type) {
+		Set<String> timeTypeList = Sets.newHashSet();
+		days.stream().forEach( day -> {
+			timeTypeList.add(getTime(day, type));
+		});
+		return timeTypeList;
+	}
+	
+	public static String getTime(String day, String type) {
+		String time = null;
+		if("day".equals(type)) {
+			time = day;
+		}else if("month".equals(type)) {
+			time = day.substring(0,7);
+		}else if("quarter".equals(type)) {
+			String year = day.substring(0,4);
+			int month = Integer.valueOf(day.substring(5, 7)) - 1;
+			int quarter = month / 3 + 1;
+			time = year + "-" + quarter + "季度";
+		}else if("year".equals(type)) {
+			time = day.substring(0,4);
+		}
+		return time;
+	}
     
+	
     
 }

@@ -544,19 +544,33 @@
 	
 	<select id="getHistoryEveryday" parameterType="map" resultType="map">
 		
-		SELECT etype.id  equiptypeId , etype.`name` name , datahis.addresscode addressCode ,
-		datahis.add_time addTime , sum(AreCumulative_his) areCumulativeHis , etype.bengxing , etype.koujing ,etype.gonglv 
+		SELECT 
+		<if test="typeLayer == 1">
+			datahis.p2 equiptypeId 
+		</if>
+		<if test="typeLayer == 2">
+			datahis.p3 equiptypeId
+		</if>
+		<if test="typeLayer == 3">
+			datahis.equiptype_id equiptypeId  
+		</if> ,
+		etype.`name` name ,
+		DATE_FORMAT(datahis.add_time , '%Y-%m-%d') addTime , 
+		sum(AreCumulative_his) areCumulativeHis 
 		from equipdata_history datahis, equiptype etype
-		where 1 = 1 and datahis.addressCode = etype.addressCode
-		<if test="ids != null">
-			AND  etype.id IN 
-			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
-				#{item}
-			</foreach>
+		where 1 = 1 and 
+		<if test="typeLayer == 1">
+			datahis.p2 = etype.id and datahis.p1 = #{parentId}
+		</if>
+		<if test="typeLayer == 2">
+			datahis.p3 = etype.id and datahis.p2 = #{parentId}
+		</if>
+		<if test="typeLayer == 3">
+			datahis.equiptype_id = etype.id and datahis.p3 = #{parentId}
 		</if>
 		and datahis.add_time BETWEEN #{ startDate } and #{ endDate }
-		GROUP BY etype.id ,datahis.addresscode, datahis.add_time
-		order by datahis.add_time desc 
+		GROUP BY equiptypeId, addTime
+		order by addTime desc 
 		<include refid="sql_map_page" />
 	</select>
 	
