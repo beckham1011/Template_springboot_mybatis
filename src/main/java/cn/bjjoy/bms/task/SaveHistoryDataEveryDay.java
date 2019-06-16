@@ -18,7 +18,7 @@ import cn.bjjoy.bms.util.DateUtils;
 @Component
 public class SaveHistoryDataEveryDay {
 
-	private static final Logger log = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger();
 	
 	@Autowired
 	EquipdataService dataService ;
@@ -37,39 +37,46 @@ public class SaveHistoryDataEveryDay {
 	 *  5，3 distinct 4 ，值为 0
 	 *  
 	 */
-	@Scheduled(cron = "30 41 12 * * ?")
+	@Scheduled(cron = "30 10 00 * * ?")
 	@SuppressWarnings({ "rawtypes", "unchecked"})
 	public void importData(){
 		
+		int days = 100;
+		
 		Map map = new HashMap() ;
-		
-		//前天
-		String yesterdayBefore = DateUtils.formatDate( DateUtils.addDays(new Date(), -2) ,DateUtils.YYYYMMDD) + DateUtils.HHMMSS000000;
-		//昨天
-		String yesterday  = DateUtils.formatDate( DateUtils.addDays(new Date(), -1) ,DateUtils.YYYYMMDD) + DateUtils.HHMMSS000000;
-		Map<String , Double> yesterdayEquipDataMap = dataService.getSpecialDayData2(yesterdayBefore , yesterday) ;
-		
-		//今天
-		String today = DateUtils.formatDate( new Date(),DateUtils.YYYYMMDD) + DateUtils.HHMMSS000000;
-		Map<String , Double> todayEquipDataMap = dataService.getSpecialDayData2(yesterday,today) ;
-
-		List<String> equipCodeList = typeService.allEquipAddressCodeList(map);
-		
-		final double defaultValue = 0.0;
-		
-		for(String addressCode : equipCodeList){
-			map.put("addressCode", addressCode);
-			map.put("addTime", yesterday.substring(0, 10));
-			if(todayEquipDataMap.containsKey(addressCode.trim()) && yesterdayEquipDataMap.containsKey(addressCode.trim())){
-				double netCollect = (Double)todayEquipDataMap.get(addressCode) - (Double)yesterdayEquipDataMap.get(addressCode);
-//				log.info("addressCode: " + addressCode + ", netCollect" + netCollect);
-				map.put("areCumulativeHis", netCollect);
-			}else{
-				map.put("areCumulativeHis", defaultValue);
-			}
+		do {
+			logger.info("SaveHistoryDataEveryDay - begin");
 			
-			dataService.insertDataHistory(map) ;
-		}
+			//前天
+			String yesterdayBefore = DateUtils.formatDate( DateUtils.addDays(new Date(), days - 2) ,DateUtils.YYYYMMDD) + DateUtils.HHMMSS000000;
+			//昨天
+			String yesterday  = DateUtils.formatDate( DateUtils.addDays(new Date(), days - 1) ,DateUtils.YYYYMMDD) + DateUtils.HHMMSS000000;
+			Map<String , Double> yesterdayEquipDataMap = dataService.getSpecialDayData2(yesterdayBefore , yesterday) ;
+			
+			//今天
+			String today = DateUtils.formatDate(  DateUtils.addDays(new Date(), days ),DateUtils.YYYYMMDD) + DateUtils.HHMMSS000000;
+			Map<String , Double> todayEquipDataMap = dataService.getSpecialDayData2(yesterday,today) ;
+			
+			List<String> equipCodeList = typeService.allEquipAddressCodeList(map);
+			
+			final double defaultValue = 0.0;
+			
+			for(String addressCode : equipCodeList){
+				map.put("addressCode", addressCode);
+				map.put("addTime", yesterday.substring(0, 10));
+				if(todayEquipDataMap.containsKey(addressCode.trim()) && yesterdayEquipDataMap.containsKey(addressCode.trim())){
+					double netCollect = (Double)todayEquipDataMap.get(addressCode) - (Double)yesterdayEquipDataMap.get(addressCode);
+//				log.info("addressCode: " + addressCode + ", netCollect" + netCollect);
+					map.put("areCumulativeHis", netCollect);
+				}else{
+					map.put("areCumulativeHis", defaultValue);
+				}
+				
+				dataService.insertDataHistory(map) ;
+			}
+			days -- ;
+		}while(days > 0);
+		logger.info("SaveHistoryDataEveryDay - end");
 	}
 	
 	

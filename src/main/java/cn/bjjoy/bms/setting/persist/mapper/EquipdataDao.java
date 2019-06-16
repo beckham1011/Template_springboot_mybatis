@@ -44,8 +44,12 @@ public interface EquipdataDao extends BaseDao<Equipdata> {
 
 	public void insertDataHistory(Map map) ;
 	
+	public void updateHistoryParentId(@Param("addressCode") String addressCode);
+	
 	public List<Map<String, Object>> getHistoryEveryday(Map map);
 
+	public List<Map<String, Object>> getHistorySearch(Map map);
+	
 	public List<Map<String, Object>> getSpecialDayData(Map map);
 
 	public List<Map<String, Object>> getSpecialDayData2(@Param("startDate") String startDate,@Param("endDate") String endDate);

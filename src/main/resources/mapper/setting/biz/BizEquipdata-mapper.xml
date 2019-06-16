@@ -538,9 +538,16 @@
 	</select>
 	
 	<insert id="insertDataHistory"  parameterType="map">
-		INSERT INTO equipdata_history(equiptype_id, addressCode , AreCumulative_his , add_time) 
-		VALUES ( #{equiptypeId} , #{addressCode }, ${areCumulativeHis}, #{addTime} ) 
+		INSERT INTO equipdata_history(equiptype_id, addressCode , AreCumulative_his , add_time , p1 , p2 , p3) 
+		VALUES ( (select id from equiptype where addresscode = #{addressCode } limit 1) , #{addressCode }, 
+			${areCumulativeHis}, #{addTime} , #{p1}, #{p2}, #{p3})
 	</insert>
+	
+	<update id="updateHistoryParentId" parameterType="string">
+		update equipdata_history set p3 = (select equip.parent_id from equiptype equip , equipdata_history datahis where equip.id = datahis.equiptype_id and datahis.address_code = #{addressCode} limit 1),
+				set p2 = (select equip.parent_id from equiptype equip , equipdata_history datahis where equip.id = datahis.p3 and datahis.address_code = #{addressCode} limit 1),
+				set p1 = (select equip.parent_id from equiptype equip , equipdata_history datahis where equip.id = datahis.p2 and datahis.address_code = #{addressCode} limit 1)
+	</update>
 	
 	<select id="getHistoryEveryday" parameterType="map" resultType="map">
 		
@@ -574,6 +581,22 @@
 		<include refid="sql_map_page" />
 	</select>
 	
+	<select id="getHistorySearch" parameterType="map" resultType="map">
+		SELECT etype.id  equiptypeId , etype.`name` name , datahis.addresscode addressCode ,
+		datahis.add_time addTime , sum(AreCumulative_his) areCumulativeHis , etype.bengxing , etype.koujing ,etype.gonglv 
+		from equipdata_history datahis, equiptype etype
+		where 1 = 1 and datahis.addressCode = etype.addressCode
+		<if test="ids != null">
+			AND  etype.id IN 
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
+				#{item}
+			</foreach>
+		</if>
+		and datahis.add_time BETWEEN #{ startDate } and #{ endDate }
+		GROUP BY etype.id ,datahis.addresscode, datahis.add_time
+		order by datahis.add_time desc 
+		<include refid="sql_map_page" />
+	</select>	
 	
 	<select id="getSpecialDayData" resultType="map" parameterType="java.lang.String">
 		SELECT 

@@ -259,7 +259,7 @@ public abstract class AbstractSocketServer {
                 rBuffer.flip();
                 byte[] dataBytes = rBuffer.array();
                 receiveText = new String( dataBytes , 0 , count);
-				logger.info("ISIP-------------client IP:" + socket.getInetAddress().getHostAddress() + ", receiveText : " + receiveText);                
+				logger.info("ISIP-------------client IP:" + socket.getInetAddress().getHostAddress() + ", connections:" + clientsMap.size() +", receiveText : " + receiveText);                
 				if(receiveText.indexOf(Constants.ALL) > -1){
 					//发送给所有客户端，要数据
 					refreshAllStation(client, receiveText , Constants.MSG_8082);

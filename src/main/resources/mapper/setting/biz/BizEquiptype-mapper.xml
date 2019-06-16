@@ -483,7 +483,7 @@
 	<select id="getEquipByAddressCode" resultType="cn.bjjoy.bms.setting.persist.model.Equiptype" parameterType="map">
 		<include refid="selectEquipColumn"/>
 		where 1 = 1 and 
-		equiptype.addressCode = #{addressCode}
+		equiptype.addressCode = #{addressCode} limit 1
 	</select>
 	
 	<select id="getEquipByName" resultType="cn.bjjoy.bms.setting.persist.model.Equiptype" parameterType="map">
