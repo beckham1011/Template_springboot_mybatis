@@ -1,5 +1,8 @@
 package cn.bjjoy.bms.shiro;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.mgt.DefaultSecurityManager;
@@ -7,18 +10,10 @@ import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Import;
-
-import com.google.common.collect.Maps;
-
-import cn.bjjoy.bms.filter.ShiroSessionFilter;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 @Import(ShiroManager.class)

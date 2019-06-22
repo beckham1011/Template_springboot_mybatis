@@ -170,7 +170,6 @@
 			    			+'&endDate=' + $("#endDate").val() ,
 			    success: function(data){
 			    	var typeListLength = data.data.typeList.length;
-			    	console.log(data.data)
 			    	var serialData = new Array(typeListLength);
 			    	for(var index = 0 ; index < typeListLength ; index ++){
 			    		console.log()
@@ -197,6 +196,7 @@
 				option.name = typeList[index];
 				option.type = 'bar';
 				option.stack = 'day';
+				option.barWidth = 30;
 				option.data = typeData[index + 1];
 				serialData[index] = option ;
 			}

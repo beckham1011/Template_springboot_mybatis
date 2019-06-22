@@ -168,7 +168,13 @@
 		    <artifactId>spring-batch-core</artifactId>
 		    <version>4.1.1.RELEASE</version>
 		</dependency>
-
+		
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.5</version>
+		</dependency>
+		
 		<dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>

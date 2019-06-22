@@ -717,7 +717,7 @@ public class DateUtils {
     }
 
 	public static Set<String> getTimeTypeList(List<String> days, String type) {
-		Set<String> timeTypeList = Sets.newHashSet();
+		Set<String> timeTypeList = Sets.newTreeSet();
 		days.stream().forEach( day -> {
 			timeTypeList.add(getTime(day, type));
 		});

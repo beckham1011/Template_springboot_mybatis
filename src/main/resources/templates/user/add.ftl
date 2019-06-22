@@ -32,7 +32,7 @@
                     <div class="ibox-content">
                         <form class="form-horizontal m-t" id="userForm">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">用户名：</label>
+                                <label class="col-sm-3 control-label">账号：</label>
                                 <div class="col-sm-8">
                                     <input id="loginName" name="loginName" class="form-control" type="text" value="" />
                                 </div>
@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">昵称：</label>
+                                <label class="col-sm-3 control-label">用户名：</label>
                                 <div class="col-sm-8">
                                     <input id="name" name="name" class="form-control" type="text" value="">
                                 </div>

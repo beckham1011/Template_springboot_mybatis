@@ -39,6 +39,7 @@ public interface EquiptypeDao extends BaseDao<Equiptype> {
 	public LinkedList<Integer> getSubOrgIds(Map map) ;
 	
 	public void updateByAddressCode(Map map);
+	
 	public void updateInfoByAddressCode(Map map);
 
 	public String getAddressCodeByIp(String ip);
@@ -64,5 +65,9 @@ public interface EquiptypeDao extends BaseDao<Equiptype> {
 	public List<Equiptype> testResultMap();
 
 	public List<Map<String, Object>> getEquipsByParentId(@Param("parentId") int parentId);
+
+	public List<Integer> getEquipIdsByParentId(@Param("parentId") int parentId);
+	
+	public void updateOnlineStatus(@Param("addressCode") String addressCode, @Param("onlineFlag") int onlineFlag);
 	
 }

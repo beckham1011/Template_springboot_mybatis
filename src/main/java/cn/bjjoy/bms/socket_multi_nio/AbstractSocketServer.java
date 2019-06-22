@@ -104,7 +104,7 @@ public abstract class AbstractSocketServer {
     		List<Equiptype> equips = equipService.getEquipsByParentId(Integer.valueOf(freshMsg[1]));
     		equips.stream().forEach(equip ->{
     			System.out.println(equip.getIP()+"," + equip.getAddressCode());
-    			if( Objects.nonNull(equip.getIP()) && clientsMap.containsKey(equip.getIP()) && addressCodeIpMap.containsKey(equip.getIP())) {
+    			if( addressCodeIpMap.containsKey(equip.getAddressCode())) {
     				System.out.println("Refresh:" + equip.getAddressCode());
     				refreshStation(clientsMap.get(addressCodeIpMap.get(equip.getAddressCode())) , Constants.MSG_8082);
     			}
@@ -163,6 +163,7 @@ public abstract class AbstractSocketServer {
 		logger.info("Equip station heart beat: IP " + ip + " , addresscode :" + addCode);
 		if(equipService.queryList(params).size() > 0){
 			equipService.updateByAddressCode(params);
+			equipService.updateOnline(addCode, true);
 		}else{
 			Equiptype t = new Equiptype ();
 			t.setIP(ip);
@@ -279,6 +280,7 @@ public abstract class AbstractSocketServer {
                 String name = socket.getInetAddress().toString().substring(1)  ;
                 logger.info(ip + " is not connect ,will close , clientsMap.size: " + clientsMap.size());
         		clientsMap.remove(name) ;
+        		equipService.updateOnline(ipAddressCodeMap.get(name), false);
         		client.close();
         	}
         }

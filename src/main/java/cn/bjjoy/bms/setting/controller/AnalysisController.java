@@ -32,7 +32,8 @@ public class AnalysisController  extends AbstractHosznController{
     
     @GetMapping(value = "/index" )
     public String index2( @RequestParam Map paramMap ,ModelMap modelMap) {
-		modelMap.addAttribute("parentId", paramMap.containsKey("parentId") ? paramMap.get("parentId") : "1") ;
+    	User user = UserUtils.getUer() ;
+		modelMap.addAttribute("parentId", user.getParentId()) ;
 		String dayMonthAgo = DateUtils.formatDate(DateUtils.addDays(new Date(), -31), DateUtils.YYYYMMDDHHMMSS) ;
 		String today = DateUtils.formatDate(DateUtils.addDays(new Date(), -1), DateUtils.YYYYMMDDHHMMSS) ;
 		modelMap.addAttribute("dayMonthAgo" , dayMonthAgo);
@@ -64,7 +65,11 @@ public class AnalysisController  extends AbstractHosznController{
 	@ResponseBody
 	public ResponseResult getAnalysisChartData(@RequestParam Map<String, Object> map){
 
-		Equiptype equip = equiptypeService.getEquipById(map.get("parentId").toString());
+		User user = UserUtils.getUer();
+		int parentId =  equiptypeService.getParentId(map , user);
+		map.put("map", parentId);
+		
+		Equiptype equip = equiptypeService.getEquipById(String.valueOf(parentId));
 		if(equip.getSystemId() != 0){
 			map.put("systemId", equip.getSystemId()) ;
 		}

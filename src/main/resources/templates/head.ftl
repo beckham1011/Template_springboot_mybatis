@@ -26,7 +26,7 @@
         dataType: "json",
         url: "${ctx}/equipdata/countMsg",
         success: function(msg){
-        	var htmlCoungMsg = '设备总数:558，在线:172，离线:386，在线率:30.77%'
+        	var htmlCoungMsg = "设备总数:" + msg.data.allNums + "，在线:"+msg.data.onLineNums + "，离线:" + msg.data.offLineNums + "，在线率:" + msg.data.onLineNumsRate
         	$("#countmsg").html(htmlCoungMsg);
         	var dayHtml = msg.data.currentDay ;
         	$("#currentDay").html(dayHtml);
@@ -35,7 +35,6 @@
         	var systemInfo = msg.data.systemInfo;
         	$("#systemInfo").html(systemInfo);
         	$("#userId").val(msg.data.userId);
-        	console.log($("#userId").val());
         },
 		error: function(){
 			try{

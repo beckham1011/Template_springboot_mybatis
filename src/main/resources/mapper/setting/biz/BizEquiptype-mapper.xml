@@ -515,6 +515,30 @@
 	</select>
 	
 	
+	<select id="getEquipIdsByParentId" resultType="int" parameterType="int">
+		select id from equiptype
+		where id = #{parentId}
+		and type_layer = 4
+		UNION all 
+		select id from equiptype 
+		where parent_id = #{parentId}
+		and type_layer = 4
+		UNION all 
+		select id from equiptype 
+		where parent_id in(select id from equiptype where parent_id = #{parentId})
+		and type_layer = 4
+		UNION all 
+		select id from equiptype 
+		where parent_id in(select id from equiptype where parent_id in(select id from equiptype where parent_id = #{parentId}))
+		and type_layer = 4
+		UNION all 
+		select id from equiptype 
+		where parent_id in(select id from equiptype where parent_id in(select id from equiptype where parent_id in(select id from equiptype where parent_id = #{parentId})))
+		and type_layer = 4
+	</select>
+	
+	
+	
 	<select id="queryMapListNoPage" resultType="map" parameterType="map">
 		<include refid="selectEquipColumn"/>
 		<where>
@@ -586,7 +610,7 @@
 	
 	<select id="getTypesByIds" resultType="map" parameterType="map">
 		<include refid="selectEquipColumn"/>
-	 	WHERE 1 = 1 
+	 	WHERE 1 = 1 and type_layer &lt; 4
 		<if test="ids != null">
 			AND equiptype.id IN 
 			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">   
@@ -742,4 +766,7 @@
 		update equiptype set cron = #{cron} where id = #{id}
 	</update>
 	
+	<update id="updateOnlineStatus" parameterType="map">
+		update equiptype set online = #{onlineFlag} where addressCode = #{addressCode}
+	</update>
 </mapper>
