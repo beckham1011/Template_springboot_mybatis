@@ -41,7 +41,7 @@ public class SaveHistoryDataEveryDay {
 	@SuppressWarnings({ "rawtypes", "unchecked"})
 	public void importData(){
 		
-		int days = 100;
+		int days = 1;
 		
 		Map map = new HashMap() ;
 		do {
@@ -71,6 +71,12 @@ public class SaveHistoryDataEveryDay {
 				}else{
 					map.put("areCumulativeHis", defaultValue);
 				}
+				
+				int equipId = typeService.getEquipByAddressCode(addressCode).getId();
+				map.put("equiptype_id", equipId);
+				map.put("p3", typeService.getParentId(equipId));
+				map.put("p2", typeService.getParentId(typeService.getParentId(equipId)));
+				map.put("p1", typeService.getParentId(typeService.getParentId(typeService.getParentId(equipId))));
 				
 				dataService.insertDataHistory(map) ;
 			}
