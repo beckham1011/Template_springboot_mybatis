@@ -64,6 +64,7 @@
 	                                        	<input id="stationName" placeholder="请输入泵站名称" name="stationName" type="text"/>
 	                                        	<aclass="glyphicon glyphicon-remove btn form-control-feedback"style="pointer-events:auto"></a>
 		                                        <button class="btn btn-xs btn-primary" onclick="refreshTable()"><i class="fa fa-search"></i>&nbsp;查询</button>
+		                                        <@shiro.hasPermission name="system:data:edit"><button class="btn btn-info btn-xs" type="button" onclick="exportData()"><i class="fa fa-edit"></i>&nbsp;导出数据</button></@shiro.hasPermission>
                                         	</div>
                                         	&nbsp;
                                         	<label>
@@ -278,6 +279,10 @@
 	        }
             
             function itemOnclick (){}
+
+			function exportData(){
+				window.location.href = "${ctx}/equipdata/export" ;
+			}
             
 		</script>
 </body>
