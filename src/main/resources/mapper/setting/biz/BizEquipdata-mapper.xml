@@ -507,16 +507,37 @@
 	</update>
 	
 	<select id="getStationCurrentDataByDataId" parameterType="map" resultType="map" >
-		select eqtp.name , eqtp.bengxing , eqtp.koujing ,eqtp.gonglv  , eqtp.id , eqtp.update_time, eqtp.longitude , eqtp.latitude ,
-		eqtp.addresscode , out2.add_time ,out2.waterstatus , out2.flowrate , out2.netcumulative ,
-		out2.signalquality ,out2.communicationStatus , out2.signalquality , out2.communicationStatus ,out2.id dataId 
+		select 
+			eqtp.name ,
+			eqtp.bengxing ,
+			eqtp.koujing ,
+			eqtp.gonglv,
+			eqtp.id ,
+			eqtp.update_time,
+			eqtp.longitude,
+			eqtp.latitude,
+			eqtp.addresscode ,
+			eqtp.online ,
+			
+			SUBSTRING(out2.add_time,1,10) addTime ,
+			out2.waterstatus , 
+			out2.flowrate , 
+			out2.netcumulative ,
+			out2.signalquality ,
+			out2.communicationStatus , 
+			out2.signalquality , 
+			out2.communicationStatus ,
+			out2.id dataId 
 		from equiptype eqtp , equipdata out2
 		where eqtp.addresscode = out2.addresscode
-		and out2.id = #{id}
+		and out2.id = #{id} limit 1
 	</select>
 	
 	<update id="updateRealData">
-		update equipdata set netcumulative = ${netcumulative} , flowrate = ${flowrate} where id = ${id}
+		update equipdata set 
+			netcumulative = ${netcumulative} , 
+			add_time = #{addTime}
+		where id = ${id}
 	</update>
 	
 	<select id="getNewestDataByAddress" parameterType="map" resultType="map">

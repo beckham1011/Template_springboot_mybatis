@@ -145,7 +145,8 @@
                 html.push('<p><b>类型:</b> ' + row.bengxing + '</p>');
                 html.push('<p><b>口径:</b> ' + row.koujing + '</p>');
                 html.push('<p><b>功率:</b> ' + row.gonglv + '</p>');
-                html.push('<p><b>操作:</b><button class="btn btn-primary btn-xs" type="button" onclick="refreshEquiptypeData(\''+row.addresscode+'\')"><i class="fa fa-edit"></i>&nbsp;刷新</button>&nbsp;&nbsp;<button class="btn btn-primary btn-xs" type="button" onclick="equiptypeDetail(\''+row.addresscode+'\')"><i class="fa fa-edit"></i>&nbsp;详情</button></p>');
+                html.push('<p><b>操作:</b><button class="btn btn-primary btn-xs" type="button" onclick="refreshEquiptypeData(\''+row.addresscode+'\')"><i class="fa fa-edit"></i>&nbsp;刷新</button>&nbsp;&nbsp;');
+                html.push('<@shiro.hasPermission name="system:data:edit"><button class="btn btn-primary btn-xs" type="button" onclick="editData(\''+row.dataId+'\',\''+row.addresscode+'\')"><i class="fa fa-edit"></i>&nbsp;编辑</button></@shiro.hasPermission></p>')
                 return html.join('');
             }
 
@@ -206,8 +207,8 @@
                     title: '编辑数据',
                     shadeClose: true,
                     shade: false,
-                    area: ['900px', '400px'],
-                    content: '${ctx}/equipdata/edit/' + addressCode + '/' + dataid,
+                    area: ['380px', '560px'],
+                    content: '${ctx}/app/equipdata/edit/' + addressCode + '/' + dataid,
                     end: function(index){
                         layer.close(index);
                         refreshTable();

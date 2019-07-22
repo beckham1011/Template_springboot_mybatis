@@ -7,17 +7,22 @@ import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.context.annotation.Description;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import cn.bjjoy.bms.exception.ControllerException;
 import cn.bjjoy.bms.setting.controller.AbstractHosznController;
 import cn.bjjoy.bms.setting.dto.CurrentEquipData;
 import cn.bjjoy.bms.setting.dto.EquiptypeDto;
 import cn.bjjoy.bms.setting.entity.User;
 import cn.bjjoy.bms.util.DataUtils;
+import cn.bjjoy.bms.util.DateUtils;
 import cn.bjjoy.bms.util.UserUtils;
 
 import com.alibaba.fastjson.JSON;
@@ -52,6 +57,25 @@ public class AppEquipdataController extends AbstractHosznController{
 		
         return "app/equipdata/index";
     }
+    
+	
+	@Description("-根据主键修改")
+	@GetMapping(value="edit/{addressCode}/{dataId}")
+	public String edit(@PathVariable String addressCode,@PathVariable Integer dataId ,  ModelMap modelMap) throws ControllerException {
+		Map<String ,Object> data = equipdataService.queryStationCurrentData(String.valueOf(dataId)) ;
+		if(data == null){
+			data = new HashMap<>();
+			data.put("dataId", 0);
+			data.put("addresscode", addressCode) ;
+			data.put("flowrate", 0);
+			data.put("netcumulative", 0);
+			data.put("online", 0);
+			data.put("addTime", DateUtils.getCurrentDate());
+		}
+		modelMap.put("data", data) ;
+		return "app/equipdata/edit";
+	}
+    
 
     @RequestMapping(value = "/map" )
     public String map(@RequestParam Map paramMap ,ModelMap modelMap) {

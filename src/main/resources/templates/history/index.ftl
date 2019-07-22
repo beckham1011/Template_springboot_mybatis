@@ -17,6 +17,7 @@
 		<link rel="stylesheet" href="${ctx}/css/ace-skins.min.css" />
 
 		<script src="${ctx}/js/ace-extra.min.js"></script>
+		<script src="${ctx}/js/dateformat.js"></script>
 	</head>
 
 	<body>
@@ -89,26 +90,7 @@
 
 
 <script>
-	
-	Date.prototype.Format = function(fmt)   
-	{ //author: meizz   
-	  var o = {   
-	    "M+" : this.getMonth()+1,                 //月份   
-	    "d+" : this.getDate(),                    //日   
-	    "h+" : this.getHours(),                   //小时   
-	    "m+" : this.getMinutes(),                 //分   
-	    "s+" : this.getSeconds(),                 //秒   
-	    "q+" : Math.floor((this.getMonth()+3)/3), //季度   
-	    "S"  : this.getMilliseconds()             //毫秒   
-	  };   
-	  if(/(y+)/.test(fmt))   
-	    fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));   
-	  for(var k in o)   
-	    if(new RegExp("("+ k +")").test(fmt))   
-	  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
-	  return fmt;
-	}
-	
+
 	$(document).ready(function () {
 		localStorage.setItem("parentId", ${parentId});
 		
@@ -125,24 +107,6 @@
 		<script type="text/javascript">
             $(document).ready(function () {
         		
-        		Date.prototype.Format = function(fmt)   
-				{ //author: meizz   
-				  var o = {   
-				    "M+" : this.getMonth()+1,                 //月份   
-				    "d+" : this.getDate(),                    //日   
-				    "h+" : this.getHours(),                   //小时   
-				    "m+" : this.getMinutes(),                 //分   
-				    "s+" : this.getSeconds(),                 //秒   
-				    "q+" : Math.floor((this.getMonth()+3)/3), //季度   
-				    "S"  : this.getMilliseconds()             //毫秒   
-				  };   
-				  if(/(y+)/.test(fmt))   
-				    fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));   
-				  for(var k in o)   
-				    if(new RegExp("("+ k +")").test(fmt))   
-				  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
-				  return fmt;
-				}
             	localStorage.setItem("parentId", ${parentId});
 				$("#createDate").val(new Date(new Date().getTime() - (31 * 24 * 3600 * 1000)).Format("yyyy-MM-dd"));
 				$("#enddate").val(new Date(new Date().getTime() - (24 * 3600 * 1000)).Format("yyyy-MM-dd"));

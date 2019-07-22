@@ -259,7 +259,7 @@
                     title: '编辑数据',
                     shadeClose: true,
                     shade: false,
-                    area: ['900px', '400px'],
+                    area: ['900px', '500px'],
                     content: '${ctx}/equipdata/edit/' + addressCode + '/' + dataid,
                     end: function(index){
                         layer.close(index);
