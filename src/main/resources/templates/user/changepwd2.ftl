@@ -74,7 +74,7 @@
     	    	oldpwd: {
     	        required: true,
     	        minlength: 4,
-    	    	maxlength: 10
+    	    	maxlength: 20
     	      },
     	      	newPwd1: {
     	        required: true,

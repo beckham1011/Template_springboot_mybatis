@@ -282,7 +282,7 @@ public class UserController extends AbstractHosznController {
     public String changePwd(ModelMap map) {
         User user = UserUtils.getUer() ;
         map.put("password", user.getPassword()) ;
-        return "/user/changePwd2";
+        return "/user/changepwd2";
     }
 
     @Description("修改密码保存")
@@ -294,6 +294,7 @@ public class UserController extends AbstractHosznController {
     	user.setPassword(newPwdAfterEncrypt);
     	try {
 			userService.update(user);
+	        logger.info(this.getClass().getDeclaredClasses() + " change pwd 1" + user.getPassword());
 			logger.info("Change user password success");
 		} catch (Exception e) {
 			logger.error("Update user password error: {}" + e.getStackTrace());
