@@ -29,13 +29,16 @@
     </RollingFile>
   </Appenders>
   <Loggers>
-    <Logger name="cn.bjjoy.bms.setting.*.dao" level="debug" additivity="false">
+    <Logger name="cn.bjjoy.bms.setting.*.dao" level="debug" additivity="true">
       <AppenderRef ref="RollingFile"/>
       <AppenderRef ref="Console" />
     </Logger>
     <Root level="info">
       <AppenderRef ref="RollingFile"/>
       <AppenderRef ref="Console" />
+      <AppenderRef ref="SYSOUT"/>
+      <AppenderRef ref="DEBUG_ROLLING_FILE"/>
+      <AppenderRef ref="ERROR_ROLLING_FILE"/>      
     </Root>
   </Loggers>
 </Configuration>

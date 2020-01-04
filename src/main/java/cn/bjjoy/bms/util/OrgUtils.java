@@ -1,6 +1,7 @@
 package cn.bjjoy.bms.util;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.PostConstruct;
 
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import cn.bjjoy.bms.setting.persist.model.Equiptype;
 import cn.bjjoy.bms.setting.service.EquiptypeService;
-import net.sf.ehcache.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class OrgUtils {

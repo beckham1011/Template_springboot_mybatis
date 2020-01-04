@@ -285,6 +285,4 @@ public abstract class AbstractSocketServer {
         	}
         }
     }
-    
-	
 }

@@ -38,12 +38,10 @@
 			equiptype.id = #{id}
 	</select>
 	
-	
 	<select id="testResultMap" resultType = "map" >
 		<include refid="selectEquipColumn"/>
 		limit 10
 	</select>
-	
 	
 	<select id="queryMapList" resultType="map" parameterType="map">
 		<include refid="selectEquipColumn"/>
