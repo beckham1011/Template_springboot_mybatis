@@ -5,11 +5,11 @@ import java.util.Map;
 
 public interface SystemService {
 
-	public static Map<Integer,Integer> systemPortMap = new HashMap<>();
-	
-	public String getSystem(Integer systemId) ;
+	Map<Integer,Integer> systemPortMap = new HashMap<>();
 
-	public Map<String ,cn.bjjoy.bms.setting.persist.model.System> getSystemList();
+	String getSystem(Integer systemId) ;
 
-	public Integer getPort(Integer systemId);
+	Map<String ,cn.bjjoy.bms.setting.persist.model.System> getSystemList();
+
+	Integer getPort(Integer systemId);
 }

@@ -20,5 +20,4 @@ public class MyRetryLimitCredentialsMatcher extends HashedCredentialsMatcher {
         boolean matches = super.doCredentialsMatch(authcToken, info);
         return matches;
     }
-	
 }

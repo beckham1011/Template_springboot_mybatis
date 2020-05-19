@@ -112,5 +112,4 @@ public class AppEquipdataController extends AbstractHosznController{
 		
         return "app/equipdata/map2";
     }
-	
 }

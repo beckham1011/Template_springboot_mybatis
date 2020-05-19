@@ -15,5 +15,4 @@ public class HosznSocketServer extends AbstractSocketServer {
 		}
 		return values;
 	}
-
 }

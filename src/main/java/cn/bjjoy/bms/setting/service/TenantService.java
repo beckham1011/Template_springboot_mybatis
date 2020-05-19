@@ -8,19 +8,19 @@ import com.github.pagehelper.PageInfo;
 @SuppressWarnings("rawtypes")
 public interface TenantService {
 
-	public List<Map<String,Object>> getTenants(Map map);
+	List<Map<String,Object>> getTenants(Map map);
 	
-	public List<Map<String,Object>> getTenantsById(int id);
+	List<Map<String,Object>> getTenantsById(int id);
 	
-	public int getCount(Map map) ;
+	int getCount(Map map) ;
 	
-	public PageInfo<cn.bjjoy.bms.setting.persist.model.System> getPage(Integer pageNumber, Integer pageSize);
+	PageInfo<cn.bjjoy.bms.setting.persist.model.System> getPage(Integer pageNumber, Integer pageSize);
 	
-	public void deleteSystem(Map map);
+	void deleteSystem(Map map);
 	
-	public int updateSystem(Map map);
+	int updateSystem(Map map);
 
-	public void add(Map map);
+	void add(Map map);
 	
 	
 }

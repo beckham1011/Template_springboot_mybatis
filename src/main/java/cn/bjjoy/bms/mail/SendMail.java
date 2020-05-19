@@ -17,6 +17,8 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +26,8 @@ import cn.bjjoy.bms.setting.constants.Constants;
 
 @Component
 public class SendMail {
+
+    Logger log = LogManager.getLogger();
 
     // 日志记录
     public static MailAuthenticator authenticator;
@@ -135,7 +139,7 @@ public class SendMail {
             // 发送邮件
             transport.sendMessage(message, message.getAllRecipients());
 
-            System.out.println(title + " Email send success!");
+            log.info(title + " Email send success!");
         } catch (Exception e) {
         	e.printStackTrace();
         } finally {

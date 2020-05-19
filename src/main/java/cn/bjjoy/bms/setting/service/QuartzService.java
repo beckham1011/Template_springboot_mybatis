@@ -4,6 +4,6 @@ import cn.bjjoy.bms.setting.entity.QuartzEntity;
 
 public interface QuartzService {
 
-	public void addSchedulerTask(QuartzEntity quartz);
+	void addSchedulerTask(QuartzEntity quartz);
 	
 }

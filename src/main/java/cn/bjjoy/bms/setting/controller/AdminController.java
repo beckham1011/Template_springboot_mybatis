@@ -32,8 +32,12 @@ import cn.bjjoy.bms.util.UserUtils;
 public class AdminController extends AbstractHosznController {
 
 	private static final Logger logger = LogManager.getLogger();
-	
-	
+
+	/**
+	 *
+	 * @param request
+	 * @return
+	 */
 	@GetMapping(value = {"/login",""})
 	public String login(HttpServletRequest request) {
 		return "admin/login";
@@ -92,7 +96,7 @@ public class AdminController extends AbstractHosznController {
 	/**
 	 * 带参重定向
 	 *
-	 * @param path
+	 * @param request
 	 * @return
 	 */
 	public String getNextPage(HttpServletRequest request){

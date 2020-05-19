@@ -7,6 +7,6 @@ package cn.bjjoy.bms.setting.service;
  */
 public interface PortService {
 
-	public int getPort(String addressCode);
+	int getPort(String addressCode);
 	
 }
