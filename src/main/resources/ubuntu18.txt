@@ -1,0 +1,28 @@
+
+01-netcfg.yaml
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eth0:
+      dhcp4: no
+      addresses: [192.168.44.142/24]
+      gateway4: 192.168.44.1
+      nameservers:
+        addresses: [192.168.44.142,8.8.8.8,8.8.4.4]
+
+50-cloud-init.yaml
+network:
+    ethernets:
+        eth0:
+            addresses: []
+            dhcp4: true
+    version: 2
+
+
+
+cd /etc/netplan/
+
+sudo netplan apply
+
+:w !sudo tee %
